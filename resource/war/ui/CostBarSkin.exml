@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="CostBarSkin" xmlns:e="http://ns.egret.com/eui" height="43">
+	<e:Image source="icon_sh_dbg_sh_d0_png" verticalCenter="4.5" x="10"/>
+	<e:Image x="38.14" source="icon_sh_dbg_sh_d11_png" verticalCenter="4"/>
+	<e:Image x="38.14" verticalCenter="4" source="icon_sh_dbg_sh_d1_png"/>
+	<e:Group verticalCenter="4.5" x="31.92">
+		<e:Image source="icon_sh_dbg_sh_d2_png"/>
+		<e:Image source="icon_sh_dbg_sh_d2_png" x="10" y="10"/>
+		<e:Image source="icon_sh_dbg_sh_d2_png" x="20" y="20"/>
+		<e:Image source="icon_sh_dbg_sh_d2_png" x="30" y="30"/>
+		<e:Image source="icon_sh_dbg_sh_d2_png" x="40" y="40"/>
+		<e:Image source="icon_sh_dbg_sh_d2_png" x="50" y="50"/>
+		<e:Image source="icon_sh_dbg_sh_d2_png" x="60" y="60"/>
+		<e:Image source="icon_sh_dbg_sh_d2_png" x="70" y="70"/>
+		<e:Image source="icon_sh_dbg_sh_d2_png" x="80" y="80"/>
+		<e:Image source="icon_sh_dbg_sh_d2_png" x="90" y="90"/>
+		<e:layout>
+		<e:HorizontalLayout gap="60"/>
+		</e:layout>
+	</e:Group>
+	<e:Image source="icon_sh_d_png"/>
+</e:Skin>
