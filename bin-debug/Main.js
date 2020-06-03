@@ -98,21 +98,20 @@ var Main = (function (_super) {
     };
     Main.prototype.runGame = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var result, userInfo;
+            var userInfo;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.loadResource()];
                     case 1:
                         _a.sent();
                         this.createGameScene();
-                        return [4 /*yield*/, RES.getResAsync("description_json")];
-                    case 2:
-                        result = _a.sent();
+                        // const result = await RES.getResAsync("description_json")
                         return [4 /*yield*/, platform.login()];
-                    case 3:
+                    case 2:
+                        // const result = await RES.getResAsync("description_json")
                         _a.sent();
                         return [4 /*yield*/, platform.getUserInfo()];
-                    case 4:
+                    case 3:
                         userInfo = _a.sent();
                         console.log(userInfo);
                         return [2 /*return*/];
@@ -165,19 +164,9 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
-        // let demo = new AStarTest();
-        // this.addChild(demo);
-        // let nodes = demo._grid._nodes;
-        // for(let i=0, len=nodes.length; i<len; i++)
-        // {
-        //     demo.aStar._startNode = nodes[i];
-        //     for(let j=0, len2=nodes.length; j<len2; j++)
-        //     {
-        //         demo.aStar._endNode = nodes[j];
-        //         let path = demo.findPath();
-        //         console.log(path)
-        //     }
-        // }
+        GameUtils.main = this;
+        LayerManager.Ins();
+        ViewManager.Ins().open(ViewIdConst.WarPanel);
     };
     return Main;
 }(eui.UILayer));

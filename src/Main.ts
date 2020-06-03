@@ -60,7 +60,7 @@ class Main extends eui.UILayer {
     private async runGame() {
         await this.loadResource()
         this.createGameScene();
-        const result = await RES.getResAsync("description_json")
+        // const result = await RES.getResAsync("description_json")
         await platform.login();
         const userInfo = await platform.getUserInfo();
         console.log(userInfo);
@@ -100,21 +100,9 @@ class Main extends eui.UILayer {
      */
     
     protected createGameScene(): void {
-        
-        // let demo = new AStarTest();
-        // this.addChild(demo);
-        
-        // let nodes = demo._grid._nodes;
-        // for(let i=0, len=nodes.length; i<len; i++)
-        // {
-        //     demo.aStar._startNode = nodes[i];
-        //     for(let j=0, len2=nodes.length; j<len2; j++)
-        //     {
-        //         demo.aStar._endNode = nodes[j];
-        //         let path = demo.findPath();
-        //         console.log(path)
-        //     }
-        // }
+        GameUtils.main = this;
+        LayerManager.Ins();
+        ViewManager.Ins().open(ViewIdConst.WarPanel);
     }
 
     static hero:war.MovieClip
