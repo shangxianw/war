@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="WarPanelSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:war="war.*">
-	<e:Group height="350" anchorOffsetY="0" left="0" right="0" bottom="0">
-		<e:Image source="bg_jz_lt_jk_wxts_png" scale9Grid="18,18,18,11" left="190" right="0" top="0" bottom="0" visible="false"/>
-		<war:Ka1 y="88" skinName="Ka1Skin" x="336" anchorOffsetX="106" anchorOffsetY="68" visible="false"/>
-		<war:Ka1 x="470" y="20" skinName="Ka1Skin" visible="false"/>
-		<war:Ka1 x="230" y="175" skinName="Ka1Skin" visible="false"/>
-		<war:Ka1 x="470" y="175" skinName="Ka1Skin" visible="false"/>
-		<war:Ka1 x="29.08" y="202.26" skinName="Ka1Skin" scaleX="0.6" scaleY="0.6" visible="false"/>
-		<war:CostBar y="288.65" skinName="CostBarSkin" horizontalCenter="0"/>
+	<e:Group height="360" anchorOffsetY="0" left="0" right="0" bottom="0">
+		<e:Image source="bg_jz_lt_jk_wxts_png" scale9Grid="18,18,18,11" left="0" right="0" top="0" bottom="0" alpha="0.3"/>
+		<war:Ka1 y="88" skinName="Ka1Skin" x="336" anchorOffsetX="106" anchorOffsetY="68"/>
+		<war:Ka1 x="470" y="20" skinName="Ka1Skin"/>
+		<war:Ka1 x="230" y="175" skinName="Ka1Skin"/>
+		<war:Ka1 x="470" y="175" skinName="Ka1Skin"/>
+		<war:Ka1 x="29.08" y="202.26" skinName="Ka1Skin" scaleX="0.6" scaleY="0.6"/>
+		<war:CostBar y="303.8" skinName="CostBarSkin" horizontalCenter="0"/>
 	</e:Group>
 </e:Skin>

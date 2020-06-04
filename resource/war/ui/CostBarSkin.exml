@@ -19,4 +19,5 @@
 		</e:layout>
 	</e:Group>
 	<e:Image source="icon_sh_d_png"/>
+	<e:BitmapLabel font="sh_font_fnt" text="0" y="11.33" horizontalCenter="-329.5"/>
 </e:Skin>
