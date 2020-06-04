@@ -52,6 +52,8 @@ declare module skins{
 }
 declare class CostBarSkin extends eui.Skin{
 }
+declare class HeroEntitySkin extends eui.Skin{
+}
 declare class Ka1Skin extends eui.Skin{
 }
 declare class WarPanelSkin extends eui.Skin{

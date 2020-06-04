@@ -72,8 +72,22 @@ class Main extends eui.UILayer {
             const loadingView = new LoadingUI();
             this.stage.addChild(loadingView);
             await RES.loadConfig("resource/default.res.json", "resource/");
-            await this.loadTheme();
+            await this.loadResource2();
             await RES.loadGroup("preload", 0, loadingView);
+            this.stage.removeChild(loadingView);
+        }
+        catch (e) {
+            console.error(e);
+        }
+    }
+
+    private async loadResource2() {
+        try {
+            const loadingView = new LoadingUI();
+            this.stage.addChild(loadingView);
+            await RES.loadConfig("resource/war.res.json", "resource/");
+            await this.loadTheme();
+            await RES.loadGroup("preload2", 0, loadingView);
             this.stage.removeChild(loadingView);
         }
         catch (e) {
@@ -102,6 +116,8 @@ class Main extends eui.UILayer {
     protected createGameScene(): void {
         GameUtils.main = this;
         LayerManager.Ins();
+        PoolManager.Ins();
+        war.WarDataMgr.Ins();
         ViewManager.Ins().open(ViewIdConst.WarPanel);
     }
 

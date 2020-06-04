@@ -29,8 +29,9 @@ class Hash<K, V>
 
 	public remove(key:K)
 	{
+		let item = this.map[key];
 		this.map[key] = null;
-		delete this.map[key];
+		return item;
 	}
 
 	public get(key:K)

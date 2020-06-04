@@ -57,7 +57,7 @@ class AStarTest extends egret.Sprite
         {
             for(let j = 0; j <this._grid.numRows; j++)
             {
-                var node:astar.Node =this._grid.getNode(i, j);
+                var node:astar.NodeItem =this._grid.getNode(i, j);
                 //这里有Bug, 绘制将近150次时， drawRect会出错
                 // this.graphics.lineStyle(0);
                 // this.graphics.beginFill(this.getColor(node));
@@ -77,7 +77,7 @@ class AStarTest extends egret.Sprite
     /**
      * Determines the color of a given node based on its state.
      */
-    private getColor(node:astar.Node)
+    private getColor(node:astar.NodeItem)
     {
         if(!node.walkable) return 0;
         if(node == this._grid.startNode) return 0xcccccc;

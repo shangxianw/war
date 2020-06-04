@@ -33,8 +33,55 @@ var war;
             this.Layer = LayerManager.Ins().War;
         };
         WarPanel.prototype.destroy = function () {
+            this.testGrid.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnGridTap, this);
         };
         WarPanel.prototype.initData = function (info) {
+            this.drawGrid();
+        };
+        WarPanel.prototype.drawGrid = function () {
+            this.gridShape = new egret.Shape();
+            this.gridShape.graphics.lineStyle(1, 0xff0000);
+            var space = 40;
+            var rows = 13;
+            var cols = 20;
+            this.gridShape.x = 100;
+            this.gridShape.y = 240;
+            for (var i = 0, len = rows; i < len; i++) {
+                for (var j = 0, len2 = cols; j < len2; j++) {
+                    this.gridShape.graphics.drawRect(space * i, space * j, space, space);
+                }
+            }
+            this.gridShape.graphics.endFill();
+            this.addChild(this.gridShape);
+            this.testGrid.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnGridTap, this);
+        };
+        WarPanel.prototype.OnGridTap = function (e) {
+            var w = this.testGrid.width;
+            var h = this.testGrid.height;
+            var space = 40;
+            var x = Math.floor(e.localX / space);
+            var y = Math.floor(e.localY / space);
+            if (this.tapShape == null) {
+                this.tapShape = new egret.Shape();
+                this.tapShape.x = 100;
+                this.tapShape.y = 240;
+                this.addChild(this.tapShape);
+            }
+            this.tapShape.graphics.clear();
+            this.tapShape.graphics.beginFill(0xff0000);
+            var path = war.WarDataMgr.Ins().findPath([0, 0], [x, y]);
+            for (var _i = 0, path_1 = path; _i < path_1.length; _i++) {
+                var node = path_1[_i];
+                this.tapShape.graphics.drawRect(space * node.x, space * node.y, space, space);
+            }
+            // console.log(x, y)
+            this.tapShape.graphics.endFill();
+            console.log(path);
+            // 创建英雄
+            var hero = PoolManager.Ins().pop(war.HeroEntity);
+            hero.x = 100 + space * x;
+            hero.y = 240 + space * y;
+            this.addChild(hero);
         };
         return WarPanel;
     }(ViewBase));

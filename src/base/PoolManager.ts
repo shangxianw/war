@@ -3,10 +3,10 @@ class PoolManager // 战斗的对象和主城的对象应该分开
 	private hash:Hash<string, any[]>;
 	public constructor()
 	{
-
+		this.init();
 	}
 
-	public init()
+	protected init()
 	{
 		this.hash = new Hash<string, any[]>();
 	}

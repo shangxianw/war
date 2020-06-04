@@ -142,6 +142,8 @@ var astar;
             enumerable: true,
             configurable: true
         });
+        AStar.prototype.destroy = function () {
+        };
         return AStar;
     }());
     astar.AStar = AStar;

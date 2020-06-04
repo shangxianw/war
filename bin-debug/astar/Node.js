@@ -6,16 +6,18 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
  */
 var astar;
 (function (astar) {
-    var Node = (function () {
-        function Node(x, y) {
+    var NodeItem = (function () {
+        function NodeItem(x, y) {
             this.walkable = true;
             this.costMultiplier = 1.0;
             this.x = x;
             this.y = y;
         }
-        return Node;
+        NodeItem.prototype.destroy = function () {
+        };
+        return NodeItem;
     }());
-    astar.Node = Node;
-    __reflect(Node.prototype, "astar.Node");
+    astar.NodeItem = NodeItem;
+    __reflect(NodeItem.prototype, "astar.NodeItem");
 })(astar || (astar = {}));
 //# sourceMappingURL=Node.js.map

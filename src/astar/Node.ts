@@ -3,7 +3,7 @@
  */
 namespace astar
 {
-    export class Node
+    export class NodeItem
     {
         public x:number;    //列
         public y:number;    //行
@@ -11,13 +11,18 @@ namespace astar
         public g:number;    //起点到当前点代价
         public h:number;    //当前点到终点估计代价
         public walkable:boolean = true;
-        public parent:Node;
+        public parent:NodeItem;
         public costMultiplier:number = 1.0;
     
         public constructor(x:number , y:number)
         {
             this.x = x;
             this.y = y;
+        }
+
+        public destroy()
+        {
+
         }
     }
 }

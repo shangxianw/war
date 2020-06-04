@@ -4,6 +4,7 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var PoolManager // 战斗的对象和主城的对象应该分开
  = (function () {
     function PoolManager() {
+        this.init();
     }
     PoolManager.prototype.init = function () {
         this.hash = new Hash();

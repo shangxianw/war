@@ -18,13 +18,13 @@ var SYSTEM;
     SYSTEM[SYSTEM["MOVE"] = 3] = "MOVE";
     SYSTEM[SYSTEM["CAMERA"] = 4] = "CAMERA";
 })(SYSTEM || (SYSTEM = {}));
-var COMPONENT;
-(function (COMPONENT) {
-    COMPONENT[COMPONENT["POS"] = 1] = "POS";
-    COMPONENT[COMPONENT["SPEED"] = 2] = "SPEED";
-    COMPONENT[COMPONENT["FALL"] = 3] = "FALL";
-    COMPONENT[COMPONENT["RIGID"] = 4] = "RIGID"; // 刚体
-})(COMPONENT || (COMPONENT = {}));
+// enum COMPONENT
+// {
+// 	POS = 1,
+// 	SPEED = 2,
+// 	FALL = 3,
+// 	RIGID = 4 // 刚体
+// }
 var KEY_CODE;
 (function (KEY_CODE) {
     KEY_CODE[KEY_CODE["W"] = 87] = "W";

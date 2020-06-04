@@ -131,7 +131,7 @@ var Main = (function (_super) {
                         return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource/")];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, this.loadTheme()];
+                        return [4 /*yield*/, this.loadResource2()];
                     case 2:
                         _a.sent();
                         return [4 /*yield*/, RES.loadGroup("preload", 0, loadingView)];
@@ -142,6 +142,35 @@ var Main = (function (_super) {
                     case 4:
                         e_1 = _a.sent();
                         console.error(e_1);
+                        return [3 /*break*/, 5];
+                    case 5: return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Main.prototype.loadResource2 = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            var loadingView, e_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 4, , 5]);
+                        loadingView = new LoadingUI();
+                        this.stage.addChild(loadingView);
+                        return [4 /*yield*/, RES.loadConfig("resource/war.res.json", "resource/")];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, this.loadTheme()];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, RES.loadGroup("preload2", 0, loadingView)];
+                    case 3:
+                        _a.sent();
+                        this.stage.removeChild(loadingView);
+                        return [3 /*break*/, 5];
+                    case 4:
+                        e_2 = _a.sent();
+                        console.error(e_2);
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -166,6 +195,8 @@ var Main = (function (_super) {
     Main.prototype.createGameScene = function () {
         GameUtils.main = this;
         LayerManager.Ins();
+        PoolManager.Ins();
+        war.WarDataMgr.Ins();
         ViewManager.Ins().open(ViewIdConst.WarPanel);
     };
     return Main;

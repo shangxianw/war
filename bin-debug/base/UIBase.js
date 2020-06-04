@@ -46,17 +46,6 @@ var UIBase = (function (_super) {
     };
     UIBase.prototype.initData = function () {
     };
-    Object.defineProperty(UIBase.prototype, "data", {
-        get: function () {
-            return this._data;
-        },
-        set: function (value) {
-            this._data = value;
-            this.dataChanged();
-        },
-        enumerable: true,
-        configurable: true
-    });
     UIBase.prototype.dataChanged = function () {
     };
     UIBase.prototype.addAttrListener = function (propName, cbFn, thisObj, param) {

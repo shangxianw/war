@@ -1,7 +1,7 @@
 class CalcPath
 {
 	public grid:astar.Grid;
-	public nodeArray:astar.Node[] = [];
+	public nodeArray:astar.NodeItem[] = [];
 	public allPathMap = {};
 	public constructor()
 	{

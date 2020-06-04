@@ -29,9 +29,10 @@
 		"resource/eui_skins/ToggleSwitchSkin.exml",
 		"resource/eui_skins/VScrollBarSkin.exml",
 		"resource/eui_skins/VSliderSkin.exml",
-		"resource/war/ui/CostBarSkin.exml",
-		"resource/war/ui/Ka1Skin.exml",
-		"resource/war/ui/WarPanelSkin.exml"
+		"resource/war/skin/CostBarSkin.exml",
+		"resource/war/skin/HeroEntitySkin.exml",
+		"resource/war/skin/Ka1Skin.exml",
+		"resource/war/skin/WarPanelSkin.exml"
 	],
 	"path": "resource/default.thm.json"
 }

@@ -8,18 +8,18 @@ namespace astar
         private open:Array<any>;               //待考察表
         private closed:Array<any>;             //已考察表
         private grid:astar.Grid;               //网格
-        private endNode:Node;                  //终点Node
-        private startNode:Node;                //起点Node
+        private endNode:NodeItem;                  //终点Node
+        private startNode:NodeItem;                //起点Node
         private heuristic:Function;            //寻路算法
         private straightCost:number = 1.0;     //上下左右走的代价
         private diagCost:number = Math.SQRT2;  //斜着走的代价 
-        public path:Array<Node>;               //保存路径
+        public path:Array<NodeItem>;               //保存路径
         
         public constructor()
         {    
             this.heuristic = this.diagonal;
         }
-        
+
         // 寻路
         public findPath(grid:Grid):boolean
         {
@@ -40,7 +40,7 @@ namespace astar
         // 查找路径
         public search():boolean
         {
-            var node:Node = this.startNode;
+            var node:NodeItem = this.startNode;
             while(node != this.endNode)
             {
                 var startX = Math.max(0, node.x - 1);
@@ -57,7 +57,7 @@ namespace astar
                         //     continue;
                         // }
 
-                        var test:Node = this.grid.getNode(i, j);
+                        var test:NodeItem = this.grid.getNode(i, j);
                         if(test == node || 
                             !test.walkable ||
                             !this.grid.getNode(node.x, test.y).walkable ||
@@ -115,7 +115,7 @@ namespace astar
                     }
                 }
 
-                node = this.open.shift() as Node;
+                node = this.open.shift() as NodeItem;
             }
             this.buildPath();
             return true;
@@ -125,7 +125,7 @@ namespace astar
         private buildPath():void
         {
             this.path = new Array();
-            var node:Node = this.endNode;
+            var node:NodeItem = this.endNode;
             this.path.push(node);
             while(node != this.startNode)
             {
@@ -135,7 +135,7 @@ namespace astar
         }
         
         // 是否待检查
-        private isOpen(node:Node):boolean
+        private isOpen(node:NodeItem):boolean
         {
             for(var i = 0; i < this.open.length; i++)
             {
@@ -148,7 +148,7 @@ namespace astar
         }
         
         // 是否已检查
-        private isClosed(node:Node):boolean
+        private isClosed(node:NodeItem):boolean
         {
             for(var i = 0; i < this.closed.length; i++)
             {
@@ -161,20 +161,20 @@ namespace astar
         }
         
         // 曼哈顿算法
-        private manhattan(node:Node)
+        private manhattan(node:NodeItem)
         {
             return Math.abs(node.x - this.endNode.x) * this.straightCost + Math.abs(node.y + this.endNode.y) * this.straightCost;
         }
         
 
-        private euclidian(node:Node)
+        private euclidian(node:NodeItem)
         {
             var dx = node.x - this.endNode.x;
             var dy = node.y - this.endNode.y;
             return Math.sqrt(dx * dx + dy * dy) * this.straightCost;
         }
         
-        private diagonal(node:Node)
+        private diagonal(node:NodeItem)
         {
             var dx = Math.abs(node.x - this.endNode.x);
             var dy = Math.abs(node.y - this.endNode.y);
@@ -186,6 +186,11 @@ namespace astar
         public get visited()
         {
             return this.closed.concat(this.open);
+        }
+
+        public destroy()
+        {
+            
         }
     }
 

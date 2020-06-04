@@ -1,9 +1,6 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-/**
- * 网格类
- */
 var astar;
 (function (astar) {
     var Grid = (function () {
@@ -14,7 +11,7 @@ var astar;
             for (var i = 0; i < numCols; i++) {
                 this.nodes[i] = [];
                 for (var j = 0; j < numRows; j++) {
-                    this.nodes[i][j] = new astar.Node(i, j);
+                    this.nodes[i][j] = new astar.NodeItem(i, j);
                 }
             }
         }
@@ -29,6 +26,18 @@ var astar;
         };
         Grid.prototype.setWalkable = function (x, y, value) {
             this.nodes[x][y].walkable = value;
+        };
+        Grid.prototype.destroy = function () {
+            for (var _i = 0, _a = this.nodes; _i < _a.length; _i++) {
+                var nodeArray = _a[_i];
+                for (var _b = 0, nodeArray_1 = nodeArray; _b < nodeArray_1.length; _b++) {
+                    var node = nodeArray_1[_b];
+                    node.destroy();
+                }
+                nodeArray.length = 0;
+            }
+            this.nodes.length = 0;
+            this.nodes = null;
         };
         return Grid;
     }());
