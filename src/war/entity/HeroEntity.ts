@@ -2,7 +2,6 @@ module war
 {
 	export class HeroEntity extends EntityBase
 	{
-		public mc:MovieClip;
 		public constructor()
 		{
 			super();
