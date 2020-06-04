@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "",
+			"keys": "bg_card_di_0_png,bg_card_di_1_png,bg_card_di_2_png,bg_card_di_3_png,bg_jz_lt_jk_wxts_png,icon_sh_d_png,icon_sh_dbg_sh_d0_png,icon_sh_dbg_sh_d1_png,icon_sh_dbg_sh_d11_png,icon_sh_dbg_sh_d2_png,heroicon_10010_png,heroicon_10020_png,heroicon_10030_png",
 			"name": "preload"
 		}
 	],
