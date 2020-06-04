@@ -22,6 +22,12 @@ module war
 				if(entity == null)
 					continue;
 				
+				let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
+				if(sCom == null)
+					continue;
+				
+				entity.x += sCom.speedX;
+				entity.y += sCom.speedY;
 			}
 		}
 	}

@@ -14,13 +14,13 @@ enum SYSTEM
 	CAMERA = 4,
 }
 
-enum COMPONENT
-{
-	POS = 1,
-	SPEED = 2,
-	FALL = 3,
-	RIGID = 4 // 刚体
-}
+// enum COMPONENT
+// {
+// 	POS = 1,
+// 	SPEED = 2,
+// 	FALL = 3,
+// 	RIGID = 4 // 刚体
+// }
 
 enum KEY_CODE
 {
