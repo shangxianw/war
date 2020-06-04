@@ -5,7 +5,6 @@
  */
 abstract class UIBase extends eui.Component
 {
-	private _data:any;
 	public id:number;
 	private _hash:Hash<string ,CBData[]>; // 惰性加载
 	public constructor(skinName:string = null)
@@ -48,17 +47,6 @@ abstract class UIBase extends eui.Component
 	public initData()
 	{
 		
-	}
-
-	public set data(value:any)
-	{
-		this._data = value;
-		this.dataChanged();
-	}
-
-	public get data()
-	{
-		return this._data;
 	}
 
 	public dataChanged()
