@@ -26,6 +26,11 @@ var war;
         EntityBase.prototype.getCom = function (id) {
             return this.comMap.get(id);
         };
+        EntityBase.prototype.setCom = function (com) {
+            if (this.comMap.has(com.componentId) == true)
+                return;
+            this.comMap.set(com.componentId, com);
+        };
         return EntityBase;
     }(UIBase));
     war.EntityBase = EntityBase;

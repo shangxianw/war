@@ -7,7 +7,7 @@ var CalcPath = (function () {
         this.allPathMap = {};
     }
     CalcPath.prototype.calc = function () {
-        this.grid = new astar.Grid(10, 10);
+        this.grid = new astar.Grid(10, 10, 20, 0, 0);
         for (var i = 0, len = this.grid.nodes.length; i < len; i++) {
             for (var j = 0, len2 = this.grid.nodes.length; j < len2; j++) {
                 this.nodeArray.push(this.grid.nodes[i][j]);

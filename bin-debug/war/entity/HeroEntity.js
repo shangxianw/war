@@ -26,7 +26,7 @@ var war;
         HeroEntity.prototype.destroy = function () {
         };
         return HeroEntity;
-    }(UIBase));
+    }(war.EntityBase));
     war.HeroEntity = HeroEntity;
     __reflect(HeroEntity.prototype, "war.HeroEntity");
 })(war || (war = {}));

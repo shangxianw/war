@@ -18,13 +18,24 @@ var war;
         SpeedCom.prototype.init = function () {
             this.speedX = 0;
             this.speedY = 0;
+            this.componentId = war.COMPONENT.SPEED;
         };
         SpeedCom.prototype.destroy = function () {
             this.speedX = 0;
             this.speedY = 0;
         };
+        SpeedCom.prototype.setSpeed = function (x, y) {
+            this.speedX = x;
+            this.speedY = y;
+        };
+        SpeedCom.prototype.setSpeedX = function (x) {
+            this.speedX = x;
+        };
+        SpeedCom.prototype.setSpeedY = function (y) {
+            this.speedY = y;
+        };
         return SpeedCom;
-    }(DataBase));
+    }(war.ComBase));
     war.SpeedCom = SpeedCom;
     __reflect(SpeedCom.prototype, "war.SpeedCom");
 })(war || (war = {}));

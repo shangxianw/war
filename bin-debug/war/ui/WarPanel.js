@@ -31,57 +31,38 @@ var war;
         WarPanel.prototype.init = function () {
             this.PanelId = ViewIdConst.WarPanel;
             this.Layer = LayerManager.Ins().War;
+            this.addEventListener(egret.Event.ENTER_FRAME, this.OnUpdate, this);
         };
         WarPanel.prototype.destroy = function () {
             this.testGrid.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnGridTap, this);
+            this.removeEventListener(egret.Event.ENTER_FRAME, this.OnUpdate, this);
         };
         WarPanel.prototype.initData = function (info) {
-            this.drawGrid();
-        };
-        WarPanel.prototype.drawGrid = function () {
-            this.gridShape = new egret.Shape();
-            this.gridShape.graphics.lineStyle(1, 0xff0000);
-            var space = 40;
-            var rows = 13;
-            var cols = 20;
-            this.gridShape.x = 100;
-            this.gridShape.y = 240;
-            for (var i = 0, len = rows; i < len; i++) {
-                for (var j = 0, len2 = cols; j < len2; j++) {
-                    this.gridShape.graphics.drawRect(space * i, space * j, space, space);
-                }
-            }
-            this.gridShape.graphics.endFill();
-            this.addChild(this.gridShape);
+            war.DrawUtils.DrawGrid(this);
             this.testGrid.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnGridTap, this);
+        };
+        WarPanel.prototype.OnUpdate = function (e) {
+            war.WarDataMgr.Ins().update();
         };
         WarPanel.prototype.OnGridTap = function (e) {
             var w = this.testGrid.width;
             var h = this.testGrid.height;
-            var space = 40;
+            var space = war.WarDataMgr.Ins().grid.space;
             var x = Math.floor(e.localX / space);
             var y = Math.floor(e.localY / space);
-            if (this.tapShape == null) {
-                this.tapShape = new egret.Shape();
-                this.tapShape.x = 100;
-                this.tapShape.y = 240;
-                this.addChild(this.tapShape);
-            }
-            this.tapShape.graphics.clear();
-            this.tapShape.graphics.beginFill(0xff0000);
-            var path = war.WarDataMgr.Ins().findPath([0, 0], [x, y]);
-            for (var _i = 0, path_1 = path; _i < path_1.length; _i++) {
-                var node = path_1[_i];
-                this.tapShape.graphics.drawRect(space * node.x, space * node.y, space, space);
-            }
-            // console.log(x, y)
-            this.tapShape.graphics.endFill();
-            console.log(path);
+            if (this.tapShape != null)
+                this.tapShape.graphics.clear();
+            this.tapShape = war.DrawUtils.DrawPath([x, y], [0, 0], this.tapShape, this);
             // 创建英雄
             var hero = PoolManager.Ins().pop(war.HeroEntity);
-            hero.x = 100 + space * x;
-            hero.y = 240 + space * y;
+            hero.x = war.WarDataMgr.Ins().grid.startX + space * x;
+            hero.y = war.WarDataMgr.Ins().grid.startY + space * y;
+            var sCom = PoolManager.Ins().pop(war.SpeedCom);
+            sCom.setSpeed(0, -0.4);
+            hero.setCom(sCom);
             this.addChild(hero);
+            war.WarDataMgr.Ins().addEntity(hero);
+            war.DrawUtils.DrawHeroAnchor(hero);
         };
         return WarPanel;
     }(ViewBase));

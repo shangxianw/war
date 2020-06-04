@@ -1,6 +1,6 @@
 module war
 {
-	export class HeroEntity extends UIBase
+	export class HeroEntity extends EntityBase
 	{
 		public mc:MovieClip;
 		public constructor()
@@ -20,6 +20,9 @@ module war
 
 		protected destroy()
 		{
+
 		}
+
+		// -------
 	}
 }

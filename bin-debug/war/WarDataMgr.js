@@ -19,10 +19,16 @@ var war;
             this.entityMap = new Hash();
             this.sysArray = [];
             this.initGrid();
+            this.moveSystem = new war.MoveSystem();
+            this.sysArray.push(this.moveSystem);
         };
         WarDataMgr.prototype.destroy = function () {
             DataUtils.DestroyUIBaseMap(this.entityMap);
-            DataUtils.DestroyDataBaseArray(this.sysArray);
+            if (this.moveSystem != null) {
+                this.moveSystem.destroyAll();
+                this.moveSystem = null;
+            }
+            this.sysArray.length = 0;
             this.destroyGrid();
         };
         WarDataMgr.prototype.update = function () {
@@ -33,9 +39,27 @@ var war;
                 sys.update();
             }
         };
+        // ---------------------------------------------------------------------- 实体
+        WarDataMgr.prototype.addEntity = function (entity) {
+            if (this.entityMap.has(entity.id) == true)
+                return false;
+            this.entityMap.set(entity.id, entity);
+        };
+        WarDataMgr.prototype.removeEntity = function (id) {
+            if (this.entityMap.has(id) == false)
+                return null;
+            return this.entityMap.remove(id);
+        };
+        WarDataMgr.prototype.destroyEntity = function (id) {
+            if (this.entityMap.has(id) == false)
+                return false;
+            var entity = this.entityMap.remove(id);
+            entity != null && entity.destroyAll();
+            PoolManager.Ins().push(entity);
+        };
         // ---------------------------------------------------------------------- 寻路
         WarDataMgr.prototype.initGrid = function () {
-            this.grid = new astar.Grid(13, 20);
+            this.grid = new astar.Grid(52, 80, 10, 100, 240);
             this.pathMap = new Hash();
         };
         WarDataMgr.prototype.destroyGrid = function () {

@@ -37,7 +37,7 @@ class AStarTest extends egret.Sprite
      */
     private makeGrid():void
     {
-        this._grid = new astar.Grid(30,30);
+        this._grid = new astar.Grid(30,30, 20, 0, 0);
         for(var i = 0; i < 200; i++)
         {
             this._grid.setWalkable(Math.floor(Math.random() * 30),

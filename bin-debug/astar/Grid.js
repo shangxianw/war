@@ -4,9 +4,12 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var astar;
 (function (astar) {
     var Grid = (function () {
-        function Grid(numCols, numRows) {
+        function Grid(numCols, numRows, space, startX, startY) {
             this.numCols = numCols;
             this.numRows = numRows;
+            this.space = space;
+            this.startX = startX;
+            this.startY = startY;
             this.nodes = [];
             for (var i = 0; i < numCols; i++) {
                 this.nodes[i] = [];

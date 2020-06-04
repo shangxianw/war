@@ -2,8 +2,10 @@ module war
 {
 	export class WarDataMgr extends DataBase
 	{
-		private entityMap:Hash<number, EntityBase>;		
+		public entityMap:Hash<number, EntityBase>;		
+		
 		public sysArray:SystemBase[];
+		public moveSystem:MoveSystem;
 		
 		public grid:astar.Grid;
 		public pathMap:Hash<string, astar.NodeItem[]>;
@@ -13,12 +15,21 @@ module war
 			this.entityMap = new Hash<number, EntityBase>();
 			this.sysArray = [];
 			this.initGrid();
+
+			this.moveSystem = new MoveSystem();
+			this.sysArray.push(this.moveSystem);
 		}
 
 		protected destroy()
 		{
 			DataUtils.DestroyUIBaseMap(this.entityMap);
-			DataUtils.DestroyDataBaseArray(this.sysArray);
+
+			if(this.moveSystem != null)
+			{
+				this.moveSystem.destroyAll();
+				this.moveSystem = null;
+			}
+			this.sysArray.length = 0;
 			this.destroyGrid();
 		}
 
@@ -59,7 +70,7 @@ module war
 		// ---------------------------------------------------------------------- 寻路
 		private initGrid()
 		{
-			this.grid = new astar.Grid(13, 20);
+			this.grid = new astar.Grid(52, 80, 10, 100, 240);
 			this.pathMap = new Hash<string, astar.NodeItem[]>();
 		}
 

@@ -37,7 +37,7 @@ var AStarTest = (function (_super) {
      * Creates a grid with a bunch of random unwalkable nodes.
      */
     AStarTest.prototype.makeGrid = function () {
-        this._grid = new astar.Grid(30, 30);
+        this._grid = new astar.Grid(30, 30, 20, 0, 0);
         for (var i = 0; i < 200; i++) {
             this._grid.setWalkable(Math.floor(Math.random() * 30), Math.floor(Math.random() * 30), false);
         }

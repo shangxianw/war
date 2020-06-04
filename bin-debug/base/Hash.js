@@ -20,8 +20,9 @@ var Hash = (function () {
         this.map[key] = value;
     };
     Hash.prototype.remove = function (key) {
+        var item = this.map[key];
         this.map[key] = null;
-        delete this.map[key];
+        return item;
     };
     Hash.prototype.get = function (key) {
         return this.map[key];

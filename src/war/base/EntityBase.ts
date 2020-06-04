@@ -19,5 +19,12 @@ module war
 		{
 			return this.comMap.get(id);
 		}
+
+		public setCom(com:ComBase)
+		{
+			if(this.comMap.has(com.componentId) == true)
+				return;
+			this.comMap.set(com.componentId, com);
+		}
 	}
 }

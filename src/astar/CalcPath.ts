@@ -10,7 +10,7 @@ class CalcPath
 
 	public calc()
 	{
-		this.grid = new astar.Grid(10,10);
+		this.grid = new astar.Grid(10,10, 20, 0, 0);
 
 		for(let i=0, len=this.grid.nodes.length; i<len; i++)
 		{

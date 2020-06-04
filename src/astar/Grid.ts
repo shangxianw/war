@@ -7,11 +7,18 @@ namespace astar
         public nodes:Array<NodeItem[]>;  //Node数组
         public numCols:number;    //网格行列
         public numRows:number;
+        public space:number;
+        
+        public startX:number;
+        public startY:number;
 
-        public constructor(numCols:number, numRows:number)
+        public constructor(numCols:number, numRows:number, space:number, startX:number, startY:number)
         {
             this.numCols = numCols;
             this.numRows = numRows;
+            this.space = space;
+            this.startX = startX;
+            this.startY = startY;
             this.nodes = [];
 
             for(let i:number=0; i<numCols; i++)
