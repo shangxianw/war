@@ -74,6 +74,14 @@ module war
 			let sCom:SpeedCom = PoolManager.Ins().pop(SpeedCom);
 			sCom.setSpeed(0, -0.4);
 			hero.setCom(sCom);
+			let dirCom:ActionCom = hero.getCom(COMPONENT.ACTION);
+			dirCom.setActionAndDir(ACTION.ATTACK , Math.ceil(Math.random()*8));
+
+			let pathCom:PathCom = PoolManager.Ins().pop(PathCom);
+			let path = WarDataMgr.Ins().findPath([x, y], [0, 0]);
+			pathCom.setPath(path);
+			hero.setCom(pathCom)
+
 			this.addChild(hero);
 			WarDataMgr.Ins().addEntity(hero);
 			DrawUtils.DrawHeroAnchor(hero);

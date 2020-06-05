@@ -6,20 +6,25 @@ module war
 		
 		public sysArray:SystemBase[];
 		public moveSystem:MoveSystem;
+		public actionSystem:ActionSystem;
 		
 		public grid:astar.Grid;
 		public pathMap:Hash<string, astar.NodeItem[]>;
 
-		public lastTime:number;
+		public world:World;
 
 		protected init()
 		{
+			this.world = new World();
 			this.entityMap = new Hash<number, EntityBase>();
 			this.sysArray = [];
 			this.initGrid();
 
 			this.moveSystem = new MoveSystem();
 			this.sysArray.push(this.moveSystem);
+
+			this.actionSystem = new ActionSystem();
+			this.sysArray.push(this.actionSystem);
 		}
 
 		protected destroy()
@@ -30,6 +35,12 @@ module war
 			{
 				this.moveSystem.destroyAll();
 				this.moveSystem = null;
+			}
+
+			if(this.actionSystem != null)
+			{
+				this.actionSystem.destroyAll();
+				this.actionSystem = null;
 			}
 			this.sysArray.length = 0;
 			this.destroyGrid();
@@ -47,18 +58,13 @@ module war
 
 		public update(deltaTime:number = null):boolean
 		{
-			let entity:EntityBase
-			for(let key in this.entityMap.map)
+			try
 			{
-				entity = this.entityMap.get(Number(key));
-				if(entity == null)
-					continue;
-				
-				let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
-				if(sCom != null)
-				{
-					this.moveSystem.update(entity, deltaTime);
-				}
+				this.world.update(deltaTime);
+			}
+			catch(e)
+			{
+
 			}
 			return true;
 		}

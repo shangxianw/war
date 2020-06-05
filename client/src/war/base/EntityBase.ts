@@ -8,7 +8,7 @@ module war
 		{
 			this.comMap = new Hash<number, ComBase>();
 
-			let dirCom:DirectionCom = PoolManager.Ins().pop(DirectionCom);
+			let dirCom:ActionCom = PoolManager.Ins().pop(ActionCom);
 			this.comMap.set(dirCom.componentId, dirCom);
 			super.initAll();
 		}
@@ -31,20 +31,9 @@ module war
 			this.comMap.set(com.componentId, com);
 		}
 
-		public setDir(dir:number)
+		public hasCom(id:number)
 		{
-			if(this.comMap.has(COMPONENT.DIRECTION) == false)
-				return;
-			let dirCom:DirectionCom = this.comMap.get(COMPONENT.DIRECTION);
-			dirCom.setDirection(dir);
-		}
-
-		public getDir()
-		{
-			if(this.comMap.has(COMPONENT.DIRECTION) == false)
-				return null;
-			let dirCom:DirectionCom = this.comMap.get(COMPONENT.DIRECTION);
-			return dirCom.getDirection();
+			return this.comMap.has(id);
 		}
 	}
 }

@@ -16,17 +16,24 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         WarDataMgr.prototype.init = function () {
+            this.world = new war.World();
             this.entityMap = new Hash();
             this.sysArray = [];
             this.initGrid();
             this.moveSystem = new war.MoveSystem();
             this.sysArray.push(this.moveSystem);
+            this.actionSystem = new war.ActionSystem();
+            this.sysArray.push(this.actionSystem);
         };
         WarDataMgr.prototype.destroy = function () {
             DataUtils.DestroyUIBaseMap(this.entityMap);
             if (this.moveSystem != null) {
                 this.moveSystem.destroyAll();
                 this.moveSystem = null;
+            }
+            if (this.actionSystem != null) {
+                this.actionSystem.destroyAll();
+                this.actionSystem = null;
             }
             this.sysArray.length = 0;
             this.destroyGrid();
@@ -39,15 +46,10 @@ var war;
         };
         WarDataMgr.prototype.update = function (deltaTime) {
             if (deltaTime === void 0) { deltaTime = null; }
-            var entity;
-            for (var key in this.entityMap.map) {
-                entity = this.entityMap.get(Number(key));
-                if (entity == null)
-                    continue;
-                var sCom = entity.getCom(war.COMPONENT.SPEED);
-                if (sCom != null) {
-                    this.moveSystem.update(entity, deltaTime);
-                }
+            try {
+                this.world.update(deltaTime);
+            }
+            catch (e) {
             }
             return true;
         };

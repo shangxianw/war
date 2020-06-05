@@ -3,7 +3,21 @@ module war
 	export enum COMPONENT
 	{
 		SPEED = 1,
-		DIRECTION = 2
+		ACTION = 2,
+		PATH = 3
+	}
+
+	export enum SYSTEM
+	{
+		MOVE = 1,
+		ACTION = 2,
+	}
+
+	export enum ACTION
+	{
+		STAND = 1,
+		RUN = 2,
+		ATTACK = 3
 	}
 
 	export enum DIRECTION

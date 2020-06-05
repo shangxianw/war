@@ -16,6 +16,7 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         MoveSystem.prototype.init = function () {
+            this.systemId = war.SYSTEM.MOVE;
         };
         MoveSystem.prototype.destroy = function () {
         };

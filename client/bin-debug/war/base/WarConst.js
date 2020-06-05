@@ -3,8 +3,20 @@ var war;
     var COMPONENT;
     (function (COMPONENT) {
         COMPONENT[COMPONENT["SPEED"] = 1] = "SPEED";
-        COMPONENT[COMPONENT["DIRECTION"] = 2] = "DIRECTION";
+        COMPONENT[COMPONENT["ACTION"] = 2] = "ACTION";
+        COMPONENT[COMPONENT["PATH"] = 3] = "PATH";
     })(COMPONENT = war.COMPONENT || (war.COMPONENT = {}));
+    var SYSTEM;
+    (function (SYSTEM) {
+        SYSTEM[SYSTEM["MOVE"] = 1] = "MOVE";
+        SYSTEM[SYSTEM["ACTION"] = 2] = "ACTION";
+    })(SYSTEM = war.SYSTEM || (war.SYSTEM = {}));
+    var ACTION;
+    (function (ACTION) {
+        ACTION[ACTION["STAND"] = 1] = "STAND";
+        ACTION[ACTION["RUN"] = 2] = "RUN";
+        ACTION[ACTION["ATTACK"] = 3] = "ATTACK";
+    })(ACTION = war.ACTION || (war.ACTION = {}));
     var DIRECTION;
     (function (DIRECTION) {
         DIRECTION[DIRECTION["UP"] = 1] = "UP";
