@@ -17,6 +17,8 @@ var war;
         }
         EntityBase.prototype.initAll = function () {
             this.comMap = new Hash();
+            var dirCom = PoolManager.Ins().pop(war.DirectionCom);
+            this.comMap.set(dirCom.componentId, dirCom);
             _super.prototype.initAll.call(this);
         };
         EntityBase.prototype.destroyAll = function () {
@@ -30,6 +32,18 @@ var war;
             if (this.comMap.has(com.componentId) == true)
                 return;
             this.comMap.set(com.componentId, com);
+        };
+        EntityBase.prototype.setDir = function (dir) {
+            if (this.comMap.has(war.COMPONENT.DIRECTION) == false)
+                return;
+            var dirCom = this.comMap.get(war.COMPONENT.DIRECTION);
+            dirCom.setDirection(dir);
+        };
+        EntityBase.prototype.getDir = function () {
+            if (this.comMap.has(war.COMPONENT.DIRECTION) == false)
+                return null;
+            var dirCom = this.comMap.get(war.COMPONENT.DIRECTION);
+            return dirCom.getDirection();
         };
         return EntityBase;
     }(UIBase));

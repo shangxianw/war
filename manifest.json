@@ -43,6 +43,7 @@
 		"bin-debug/astar/AStar.js",
 		"bin-debug/astar/AStarTest.js",
 		"bin-debug/war/base/WarConst.js",
+		"bin-debug/war/component/DirectionCom.js",
 		"bin-debug/war/component/SpeedCom.js",
 		"bin-debug/war/entity/HeroEntity.js",
 		"bin-debug/war/system/MoveSystem.js",

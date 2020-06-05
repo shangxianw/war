@@ -3,6 +3,18 @@ var war;
     var COMPONENT;
     (function (COMPONENT) {
         COMPONENT[COMPONENT["SPEED"] = 1] = "SPEED";
+        COMPONENT[COMPONENT["DIRECTION"] = 2] = "DIRECTION";
     })(COMPONENT = war.COMPONENT || (war.COMPONENT = {}));
+    var DIRECTION;
+    (function (DIRECTION) {
+        DIRECTION[DIRECTION["UP"] = 1] = "UP";
+        DIRECTION[DIRECTION["RIGHT_UP"] = 2] = "RIGHT_UP";
+        DIRECTION[DIRECTION["RIGHT"] = 3] = "RIGHT";
+        DIRECTION[DIRECTION["RIGHT_DOWN"] = 4] = "RIGHT_DOWN";
+        DIRECTION[DIRECTION["DOWN"] = 5] = "DOWN";
+        DIRECTION[DIRECTION["LEFT_DOWN"] = 6] = "LEFT_DOWN";
+        DIRECTION[DIRECTION["LEFT"] = 7] = "LEFT";
+        DIRECTION[DIRECTION["LEFT_UP"] = 8] = "LEFT_UP";
+    })(DIRECTION = war.DIRECTION || (war.DIRECTION = {}));
 })(war || (war = {}));
 //# sourceMappingURL=WarConst.js.map

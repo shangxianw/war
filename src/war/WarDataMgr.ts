@@ -10,6 +10,8 @@ module war
 		public grid:astar.Grid;
 		public pathMap:Hash<string, astar.NodeItem[]>;
 
+		public lastTime:number;
+
 		protected init()
 		{
 			this.entityMap = new Hash<number, EntityBase>();
@@ -33,7 +35,17 @@ module war
 			this.destroyGrid();
 		}
 
-		public update()
+		public startWar()
+		{
+			egret.startTick(this.update, this);
+		}
+
+		public endWar()
+		{
+			egret.stopTick(this.update, this);
+		}
+
+		public update(delayTime:number):boolean
 		{
 			for(let sys of this.sysArray)
 			{
@@ -41,6 +53,7 @@ module war
 					continue;
 				sys.update();
 			}
+			return true;
 		}
 
 		// ---------------------------------------------------------------------- 实体
