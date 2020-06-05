@@ -37,13 +37,17 @@ var war;
         WarDataMgr.prototype.endWar = function () {
             egret.stopTick(this.update, this);
         };
-        WarDataMgr.prototype.update = function (delayTime) {
-            if (delayTime === void 0) { delayTime = null; }
-            for (var _i = 0, _a = this.sysArray; _i < _a.length; _i++) {
-                var sys = _a[_i];
-                if (sys == null)
+        WarDataMgr.prototype.update = function (deltaTime) {
+            if (deltaTime === void 0) { deltaTime = null; }
+            var entity;
+            for (var key in this.entityMap.map) {
+                entity = this.entityMap.get(Number(key));
+                if (entity == null)
                     continue;
-                sys.update();
+                var sCom = entity.getCom(war.COMPONENT.SPEED);
+                if (sCom != null) {
+                    this.moveSystem.update(entity, deltaTime);
+                }
             }
             return true;
         };

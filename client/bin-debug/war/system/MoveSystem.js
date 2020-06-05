@@ -19,19 +19,10 @@ var war;
         };
         MoveSystem.prototype.destroy = function () {
         };
-        MoveSystem.prototype.update = function () {
-            var entityMap = war.WarDataMgr.Ins().entityMap;
-            var entity;
-            for (var key in entityMap.map) {
-                entity = entityMap.get(Number(key));
-                if (entity == null)
-                    continue;
-                var sCom = entity.getCom(war.COMPONENT.SPEED);
-                if (sCom == null)
-                    continue;
-                entity.x += sCom.speedX;
-                entity.y += sCom.speedY;
-            }
+        MoveSystem.prototype.update = function (entity, deltaTime) {
+            var sCom = entity.getCom(war.COMPONENT.SPEED);
+            entity.x += sCom.speedX;
+            entity.y += sCom.speedY;
         };
         return MoveSystem;
     }(war.SystemBase));

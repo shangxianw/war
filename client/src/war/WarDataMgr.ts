@@ -45,13 +45,20 @@ module war
 			egret.stopTick(this.update, this);
 		}
 
-		public update(delayTime:number = null):boolean
+		public update(deltaTime:number = null):boolean
 		{
-			for(let sys of this.sysArray)
+			let entity:EntityBase
+			for(let key in this.entityMap.map)
 			{
-				if(sys == null)
+				entity = this.entityMap.get(Number(key));
+				if(entity == null)
 					continue;
-				sys.update();
+				
+				let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
+				if(sCom != null)
+				{
+					this.moveSystem.update(entity, deltaTime);
+				}
 			}
 			return true;
 		}

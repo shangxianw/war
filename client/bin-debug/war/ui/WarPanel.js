@@ -32,6 +32,10 @@ var war;
             this.PanelId = ViewIdConst.WarPanel;
             this.Layer = LayerManager.Ins().War;
             this.addEventListener(egret.Event.ENTER_FRAME, this.OnUpdate, this);
+            // WarDataMgr.Ins().startWar();
+            this.addEventListener(egret.Event.ENTER_FRAME, function () {
+                war.WarDataMgr.Ins().update();
+            }, this);
         };
         WarPanel.prototype.destroy = function () {
             this.testGrid.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnGridTap, this);

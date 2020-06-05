@@ -29,6 +29,10 @@ module war
 			this.PanelId = ViewIdConst.WarPanel;
 			this.Layer = LayerManager.Ins().War;
 			this.addEventListener(egret.Event.ENTER_FRAME, this.OnUpdate, this);
+			// WarDataMgr.Ins().startWar();
+			this.addEventListener(egret.Event.ENTER_FRAME, ()=>{
+				WarDataMgr.Ins().update();
+			}, this);
 		}
 
 		protected destroy()
