@@ -45,7 +45,7 @@ module war
 			egret.stopTick(this.update, this);
 		}
 
-		public update(delayTime:number):boolean
+		public update(delayTime:number = null):boolean
 		{
 			for(let sys of this.sysArray)
 			{

@@ -31,13 +31,21 @@ var war;
             this.sysArray.length = 0;
             this.destroyGrid();
         };
-        WarDataMgr.prototype.update = function () {
+        WarDataMgr.prototype.startWar = function () {
+            egret.startTick(this.update, this);
+        };
+        WarDataMgr.prototype.endWar = function () {
+            egret.stopTick(this.update, this);
+        };
+        WarDataMgr.prototype.update = function (delayTime) {
+            if (delayTime === void 0) { delayTime = null; }
             for (var _i = 0, _a = this.sysArray; _i < _a.length; _i++) {
                 var sys = _a[_i];
                 if (sys == null)
                     continue;
                 sys.update();
             }
+            return true;
         };
         // ---------------------------------------------------------------------- 实体
         WarDataMgr.prototype.addEntity = function (entity) {
