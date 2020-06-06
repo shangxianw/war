@@ -10,29 +10,29 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var war;
 (function (war) {
-    var HeroEntity = (function (_super) {
-        __extends(HeroEntity, _super);
-        function HeroEntity() {
+    var QueenEntity = (function (_super) {
+        __extends(QueenEntity, _super);
+        function QueenEntity() {
             return _super.call(this) || this;
         }
-        HeroEntity.prototype.init = function () {
+        QueenEntity.prototype.init = function () {
             this.anchorOffsetX = this.width >> 1;
             this.anchorOffsetY = this.height;
             this.mc = new war.MovieClip();
             this.mc.initData("hero_10010", "hero_10010");
-            this.mc.startPlay("run0", -1);
+            this.mc.startPlay("stand4", -1);
             this.addChild(this.mc);
             var rCom2 = new war.RigidCom();
             rCom2.radius = 20;
             this.setCom(rCom2);
-            war.DrawUtils.DrawGrigd(this);
             war.DrawUtils.DrawHeroAnchor(this);
+            war.DrawUtils.DrawGrigd(this);
         };
-        HeroEntity.prototype.destroy = function () {
+        QueenEntity.prototype.destroy = function () {
         };
-        return HeroEntity;
+        return QueenEntity;
     }(war.EntityBase));
-    war.HeroEntity = HeroEntity;
-    __reflect(HeroEntity.prototype, "war.HeroEntity");
+    war.QueenEntity = QueenEntity;
+    __reflect(QueenEntity.prototype, "war.QueenEntity");
 })(war || (war = {}));
-//# sourceMappingURL=HeroEntity.js.map
+//# sourceMappingURL=QueenEntity.js.map

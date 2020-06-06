@@ -1,6 +1,6 @@
 module war
 {
-	export class HeroEntity extends EntityBase
+	export class QueenEntity extends EntityBase
 	{
 		public constructor()
 		{
@@ -13,14 +13,14 @@ module war
 			this.anchorOffsetY = this.height;
 			this.mc = new MovieClip();
 			this.mc.initData("hero_10010", "hero_10010");
-			this.mc.startPlay("run0", - 1);
+			this.mc.startPlay("stand4", - 1);
 			this.addChild(this.mc);
 
 			let rCom2:RigidCom = new RigidCom();
 			rCom2.radius = 20;
 			this.setCom(rCom2);
-			DrawUtils.DrawGrigd(this);
 			DrawUtils.DrawHeroAnchor(this);
+			DrawUtils.DrawGrigd(this);
 		}
 
 		protected destroy()

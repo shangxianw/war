@@ -32,9 +32,11 @@ var war;
                 entity = warData.entityMap.get(Number(idStr));
                 if (entity == null)
                     continue;
-                var sCom = entity.getCom(war.COMPONENT.SPEED);
+                var sCom = entity.getCom(war.COMPONENT.SPEED); // 连速度都没有，就不用移动了(除非闪现？到后面再说吧，反正刷新实体位置的操作就在这了)
                 if (sCom == null)
                     continue;
+                // 当有路径组件时，就判断当前位置与当前路径阶段的关系。
+                // 当实体到达阶段时，不进行下一步操作。(其实放这里也可以做)
                 var pCom = entity.getCom(war.COMPONENT.PATH);
                 if (pCom != null) {
                     var currTar = pCom.getCurr();

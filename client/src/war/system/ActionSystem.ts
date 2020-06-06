@@ -27,123 +27,34 @@ module war
 				if(entity == null)
 					continue;
 				
-				// 当有路径时，就执行跑的动作
+				// 当有路径又有速度时，就执行跑的动作
 				let pCom:PathCom = entity.getCom(COMPONENT.PATH);
-				if(pCom != null)
+				let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
+				if(pCom != null && sCom != null)
 				{
-					let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
-					if(sCom != null)
+					let currTar:astar.NodeItem = pCom.getCurr();
+					let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
+					if(currTar != null)
 					{
-						let currTar:astar.NodeItem = pCom.getCurr();
-						if(currTar != null)
-						{
-							let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
-							let localX = warData.grid.startX + warData.grid.space * currTar.x;
-							let localY = warData.grid.startY + warData.grid.space * currTar.y;
-							if(entity.x == localX && entity.y == localY)
-								pCom.toNext();
-							else if(entity.x < localX && entity.y == localY) 
-							{
-								aCom.setDir(DIRECTION.RIGHT);
-								this.setRun(entity, DIRECTION.RIGHT);
-							}
-							else if(entity.x > localX && entity.y == localY)
-							{
-								aCom.setDir(DIRECTION.LEFT);
-								this.setRun(entity, DIRECTION.LEFT);
-							}
-							else if(entity.x == localX && entity.y < localY)
-							{
-								aCom.setDir(DIRECTION.DOWN);
-								this.setRun(entity, DIRECTION.DOWN);
-							}
-							else if(entity.x == localX && entity.y > localY)
-							{
-								aCom.setDir(DIRECTION.UP);
-								this.setRun(entity, DIRECTION.UP);
-							}
-							else if(entity.x < localX && entity.y < localY)
-							{
-								aCom.setDir(DIRECTION.DOWN);
-								this.setRun(entity, DIRECTION.RIGHT_DOWN);
-							}
-							else if(entity.x < localX && entity.y > localY)
-							{
-								aCom.setDir(DIRECTION.UP);
-								this.setRun(entity, DIRECTION.RIGHT_UP);
-							}
-							else if(entity.x > localX && entity.y < localY)
-							{
-								aCom.setDir(DIRECTION.DOWN);
-								this.setRun(entity, DIRECTION.LEFT_DOWN);
-							}
-							else if(entity.x > localX && entity.y > localY)
-							{
-								aCom.setDir(DIRECTION.UP);
-								this.setRun(entity, DIRECTION.LEFT_UP);
-							}
-						}
-						else
-						{
-							this.setStand(entity, 3);
-							entity.removeCom(COMPONENT.PATH);
-							entity.removeCom(COMPONENT.SPEED);
-						}
+						let localX = warData.grid.startX + warData.grid.space * currTar.x;
+						let localY = warData.grid.startY + warData.grid.space * currTar.y;
+						this.setRun(entity, aCom.getDir(), localX, localY);
 					}
 					else
 					{
-
+						entity.removeCom(COMPONENT.PATH);
+						entity.removeCom(COMPONENT.SPEED);
+						aCom.setAction(ACTION.STAND);
 					}
 				}
 				else
 				{
-
+					let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
+					if(aCom.getAction() == ACTION.STAND)
+					{
+						this.setStand(entity, aCom.getDir());
+					}
 				}
-			}
-		}
-
-		private setAttack(entity:EntityBase, dir:number)
-		{
-			if(dir == DIRECTION.UP)
-			{
-				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`attack0`, -1);
-			}
-			else if(dir == DIRECTION.RIGHT_UP)
-			{
-				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`attack1`, -1);
-			}
-			else if(dir == DIRECTION.RIGHT)
-			{
-				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`attack2`, -1);
-			}
-			else if(dir == DIRECTION.RIGHT_DOWN)
-			{
-				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`attack3`, -1);
-			}
-			else if(dir == DIRECTION.DOWN)
-			{
-				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`attack4`, -1);
-			}
-
-			else if(dir == DIRECTION.LEFT_DOWN)
-			{
-				entity.mc.scaleX = -1;
-				entity.mc.startPlay(`attack3`, -1);
-			}
-			else if(dir == DIRECTION.LEFT)
-			{
-				entity.mc.scaleX = -1;
-				entity.mc.startPlay(`attack2`, -1);
-			}
-			else if(dir == DIRECTION.LEFT_UP)
-			{
-				entity.mc.scaleX = -1;
-				entity.mc.startPlay(`attack1`, -1);
 			}
 		}
 
@@ -192,48 +103,105 @@ module war
 			}
 		}
 
-		private setRun(entity:EntityBase, dir:number)
+		private setRun(entity:EntityBase, dir:number, localX:number, localY)
+		{
+			let pCom:PathCom = entity.getCom(COMPONENT.PATH);
+			let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
+			let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
+			if(entity.x == localX && entity.y == localY)
+				pCom.toNext();
+			else if(entity.x < localX && entity.y == localY) 
+			{
+				aCom.setDir(DIRECTION.RIGHT);
+				entity.mc.scaleX = 1;
+				entity.mc.startPlay(`run3`, -1);
+			}
+			else if(entity.x > localX && entity.y == localY)
+			{
+				aCom.setDir(DIRECTION.LEFT);
+				entity.mc.scaleX = -1;
+				entity.mc.startPlay(`run3`, -1);
+			}
+			else if(entity.x == localX && entity.y < localY)
+			{
+				aCom.setDir(DIRECTION.DOWN);
+				entity.mc.scaleX = 1;
+				entity.mc.startPlay(`run5`, -1);
+			}
+			else if(entity.x == localX && entity.y > localY)
+			{
+				aCom.setDir(DIRECTION.UP);
+				entity.mc.scaleX = 1;
+				entity.mc.startPlay(`run0`, -1);
+			}
+			else if(entity.x < localX && entity.y < localY)
+			{
+				aCom.setDir(DIRECTION.DOWN);
+				entity.mc.scaleX = 1;
+				entity.mc.startPlay(`run4`, -1);
+			}
+			else if(entity.x < localX && entity.y > localY)
+			{
+				aCom.setDir(DIRECTION.UP);
+				entity.mc.scaleX = 1;
+				entity.mc.startPlay(`run2`, -1);
+			}
+			else if(entity.x > localX && entity.y < localY)
+			{
+				aCom.setDir(DIRECTION.DOWN);
+				entity.mc.scaleX = -1;
+				entity.mc.startPlay(`run4`, -1);
+			}
+			else if(entity.x > localX && entity.y > localY)
+			{
+				aCom.setDir(DIRECTION.UP);
+				entity.mc.scaleX = -1;
+				entity.mc.startPlay(`run2`, -1);
+			}
+		}
+
+		private setAttack(entity:EntityBase, dir:number)
 		{
 			if(dir == DIRECTION.UP)
 			{
 				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`run0`, -1);
+				entity.mc.startPlay(`attack0`, -1);
 			}
 			else if(dir == DIRECTION.RIGHT_UP)
 			{
 				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`run1`, -1);
+				entity.mc.startPlay(`attack1`, -1);
 			}
 			else if(dir == DIRECTION.RIGHT)
 			{
 				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`run2`, -1);
+				entity.mc.startPlay(`attack2`, -1);
 			}
 			else if(dir == DIRECTION.RIGHT_DOWN)
 			{
 				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`run3`, -1);
+				entity.mc.startPlay(`attack3`, -1);
 			}
 			else if(dir == DIRECTION.DOWN)
 			{
 				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`run4`, -1);
+				entity.mc.startPlay(`attack4`, -1);
 			}
 
 			else if(dir == DIRECTION.LEFT_DOWN)
 			{
 				entity.mc.scaleX = -1;
-				entity.mc.startPlay(`run3`, -1);
+				entity.mc.startPlay(`attack3`, -1);
 			}
 			else if(dir == DIRECTION.LEFT)
 			{
 				entity.mc.scaleX = -1;
-				entity.mc.startPlay(`run2`, -1);
+				entity.mc.startPlay(`attack2`, -1);
 			}
 			else if(dir == DIRECTION.LEFT_UP)
 			{
 				entity.mc.scaleX = -1;
-				entity.mc.startPlay(`run1`, -1);
+				entity.mc.startPlay(`attack1`, -1);
 			}
 		}
 	}

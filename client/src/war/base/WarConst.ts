@@ -4,7 +4,8 @@ module war
 	{
 		SPEED = 1,
 		ACTION = 2,
-		PATH = 3
+		PATH = 3,
+		GRIGD = 4
 	}
 
 	export enum SYSTEM

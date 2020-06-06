@@ -5,6 +5,7 @@ var war;
         COMPONENT[COMPONENT["SPEED"] = 1] = "SPEED";
         COMPONENT[COMPONENT["ACTION"] = 2] = "ACTION";
         COMPONENT[COMPONENT["PATH"] = 3] = "PATH";
+        COMPONENT[COMPONENT["GRIGD"] = 4] = "GRIGD";
     })(COMPONENT = war.COMPONENT || (war.COMPONENT = {}));
     var SYSTEM;
     (function (SYSTEM) {

@@ -83,7 +83,18 @@ var war;
             lb.y = -50;
             hero.addChild(lb);
         };
-        DrawUtils.isTest = false;
+        DrawUtils.DrawGrigd = function (entity) {
+            if (entity.hasCom(war.COMPONENT.GRIGD) == false)
+                return;
+            var rCom = entity.getCom(war.COMPONENT.GRIGD);
+            var shape = new egret.Shape();
+            shape.graphics.beginFill(0xffff00);
+            shape.graphics.lineStyle(1, 0x000000);
+            shape.graphics.drawCircle(0, 0, rCom.radius);
+            shape.graphics.endFill();
+            entity.addChildAt(shape, 0);
+        };
+        DrawUtils.isTest = true;
         DrawUtils.pathMap = new Hash();
         return DrawUtils;
     }());

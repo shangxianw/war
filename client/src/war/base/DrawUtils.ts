@@ -2,7 +2,7 @@ module war
 {
 	export class DrawUtils
 	{
-		public static isTest:boolean = false;
+		public static isTest:boolean = true;
 		public static Destroy()
 		{
 			for(let key in this.pathMap.map)
@@ -14,7 +14,7 @@ module war
 			this.pathMap.destroy();
 		}
 
-		public static DrawGrid(group:eui.Component)
+		public static DrawGrid(group:eui.Group)
 		{
 			if(DrawUtils.isTest == false)
 				return;
@@ -38,7 +38,7 @@ module war
 		}
 
 		public static pathMap:Hash<number, egret.Shape> = new Hash<number, egret.Shape>();
-		public static DrawPath(entity:EntityBase, group:eui.Component = null)
+		public static DrawPath(entity:EntityBase, group:eui.Group = null)
 		{
 			if(DrawUtils.isTest == false)
 				return;
@@ -99,6 +99,19 @@ module war
 			lb.x = hero.width >>1;
 			lb.y = -50;
 			hero.addChild(lb);
+		}
+
+		public static DrawGrigd(entity:EntityBase)
+		{
+			if(entity.hasCom(COMPONENT.GRIGD) == false)
+				return;
+			let rCom:RigidCom = entity.getCom(COMPONENT.GRIGD);
+			let shape = new egret.Shape();
+			shape.graphics.beginFill(0xffff00);
+			shape.graphics.lineStyle(1, 0x000000);
+			shape.graphics.drawCircle(0, 0, rCom.radius);
+			shape.graphics.endFill();
+			entity.addChildAt(shape, 0);
 		}
 	}
 }
