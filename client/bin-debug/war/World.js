@@ -19,22 +19,37 @@ var war;
         };
         World.prototype.destroy = function () {
         };
+        World.prototype.updateSystem = function (deltaTime) {
+            var warData = war.WarDataMgr.Ins();
+            for (var _i = 0, _a = warData.sysArray; _i < _a.length; _i++) {
+                var system = _a[_i];
+                system.update(deltaTime);
+            }
+        };
         World.prototype.update = function (deltaTime) {
             var warData = war.WarDataMgr.Ins();
-            var entity;
-            for (var key in warData.entityMap.map) {
-                entity = warData.entityMap.get(Number(key));
-                if (entity == null)
-                    continue;
-                // 动作
-                if (entity.hasCom(war.COMPONENT.ACTION) == true) {
-                    warData.actionSystem.update(entity, deltaTime);
-                }
-                // 移动
-                if (entity.hasCom(war.COMPONENT.SPEED) == true) {
-                    warData.moveSystem.update(entity, deltaTime);
-                }
+            for (var _i = 0, _a = warData.sysArray; _i < _a.length; _i++) {
+                var system = _a[_i];
+                system.update(deltaTime);
             }
+            // let warData = WarDataMgr.Ins();
+            // let entity:EntityBase;
+            // for(let key in warData.entityMap.map)
+            // {
+            // 	entity = warData.entityMap.get(Number(key));
+            // 	if(entity == null)
+            // 		continue;
+            // 	// 动作
+            // 	if(entity.hasCom(COMPONENT.ACTION) == true)
+            // 	{
+            // 		warData.actionSystem.update(entity, deltaTime);
+            // 	}
+            // 	// 移动
+            // 	if(entity.hasCom(COMPONENT.SPEED) == true)
+            // 	{
+            // 		warData.moveSystem.update(entity, deltaTime);
+            // 	}
+            // }
         };
         return World;
     }(DataBase));

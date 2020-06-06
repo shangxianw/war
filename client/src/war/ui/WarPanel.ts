@@ -53,38 +53,38 @@ module war
 		}
 
 		// ---------------------------------------------------------------------- test
-		
-		private tapShape:egret.Shape;
 		private OnGridTap(e:egret.TouchEvent)
 		{
 			let w = this.testGrid.width;
 			let h = this.testGrid.height;
 			let space = WarDataMgr.Ins().grid.space;
+			let endX = Math.floor(Math.random() * WarDataMgr.Ins().grid.numCols);
+			let endY = Math.floor(Math.random() * WarDataMgr.Ins().grid.numRows);
 			
 			let x = Math.floor(e.localX / space);
 			let y = Math.floor(e.localY / space);
-			if(this.tapShape != null)
-				this.tapShape.graphics.clear();
-			this.tapShape = DrawUtils.DrawPath([x, y], [0,0], this.tapShape, this);
+			
 			
 			// 创建英雄
 			let hero:HeroEntity = PoolManager.Ins().pop(HeroEntity);
-			hero.x = WarDataMgr.Ins().grid.startX + space*x;
-			hero.y = WarDataMgr.Ins().grid.startY + space*y;
+			hero.x = WarDataMgr.Ins().grid.startX + space*x; // e.stageX//
+			hero.y = WarDataMgr.Ins().grid.startY + space*y; // e.stageY;
 			let sCom:SpeedCom = PoolManager.Ins().pop(SpeedCom);
-			sCom.setSpeed(0, -0.4);
+			sCom.speed = 0.8;
 			hero.setCom(sCom);
 			let dirCom:ActionCom = hero.getCom(COMPONENT.ACTION);
-			dirCom.setActionAndDir(ACTION.ATTACK , Math.ceil(Math.random()*8));
+			dirCom.setActionAndDir(ACTION.RUN , Math.ceil(Math.random()*8));
 
 			let pathCom:PathCom = PoolManager.Ins().pop(PathCom);
-			let path = WarDataMgr.Ins().findPath([x, y], [0, 0]);
+			let path = WarDataMgr.Ins().findPath([x, y], [endX, endY]);
 			pathCom.setPath(path);
 			hero.setCom(pathCom)
 
 			this.addChild(hero);
 			WarDataMgr.Ins().addEntity(hero);
 			DrawUtils.DrawHeroAnchor(hero);
+			DrawUtils.DrawHeroId(hero);
+			DrawUtils.DrawPath(hero, this);
 		}
 	}
 }

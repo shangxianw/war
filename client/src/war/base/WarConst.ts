@@ -22,6 +22,7 @@ module war
 
 	export enum DIRECTION
 	{
+		NONE = 0,
 		UP = 1,
 		RIGHT_UP = 2,
 		RIGHT = 3,

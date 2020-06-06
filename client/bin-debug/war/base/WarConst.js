@@ -19,6 +19,7 @@ var war;
     })(ACTION = war.ACTION || (war.ACTION = {}));
     var DIRECTION;
     (function (DIRECTION) {
+        DIRECTION[DIRECTION["NONE"] = 0] = "NONE";
         DIRECTION[DIRECTION["UP"] = 1] = "UP";
         DIRECTION[DIRECTION["RIGHT_UP"] = 2] = "RIGHT_UP";
         DIRECTION[DIRECTION["RIGHT"] = 3] = "RIGHT";

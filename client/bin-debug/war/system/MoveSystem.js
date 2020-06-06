@@ -10,6 +10,11 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var war;
 (function (war) {
+    /**
+     * 移动系统
+     * 同时拥有位置和速度，便认为该实体可以移动
+     * 负责刷新实体的位置
+     */
     var MoveSystem = (function (_super) {
         __extends(MoveSystem, _super);
         function MoveSystem() {
@@ -20,10 +25,37 @@ var war;
         };
         MoveSystem.prototype.destroy = function () {
         };
-        MoveSystem.prototype.update = function (entity, deltaTime) {
-            var sCom = entity.getCom(war.COMPONENT.SPEED);
-            entity.x += sCom.speedX;
-            entity.y += sCom.speedY;
+        MoveSystem.prototype.update = function (deltaTime) {
+            var entity;
+            var warData = war.WarDataMgr.Ins();
+            for (var idStr in warData.entityMap.map) {
+                entity = warData.entityMap.get(Number(idStr));
+                if (entity == null)
+                    continue;
+                var sCom = entity.getCom(war.COMPONENT.SPEED);
+                if (sCom == null)
+                    continue;
+                var pCom = entity.getCom(war.COMPONENT.PATH);
+                if (pCom != null) {
+                    var currTar = pCom.getCurr();
+                    if (currTar != null) {
+                        var localX = warData.grid.startX + warData.grid.space * currTar.x;
+                        var localY = warData.grid.startY + warData.grid.space * currTar.y;
+                        var speedXY = MathUtils.CalcSpeedXY(sCom.speed, entity.x, entity.y, localX, localY);
+                        var speedX = speedXY[0], speedY = speedXY[1];
+                        entity.x = Number((entity.x + speedX).toFixed(2));
+                        entity.y = Number((entity.y + speedY).toFixed(2));
+                        if ((speedX < 0 && entity.x < localX) ||
+                            (speedX > 0 && entity.x > localX) ||
+                            (speedY < 0 && entity.y < localY) ||
+                            (speedY > 0 && entity.y > localY)) {
+                            entity.x = localX;
+                            entity.y = localY;
+                        }
+                        war.DrawUtils.DrawPath(entity);
+                    }
+                }
+            }
         };
         return MoveSystem;
     }(war.SystemBase));

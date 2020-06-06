@@ -4,6 +4,15 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var DataUtils = (function () {
     function DataUtils() {
     }
+    // 复制
+    DataUtils.CopyArray = function (oriArray) {
+        var copyArray = [];
+        for (var _i = 0, oriArray_1 = oriArray; _i < oriArray_1.length; _i++) {
+            var item = oriArray_1[_i];
+            copyArray.push(item);
+        }
+        return copyArray;
+    };
     // 销毁以 DataBase 为父类的哈希对象
     DataUtils.DestroyDataBaseMap = function (map, setNull) {
         if (setNull === void 0) { setNull = true; }

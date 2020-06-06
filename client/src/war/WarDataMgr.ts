@@ -20,11 +20,12 @@ module war
 			this.sysArray = [];
 			this.initGrid();
 
+			this.actionSystem = new ActionSystem();
+			this.sysArray.push(this.actionSystem);
+
 			this.moveSystem = new MoveSystem();
 			this.sysArray.push(this.moveSystem);
 
-			this.actionSystem = new ActionSystem();
-			this.sysArray.push(this.actionSystem);
 		}
 
 		protected destroy()
@@ -96,7 +97,9 @@ module war
 		// ---------------------------------------------------------------------- 寻路
 		private initGrid()
 		{
-			this.grid = new astar.Grid(52, 80, 10, 100, 240);
+			this.grid = new astar.Grid(52, 80, 10, 100, 240); // 520, 800
+			// this.grid = new astar.Grid(26, 40, 20, 100, 240); // 520, 800
+			// this.grid = new astar.Grid(13, 20, 40, 100, 240); // 520, 800
 			this.pathMap = new Hash<string, astar.NodeItem[]>();
 		}
 
@@ -131,7 +134,11 @@ module war
 			// 如果存在缓存，则在缓存中查找
 			let key = `${start[0]}_${start[1]}_${end[0]}_${end[1]}`;
 			if(this.pathMap.has(key) == true)
-				return this.pathMap.get(key);
+			{
+				let path = this.pathMap.get(key);
+				return DataUtils.CopyArray(path); // 如果直接返回的话，会因为引用同一段路径而使其他实体产生问题。
+				// return path;
+			}
 			
 			this.grid.setStartNode(start[0], start[1]);
 			this.grid.setEndNode(end[0], end[1]);
@@ -142,7 +149,7 @@ module war
 				this.pathMap.set(key, star.path)
 				star.destroy();
 				PoolManager.Ins().push(star);
-				return star.path;
+				return DataUtils.CopyArray(star.path);
 			}
 			PoolManager.Ins().push(star);
 			return [];

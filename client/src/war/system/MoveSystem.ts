@@ -1,5 +1,10 @@
 module war
 {
+	/**
+	 * 移动系统
+	 * 同时拥有位置和速度，便认为该实体可以移动
+	 * 负责刷新实体的位置
+	 */
 	export class MoveSystem extends SystemBase
 	{
 		protected init()
@@ -12,66 +17,52 @@ module war
 
 		}
 
-		public update(entity:EntityBase, deltaTime:number)
+		public update(deltaTime:number)
 		{
-			let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
-			let pCom:PathCom = entity.getCom(COMPONENT.PATH);
-			if(pCom != null)
+			let entity:EntityBase;
+			let warData = WarDataMgr.Ins();
+			for(let idStr in warData.entityMap.map)
 			{
-				let path:astar.NodeItem[] = pCom.getPath();
-				let tarNode:astar.NodeItem = path[0];
-				if(tarNode == null)
-					return;
-				let space = WarDataMgr.Ins().grid.space;
-				let localX = WarDataMgr.Ins().grid.startX + tarNode.x * space;
-				let localY = WarDataMgr.Ins().grid.startY + tarNode.y * space;
-				
-				let isXOK = false;
-				let isYOK = false;
-				if(sCom.speedX < 0) // 从右往左
-				{
-					if(entity.x <= localX) //到达目标
-					{
-						isXOK = true;
-					}
-					else
-					{
-						sCom.speedX = Math.abs()
-					}
-				}
-				else if(sCom.speedX > 0)
-				{
-					if(entity.x >= localX)
-					{
-						isXOK = true;
-					}
-				}
-				
-				if(sCom.speedY < 0)
-				{
-					if(entity.y <= localY)
-					{
-						isYOK = true;
-					}
-				}
-				else if(sCom.speedY > 0)
-				{
-					if(entity.y >= localY)
-					{
-						isYOK = true;
-					}
-				}
+				entity = warData.entityMap.get(Number(idStr));
+				if(entity == null)
+					continue;
 
-				if(isYOK == true && isXOK == true)
+				let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED); // 连速度都没有，就不用移动了(除非闪现？到后面再说吧，反正刷新实体位置的操作就在这了)
+				if(sCom == null)
+					continue;
+				
+				// 当有路径组件时，就判断当前位置与当前路径阶段的关系。
+				// 当实体到达阶段时，不进行下一步操作。(其实放这里也可以做)
+				let pCom:PathCom = entity.getCom(COMPONENT.PATH);
+				if(pCom != null)
 				{
-					let item = path.pop();
-					item.destroy();
-					PoolManager.Ins().push(item);
+					let currTar:astar.NodeItem = pCom.getCurr();
+					if(currTar != null)
+					{
+						let localX = warData.grid.startX + warData.grid.space * currTar.x;
+						let localY = warData.grid.startY + warData.grid.space * currTar.y;
+
+						let speedXY = MathUtils.CalcSpeedXY(sCom.speed, entity.x, entity.y, localX, localY);
+						let speedX = speedXY[0],
+							speedY = speedXY[1];
+						entity.x = Number((entity.x + speedX).toFixed(2));
+						entity.y = Number((entity.y + speedY).toFixed(2));
+
+						if(
+							(speedX < 0 && entity.x < localX) ||
+							(speedX > 0 && entity.x > localX) ||
+							(speedY < 0 && entity.y < localY) ||
+							(speedY > 0 && entity.y > localY)
+						)
+						{
+							entity.x = localX;
+							entity.y = localY;
+						}
+
+						DrawUtils.DrawPath(entity);
+					}
 				}
 			}
-
-			entity.x += sCom.speedX;
-			entity.y += sCom.speedY;
 		}
 	}
 }

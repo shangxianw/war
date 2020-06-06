@@ -18,6 +18,7 @@ var war;
         PathCom.prototype.init = function () {
             this.componentId = war.COMPONENT.PATH;
             this.path = [];
+            this.currStep = -1;
         };
         PathCom.prototype.destroy = function () {
             this.destroyPath();
@@ -26,9 +27,22 @@ var war;
         PathCom.prototype.setPath = function (path) {
             this.destroyPath();
             this.path = path;
+            this.currStep = 0;
         };
-        PathCom.prototype.getDirection = function () {
+        PathCom.prototype.getPath = function () {
             return this.path;
+        };
+        PathCom.prototype.getLeftPath = function () {
+            return this.path.slice(Math.max(this.currStep - 1, 0));
+        };
+        PathCom.prototype.getCurr = function () {
+            return this.path[this.currStep];
+        };
+        PathCom.prototype.getEnd = function () {
+            return this.path[this.path.length - 1];
+        };
+        PathCom.prototype.toNext = function () {
+            this.currStep++;
         };
         PathCom.prototype.destroyPath = function () {
             for (var _i = 0, _a = this.path; _i < _a.length; _i++) {

@@ -1,5 +1,16 @@
 class DataUtils
 {
+	// 复制
+	public static CopyArray(oriArray:any[])
+	{
+		let copyArray:any[] = [];
+		for(let item of oriArray)
+		{
+			copyArray.push(item);
+		}
+		return copyArray;
+	}
+
 	// 销毁以 DataBase 为父类的哈希对象
 	public static DestroyDataBaseMap(map:Hash<any, DataBase>, setNull:boolean = true)
 	{

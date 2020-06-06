@@ -48,31 +48,33 @@ var war;
         WarPanel.prototype.OnUpdate = function (e) {
             war.WarDataMgr.Ins().update();
         };
+        // ---------------------------------------------------------------------- test
         WarPanel.prototype.OnGridTap = function (e) {
             var w = this.testGrid.width;
             var h = this.testGrid.height;
             var space = war.WarDataMgr.Ins().grid.space;
+            var endX = Math.floor(Math.random() * war.WarDataMgr.Ins().grid.numCols);
+            var endY = Math.floor(Math.random() * war.WarDataMgr.Ins().grid.numRows);
             var x = Math.floor(e.localX / space);
             var y = Math.floor(e.localY / space);
-            if (this.tapShape != null)
-                this.tapShape.graphics.clear();
-            this.tapShape = war.DrawUtils.DrawPath([x, y], [0, 0], this.tapShape, this);
             // 创建英雄
             var hero = PoolManager.Ins().pop(war.HeroEntity);
-            hero.x = war.WarDataMgr.Ins().grid.startX + space * x;
-            hero.y = war.WarDataMgr.Ins().grid.startY + space * y;
+            hero.x = war.WarDataMgr.Ins().grid.startX + space * x; // e.stageX//
+            hero.y = war.WarDataMgr.Ins().grid.startY + space * y; // e.stageY;
             var sCom = PoolManager.Ins().pop(war.SpeedCom);
-            sCom.setSpeed(0, -0.4);
+            sCom.speed = 0.8;
             hero.setCom(sCom);
             var dirCom = hero.getCom(war.COMPONENT.ACTION);
-            dirCom.setActionAndDir(war.ACTION.ATTACK, Math.ceil(Math.random() * 8));
+            dirCom.setActionAndDir(war.ACTION.RUN, Math.ceil(Math.random() * 8));
             var pathCom = PoolManager.Ins().pop(war.PathCom);
-            var path = war.WarDataMgr.Ins().findPath([x, y], [0, 0]);
+            var path = war.WarDataMgr.Ins().findPath([x, y], [endX, endY]);
             pathCom.setPath(path);
             hero.setCom(pathCom);
             this.addChild(hero);
             war.WarDataMgr.Ins().addEntity(hero);
             war.DrawUtils.DrawHeroAnchor(hero);
+            war.DrawUtils.DrawHeroId(hero);
+            war.DrawUtils.DrawPath(hero, this);
         };
         return WarPanel;
     }(ViewBase));

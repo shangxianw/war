@@ -32,6 +32,30 @@ var war;
             this.action = action;
             this.hasChanged = true;
         };
+        ActionCom.prototype.setDirByXY = function (x, y) {
+            var oldDir = this.direction;
+            if (x == war.DIRECTION.NONE && y == war.DIRECTION.NONE)
+                return;
+            else if (x == war.DIRECTION.RIGHT && y == war.DIRECTION.NONE)
+                this.direction = war.DIRECTION.RIGHT;
+            else if (x == war.DIRECTION.LEFT && y == war.DIRECTION.NONE)
+                this.direction = war.DIRECTION.LEFT;
+            else if (x == war.DIRECTION.NONE && y == war.DIRECTION.UP)
+                this.direction = war.DIRECTION.UP;
+            else if (x == war.DIRECTION.NONE && y == war.DIRECTION.DOWN)
+                this.direction = war.DIRECTION.DOWN;
+            else if (x == war.DIRECTION.LEFT && y == war.DIRECTION.UP)
+                this.direction = war.DIRECTION.LEFT_UP;
+            else if (x == war.DIRECTION.LEFT && y == war.DIRECTION.DOWN)
+                this.direction = war.DIRECTION.LEFT_DOWN;
+            else if (x == war.DIRECTION.RIGHT && y == war.DIRECTION.UP)
+                this.direction = war.DIRECTION.RIGHT_UP;
+            else if (x == war.DIRECTION.RIGHT && y == war.DIRECTION.DOWN)
+                this.direction = war.DIRECTION.DOWN;
+            if (oldDir == this.direction)
+                return;
+            this.hasChanged = true;
+        };
         ActionCom.prototype.setDir = function (dir) {
             this.direction = dir;
             this.hasChanged = true;

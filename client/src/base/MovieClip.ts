@@ -2,6 +2,7 @@ module war
 {
 	export class MovieClip extends egret.MovieClip
 	{
+		public currAction:string;
 		public constructor()
 		{
 			super();
@@ -17,7 +18,11 @@ module war
 
 		public startPlay(action:string, count:number)
 		{
-			this.gotoAndPlay(action, count);
+			if(this.currAction != action)
+			{
+				this.currAction = action;
+				this.gotoAndPlay(action, count);
+			}
 		}
 	}
 }

@@ -22,7 +22,10 @@ var war;
             this.movieClipData = mcFactory.generateMovieClipData(clipName);
         };
         MovieClip.prototype.startPlay = function (action, count) {
-            this.gotoAndPlay(action, count);
+            if (this.currAction != action) {
+                this.currAction = action;
+                this.gotoAndPlay(action, count);
+            }
         };
         return MovieClip;
     }(egret.MovieClip));

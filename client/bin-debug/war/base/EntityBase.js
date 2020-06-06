@@ -17,6 +17,8 @@ var war;
         }
         EntityBase.prototype.initAll = function () {
             this.comMap = new Hash();
+            this.touchEnabled = false;
+            this.touchChildren = false;
             var dirCom = PoolManager.Ins().pop(war.ActionCom);
             this.comMap.set(dirCom.componentId, dirCom);
             _super.prototype.initAll.call(this);
@@ -27,6 +29,13 @@ var war;
         };
         EntityBase.prototype.getCom = function (id) {
             return this.comMap.get(id);
+        };
+        EntityBase.prototype.removeCom = function (id) {
+            var com = this.comMap.remove(id);
+            if (com == null)
+                return;
+            com.destroyAll();
+            PoolManager.Ins().push(com);
         };
         EntityBase.prototype.setCom = function (com) {
             if (this.comMap.has(com.componentId) == true)

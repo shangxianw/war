@@ -7,7 +7,8 @@ module war
 		protected initAll()
 		{
 			this.comMap = new Hash<number, ComBase>();
-
+			this.touchEnabled = false;
+			this.touchChildren = false;
 			let dirCom:ActionCom = PoolManager.Ins().pop(ActionCom);
 			this.comMap.set(dirCom.componentId, dirCom);
 			super.initAll();
@@ -22,6 +23,15 @@ module war
 		public getCom(id:number)
 		{
 			return this.comMap.get(id);
+		}
+
+		public removeCom(id:number)
+		{
+			let com:ComBase = this.comMap.remove(id);
+			if(com == null)
+				return;
+			com.destroyAll();
+			PoolManager.Ins().push(com);
 		}
 
 		public setCom(com:ComBase)

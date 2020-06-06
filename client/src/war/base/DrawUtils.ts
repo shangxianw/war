@@ -2,7 +2,17 @@ module war
 {
 	export class DrawUtils
 	{
-		public static isTest:boolean = true;
+		public static isTest:boolean = false;
+		public static Destroy()
+		{
+			for(let key in this.pathMap.map)
+			{
+				let item:egret.Shape = this.pathMap.get(Number(key));
+				item.parent != null && item.parent.removeChild(item);
+				item = null;
+			}
+			this.pathMap.destroy();
+		}
 
 		public static DrawGrid(group:eui.Component)
 		{
@@ -13,7 +23,7 @@ module war
 			let cols = WarDataMgr.Ins().grid.numRows;
 
 			let shape = new egret.Shape();
-			shape.graphics.lineStyle(1, 0xff0000);
+			shape.graphics.lineStyle(1, 0x00ff00);
 			shape.x = WarDataMgr.Ins().grid.startX;
 			shape.y = WarDataMgr.Ins().grid.startY;
 			for(let i=0, len = rows; i<len; i++)
@@ -27,27 +37,43 @@ module war
 			group.addChild(shape);
 		}
 
-		public static DrawPath(start:number[], end:number[], testShap:egret.Shape, group:eui.Component)
+		public static pathMap:Hash<number, egret.Shape> = new Hash<number, egret.Shape>();
+		public static DrawPath(entity:EntityBase, group:eui.Component = null)
 		{
 			if(DrawUtils.isTest == false)
 				return;
-			let space = WarDataMgr.Ins().grid.space;
-			if(testShap == null)
+
+			if(this.pathMap.has(entity.id) == false)
 			{
-				testShap = new egret.Shape();
+				let testShap = new egret.Shape();
 				testShap.x = WarDataMgr.Ins().grid.startX;
 				testShap.y = WarDataMgr.Ins().grid.startY;
-				group.addChild(testShap);
+				group != null && group.addChild(testShap);
+				this.pathMap.set(entity.id, testShap);
 			}
-			testShap.graphics.clear();
-			testShap.graphics.beginFill(0xff0000);
-			let path = WarDataMgr.Ins().findPath([start[0], start[1]], [end[0], end[1]]);
-			for(let node of path)
+
+			let testShap:egret.Shape = this.pathMap.get(entity.id);
+			let space = WarDataMgr.Ins().grid.space;
+			let pCom:PathCom = entity.getCom(COMPONENT.PATH);
+			if(pCom != null)
 			{
-				testShap.graphics.drawRect(space*node.x, space*node.y, space, space);
+				testShap.graphics.clear();
+				testShap.graphics.lineStyle(2, 0xff0000);
+				testShap.graphics.moveTo(entity.x - WarDataMgr.Ins().grid.startX, entity.y - WarDataMgr.Ins().grid.startY);
+				let path = pCom.getLeftPath();
+				let index:number = 1;
+				
+				for(let i=1; i<path.length; i++)
+				{
+					let node = path[i];
+					testShap.graphics.lineTo(space*node.x, space*node.y);
+				}
+				testShap.graphics.endFill();
 			}
-			testShap.graphics.endFill();
-			return testShap;
+			else
+			{
+				testShap.parent != null && testShap.parent.removeChild(testShap);
+			}
 		}
 
 		public static DrawHeroAnchor(hero:EntityBase)
@@ -60,6 +86,19 @@ module war
 			shape.graphics.drawCircle(0, 0, 4);
 			shape.graphics.endFill();
 			hero.addChild(shape);
+		}
+
+		public static DrawHeroId(hero:EntityBase)
+		{
+			if(DrawUtils.isTest == false)
+				return;
+			let lb = new eui.Label;
+			lb.text = `${hero.id}`;
+			lb.stroke = 2;
+			lb.strokeColor = 0x000;
+			lb.x = hero.width >>1;
+			lb.y = -50;
+			hero.addChild(lb);
 		}
 	}
 }

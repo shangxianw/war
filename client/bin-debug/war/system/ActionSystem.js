@@ -10,6 +10,11 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var war;
 (function (war) {
+    /**
+     * 行为系统
+     * 如果拥有路径组件，则为跑，添加速度组件
+     * 如果没有路径组件，则为站或者攻击。
+     */
     var ActionSystem = (function (_super) {
         __extends(ActionSystem, _super);
         function ActionSystem() {
@@ -20,20 +25,65 @@ var war;
         };
         ActionSystem.prototype.destroy = function () {
         };
-        ActionSystem.prototype.update = function (entity, deltaTime) {
-            var dirCom = entity.getCom(war.COMPONENT.ACTION);
-            var action = dirCom.getAction();
-            var dir = dirCom.getDir();
-            if (dirCom.hasChanged == true) {
-                dirCom.hasChanged = false;
-                if (action == war.ACTION.RUN) {
-                    this.setRun(entity, dir);
-                }
-                else if (action == war.ACTION.STAND) {
-                    this.setStand(entity, dir);
-                }
-                else if (action == war.ACTION.ATTACK) {
-                    this.setAttack(entity, dir);
+        ActionSystem.prototype.update = function (deltaTime) {
+            var entity;
+            var warData = war.WarDataMgr.Ins();
+            for (var idStr in warData.entityMap.map) {
+                entity = warData.entityMap.get(Number(idStr));
+                if (entity == null)
+                    continue;
+                var pCom = entity.getCom(war.COMPONENT.PATH);
+                if (pCom != null) {
+                    var sCom = entity.getCom(war.COMPONENT.SPEED);
+                    if (sCom != null) {
+                        var currTar = pCom.getCurr();
+                        if (currTar != null) {
+                            var aCom = entity.getCom(war.COMPONENT.ACTION);
+                            var localX = warData.grid.startX + warData.grid.space * currTar.x;
+                            var localY = warData.grid.startY + warData.grid.space * currTar.y;
+                            if (entity.x == localX && entity.y == localY)
+                                pCom.toNext();
+                            else if (entity.x < localX && entity.y == localY) {
+                                aCom.setDir(war.DIRECTION.RIGHT);
+                                this.setRun(entity, war.DIRECTION.RIGHT);
+                            }
+                            else if (entity.x > localX && entity.y == localY) {
+                                aCom.setDir(war.DIRECTION.LEFT);
+                                this.setRun(entity, war.DIRECTION.LEFT);
+                            }
+                            else if (entity.x == localX && entity.y < localY) {
+                                aCom.setDir(war.DIRECTION.DOWN);
+                                this.setRun(entity, war.DIRECTION.DOWN);
+                            }
+                            else if (entity.x == localX && entity.y > localY) {
+                                aCom.setDir(war.DIRECTION.UP);
+                                this.setRun(entity, war.DIRECTION.UP);
+                            }
+                            else if (entity.x < localX && entity.y < localY) {
+                                aCom.setDir(war.DIRECTION.DOWN);
+                                this.setRun(entity, war.DIRECTION.RIGHT_DOWN);
+                            }
+                            else if (entity.x < localX && entity.y > localY) {
+                                aCom.setDir(war.DIRECTION.UP);
+                                this.setRun(entity, war.DIRECTION.RIGHT_UP);
+                            }
+                            else if (entity.x > localX && entity.y < localY) {
+                                aCom.setDir(war.DIRECTION.DOWN);
+                                this.setRun(entity, war.DIRECTION.LEFT_DOWN);
+                            }
+                            else if (entity.x > localX && entity.y > localY) {
+                                aCom.setDir(war.DIRECTION.UP);
+                                this.setRun(entity, war.DIRECTION.LEFT_UP);
+                            }
+                        }
+                        else {
+                            this.setStand(entity, 3);
+                            entity.removeCom(war.COMPONENT.PATH);
+                            entity.removeCom(war.COMPONENT.SPEED);
+                        }
+                    }
+                    else {
+                    }
                 }
             }
         };
