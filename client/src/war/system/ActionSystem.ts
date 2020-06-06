@@ -26,40 +26,30 @@ module war
 				entity = warData.entityMap.get(Number(idStr));
 				if(entity == null)
 					continue;
+
+				let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
+				if(aCom == null)
+					continue;
 				
-				// 当有路径又有速度时，就执行跑的动作
-				let pCom:PathCom = entity.getCom(COMPONENT.PATH);
-				let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
-				if(pCom != null && sCom != null)
+				if(aCom.action == ACTION.RUN)
 				{
-					let currTar:astar.NodeItem = pCom.getCurr();
-					let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
-					if(currTar != null)
-					{
-						let localX = warData.grid.startX + warData.grid.space * currTar.x;
-						let localY = warData.grid.startY + warData.grid.space * currTar.y;
-						this.setRun(entity, aCom.getDir(), localX, localY);
-					}
-					else
-					{
-						entity.removeCom(COMPONENT.PATH);
-						entity.removeCom(COMPONENT.SPEED);
-						aCom.setAction(ACTION.STAND);
-					}
+					this.setRun(entity);
 				}
-				else
+				else if(aCom.action == ACTION.STAND)
 				{
-					let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
-					if(aCom.getAction() == ACTION.STAND)
-					{
-						this.setStand(entity, aCom.getDir());
-					}
+					this.setStand(entity);
+				}
+				else if(aCom.action == ACTION.ATTACK)
+				{
+					this.setAttack(entity);
 				}
 			}
 		}
 
-		private setStand(entity:EntityBase, dir:number)
+		private setStand(entity:EntityBase)
 		{
+			let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
+			let dir = aCom.direction;
 			if(dir == DIRECTION.UP)
 			{
 				entity.mc.scaleX = 1;
@@ -103,65 +93,75 @@ module war
 			}
 		}
 
-		private setRun(entity:EntityBase, dir:number, localX:number, localY)
+		private setRun(entity:EntityBase)
 		{
 			let pCom:PathCom = entity.getCom(COMPONENT.PATH);
-			let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
 			let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
+			
+			let currNode:astar.NodeItem = pCom.getCurr();
+			if(currNode == null)
+				return;
+			let warData = WarDataMgr.Ins();
+			let localX = warData.grid.startX + warData.grid.space * currNode.x;
+			let localY = warData.grid.startY + warData.grid.space * currNode.y;
 			if(entity.x == localX && entity.y == localY)
-				pCom.toNext();
+			{
+
+			}
 			else if(entity.x < localX && entity.y == localY) 
+			{
+				aCom.setDir(DIRECTION.UP);
+				entity.mc.scaleX = 1;
+				entity.mc.startPlay(`run0`, -1);
+			}
+			else if(entity.x > localX && entity.y <= localY)
+			{
+				aCom.setDir(DIRECTION.RIGHT_UP);
+				entity.mc.scaleX = 1;
+				entity.mc.startPlay(`run1`, -1);
+			}
+			else if(entity.x < localX && entity.y == localY)
 			{
 				aCom.setDir(DIRECTION.RIGHT);
 				entity.mc.scaleX = 1;
+				entity.mc.startPlay(`run2`, -1);
+			}
+			else if(entity.x < localX && entity.y < localY)
+			{
+				aCom.setDir(DIRECTION.RIGHT_DOWN);
+				entity.mc.scaleX = 1;
+				entity.mc.startPlay(`run3`, -1);
+			}
+			else if(entity.x < localX && entity.y == localY)
+			{
+				aCom.setDir(DIRECTION.DOWN);
+				entity.mc.scaleX = 1;
+				entity.mc.startPlay(`run4`, -1);
+			}
+			else if(entity.x > localX && entity.y < localY)
+			{
+				aCom.setDir(DIRECTION.LEFT_DOWN);
+				entity.mc.scaleX = -1;
 				entity.mc.startPlay(`run3`, -1);
 			}
 			else if(entity.x > localX && entity.y == localY)
 			{
 				aCom.setDir(DIRECTION.LEFT);
 				entity.mc.scaleX = -1;
-				entity.mc.startPlay(`run3`, -1);
-			}
-			else if(entity.x == localX && entity.y < localY)
-			{
-				aCom.setDir(DIRECTION.DOWN);
-				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`run5`, -1);
-			}
-			else if(entity.x == localX && entity.y > localY)
-			{
-				aCom.setDir(DIRECTION.UP);
-				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`run0`, -1);
-			}
-			else if(entity.x < localX && entity.y < localY)
-			{
-				aCom.setDir(DIRECTION.DOWN);
-				entity.mc.scaleX = 1;
-				entity.mc.startPlay(`run4`, -1);
-			}
-			else if(entity.x < localX && entity.y > localY)
-			{
-				aCom.setDir(DIRECTION.UP);
-				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`run2`, -1);
-			}
-			else if(entity.x > localX && entity.y < localY)
-			{
-				aCom.setDir(DIRECTION.DOWN);
-				entity.mc.scaleX = -1;
-				entity.mc.startPlay(`run4`, -1);
 			}
 			else if(entity.x > localX && entity.y > localY)
 			{
-				aCom.setDir(DIRECTION.UP);
+				aCom.setDir(DIRECTION.LEFT_UP);
 				entity.mc.scaleX = -1;
-				entity.mc.startPlay(`run2`, -1);
+				entity.mc.startPlay(`run1`, -1);
 			}
 		}
 
-		private setAttack(entity:EntityBase, dir:number)
+		private setAttack(entity:EntityBase)
 		{
+			let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
+			let dir = aCom.direction;
 			if(dir == DIRECTION.UP)
 			{
 				entity.mc.scaleX = 1;

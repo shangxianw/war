@@ -73,9 +73,9 @@ var war;
         };
         // ---------------------------------------------------------------------- 寻路
         WarDataMgr.prototype.initGrid = function () {
-            this.grid = new astar.Grid(52, 80, 10, 100, 240); // 520, 800
+            // this.grid = new astar.Grid(52, 80, 10, 100, 240); // 520, 800
             // this.grid = new astar.Grid(26, 40, 20, 100, 240); // 520, 800
-            // this.grid = new astar.Grid(13, 20, 40, 100, 240); // 520, 800
+            this.grid = new astar.Grid(13, 20, 40, 100, 240); // 520, 800
             this.pathMap = new Hash();
         };
         WarDataMgr.prototype.destroyGrid = function () {

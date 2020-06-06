@@ -47,6 +47,7 @@ module war
 		public toNext()
 		{
 			this.currStep++;
+			return this.getCurr();
 		}
 
 		private destroyPath()

@@ -83,8 +83,8 @@ module war
 			let w = this.testGrid.width;
 			let h = this.testGrid.height;
 			let space = WarDataMgr.Ins().grid.space;
-			let endX = 30//Math.floor(Math.random() * WarDataMgr.Ins().grid.numCols); 
-			let endY = 30//Math.floor(Math.random() * WarDataMgr.Ins().grid.numRows);
+			let endX = 6//Math.floor(Math.random() * WarDataMgr.Ins().grid.numCols); 
+			let endY = 10//Math.floor(Math.random() * WarDataMgr.Ins().grid.numRows);
 			// let queen:QueenEntity = WarDataMgr.Ins().entityMap.get(this.queen1Id);
 			// let endX = Math.floor((queen.x - WarDataMgr.Ins().grid.startX)/space);
 			// let endY = Math.floor((queen.y - WarDataMgr.Ins().grid.startY)/space);
@@ -100,13 +100,14 @@ module war
 			let sCom:SpeedCom = PoolManager.Ins().pop(SpeedCom);
 			sCom.speed = 0.8;
 			hero.setCom(sCom);
+
 			let dirCom:ActionCom = hero.getCom(COMPONENT.ACTION);
 			dirCom.setActionAndDir(ACTION.RUN , Math.ceil(Math.random()*8));
 
 			let pathCom:PathCom = PoolManager.Ins().pop(PathCom);
 			let path = WarDataMgr.Ins().findPath([x, y], [endX, endY]);
 			pathCom.setPath(path);
-			hero.setCom(pathCom)
+			hero.setCom(pathCom);
 
 			this.entityGroup.addChild(hero);
 			WarDataMgr.Ins().addEntity(hero);

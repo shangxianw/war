@@ -60,12 +60,6 @@ var war;
             this.direction = dir;
             this.hasChanged = true;
         };
-        ActionCom.prototype.getAction = function () {
-            return this.action;
-        };
-        ActionCom.prototype.getDir = function () {
-            return this.direction;
-        };
         return ActionCom;
     }(war.ComBase));
     war.ActionCom = ActionCom;

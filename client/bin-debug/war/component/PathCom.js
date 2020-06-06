@@ -43,6 +43,7 @@ var war;
         };
         PathCom.prototype.toNext = function () {
             this.currStep++;
+            return this.getCurr();
         };
         PathCom.prototype.destroyPath = function () {
             for (var _i = 0, _a = this.path; _i < _a.length; _i++) {

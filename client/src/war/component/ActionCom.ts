@@ -3,8 +3,8 @@ module war
 	export class ActionCom extends ComBase
 	{
 		public hasChanged:boolean;
-		private action:number;
-		private direction:number;
+		public action:number;
+		public direction:number;
 		protected init()
 		{
 			this.componentId = COMPONENT.ACTION;
@@ -62,16 +62,6 @@ module war
 		{
 			this.direction = dir;
 			this.hasChanged = true;
-		}
-
-		public getAction()
-		{
-			return this.action;
-		}
-
-		public getDir()
-		{
-			return this.direction;
 		}
 	}
 }

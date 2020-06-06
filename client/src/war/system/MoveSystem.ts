@@ -31,37 +31,67 @@ module war
 				if(sCom == null)
 					continue;
 				
-				// 当有路径组件时，就判断当前位置与当前路径阶段的关系。
-				// 当实体到达阶段时，不进行下一步操作。(其实放这里也可以做)
 				let pCom:PathCom = entity.getCom(COMPONENT.PATH);
 				if(pCom != null)
 				{
-					let currTar:astar.NodeItem = pCom.getCurr();
-					if(currTar != null)
+					let array = this.getCurrNode(entity);
+					if(array == null)
 					{
-						let localX = warData.grid.startX + warData.grid.space * currTar.x;
-						let localY = warData.grid.startY + warData.grid.space * currTar.y;
-
-						let speedXY = MathUtils.CalcSpeedXY(sCom.speed, entity.x, entity.y, localX, localY);
-						let speedX = speedXY[0],
-							speedY = speedXY[1];
-						entity.x = Number((entity.x + speedX).toFixed(2));
-						entity.y = Number((entity.y + speedY).toFixed(2));
-
-						if(
-							(speedX < 0 && entity.x < localX) ||
-							(speedX > 0 && entity.x > localX) ||
-							(speedY < 0 && entity.y < localY) ||
-							(speedY > 0 && entity.y > localY)
-						)
+						// 考虑下一步操作了
+						let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
+						if(aCom != null)
 						{
-							entity.x = localX;
-							entity.y = localY;
+							aCom.setAction(ACTION.ATTACK); // 暂时为站着，
 						}
-
-						DrawUtils.DrawPath(entity);
+						continue;
 					}
+					let currTar:astar.NodeItem = array[0];
+					let localX = array[1];
+					let localY = array[2];
+
+					let speedXY = MathUtils.CalcSpeedXY(sCom.speed, entity.x, entity.y, localX, localY);
+					let speedX = speedXY[0],
+						speedY = speedXY[1];
+					entity.x = Number((entity.x + speedX).toFixed(2));
+					entity.y = Number((entity.y + speedY).toFixed(2));
+
+					if(
+						(speedX < 0 && entity.x < localX) ||
+						(speedX > 0 && entity.x > localX) ||
+						(speedY < 0 && entity.y < localY) ||
+						(speedY > 0 && entity.y > localY)
+					)
+					{
+						entity.x = localX;
+						entity.y = localY;
+					}
+
+					DrawUtils.DrawPath(entity);
 				}
+				else // 没有路径则原地不动
+				{
+					
+				}
+			}
+		}
+
+		private getCurrNode(entity:EntityBase):any[]
+		{
+			let warData = WarDataMgr.Ins();
+			let pCom:PathCom = entity.getCom(COMPONENT.PATH);
+			let currTar:astar.NodeItem = pCom.getCurr();
+			if(currTar == null)
+				return null;
+			let localX = warData.grid.startX + warData.grid.space * currTar.x;
+			let localY = warData.grid.startY + warData.grid.space * currTar.y;
+			if(entity.x == localX && entity.y == localY)
+			{
+				pCom.toNext();
+				return [this.getCurrNode(entity), localX, localY];
+			}
+			else
+			{
+				return [currTar, localX, localY];
 			}
 		}
 	}

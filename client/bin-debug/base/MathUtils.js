@@ -5,11 +5,11 @@ var MathUtils = (function () {
     function MathUtils() {
     }
     MathUtils.CalcSpeedXY = function (speed, oriX, oriY, tarX, tarY) {
+        if (oriX == tarX && oriY == tarY)
+            return [0, 0];
         var width = tarX - oriX;
         var height = tarY - oriY;
         var hypotenuse = Math.sqrt(width * width + height * height);
-        // let sinA = height / hypotenuse;
-        // let cosA = width / hypotenuse;
         var speedX = (width * speed) / hypotenuse;
         var speedY = (height * speed) / hypotenuse;
         return [speedX, speedY];
