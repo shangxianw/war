@@ -42,7 +42,7 @@ var war;
                         // 考虑下一步操作了
                         var aCom = entity.getCom(war.COMPONENT.ACTION);
                         if (aCom != null) {
-                            aCom.setAction(war.ACTION.ATTACK); // 暂时为站着，
+                            aCom.setAction(war.ACTION.STAND); // 暂时为站着，
                         }
                         continue;
                     }

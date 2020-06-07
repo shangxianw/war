@@ -11,6 +11,7 @@ var war;
     (function (SYSTEM) {
         SYSTEM[SYSTEM["MOVE"] = 1] = "MOVE";
         SYSTEM[SYSTEM["ACTION"] = 2] = "ACTION";
+        SYSTEM[SYSTEM["COLLISION"] = 3] = "COLLISION";
     })(SYSTEM = war.SYSTEM || (war.SYSTEM = {}));
     var ACTION;
     (function (ACTION) {

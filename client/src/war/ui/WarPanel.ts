@@ -48,26 +48,26 @@ module war
 		public initData(info:WarPanelData)
 		{
 			DrawUtils.DrawGrid(this.drawGroup);
-			// let space = WarDataMgr.Ins().grid.space;
-			// let localX = WarDataMgr.Ins().grid.startX + space * Math.floor(WarDataMgr.Ins().grid.numCols/4);
-			// let localY = WarDataMgr.Ins().grid.startY + space * Math.floor(WarDataMgr.Ins().grid.numRows/4);
-			// let queen1:QueenEntity = new QueenEntity();
-			// (queen1.getCom(COMPONENT.ACTION) as ActionCom).setDir(DIRECTION.DOWN);
-			// queen1.x = localX;
-			// queen1.y = localY;
-			// this.entityGroup.addChild(queen1);
-			// this.queen1Id = queen1.id;
+			let space = WarDataMgr.Ins().grid.space;
+			let localX = WarDataMgr.Ins().grid.startX + space * Math.floor(WarDataMgr.Ins().grid.numCols/4);
+			let localY = WarDataMgr.Ins().grid.startY + space * Math.floor(WarDataMgr.Ins().grid.numRows/4);
+			let queen1:QueenEntity = new QueenEntity();
+			(queen1.getCom(COMPONENT.ACTION) as ActionCom).setDir(DIRECTION.DOWN);
+			queen1.x = localX;
+			queen1.y = localY;
+			this.entityGroup.addChild(queen1);
+			this.queen1Id = queen1.id;
 
-			// let queen2:QueenEntity = new QueenEntity();
-			// localX = WarDataMgr.Ins().grid.startX + space * Math.floor(WarDataMgr.Ins().grid.numCols - WarDataMgr.Ins().grid.numCols/4);
-			// localY = WarDataMgr.Ins().grid.startY + space * Math.floor(WarDataMgr.Ins().grid.numRows/4);
-			// queen2.x = localX;
-			// queen2.y = localY;
-			// (queen2.getCom(COMPONENT.ACTION) as ActionCom).setDir(DIRECTION.DOWN);
+			let queen2:QueenEntity = new QueenEntity();
+			localX = WarDataMgr.Ins().grid.startX + space * Math.floor(WarDataMgr.Ins().grid.numCols - WarDataMgr.Ins().grid.numCols/4);
+			localY = WarDataMgr.Ins().grid.startY + space * Math.floor(WarDataMgr.Ins().grid.numRows/4);
+			queen2.x = localX;
+			queen2.y = localY;
+			(queen2.getCom(COMPONENT.ACTION) as ActionCom).setDir(DIRECTION.DOWN);
 
-			// this.entityGroup.addChild(queen2);
-			// WarDataMgr.Ins().addEntity(queen1);
-			// WarDataMgr.Ins().addEntity(queen2);
+			this.entityGroup.addChild(queen2);
+			WarDataMgr.Ins().addEntity(queen1);
+			WarDataMgr.Ins().addEntity(queen2);
 
 			this.testGrid.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnGridTap, this);
 		}
@@ -111,7 +111,6 @@ module war
 
 			this.entityGroup.addChild(hero);
 			WarDataMgr.Ins().addEntity(hero);
-			DrawUtils.DrawHeroId(hero);
 			DrawUtils.DrawPath(hero, this.drawGroup);
 		}
 	}

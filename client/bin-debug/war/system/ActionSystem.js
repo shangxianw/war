@@ -93,12 +93,12 @@ var war;
             var localY = warData.grid.startY + warData.grid.space * currNode.y;
             if (entity.x == localX && entity.y == localY) {
             }
-            else if (entity.x < localX && entity.y == localY) {
+            else if (entity.x == localX && entity.y > localY) {
                 aCom.setDir(war.DIRECTION.UP);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("run0", -1);
             }
-            else if (entity.x > localX && entity.y <= localY) {
+            else if (entity.x < localX && entity.y > localY) {
                 aCom.setDir(war.DIRECTION.RIGHT_UP);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("run1", -1);
@@ -113,7 +113,7 @@ var war;
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("run3", -1);
             }
-            else if (entity.x < localX && entity.y == localY) {
+            else if (entity.x == localX && entity.y < localY) {
                 aCom.setDir(war.DIRECTION.DOWN);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("run4", -1);

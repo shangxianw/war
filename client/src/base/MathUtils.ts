@@ -11,4 +11,12 @@ class MathUtils
 		let speedY = (height * speed) / hypotenuse;
 		return [speedX, speedY];
 	}
+
+	public static IsCircleIntersect(x1:number, y1:number, radius1:number, x2:number, y2:number, radius2:number)
+	{
+		let width = x2 - x1;
+		let height = y2 - y1;
+		let distance = Math.sqrt(width * width + height * height);
+		return distance < radius1 + radius2;
+	}
 }

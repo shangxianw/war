@@ -34,6 +34,11 @@ module war
 			return this.path.slice(Math.max(this.currStep-1, 0));
 		}
 
+		public getEndNode()
+		{
+			return this.path[this.path.length - 1];
+		}
+
 		public getCurr()
 		{
 			return this.path[this.currStep];

@@ -41,7 +41,7 @@ module war
 						let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
 						if(aCom != null)
 						{
-							aCom.setAction(ACTION.ATTACK); // 暂时为站着，
+							aCom.setAction(ACTION.STAND); // 暂时为站着，
 						}
 						continue;
 					}

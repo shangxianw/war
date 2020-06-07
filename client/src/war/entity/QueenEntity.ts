@@ -17,8 +17,9 @@ module war
 			this.addChild(this.mc);
 
 			let rCom2:RigidCom = new RigidCom();
-			rCom2.radius = 20;
+			rCom2.radius = 30;
 			this.setCom(rCom2);
+			DrawUtils.DrawHeroId(this);
 			DrawUtils.DrawHeroAnchor(this);
 			DrawUtils.DrawGrigd(this);
 		}

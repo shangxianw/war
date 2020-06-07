@@ -24,6 +24,8 @@ var war;
             this.sysArray.push(this.actionSystem);
             this.moveSystem = new war.MoveSystem();
             this.sysArray.push(this.moveSystem);
+            this.collisionSystem = new war.CollisionSystem();
+            this.sysArray.push(this.collisionSystem);
         };
         WarDataMgr.prototype.destroy = function () {
             DataUtils.DestroyUIBaseMap(this.entityMap);

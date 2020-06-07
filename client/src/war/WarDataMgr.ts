@@ -7,6 +7,7 @@ module war
 		public sysArray:SystemBase[];
 		public moveSystem:MoveSystem;
 		public actionSystem:ActionSystem;
+		public collisionSystem:CollisionSystem;
 		
 		public grid:astar.Grid;
 		public pathMap:Hash<string, astar.NodeItem[]>;
@@ -26,6 +27,8 @@ module war
 			this.moveSystem = new MoveSystem();
 			this.sysArray.push(this.moveSystem);
 
+			this.collisionSystem = new CollisionSystem();
+			this.sysArray.push(this.collisionSystem);
 		}
 
 		protected destroy()

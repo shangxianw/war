@@ -14,6 +14,12 @@ var MathUtils = (function () {
         var speedY = (height * speed) / hypotenuse;
         return [speedX, speedY];
     };
+    MathUtils.IsCircleIntersect = function (x1, y1, radius1, x2, y2, radius2) {
+        var width = x2 - x1;
+        var height = y2 - y1;
+        var distance = Math.sqrt(width * width + height * height);
+        return distance < radius1 + radius2;
+    };
     return MathUtils;
 }());
 __reflect(MathUtils.prototype, "MathUtils");

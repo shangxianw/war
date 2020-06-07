@@ -12,6 +12,7 @@ module war
 	{
 		MOVE = 1,
 		ACTION = 2,
+		COLLISION = 3
 	}
 
 	export enum ACTION

@@ -53,6 +53,7 @@
 		"bin-debug/war/entity/HeroEntity.js",
 		"bin-debug/war/entity/QueenEntity.js",
 		"bin-debug/war/system/ActionSystem.js",
+		"bin-debug/war/system/CollisionSystem.js",
 		"bin-debug/war/system/MoveSystem.js",
 		"bin-debug/war/ui/CostBar.js",
 		"bin-debug/war/ui/Ka1.js",

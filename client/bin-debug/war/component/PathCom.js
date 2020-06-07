@@ -35,6 +35,9 @@ var war;
         PathCom.prototype.getLeftPath = function () {
             return this.path.slice(Math.max(this.currStep - 1, 0));
         };
+        PathCom.prototype.getEndNode = function () {
+            return this.path[this.path.length - 1];
+        };
         PathCom.prototype.getCurr = function () {
             return this.path[this.currStep];
         };

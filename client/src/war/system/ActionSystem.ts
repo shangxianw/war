@@ -108,13 +108,13 @@ module war
 			{
 
 			}
-			else if(entity.x < localX && entity.y == localY) 
+			else if(entity.x == localX && entity.y > localY) 
 			{
 				aCom.setDir(DIRECTION.UP);
 				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`run0`, -1);
 			}
-			else if(entity.x > localX && entity.y <= localY)
+			else if(entity.x < localX && entity.y > localY)
 			{
 				aCom.setDir(DIRECTION.RIGHT_UP);
 				entity.mc.scaleX = 1;
@@ -132,7 +132,7 @@ module war
 				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`run3`, -1);
 			}
-			else if(entity.x < localX && entity.y == localY)
+			else if(entity.x == localX && entity.y < localY)
 			{
 				aCom.setDir(DIRECTION.DOWN);
 				entity.mc.scaleX = 1;
@@ -162,6 +162,7 @@ module war
 		{
 			let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
 			let dir = aCom.direction;
+			
 			if(dir == DIRECTION.UP)
 			{
 				entity.mc.scaleX = 1;
