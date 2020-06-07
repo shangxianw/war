@@ -41,6 +41,12 @@ var war;
         PathCom.prototype.getCurr = function () {
             return this.path[this.currStep];
         };
+        PathCom.prototype.getLast = function () {
+            return this.path[this.currStep - 1];
+        };
+        PathCom.prototype.getNext = function () {
+            return this.path[this.currStep + 1];
+        };
         PathCom.prototype.getEnd = function () {
             return this.path[this.path.length - 1];
         };

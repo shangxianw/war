@@ -1,68 +1,69 @@
-namespace astar
+module astar
 {
-    export  class Grid
-    {
-        public startNode:NodeItem;    //起点
-        public endNode:NodeItem;      //终点
-        public nodes:Array<NodeItem[]>;  //Node数组
-        public numCols:number;    //网格行列
-        public numRows:number;
-        public space:number;
-        
-        public startX:number;
-        public startY:number;
+	export class Grid
+	{
+		public numCols:number; // 列
+		public numRows:number;
+		public space:number;
+		public nodeArray:Node[][];
+		public constructor()
+		{
 
-        public constructor(numCols:number, numRows:number, space:number, startX:number, startY:number)
-        {
-            this.numCols = numCols;
-            this.numRows = numRows;
-            this.space = space;
-            this.startX = startX;
-            this.startY = startY;
-            this.nodes = [];
+		}
 
-            for(let i:number=0; i<numCols; i++)
-            {
-                this.nodes[i] = [];
-                for(let j:number=0; j<numRows; j++)
-                {
-                    this.nodes[i][j] = new NodeItem(i,j);
-                }
-            }
-        }
+		public init(numRows:number, numCols:number, space:number)
+		{
+			this.numRows = numRows;
+			this.numCols = numCols;
+			this.space = space;
 
-        public getNode(x:number , y:number):NodeItem
-        {
-            return this.nodes[x][y];
-        }
+			this.nodeArray = [];
+			let x:number, y:number;
+			for(let i=0, len=this.numRows; i<len; i++)
+			{
+				let rowArray:Node[] = [];
+				for(let j=0, len2=this.numCols; j<len2; j++)
+				{
+					x = j;
+					y = i;
+					let node = new Node();
+					node.init(x, y, true);
+					rowArray.push(node);
+				}
+				this.nodeArray.push(rowArray);
+			}
+		}
 
-        public setEndNode(x:number, y:number)
-        {
-            this.endNode = this.nodes[x][y];
-        }
+		public destroy()
+		{
+			for(let i=0, len=this.numRows; i<len; i++)
+			{
+				for(let j=0, len2=this.numCols; j<len2; j++)
+				{
+					this.nodeArray[i][j].destroy();
+					this.nodeArray[i][j] = null;
+				}
+				this.nodeArray[i].length = 0;
+				this.nodeArray[i] = null;
+			}
+			this.nodeArray.length  = 0;
+			this.nodeArray = null;
+		}
 
-        public setStartNode(x:number, y:number)
-        {
-            this.startNode = this.nodes[x][y];
-        }
+		public getNode(x:number, y:number)
+		{
+			// 第一个是y，第二个是x，容易搞反
+			if(this.nodeArray[y] == null)
+				return null;
+			return this.nodeArray[y][x];
+		}
 
-        public setWalkable(x:number, y:number, value:boolean)
-        {
-            this.nodes[x][y].walkable = value;
-        }
-
-        public destroy()
-        {
-            for(let nodeArray of this.nodes)
-            {
-                for(let node of nodeArray)
-                {
-                    node.destroy();
-                }
-                nodeArray.length = 0;
-            }
-            this.nodes.length = 0;
-            this.nodes = null;
-        }
-    }
+		public setWalkable(x:number, y:number, walkable:boolean)
+		{
+			if(this.nodeArray[y] == null || this.nodeArray[y][x] == null)
+				return false;
+			this.nodeArray[y][x].walkable = walkable;
+			return true;
+		}
+	}
 }

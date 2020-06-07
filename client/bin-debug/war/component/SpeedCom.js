@@ -16,13 +16,13 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         SpeedCom.prototype.init = function () {
+            this.angle = 45;
             this.speed = 0;
             this.componentId = war.COMPONENT.SPEED;
         };
         SpeedCom.prototype.destroy = function () {
             this.speed = 0;
-        };
-        SpeedCom.prototype.getSpeedXY = function (oriX, oriY, tarX, tarY) {
+            this.angle = 0;
         };
         return SpeedCom;
     }(war.ComBase));

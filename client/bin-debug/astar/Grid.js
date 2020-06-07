@@ -4,43 +4,49 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var astar;
 (function (astar) {
     var Grid = (function () {
-        function Grid(numCols, numRows, space, startX, startY) {
-            this.numCols = numCols;
-            this.numRows = numRows;
-            this.space = space;
-            this.startX = startX;
-            this.startY = startY;
-            this.nodes = [];
-            for (var i = 0; i < numCols; i++) {
-                this.nodes[i] = [];
-                for (var j = 0; j < numRows; j++) {
-                    this.nodes[i][j] = new astar.NodeItem(i, j);
-                }
-            }
+        function Grid() {
         }
-        Grid.prototype.getNode = function (x, y) {
-            return this.nodes[x][y];
-        };
-        Grid.prototype.setEndNode = function (x, y) {
-            this.endNode = this.nodes[x][y];
-        };
-        Grid.prototype.setStartNode = function (x, y) {
-            this.startNode = this.nodes[x][y];
-        };
-        Grid.prototype.setWalkable = function (x, y, value) {
-            this.nodes[x][y].walkable = value;
+        Grid.prototype.init = function (numRows, numCols, space) {
+            this.numRows = numRows;
+            this.numCols = numCols;
+            this.space = space;
+            this.nodeArray = [];
+            var x, y;
+            for (var i = 0, len = this.numRows; i < len; i++) {
+                var rowArray = [];
+                for (var j = 0, len2 = this.numCols; j < len2; j++) {
+                    x = j;
+                    y = i;
+                    var node = new astar.Node();
+                    node.init(x, y, true);
+                    rowArray.push(node);
+                }
+                this.nodeArray.push(rowArray);
+            }
         };
         Grid.prototype.destroy = function () {
-            for (var _i = 0, _a = this.nodes; _i < _a.length; _i++) {
-                var nodeArray = _a[_i];
-                for (var _b = 0, nodeArray_1 = nodeArray; _b < nodeArray_1.length; _b++) {
-                    var node = nodeArray_1[_b];
-                    node.destroy();
+            for (var i = 0, len = this.numRows; i < len; i++) {
+                for (var j = 0, len2 = this.numCols; j < len2; j++) {
+                    this.nodeArray[i][j].destroy();
+                    this.nodeArray[i][j] = null;
                 }
-                nodeArray.length = 0;
+                this.nodeArray[i].length = 0;
+                this.nodeArray[i] = null;
             }
-            this.nodes.length = 0;
-            this.nodes = null;
+            this.nodeArray.length = 0;
+            this.nodeArray = null;
+        };
+        Grid.prototype.getNode = function (x, y) {
+            // 第一个是y，第二个是x，容易搞反
+            if (this.nodeArray[y] == null)
+                return null;
+            return this.nodeArray[y][x];
+        };
+        Grid.prototype.setWalkable = function (x, y, walkable) {
+            if (this.nodeArray[y] == null || this.nodeArray[y][x] == null)
+                return false;
+            this.nodeArray[y][x].walkable = walkable;
+            return true;
         };
         return Grid;
     }());

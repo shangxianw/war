@@ -8,27 +8,47 @@ module war
 		public moveSystem:MoveSystem;
 		public actionSystem:ActionSystem;
 		public collisionSystem:CollisionSystem;
+		public pathSystem:PathSystem;
+		public speedSystem:SpeedSystem;
 		
+		public astar:astar.AStar;
 		public grid:astar.Grid;
-		public pathMap:Hash<string, astar.NodeItem[]>;
+		public pathMap:Hash<string, astar.Node[]>;
+		public numCols:number = 10
+		public numRows:number = 10;
+		public space:number = 40;
+		public startX:number = 100;
+		public startY:number = 240;
 
 		public world:World;
 
 		protected init()
 		{
+			this.numCols = 13;
+			this.numRows = 20;
+			this.space = 40;
+			this.startX = 100;
+			this.startY = 240;
 			this.world = new World();
 			this.entityMap = new Hash<number, EntityBase>();
 			this.sysArray = [];
 			this.initGrid();
 
-			this.actionSystem = new ActionSystem();
-			this.sysArray.push(this.actionSystem);
-
 			this.moveSystem = new MoveSystem();
 			this.sysArray.push(this.moveSystem);
 
-			this.collisionSystem = new CollisionSystem();
-			this.sysArray.push(this.collisionSystem);
+			// this.pathSystem = new PathSystem();
+			// this.sysArray.push(this.pathSystem);
+
+			// this.speedSystem = new SpeedSystem();
+			// this.sysArray.push(this.speedSystem);
+
+			// this.actionSystem = new ActionSystem();
+			// this.sysArray.push(this.actionSystem);
+
+
+			// this.collisionSystem = new CollisionSystem();
+			// this.sysArray.push(this.collisionSystem);
 		}
 
 		protected destroy()
@@ -47,7 +67,10 @@ module war
 				this.actionSystem = null;
 			}
 			this.sysArray.length = 0;
-			this.destroyGrid();
+			this.astar.destroy();
+			this.grid.destroy();
+			this.astar = null;
+			this.grid = null;
 		}
 
 		public startWar()
@@ -100,62 +123,33 @@ module war
 		// ---------------------------------------------------------------------- 寻路
 		private initGrid()
 		{
-			// this.grid = new astar.Grid(52, 80, 10, 100, 240); // 520, 800
-			// this.grid = new astar.Grid(26, 40, 20, 100, 240); // 520, 800
-			this.grid = new astar.Grid(13, 20, 40, 100, 240); // 520, 800
-			this.pathMap = new Hash<string, astar.NodeItem[]>();
+			this.astar = new astar.AStar();
+			this.grid = new astar.Grid();
+			this.grid.init(this.numRows, this.numCols, this.space);
+			this.pathMap = new Hash<string, astar.Node[]>();
 		}
 
-		private destroyGrid()
+		public findPath(startX:number, startY:number, endX:number, endY:number):astar.Node[]
 		{
-			this.grid.destroy();
-			this.grid = null;
-
-			let path:astar.NodeItem[];
-			for(let key in this.pathMap)
-			{
-				path = this.pathMap.get(key);
-				if(path = null)
-					continue;
-				for(let node of path)
-				{
-					node.destroy();
-				}
-				path.length = 0;
-				path = null;
-			}
-			this.pathMap.destroy();
-			this.pathMap = null;
-		}
-
-		public findPath(start:number[], end:number[]):astar.NodeItem[]
-		{
-			if(start == null || end == null)
-				return;
-			// 超出边界判断
-
 			// 如果存在缓存，则在缓存中查找
-			let key = `${start[0]}_${start[1]}_${end[0]}_${end[1]}`;
+			let key = `${startX}_${startY}_${endX}_${endY}`;
+			let path:astar.Node[];
 			if(this.pathMap.has(key) == true)
 			{
-				let path = this.pathMap.get(key);
+				path = this.pathMap.get(key);
 				return DataUtils.CopyArray(path); // 如果直接返回的话，会因为引用同一段路径而使其他实体产生问题。
-				// return path;
 			}
-			
-			this.grid.setStartNode(start[0], start[1]);
-			this.grid.setEndNode(end[0], end[1]);
 
-			var star:astar.AStar = PoolManager.Ins().pop(astar.AStar) as astar.AStar;
-			if(star.findPath(this.grid) == true)
-			{
-				this.pathMap.set(key, star.path)
-				star.destroy();
-				PoolManager.Ins().push(star);
-				return DataUtils.CopyArray(star.path);
-			}
-			PoolManager.Ins().push(star);
-			return [];
+			path = this.astar.findPath(startX, startY, endX, endY, this.grid);
+			this.pathMap.set(key, path);
+			return path;
+		}
+
+		public calcLocalXY(x:number, y:number)
+		{
+			let localX = this.startX + this.space * x;
+			let localY = this.startY + this.space * y;
+			return [localX, localY];
 		}
 
 		private static instance:WarDataMgr;

@@ -22,8 +22,8 @@ var war;
             var cols = war.WarDataMgr.Ins().grid.numRows;
             var shape = new egret.Shape();
             shape.graphics.lineStyle(1, 0x00ff00);
-            shape.x = war.WarDataMgr.Ins().grid.startX;
-            shape.y = war.WarDataMgr.Ins().grid.startY;
+            shape.x = war.WarDataMgr.Ins().startX;
+            shape.y = war.WarDataMgr.Ins().startY;
             for (var i = 0, len = rows; i < len; i++) {
                 for (var j = 0, len2 = cols; j < len2; j++) {
                     shape.graphics.drawRect(space * i, space * j, space, space);
@@ -38,8 +38,8 @@ var war;
                 return;
             if (this.pathMap.has(entity.id) == false) {
                 var testShap_1 = new egret.Shape();
-                testShap_1.x = war.WarDataMgr.Ins().grid.startX;
-                testShap_1.y = war.WarDataMgr.Ins().grid.startY;
+                testShap_1.x = war.WarDataMgr.Ins().startX;
+                testShap_1.y = war.WarDataMgr.Ins().startY;
                 group != null && group.addChild(testShap_1);
                 this.pathMap.set(entity.id, testShap_1);
             }
@@ -49,7 +49,7 @@ var war;
             if (pCom != null) {
                 testShap.graphics.clear();
                 testShap.graphics.lineStyle(2, 0xff0000);
-                testShap.graphics.moveTo(entity.x - war.WarDataMgr.Ins().grid.startX, entity.y - war.WarDataMgr.Ins().grid.startY);
+                testShap.graphics.moveTo(entity.x - war.WarDataMgr.Ins().startX, entity.y - war.WarDataMgr.Ins().startY);
                 var path = pCom.getLeftPath();
                 var index = 1;
                 for (var i = 1; i < path.length; i++) {

@@ -13,19 +13,34 @@ var war;
     var WarDataMgr = (function (_super) {
         __extends(WarDataMgr, _super);
         function WarDataMgr() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.numCols = 10;
+            _this.numRows = 10;
+            _this.space = 40;
+            _this.startX = 100;
+            _this.startY = 240;
+            return _this;
         }
         WarDataMgr.prototype.init = function () {
+            this.numCols = 13;
+            this.numRows = 20;
+            this.space = 40;
+            this.startX = 100;
+            this.startY = 240;
             this.world = new war.World();
             this.entityMap = new Hash();
             this.sysArray = [];
             this.initGrid();
-            this.actionSystem = new war.ActionSystem();
-            this.sysArray.push(this.actionSystem);
             this.moveSystem = new war.MoveSystem();
             this.sysArray.push(this.moveSystem);
-            this.collisionSystem = new war.CollisionSystem();
-            this.sysArray.push(this.collisionSystem);
+            // this.pathSystem = new PathSystem();
+            // this.sysArray.push(this.pathSystem);
+            // this.speedSystem = new SpeedSystem();
+            // this.sysArray.push(this.speedSystem);
+            // this.actionSystem = new ActionSystem();
+            // this.sysArray.push(this.actionSystem);
+            // this.collisionSystem = new CollisionSystem();
+            // this.sysArray.push(this.collisionSystem);
         };
         WarDataMgr.prototype.destroy = function () {
             DataUtils.DestroyUIBaseMap(this.entityMap);
@@ -38,7 +53,10 @@ var war;
                 this.actionSystem = null;
             }
             this.sysArray.length = 0;
-            this.destroyGrid();
+            this.astar.destroy();
+            this.grid.destroy();
+            this.astar = null;
+            this.grid = null;
         };
         WarDataMgr.prototype.startWar = function () {
             egret.startTick(this.update, this);
@@ -75,51 +93,27 @@ var war;
         };
         // ---------------------------------------------------------------------- 寻路
         WarDataMgr.prototype.initGrid = function () {
-            // this.grid = new astar.Grid(52, 80, 10, 100, 240); // 520, 800
-            // this.grid = new astar.Grid(26, 40, 20, 100, 240); // 520, 800
-            this.grid = new astar.Grid(13, 20, 40, 100, 240); // 520, 800
+            this.astar = new astar.AStar();
+            this.grid = new astar.Grid();
+            this.grid.init(this.numRows, this.numCols, this.space);
             this.pathMap = new Hash();
         };
-        WarDataMgr.prototype.destroyGrid = function () {
-            this.grid.destroy();
-            this.grid = null;
-            var path;
-            for (var key in this.pathMap) {
-                path = this.pathMap.get(key);
-                if (path = null)
-                    continue;
-                for (var _i = 0, path_1 = path; _i < path_1.length; _i++) {
-                    var node = path_1[_i];
-                    node.destroy();
-                }
-                path.length = 0;
-                path = null;
-            }
-            this.pathMap.destroy();
-            this.pathMap = null;
-        };
-        WarDataMgr.prototype.findPath = function (start, end) {
-            if (start == null || end == null)
-                return;
-            // 超出边界判断
+        WarDataMgr.prototype.findPath = function (startX, startY, endX, endY) {
             // 如果存在缓存，则在缓存中查找
-            var key = start[0] + "_" + start[1] + "_" + end[0] + "_" + end[1];
+            var key = startX + "_" + startY + "_" + endX + "_" + endY;
+            var path;
             if (this.pathMap.has(key) == true) {
-                var path = this.pathMap.get(key);
+                path = this.pathMap.get(key);
                 return DataUtils.CopyArray(path); // 如果直接返回的话，会因为引用同一段路径而使其他实体产生问题。
-                // return path;
             }
-            this.grid.setStartNode(start[0], start[1]);
-            this.grid.setEndNode(end[0], end[1]);
-            var star = PoolManager.Ins().pop(astar.AStar);
-            if (star.findPath(this.grid) == true) {
-                this.pathMap.set(key, star.path);
-                star.destroy();
-                PoolManager.Ins().push(star);
-                return DataUtils.CopyArray(star.path);
-            }
-            PoolManager.Ins().push(star);
-            return [];
+            path = this.astar.findPath(startX, startY, endX, endY, this.grid);
+            this.pathMap.set(key, path);
+            return path;
+        };
+        WarDataMgr.prototype.calcLocalXY = function (x, y) {
+            var localX = this.startX + this.space * x;
+            var localY = this.startY + this.space * y;
+            return [localX, localY];
         };
         WarDataMgr.Ins = function () {
             if (WarDataMgr.instance == null)

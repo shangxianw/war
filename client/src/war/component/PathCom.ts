@@ -3,7 +3,7 @@ module war
 	export class PathCom extends ComBase
 	{
 		public currStep:number;
-		private path:astar.NodeItem[];
+		private path:astar.Node[];
 		protected init()
 		{
 			this.componentId = COMPONENT.PATH;
@@ -17,7 +17,7 @@ module war
 			this.path.length = 0;
 		}
 
-		public setPath(path:astar.NodeItem[])
+		public setPath(path:astar.Node[])
 		{
 			this.destroyPath();
 			this.path = path;
@@ -42,6 +42,16 @@ module war
 		public getCurr()
 		{
 			return this.path[this.currStep];
+		}
+
+		public getLast()
+		{
+			return this.path[this.currStep-1];
+		}
+
+		public getNext()
+		{
+			return this.path[this.currStep+1];
 		}
 
 		public getEnd()

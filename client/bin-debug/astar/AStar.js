@@ -1,148 +1,119 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-/**
- * A星寻路
- */
 var astar;
 (function (astar) {
+    /**
+     * A星算法
+     * 参考文章：https://blog.csdn.net/hitwhylz/article/details/23089415
+     * 1、把起点加入到openList
+     * 2、重复以下过程：
+     * 		a、遍历openList，找到F值最小的节点，把它当做当前要处理的节点。
+     * 		b、把这个节点加入到closeList。
+     * 		c、对这个节点周围的8个相邻节点遍历：
+     * 			1)、如果它不可抵达或已在closeList中，忽略它。
+     * 			2)、如果它不在openList，则把它加入到openList，并将它的父节点设置为当前节点，计算FGH值。
+     * 			3)、如果它已经在openList中，比较一下该节点原先的g值与当前计算的g值，去最小的为准，如果新值更小，则将它的父节点设置单位当前节点。
+     * 		d、结束标志：
+     * 			1)、当把终点加入到openList中，此时终点找到。
+     * 			2)、查找终点失败，openList为空，此时没有路径。
+     *
+     */
     var AStar = (function () {
         function AStar() {
-            this.straightCost = 1.0; //上下左右走的代价
-            this.diagCost = Math.SQRT2; //斜着走的代价 
-            this.heuristic = this.diagonal;
+            this.init();
         }
-        // 寻路
-        AStar.prototype.findPath = function (grid) {
+        AStar.prototype.init = function () {
+            this.hCost = 10;
+            this.costArray = [
+                14, 10, 14,
+                10, 10,
+                14, 10, 14
+            ];
+            this.posArray = [
+                [-1, -1], [0, -1], [1, -1],
+                [-1, 0], [1, 0],
+                [-1, 1], [0, 1], [1, 1]
+            ];
+        };
+        AStar.prototype.destroy = function () {
+        };
+        AStar.prototype.findPath = function (startX, startY, endX, endY, grid) {
             this.grid = grid;
-            this.open = [];
-            this.closed = [];
-            this.startNode = this.grid.startNode;
-            this.endNode = this.grid.endNode;
-            this.startNode.g = 0;
-            this.startNode.h = this.heuristic(this.startNode);
-            this.startNode.f = this.startNode.g + this.startNode.h;
+            this.openArray = [];
+            this.closeArray = [];
+            this.startNode = this.grid.getNode(startX, startY);
+            this.endNode = this.grid.getNode(endX, endY);
+            this.grid = grid;
             return this.search();
         };
-        // 查找路径
         AStar.prototype.search = function () {
-            var node = this.startNode;
-            while (node != this.endNode) {
-                var startX = Math.max(0, node.x - 1);
-                var endX = Math.min(this.grid.numCols - 1, node.x + 1);
-                var startY = Math.max(0, node.y - 1);
-                var endY = Math.min(this.grid.numRows - 1, node.y + 1);
-                for (var i = startX; i <= endX; i++) {
-                    for (var j = startY; j <= endY; j++) {
-                        //不让斜着走
-                        // if(i != node.x && j != node.y){
-                        //     continue;
-                        // }
-                        var test = this.grid.getNode(i, j);
-                        if (test == node ||
-                            !test.walkable ||
-                            !this.grid.getNode(node.x, test.y).walkable ||
-                            !this.grid.getNode(test.x, node.y).walkable) {
-                            continue;
-                        }
-                        var cost = this.straightCost;
-                        if (!((node.x == test.x) || (node.y == test.y))) {
-                            cost = this.diagCost;
-                        }
-                        var g = node.g + cost * test.costMultiplier;
-                        var h = this.heuristic(test);
-                        var f = g + h;
-                        if (this.isOpen(test) || this.isClosed(test)) {
-                            if (test.f > f) {
-                                test.f = f;
-                                test.g = g;
-                                test.h = h;
-                                test.parent = node;
-                            }
-                        }
-                        else {
-                            test.f = f;
-                            test.g = g;
-                            test.h = h;
-                            test.parent = node;
-                            this.open.push(test);
-                        }
+            var currNode = this.startNode;
+            this.openArray.push(currNode);
+            while (currNode != this.endNode) {
+                currNode = this.getMinFNode();
+                if (currNode == null)
+                    break;
+                this.closeArray.push(currNode);
+                var node = void 0;
+                for (var i = 0, len = 8; i < len; i++) {
+                    node = this.grid.getNode(currNode.x + this.posArray[i][0], currNode.y + this.posArray[i][1]);
+                    if (node == null)
+                        continue;
+                    if (node.x == this.endNode.x && node.y == this.endNode.y) {
+                        node.parent = currNode;
+                        return this.packPath();
+                    }
+                    if (this.closeArray.indexOf(node) >= 0)
+                        continue;
+                    if (node.walkable == false)
+                        continue;
+                    if (node.g != 0 && currNode.g + this.costArray[i] > node.g)
+                        continue;
+                    node.parent = currNode;
+                    node.g = node.parent.g + this.costArray[i];
+                    node.h = (Math.abs(this.endNode.y - node.y) + Math.abs(this.endNode.x - node.x)) * this.hCost;
+                    node.f = node.g + node.h;
+                    this.openArray.push(node);
+                }
+                if (this.openArray.length <= 0) {
+                    return [];
+                }
+            }
+            return [];
+        };
+        AStar.prototype.packPath = function () {
+            var currNode = this.endNode;
+            var path = [this.grid.getNode(currNode.x, currNode.y)];
+            while (currNode != this.startNode) {
+                currNode = currNode.parent;
+                if (currNode == null)
+                    break;
+                path.unshift(this.grid.getNode(currNode.x, currNode.y));
+            }
+            var arr = [].concat(this.openArray, this.closeArray);
+            for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
+                var node = arr_1[_i];
+                node.resetGHF();
+            }
+            return path;
+        };
+        AStar.prototype.getMinFNode = function () {
+            var minIndex;
+            var currIndex = 0;
+            for (var _i = 0, _a = this.openArray; _i < _a.length; _i++) {
+                var openNode = _a[_i];
+                if (minIndex == null) {
+                    minIndex = currIndex;
+                }
+                else {
+                    if (openNode.f < this.openArray[minIndex].f) {
+                        minIndex = currIndex;
                     }
                 }
-                for (var o = 0; o < this.open.length; o++) {
-                }
-                this.closed.push(node);
-                if (this.open.length == 0) {
-                    console.log("AStar >> no path found");
-                    return false;
-                }
-                var openLen = this.open.length;
-                for (var m = 0; m < openLen; m++) {
-                    for (var n = m + 1; n < openLen; n++) {
-                        if (this.open[m].f > this.open[n].f) {
-                            var temp = this.open[m];
-                            this.open[m] = this.open[n];
-                            this.open[n] = temp;
-                        }
-                    }
-                }
-                node = this.open.shift();
+                currIndex++;
             }
-            this.buildPath();
-            return true;
-        };
-        //获取路径
-        AStar.prototype.buildPath = function () {
-            this.path = new Array();
-            var node = this.endNode;
-            this.path.push(node);
-            while (node != this.startNode) {
-                node = node.parent;
-                this.path.unshift(node);
-            }
-        };
-        // 是否待检查
-        AStar.prototype.isOpen = function (node) {
-            for (var i = 0; i < this.open.length; i++) {
-                if (this.open[i] == node) {
-                    return true;
-                }
-            }
-            return false;
-        };
-        // 是否已检查
-        AStar.prototype.isClosed = function (node) {
-            for (var i = 0; i < this.closed.length; i++) {
-                if (this.closed[i] == node) {
-                    return true;
-                }
-            }
-            return false;
-        };
-        // 曼哈顿算法
-        AStar.prototype.manhattan = function (node) {
-            return Math.abs(node.x - this.endNode.x) * this.straightCost + Math.abs(node.y + this.endNode.y) * this.straightCost;
-        };
-        AStar.prototype.euclidian = function (node) {
-            var dx = node.x - this.endNode.x;
-            var dy = node.y - this.endNode.y;
-            return Math.sqrt(dx * dx + dy * dy) * this.straightCost;
-        };
-        AStar.prototype.diagonal = function (node) {
-            var dx = Math.abs(node.x - this.endNode.x);
-            var dy = Math.abs(node.y - this.endNode.y);
-            var diag = Math.min(dx, dy);
-            var straight = dx + dy;
-            return this.diagCost * diag + this.straightCost * (straight - 2 * diag);
-        };
-        Object.defineProperty(AStar.prototype, "visited", {
-            get: function () {
-                return this.closed.concat(this.open);
-            },
-            enumerable: true,
-            configurable: true
-        });
-        AStar.prototype.destroy = function () {
+            return this.openArray.splice(minIndex, 1)[0];
         };
         return AStar;
     }());

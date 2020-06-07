@@ -24,8 +24,8 @@ module war
 
 			let shape = new egret.Shape();
 			shape.graphics.lineStyle(1, 0x00ff00);
-			shape.x = WarDataMgr.Ins().grid.startX;
-			shape.y = WarDataMgr.Ins().grid.startY;
+			shape.x = WarDataMgr.Ins().startX;
+			shape.y = WarDataMgr.Ins().startY;
 			for(let i=0, len = rows; i<len; i++)
 			{
 				for(let j=0, len2 = cols; j<len2; j++)
@@ -46,8 +46,8 @@ module war
 			if(this.pathMap.has(entity.id) == false)
 			{
 				let testShap = new egret.Shape();
-				testShap.x = WarDataMgr.Ins().grid.startX;
-				testShap.y = WarDataMgr.Ins().grid.startY;
+				testShap.x = WarDataMgr.Ins().startX;
+				testShap.y = WarDataMgr.Ins().startY;
 				group != null && group.addChild(testShap);
 				this.pathMap.set(entity.id, testShap);
 			}
@@ -59,7 +59,7 @@ module war
 			{
 				testShap.graphics.clear();
 				testShap.graphics.lineStyle(2, 0xff0000);
-				testShap.graphics.moveTo(entity.x - WarDataMgr.Ins().grid.startX, entity.y - WarDataMgr.Ins().grid.startY);
+				testShap.graphics.moveTo(entity.x - WarDataMgr.Ins().startX, entity.y - WarDataMgr.Ins().startY);
 				let path = pCom.getLeftPath();
 				let index:number = 1;
 				

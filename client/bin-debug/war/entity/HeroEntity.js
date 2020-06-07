@@ -18,15 +18,15 @@ var war;
         HeroEntity.prototype.init = function () {
             this.anchorOffsetX = this.width >> 1;
             this.anchorOffsetY = this.height;
-            this.mc = new war.MovieClip();
-            this.mc.initData("hero_10010", "hero_10010");
-            this.mc.startPlay("run0", -1);
-            this.addChild(this.mc);
-            var rCom2 = new war.RigidCom();
-            rCom2.radius = 30;
-            this.setCom(rCom2);
-            war.DrawUtils.DrawHeroId(this);
-            war.DrawUtils.DrawGrigd(this);
+            // this.mc = new MovieClip();
+            // this.mc.initData("hero_10010", "hero_10010");
+            // this.mc.startPlay("run0", - 1);
+            // this.addChild(this.mc);
+            // let rCom2:RigidCom = new RigidCom();
+            // rCom2.radius = 30;
+            // this.setCom(rCom2);
+            // DrawUtils.DrawHeroId(this);
+            // DrawUtils.DrawGrigd(this);
             war.DrawUtils.DrawHeroAnchor(this);
         };
         HeroEntity.prototype.destroy = function () {

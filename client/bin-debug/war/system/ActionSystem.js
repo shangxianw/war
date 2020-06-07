@@ -89,8 +89,8 @@ var war;
             if (currNode == null)
                 return;
             var warData = war.WarDataMgr.Ins();
-            var localX = warData.grid.startX + warData.grid.space * currNode.x;
-            var localY = warData.grid.startY + warData.grid.space * currNode.y;
+            var localX = warData.startX + warData.grid.space * currNode.x;
+            var localY = warData.startY + warData.grid.space * currNode.y;
             if (entity.x == localX && entity.y == localY) {
             }
             else if (entity.x == localX && entity.y > localY) {

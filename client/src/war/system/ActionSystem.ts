@@ -98,12 +98,12 @@ module war
 			let pCom:PathCom = entity.getCom(COMPONENT.PATH);
 			let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
 			
-			let currNode:astar.NodeItem = pCom.getCurr();
+			let currNode:astar.Node = pCom.getCurr();
 			if(currNode == null)
 				return;
 			let warData = WarDataMgr.Ins();
-			let localX = warData.grid.startX + warData.grid.space * currNode.x;
-			let localY = warData.grid.startY + warData.grid.space * currNode.y;
+			let localX = warData.startX + warData.grid.space * currNode.x;
+			let localY = warData.startY + warData.grid.space * currNode.y;
 			if(entity.x == localX && entity.y == localY)
 			{
 

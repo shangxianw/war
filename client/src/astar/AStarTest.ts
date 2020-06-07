@@ -1,149 +1,109 @@
-class AStarTest extends egret.Sprite
+module astar
 {
-    private _cellSize:number = 20;
-    public _grid:astar.Grid;
-    private _player:egret.Sprite;
-    private _index:number;
-    private _path:Array<any>;
-    
-    public constructor()
-    {
-        super();
-        this.makePlayer();
-        this.makeGrid();
-        this.addEventListener(egret.Event.ADDED_TO_STAGE, ()=>{
-            this.stage.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onGridClick, this);
-        },this);
-        
-    }
-    
-    /**
-     * Creates the player sprite. Just a circle here.
-     */
-    private makePlayer()
-    {
-        this._player = new egret.Sprite();
-        this._player.graphics.beginFill(0xff0000);
-        this._player.graphics.drawCircle(0, 0, 5);
-        this._player.graphics.endFill();
-        this._player.x = Math.random() * 600;
-        this._player.y = Math.random() * 600;
-        this.addChild(this._player);
-    }
+	export class AStarTest extends eui.Component
+	{
+		private numCols:number; // 列
+		private numRows:number; // 行
+		private space:number;
+		private astar:AStar;
+		private grid:Grid;
+		public constructor()
+		{
+			super();
+			this.init();
+			this.touchChildren = false;
+			this.touchEnabled = true;
+		}
 
-    
-    /**
-     * Creates a grid with a bunch of random unwalkable nodes.
-     */
-    private makeGrid():void
-    {
-        this._grid = new astar.Grid(30,30, 20, 0, 0);
-        for(var i = 0; i < 200; i++)
-        {
-            this._grid.setWalkable(Math.floor(Math.random() * 30),
-                                Math.floor(Math.random() * 30),
-                                false);
-        }
-        this.drawGrid();
-    }
-    
-    /**
-     * Draws the given grid, coloring each cell according to its state.
-     */
-    private drawGrid():void
-    {
-        this.graphics.clear();
-        for(let i = 0; i < this._grid.numCols; i++)
-        {
-            for(let j = 0; j <this._grid.numRows; j++)
-            {
-                var node:astar.NodeItem =this._grid.getNode(i, j);
-                //这里有Bug, 绘制将近150次时， drawRect会出错
-                // this.graphics.lineStyle(0);
-                // this.graphics.beginFill(this.getColor(node));
-                // this.graphics.drawRect(i * this._cellSize, j * this._cellSize, this._cellSize, this._cellSize);
-                let sp:egret.Sprite = new egret.Sprite();
-                sp.graphics.beginFill(this.getColor(node));
-                sp.graphics.drawRect(0,0,20,20);
-                sp.graphics.endFill();
-                sp.x = i*this._cellSize;
-                sp.y = j*this._cellSize;
-                this.addChild(sp);
-            }
-        }
-        this.addChild(this._player);
-    }
-    
-    /**
-     * Determines the color of a given node based on its state.
-     */
-    private getColor(node:astar.NodeItem)
-    {
-        if(!node.walkable) return 0;
-        if(node == this._grid.startNode) return 0xcccccc;
-        if(node == this._grid.endNode) return 0xcccccc;
-        return 0xffffff;
-    }
+		public init()
+		{
+			this.numCols = 100;
+			this.numRows = 200;
+			this.space = 10;
+			this.astar = new AStar();
+			this.initData();
+		}
 
-    /**
-     * Handles the click event on the GridView. Finds the clicked on cell and toggles its walkable state.
-     */
-    private onGridClick(event:egret.TouchEvent):void
-    {
-        var xpos = Math.floor(event.stageX / this._cellSize);
-        var ypos = Math.floor(event.stageY / this._cellSize);
-        this._grid.setEndNode(xpos, ypos);
-        
-        xpos = Math.floor(this._player.x / this._cellSize);
-        ypos = Math.floor(this._player.y / this._cellSize);
-        this._grid.setStartNode(xpos, ypos);
-        
-        this.drawGrid();
+		public destroy()
+		{
+			this.grid.destroy();
+			this.grid = null;
+			this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTap, this);
+		}
 
-        this.startTime = egret.getTimer();
-        this.findPath();
-        console.log("耗时:", egret.getTimer() - this.startTime);
-    }
+		public initData()
+		{
+			let tect = new eui.Rect();
+			tect.width = this.space * this.numCols;
+			tect.height = this.space * this.numRows;
+			this.addChild(tect);
+			let gridMap = new egret.Shape();
+			let walkMap = new egret.Shape();
+			gridMap.graphics.lineStyle(1, 0xffff00);
+			walkMap.graphics.beginFill(0xffff00);
+			
+			this.grid = new Grid();
+			this.grid.init(this.numRows, this.numCols, this.space);
 
-    private startTime = 0;
-    
-    /**
-     * Creates an instance of AStar and uses it to find a path.
-     */
-    public findPath():any[]
-    {
-        var aStar:astar.AStar = new astar.AStar();
-        if(aStar.findPath(this._grid))
-        {
-            this._path = aStar.path;
-            this._index = 0;
-            this.addEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
-            return this._path
-        }
-    }
-    
-    /**
-     * Finds the next node on the path and eases to it.
-     */
-    private onEnterFrame(event:egret.Event):void
-    {
-        var targetX = this._path[this._index].x * this._cellSize +  this._cellSize / 2;
-        var targetY = this._path[this._index].y * this._cellSize + this._cellSize / 2;
-        var dx = targetX - this._player.x;
-        var dy = targetY - this._player.y;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        if(dist < 1)
-        {
-            this._index++;
-            if(this._index >= this._path.length)
-            {
-                this.removeEventListener(egret.Event.ENTER_FRAME, this.onEnterFrame, this);
-            }
-        }
-        else
-        {
-            this._player.x += dx * .5;
-            this._player.y += dy * .5;
-        }
-    }
+			for(let i=0, len=this.numRows; i<len; i++)
+			{
+				for(let j=0, len2=this.numCols; j<len2; j++)
+				{
+					let x = j * this.space;
+					let y = i * this.space;
+					gridMap.graphics.drawRect(x, y, this.space, this.space);
+
+					// let walkable = Math.random() > 0.8;
+					// if(walkable == false)
+					// {
+					// 	walkMap.graphics.drawRect(x, y, this.space, this.space);
+					// 	let flag = this.grid.setWalkable(j, i, false);
+					// 	if(flag == false)
+					// 		1;
+					// }
+				}
+			}
+
+			gridMap.graphics.endFill();
+			walkMap.graphics.endFill();
+			this.addChild(gridMap);
+			this.addChild(walkMap);
+
+			this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTap, this);
+		}
+
+		private pathShap:egret.Shape;
+		private OnTap(e:egret.TouchEvent)
+		{
+
+			let x = Math.floor(e.localX / this.space);
+			let y = Math.floor(e.localY / this.space);
+
+			if(this.pathShap == null)
+			{
+				this.pathShap = new egret.Shape();
+				this.addChild(this.pathShap);
+			}
+			this.pathShap.graphics.clear();
+			this.pathShap.graphics.beginFill(0xff0000);
+
+			if(this.astar.startNode == null && this.astar.endNode == null)
+			{
+				this.astar.startNode = this.grid.getNode(0, 0);
+				this.astar.endNode = this.grid.getNode(x, y);
+			}
+			else
+			{
+				this.astar.startNode = this.astar.endNode;
+				this.astar.endNode = this.grid.getNode(x, y);
+			}
+			let path = this.astar.findPath(this.astar.startNode.x, this.astar.startNode.y, this.astar.endNode.x, this.astar.endNode.y, this.grid);
+			// let path = this.astar.findPath(9, 19, x, y, this.grid);
+			for(let node of path)
+			{
+				this.pathShap.graphics.drawRect(node.x*this.space, node.y*this.space, this.space, this.space);
+			}
+			this.pathShap.graphics.endFill();
+		}
+	}
 }

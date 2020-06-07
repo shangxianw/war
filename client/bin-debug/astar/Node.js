@@ -1,23 +1,28 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
-/**
- * Node 节点
- */
 var astar;
 (function (astar) {
-    var NodeItem = (function () {
-        function NodeItem(x, y) {
+    var Node = (function () {
+        function Node() {
             this.walkable = true;
-            this.costMultiplier = 1.0;
+        }
+        Node.prototype.init = function (x, y, walkable) {
+            this.resetGHF();
             this.x = x;
             this.y = y;
-        }
-        NodeItem.prototype.destroy = function () {
+            this.walkable = walkable;
         };
-        return NodeItem;
+        Node.prototype.destroy = function () {
+        };
+        Node.prototype.resetGHF = function () {
+            this.g = 0;
+            this.h = 0;
+            this.f = this.g + this.h;
+        };
+        return Node;
     }());
-    astar.NodeItem = NodeItem;
-    __reflect(NodeItem.prototype, "astar.NodeItem");
+    astar.Node = Node;
+    __reflect(Node.prototype, "astar.Node");
 })(astar || (astar = {}));
 //# sourceMappingURL=Node.js.map

@@ -48,26 +48,26 @@ module war
 		public initData(info:WarPanelData)
 		{
 			DrawUtils.DrawGrid(this.drawGroup);
-			let space = WarDataMgr.Ins().grid.space;
-			let localX = WarDataMgr.Ins().grid.startX + space * Math.floor(WarDataMgr.Ins().grid.numCols/4);
-			let localY = WarDataMgr.Ins().grid.startY + space * Math.floor(WarDataMgr.Ins().grid.numRows/4);
-			let queen1:QueenEntity = new QueenEntity();
-			(queen1.getCom(COMPONENT.ACTION) as ActionCom).setDir(DIRECTION.DOWN);
-			queen1.x = localX;
-			queen1.y = localY;
-			this.entityGroup.addChild(queen1);
-			this.queen1Id = queen1.id;
+			// let space = WarDataMgr.Ins().grid.space;
+			// let localX = WarDataMgr.Ins().grid.startX + space * Math.floor(WarDataMgr.Ins().grid.numCols/4);
+			// let localY = WarDataMgr.Ins().grid.startY + space * Math.floor(WarDataMgr.Ins().grid.numRows/4);
+			// let queen1:QueenEntity = new QueenEntity();
+			// (queen1.getCom(COMPONENT.ACTION) as ActionCom).setDir(DIRECTION.DOWN);
+			// queen1.x = localX;
+			// queen1.y = localY;
+			// this.entityGroup.addChild(queen1);
+			// this.queen1Id = queen1.id;
 
-			let queen2:QueenEntity = new QueenEntity();
-			localX = WarDataMgr.Ins().grid.startX + space * Math.floor(WarDataMgr.Ins().grid.numCols - WarDataMgr.Ins().grid.numCols/4);
-			localY = WarDataMgr.Ins().grid.startY + space * Math.floor(WarDataMgr.Ins().grid.numRows/4);
-			queen2.x = localX;
-			queen2.y = localY;
-			(queen2.getCom(COMPONENT.ACTION) as ActionCom).setDir(DIRECTION.DOWN);
+			// let queen2:QueenEntity = new QueenEntity();
+			// localX = WarDataMgr.Ins().grid.startX + space * Math.floor(WarDataMgr.Ins().grid.numCols - WarDataMgr.Ins().grid.numCols/4);
+			// localY = WarDataMgr.Ins().grid.startY + space * Math.floor(WarDataMgr.Ins().grid.numRows/4);
+			// queen2.x = localX;
+			// queen2.y = localY;
+			// (queen2.getCom(COMPONENT.ACTION) as ActionCom).setDir(DIRECTION.DOWN);
 
-			this.entityGroup.addChild(queen2);
-			WarDataMgr.Ins().addEntity(queen1);
-			WarDataMgr.Ins().addEntity(queen2);
+			// this.entityGroup.addChild(queen2);
+			// WarDataMgr.Ins().addEntity(queen1);
+			// WarDataMgr.Ins().addEntity(queen2);
 
 			this.testGrid.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnGridTap, this);
 		}
@@ -82,12 +82,9 @@ module war
 		{
 			let w = this.testGrid.width;
 			let h = this.testGrid.height;
-			let space = WarDataMgr.Ins().grid.space;
-			let endX = 6//Math.floor(Math.random() * WarDataMgr.Ins().grid.numCols); 
-			let endY = 10//Math.floor(Math.random() * WarDataMgr.Ins().grid.numRows);
-			// let queen:QueenEntity = WarDataMgr.Ins().entityMap.get(this.queen1Id);
-			// let endX = Math.floor((queen.x - WarDataMgr.Ins().grid.startX)/space);
-			// let endY = Math.floor((queen.y - WarDataMgr.Ins().grid.startY)/space);
+			let space = WarDataMgr.Ins().space;
+			let endX = 6;
+			let endY = 6;
 			
 			let x = Math.floor(e.localX / space);
 			let y = Math.floor(e.localY / space);
@@ -95,19 +92,23 @@ module war
 			
 			// 创建英雄
 			let hero:HeroEntity = PoolManager.Ins().pop(HeroEntity);
-			hero.x = WarDataMgr.Ins().grid.startX + space*x; // e.stageX//
-			hero.y = WarDataMgr.Ins().grid.startY + space*y; // e.stageY;
+			hero.x = WarDataMgr.Ins().startX + space*x; // e.stageX//
+			hero.y = WarDataMgr.Ins().startY + space*y; // e.stageY;
 			let sCom:SpeedCom = PoolManager.Ins().pop(SpeedCom);
 			sCom.speed = 0.8;
+			sCom.angle = 0;
 			hero.setCom(sCom);
 
-			let dirCom:ActionCom = hero.getCom(COMPONENT.ACTION);
-			dirCom.setActionAndDir(ACTION.RUN , Math.ceil(Math.random()*8));
+			setInterval(()=>{
+				sCom.angle += 30;
+			}, 1000);
+			// let dirCom:ActionCom = hero.getCom(COMPONENT.ACTION);
+			// dirCom.setActionAndDir(ACTION.RUN , Math.ceil(Math.random()*8));
 
-			let pathCom:PathCom = PoolManager.Ins().pop(PathCom);
-			let path = WarDataMgr.Ins().findPath([x, y], [endX, endY]);
-			pathCom.setPath(path);
-			hero.setCom(pathCom);
+			// let pathCom:PathCom = PoolManager.Ins().pop(PathCom);
+			// let path = WarDataMgr.Ins().findPath(x, y, endX, endY);
+			// pathCom.setPath(path);
+			// hero.setCom(pathCom);
 
 			this.entityGroup.addChild(hero);
 			WarDataMgr.Ins().addEntity(hero);
