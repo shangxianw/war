@@ -1,5 +1,9 @@
 module war
 {
+	/**
+	 * 速度系统
+	 * 专门负责研究
+	 */
 	export class SpeedSystem extends SystemBase
 	{
 		protected init()
@@ -31,7 +35,7 @@ module war
 						continue;
 					let currNode:astar.Node = pCom.getCurr();
 					let localXY = warData.calcLocalXY(currNode.x, currNode.y);
-					let angle = MathUtils.CalcSpeedAngle(entity.x, entity.y, localXY[0], localXY[1]);
+					let angle = MathUtils.CalcAngle(entity.x, entity.y, localXY[0], localXY[1]);
 					sCom.angle = angle;
 
 					let speedXY = MathUtils.CalcLegSide(sCom.speed, sCom.angle);

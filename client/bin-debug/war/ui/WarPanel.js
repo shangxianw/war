@@ -83,15 +83,15 @@ var war;
             sCom.speed = 0.8;
             sCom.angle = 0;
             hero.setCom(sCom);
-            setInterval(function () {
-                sCom.angle += 30;
-            }, 1000);
+            // setInterval(()=>{
+            // 	sCom.angle += 30;
+            // }, 1000);
             // let dirCom:ActionCom = hero.getCom(COMPONENT.ACTION);
             // dirCom.setActionAndDir(ACTION.RUN , Math.ceil(Math.random()*8));
-            // let pathCom:PathCom = PoolManager.Ins().pop(PathCom);
-            // let path = WarDataMgr.Ins().findPath(x, y, endX, endY);
-            // pathCom.setPath(path);
-            // hero.setCom(pathCom);
+            var pathCom = PoolManager.Ins().pop(war.PathCom);
+            var path = war.WarDataMgr.Ins().findPath(x, y, endX, endY);
+            pathCom.setPath(path);
+            hero.setCom(pathCom);
             this.entityGroup.addChild(hero);
             war.WarDataMgr.Ins().addEntity(hero);
             war.DrawUtils.DrawPath(hero, this.drawGroup);

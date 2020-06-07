@@ -99,16 +99,16 @@ module war
 			sCom.angle = 0;
 			hero.setCom(sCom);
 
-			setInterval(()=>{
-				sCom.angle += 30;
-			}, 1000);
+			// setInterval(()=>{
+			// 	sCom.angle += 30;
+			// }, 1000);
 			// let dirCom:ActionCom = hero.getCom(COMPONENT.ACTION);
 			// dirCom.setActionAndDir(ACTION.RUN , Math.ceil(Math.random()*8));
 
-			// let pathCom:PathCom = PoolManager.Ins().pop(PathCom);
-			// let path = WarDataMgr.Ins().findPath(x, y, endX, endY);
-			// pathCom.setPath(path);
-			// hero.setCom(pathCom);
+			let pathCom:PathCom = PoolManager.Ins().pop(PathCom);
+			let path = WarDataMgr.Ins().findPath(x, y, endX, endY);
+			pathCom.setPath(path);
+			hero.setCom(pathCom);
 
 			this.entityGroup.addChild(hero);
 			WarDataMgr.Ins().addEntity(hero);

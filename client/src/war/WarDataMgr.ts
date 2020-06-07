@@ -37,8 +37,8 @@ module war
 			this.moveSystem = new MoveSystem();
 			this.sysArray.push(this.moveSystem);
 
-			// this.pathSystem = new PathSystem();
-			// this.sysArray.push(this.pathSystem);
+			this.pathSystem = new PathSystem();
+			this.sysArray.push(this.pathSystem);
 
 			// this.speedSystem = new SpeedSystem();
 			// this.sysArray.push(this.speedSystem);

@@ -31,17 +31,28 @@ module war
 					continue;
 				
 				let currNode:astar.Node = pCom.getCurr();
-				let lastNode:astar.Node = pCom.getLast();
 				if(currNode == null)
+				{
+					entity.removeCom(COMPONENT.PATH);
 					continue;
+				}
+				let lastNode:astar.Node = pCom.getLast();
+				let localXY2 = warData.calcLocalXY(currNode.x, currNode.y);
 				if(lastNode != null)
 				{
 					let localXY1 = warData.calcLocalXY(lastNode.x, lastNode.y);
-					let localXY2 = warData.calcLocalXY(currNode.x, currNode.y);
 					let d1 = MathUtils.CalcDistance(localXY1[0], localXY1[1], localXY2[0], localXY2[1]);
 					let d2 = MathUtils.CalcDistance(localXY1[0], localXY1[1], entity.x, entity.y);
 					if(d2 >= d1)
 						pCom.toNext();
+					else
+					{
+						let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
+						if(sCom != null)
+						{
+							sCom.angle = MathUtils.CalcAngle(entity.x, entity.y, localXY2[0], localXY2[1]);
+						}
+					}
 				}
 				else
 				{

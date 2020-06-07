@@ -35,16 +35,24 @@ var war;
                 if (pCom == null)
                     continue;
                 var currNode = pCom.getCurr();
-                var lastNode = pCom.getLast();
-                if (currNode == null)
+                if (currNode == null) {
+                    entity.removeCom(war.COMPONENT.PATH);
                     continue;
+                }
+                var lastNode = pCom.getLast();
+                var localXY2 = warData.calcLocalXY(currNode.x, currNode.y);
                 if (lastNode != null) {
                     var localXY1 = warData.calcLocalXY(lastNode.x, lastNode.y);
-                    var localXY2 = warData.calcLocalXY(currNode.x, currNode.y);
                     var d1 = MathUtils.CalcDistance(localXY1[0], localXY1[1], localXY2[0], localXY2[1]);
                     var d2 = MathUtils.CalcDistance(localXY1[0], localXY1[1], entity.x, entity.y);
                     if (d2 >= d1)
                         pCom.toNext();
+                    else {
+                        var sCom = entity.getCom(war.COMPONENT.SPEED);
+                        if (sCom != null) {
+                            sCom.angle = MathUtils.CalcAngle(entity.x, entity.y, localXY2[0], localXY2[1]);
+                        }
+                    }
                 }
                 else {
                     pCom.toNext();

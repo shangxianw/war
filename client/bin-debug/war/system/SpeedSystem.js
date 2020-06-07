@@ -10,6 +10,10 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var war;
 (function (war) {
+    /**
+     * 速度系统
+     * 专门负责研究
+     */
     var SpeedSystem = (function (_super) {
         __extends(SpeedSystem, _super);
         function SpeedSystem() {
@@ -35,7 +39,7 @@ var war;
                         continue;
                     var currNode = pCom.getCurr();
                     var localXY = warData.calcLocalXY(currNode.x, currNode.y);
-                    var angle = MathUtils.CalcSpeedAngle(entity.x, entity.y, localXY[0], localXY[1]);
+                    var angle = MathUtils.CalcAngle(entity.x, entity.y, localXY[0], localXY[1]);
                     sCom.angle = angle;
                     var speedXY = MathUtils.CalcLegSide(sCom.speed, sCom.angle);
                     var speedX = speedXY[0];
