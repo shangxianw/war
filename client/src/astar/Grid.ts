@@ -6,7 +6,6 @@ module astar
 		public numRows:number;
 		public space:number;
 		public nodeArray:Node[][];
-		public
 		public constructor()
 		{
 
@@ -65,6 +64,19 @@ module astar
 				return false;
 			this.nodeArray[y][x].walkable = walkable;
 			return true;
+		}
+
+		public getNodeArray()
+		{
+			let tarArray:Node[] = [];
+			for(let nodeArray of this.nodeArray)
+			{
+				for(let node of nodeArray)
+				{
+					tarArray.push(node);
+				}
+			}
+			return tarArray;
 		}
 	}
 }

@@ -48,6 +48,17 @@ var astar;
             this.nodeArray[y][x].walkable = walkable;
             return true;
         };
+        Grid.prototype.getNodeArray = function () {
+            var tarArray = [];
+            for (var _i = 0, _a = this.nodeArray; _i < _a.length; _i++) {
+                var nodeArray = _a[_i];
+                for (var _b = 0, nodeArray_1 = nodeArray; _b < nodeArray_1.length; _b++) {
+                    var node = nodeArray_1[_b];
+                    tarArray.push(node);
+                }
+            }
+            return tarArray;
+        };
         return Grid;
     }());
     astar.Grid = Grid;
