@@ -83,8 +83,8 @@ module war
 			let w = this.testGrid.width;
 			let h = this.testGrid.height;
 			let space = WarDataMgr.Ins().space;
-			let endX = 6;
-			let endY = 6;
+			let endX = 0;
+			let endY = 0;
 			
 			let x = Math.floor(e.localX / space);
 			let y = Math.floor(e.localY / space);
@@ -92,18 +92,12 @@ module war
 			
 			// 创建英雄
 			let hero:HeroEntity = PoolManager.Ins().pop(HeroEntity);
-			hero.x = WarDataMgr.Ins().startX + space*x; // e.stageX//
-			hero.y = WarDataMgr.Ins().startY + space*y; // e.stageY;
-			let sCom:SpeedCom = PoolManager.Ins().pop(SpeedCom);
-			sCom.speed = 0.8;
-			sCom.angle = 0;
-			hero.setCom(sCom);
-
-			// setInterval(()=>{
-			// 	sCom.angle += 30;
-			// }, 1000);
-			// let dirCom:ActionCom = hero.getCom(COMPONENT.ACTION);
-			// dirCom.setActionAndDir(ACTION.RUN , Math.ceil(Math.random()*8));
+			hero.x = WarUtils.ToRealX(x);
+			hero.y = WarUtils.ToRealY(y);
+			// let sCom:SpeedCom = PoolManager.Ins().pop(SpeedCom);
+			// sCom.speed = 0.8;
+			// sCom.angle = 0;
+			// hero.setCom(sCom);
 
 			let pathCom:PathCom = PoolManager.Ins().pop(PathCom);
 			let path = WarDataMgr.Ins().findPath(x, y, endX, endY);

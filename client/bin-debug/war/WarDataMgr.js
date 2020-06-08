@@ -13,20 +13,15 @@ var war;
     var WarDataMgr = (function (_super) {
         __extends(WarDataMgr, _super);
         function WarDataMgr() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.numCols = 10;
-            _this.numRows = 10;
-            _this.space = 40;
-            _this.startX = 100;
-            _this.startY = 240;
-            return _this;
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         WarDataMgr.prototype.init = function () {
-            this.numCols = 13;
-            this.numRows = 20;
-            this.space = 40;
-            this.startX = 100;
-            this.startY = 240;
+            this.numCols = 18;
+            this.numRows = 30;
+            this.space = 30;
+            this.startX = 90;
+            this.startY = 90;
+            // 战场宽540高900
             this.world = new war.World();
             this.entityMap = new Hash();
             this.sysArray = [];
@@ -39,8 +34,8 @@ var war;
             // this.sysArray.push(this.speedSystem);
             // this.actionSystem = new ActionSystem();
             // this.sysArray.push(this.actionSystem);
-            // this.collisionSystem = new CollisionSystem();
-            // this.sysArray.push(this.collisionSystem);
+            this.collisionSystem = new war.CollisionSystem();
+            this.sysArray.push(this.collisionSystem);
         };
         WarDataMgr.prototype.destroy = function () {
             DataUtils.DestroyUIBaseMap(this.entityMap);

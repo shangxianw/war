@@ -71,23 +71,18 @@ var war;
             var w = this.testGrid.width;
             var h = this.testGrid.height;
             var space = war.WarDataMgr.Ins().space;
-            var endX = 6;
-            var endY = 6;
+            var endX = 0;
+            var endY = 0;
             var x = Math.floor(e.localX / space);
             var y = Math.floor(e.localY / space);
             // 创建英雄
             var hero = PoolManager.Ins().pop(war.HeroEntity);
-            hero.x = war.WarDataMgr.Ins().startX + space * x; // e.stageX//
-            hero.y = war.WarDataMgr.Ins().startY + space * y; // e.stageY;
-            var sCom = PoolManager.Ins().pop(war.SpeedCom);
-            sCom.speed = 0.8;
-            sCom.angle = 0;
-            hero.setCom(sCom);
-            // setInterval(()=>{
-            // 	sCom.angle += 30;
-            // }, 1000);
-            // let dirCom:ActionCom = hero.getCom(COMPONENT.ACTION);
-            // dirCom.setActionAndDir(ACTION.RUN , Math.ceil(Math.random()*8));
+            hero.x = war.WarUtils.ToRealX(x);
+            hero.y = war.WarUtils.ToRealY(y);
+            // let sCom:SpeedCom = PoolManager.Ins().pop(SpeedCom);
+            // sCom.speed = 0.8;
+            // sCom.angle = 0;
+            // hero.setCom(sCom);
             var pathCom = PoolManager.Ins().pop(war.PathCom);
             var path = war.WarDataMgr.Ins().findPath(x, y, endX, endY);
             pathCom.setPath(path);

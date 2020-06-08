@@ -14,7 +14,7 @@
 		<war:CostBar y="303.8" skinName="CostBarSkin" horizontalCenter="0"/>
 	</e:Group>
 	</e:Group>
-	<e:Group id="testGrid" width="520" height="800" y="240" x="100">
+	<e:Group id="testGrid" width="540" height="900" y="90" x="90">
 		<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0xffffff"/>
 	</e:Group>
 	<e:Group id="drawGroup" left="0" right="0" top="0" bottom="0" touchEnabled="false"/>

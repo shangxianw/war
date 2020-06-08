@@ -18,12 +18,14 @@ var MathUtils = (function () {
         return [h, w]; // 返回后记得保留小数点后两位
     };
     MathUtils.CalcAngle = function (x1, y1, x2, y2) {
+        y1 = -y1; // 因为舞台的坐标系统与数学的坐标系统y是相反的。
+        y2 = -y2;
         if (x1 == x2 && y1 == y2)
             return 0; // 其实应该是报错才对。
         if (x1 == x2 && y2 - y1 < 0)
-            return 270;
-        else if (x1 == x2 && y2 - y1 > 0)
             return 90;
+        else if (x1 == x2 && y2 - y1 > 0)
+            return 270;
         var h = x2 - x1;
         var w = y2 - y1;
         var hypo = Math.sqrt(h * h + w * w);

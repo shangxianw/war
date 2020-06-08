@@ -46,27 +46,32 @@ module war
 					
 					let flag = MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, entity2.x, entity2.y, rCom2.radius);
 					if(flag == false)
+					{
+						DrawUtils.SetColor(entity2, false, 255, 0, 0);
 						continue;
+					}
 					
 					// 以下是碰撞处理
 					let aCom:ActionCom = entity2.getCom(COMPONENT.ACTION);
 					if(aCom != null)
 					{
+						// DrawUtils.SetColor(entity2, true, 255, 0, 0);
+						DrawUtils.SetColor(entity2, true, 255, 0, 0);
 						// aCom.setAction(ACTION.ATTACK);
 						// entity2.removeCom(COMPONENT.SPEED);
-						let pathCom:PathCom = entity2.getCom(COMPONENT.PATH);
-						let endNode:astar.Node = pathCom.getEndNode();
+						// let pathCom:PathCom = entity2.getCom(COMPONENT.PATH);
+						// let endNode:astar.Node = pathCom.getEndNode();
 						
-						let currNode:astar.Node = pathCom.getCurr();
-						let path = WarDataMgr.Ins().findPath(currNode.x, currNode.y-1, endNode.x, endNode.y);
-						if(MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, path[0].x, path[0].y, rCom2.radius) == false)
-							pathCom.setPath(path);
-						else
-						{
-							path = WarDataMgr.Ins().findPath(currNode.x+1, currNode.y-1, endNode.x, endNode.y);
-							if(MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, path[0].x, path[0].y, rCom2.radius) == false)
-								pathCom.setPath(path);
-						}
+						// let currNode:astar.Node = pathCom.getCurr();
+						// let path = WarDataMgr.Ins().findPath(currNode.x, currNode.y-1, endNode.x, endNode.y);
+						// if(MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, path[0].x, path[0].y, rCom2.radius) == false)
+						// 	pathCom.setPath(path);
+						// else
+						// {
+						// 	path = WarDataMgr.Ins().findPath(currNode.x+1, currNode.y-1, endNode.x, endNode.y);
+						// 	if(MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, path[0].x, path[0].y, rCom2.radius) == false)
+						// 		pathCom.setPath(path);
+						// }
 					}
 				}
 			}

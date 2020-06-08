@@ -17,12 +17,14 @@ class MathUtils
 
 	public static CalcAngle(x1:number, y1:number, x2:number, y2:number)
 	{
+		y1 = -y1; // 因为舞台的坐标系统与数学的坐标系统y是相反的。
+		y2 = -y2;
 		if(x1 == x2 && y1 == y2)
 			return 0; // 其实应该是报错才对。
 		if(x1 == x2 && y2 - y1 < 0)
-			return 270;
-		else if(x1 == x2 && y2 - y1 > 0)
 			return 90;
+		else if(x1 == x2 && y2 - y1 > 0)
+			return 270;
 
 		let h = x2 - x1;
 		let w = y2 - y1;

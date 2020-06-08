@@ -14,28 +14,29 @@ module war
 		public astar:astar.AStar;
 		public grid:astar.Grid;
 		public pathMap:Hash<string, astar.Node[]>;
-		public numCols:number = 10
-		public numRows:number = 10;
-		public space:number = 40;
-		public startX:number = 100;
-		public startY:number = 240;
+		public numCols:number;
+		public numRows:number;
+		public space:number;
+		public startX:number;
+		public startY:number;
 
 		public world:World;
 
 		protected init()
 		{
-			this.numCols = 13;
-			this.numRows = 20;
-			this.space = 40;
-			this.startX = 100;
-			this.startY = 240;
+			this.numCols = 18;
+			this.numRows = 30;
+			this.space = 30;
+			this.startX = 90;
+			this.startY = 90;
+			// 战场宽540高900
 			this.world = new World();
 			this.entityMap = new Hash<number, EntityBase>();
 			this.sysArray = [];
 			this.initGrid();
 
 			this.moveSystem = new MoveSystem();
-			this.sysArray.push(this.moveSystem);
+			this.sysArray.push(this.moveSystem); 
 
 			this.pathSystem = new PathSystem();
 			this.sysArray.push(this.pathSystem);
@@ -47,8 +48,8 @@ module war
 			// this.sysArray.push(this.actionSystem);
 
 
-			// this.collisionSystem = new CollisionSystem();
-			// this.sysArray.push(this.collisionSystem);
+			this.collisionSystem = new CollisionSystem();
+			this.sysArray.push(this.collisionSystem);
 		}
 
 		protected destroy()

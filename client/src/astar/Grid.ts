@@ -6,6 +6,7 @@ module astar
 		public numRows:number;
 		public space:number;
 		public nodeArray:Node[][];
+		public
 		public constructor()
 		{
 

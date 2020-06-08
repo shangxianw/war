@@ -5,13 +5,27 @@ module war
 		public static isTest:boolean = true;
 		public static Destroy()
 		{
-			for(let key in this.pathMap.map)
+			if(this.pathMap != null)
 			{
-				let item:egret.Shape = this.pathMap.get(Number(key));
-				item.parent != null && item.parent.removeChild(item);
-				item = null;
+				for(let key in this.pathMap.map)
+				{
+					let item:egret.Shape = this.pathMap.get(Number(key));
+					item.parent != null && item.parent.removeChild(item);
+					item = null;
+				}
+				this.pathMap.destroy();
 			}
-			this.pathMap.destroy();
+
+			if(this.colorMap != null)
+			{
+				for(let key in this.colorMap.map)
+				{
+					let item:egret.ColorMatrixFilter = this.pathMap.get(Number(key));
+					item.matrix = null;
+					item = null;
+				}
+				this.pathMap.destroy();
+			}
 		}
 
 		public static DrawGrid(group:eui.Group)
@@ -30,18 +44,23 @@ module war
 			{
 				for(let j=0, len2 = cols; j<len2; j++)
 				{
-					shape.graphics.drawRect(space*i, space*j, space, space);
+					let x = space*i// - space/2;
+					let y = space*j// - space/2
+					shape.graphics.drawRect(x, y, space, space);
 				}
 			}
 			shape.graphics.endFill();
 			group.addChild(shape);
 		}
 
-		public static pathMap:Hash<number, egret.Shape> = new Hash<number, egret.Shape>();
+		public static pathMap:Hash<number, egret.Shape>;
 		public static DrawPath(entity:EntityBase, group:eui.Group = null)
 		{
 			if(DrawUtils.isTest == false)
 				return;
+			
+			if(this.pathMap == null)
+				this.pathMap = new Hash<number, egret.Shape>();
 
 			if(this.pathMap.has(entity.id) == false)
 			{
@@ -66,7 +85,7 @@ module war
 				for(let i=1; i<path.length; i++)
 				{
 					let node = path[i];
-					testShap.graphics.lineTo(space*node.x, space*node.y);
+					testShap.graphics.lineTo(space*node.x + space/2, space*node.y + space/2);
 				}
 				testShap.graphics.endFill();
 			}
@@ -112,6 +131,53 @@ module war
 			shape.graphics.drawCircle(0, 0, rCom.radius);
 			shape.graphics.endFill();
 			entity.addChildAt(shape, 0);
+		}
+
+		public static colorMap:Hash<number, egret.ColorMatrixFilter>;
+		public static SetColor(entity:EntityBase, show:boolean, r:number, g:number, b:number, strength:number=1)
+		{
+			if(this.colorMap == null)
+				this.colorMap = new Hash<number, egret.ColorMatrixFilter>();
+
+			if(this.colorMap.has(entity.id) == false)
+			{
+				let colorFilter = new egret.ColorMatrixFilter();
+				this.colorMap.set(entity.id, colorFilter);
+				entity.filters = [colorFilter];
+			}
+			let colorFilter:egret.ColorMatrixFilter = this.colorMap.get(entity.id);
+			if(show == false)
+			{
+				colorFilter.matrix = null;
+				return;
+			}
+			let color = (r<<16) + (g<<8) + b;
+			if(!egret.WebGLUtils.checkCanUseWebGL())
+			{
+				entity.tint = color;
+				return;
+			}
+			if(r==256 && g==256 && b==256)
+			{
+				entity.filters = null;
+			}
+			else
+			{
+				let colorMatrix = [
+					1, 0, 0, 0, 100, 
+					0, 1, 0, 0, 100, 
+					0, 0, 1, 0, 100, 
+					0, 0, 0, 1, 0 
+				];
+				colorMatrix[0] = r / 255;
+				colorMatrix[6] = g / 255;
+				colorMatrix[12] = b / 255;
+				colorMatrix[4] = strength;
+				colorMatrix[9] = strength;
+				colorMatrix[14] = strength;
+				
+				colorFilter.matrix = colorMatrix;
+			}
 		}
 	}
 }
