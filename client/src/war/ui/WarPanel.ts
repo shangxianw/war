@@ -83,8 +83,8 @@ module war
 			let w = this.testGrid.width;
 			let h = this.testGrid.height;
 			let space = WarDataMgr.Ins().space;
-			let endX = 0;
-			let endY = 0;
+			let endX = 3;
+			let endY = 7;
 			
 			let x = Math.floor(e.localX / space);
 			let y = Math.floor(e.localY / space);
@@ -94,10 +94,11 @@ module war
 			let hero:HeroEntity = PoolManager.Ins().pop(HeroEntity);
 			hero.x = WarUtils.ToRealX(x);
 			hero.y = WarUtils.ToRealY(y);
-			// let sCom:SpeedCom = PoolManager.Ins().pop(SpeedCom);
-			// sCom.speed = 0.8;
-			// sCom.angle = 0;
-			// hero.setCom(sCom);
+
+			let sCom:SpeedCom = PoolManager.Ins().pop(SpeedCom);
+			sCom.speed = 0.8;
+			sCom.angle = 0;
+			hero.setCom(sCom);
 
 			let pathCom:PathCom = PoolManager.Ins().pop(PathCom);
 			let path = WarDataMgr.Ins().findPath(x, y, endX, endY);

@@ -37,12 +37,13 @@ module war
 					continue;
 				}
 				let lastNode:astar.Node = pCom.getLast();
-				let localXY2 = warData.calcLocalXY(currNode.x, currNode.y);
+				let localXY2 = WarUtils.ToRealPos(currNode.x, currNode.y);
 				if(lastNode != null)
 				{
-					let localXY1 = warData.calcLocalXY(lastNode.x, lastNode.y);
-					let d1 = MathUtils.CalcDistance(localXY1[0], localXY1[1], localXY2[0], localXY2[1]);
-					let d2 = MathUtils.CalcDistance(localXY1[0], localXY1[1], entity.x, entity.y);
+					let localX1 = WarUtils.ToRealX(lastNode.x);
+					let localY1 = WarUtils.ToRealX(lastNode.y);
+					let d1 = MathUtils.CalcDistance(localX1, localY1, localXY2[0], localXY2[1]);
+					let d2 = MathUtils.CalcDistance(localX1, localY1, entity.x, entity.y);
 					if(d2 >= d1)
 						pCom.toNext();
 					else

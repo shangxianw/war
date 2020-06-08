@@ -38,7 +38,7 @@ var war;
                     if (pCom == null)
                         continue;
                     var currNode = pCom.getCurr();
-                    var localXY = warData.calcLocalXY(currNode.x, currNode.y);
+                    var localXY = war.WarUtils.ToRealPos(currNode.x, currNode.y);
                     var angle = MathUtils.CalcAngle(entity.x, entity.y, localXY[0], localXY[1]);
                     sCom.angle = angle;
                     var speedXY = MathUtils.CalcLegSide(sCom.speed, sCom.angle);

@@ -19,6 +19,7 @@
 		"bin-debug/war/base/SystemBase.js",
 		"bin-debug/base/ViewIdConst.js",
 		"bin-debug/astar/Grid.js",
+		"bin-debug/astar/MapCfg.js",
 		"bin-debug/astar/Node.js",
 		"bin-debug/base/CBData.js",
 		"bin-debug/base/Const.js",

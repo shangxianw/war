@@ -41,7 +41,7 @@ var astar;
             gridMap.graphics.lineStyle(1, 0xffff00);
             walkMap.graphics.beginFill(0xffff00);
             this.grid = new astar.Grid();
-            this.grid.init(this.numRows, this.numCols, this.space);
+            this.grid.init(this.numRows, this.numCols, this.space, war.WarDataMgr.Ins().mapCfg);
             for (var i = 0, len = this.numRows; i < len; i++) {
                 for (var j = 0, len2 = this.numCols; j < len2; j++) {
                     var x = j * this.space;

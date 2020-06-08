@@ -40,11 +40,12 @@ var war;
                     continue;
                 }
                 var lastNode = pCom.getLast();
-                var localXY2 = warData.calcLocalXY(currNode.x, currNode.y);
+                var localXY2 = war.WarUtils.ToRealPos(currNode.x, currNode.y);
                 if (lastNode != null) {
-                    var localXY1 = warData.calcLocalXY(lastNode.x, lastNode.y);
-                    var d1 = MathUtils.CalcDistance(localXY1[0], localXY1[1], localXY2[0], localXY2[1]);
-                    var d2 = MathUtils.CalcDistance(localXY1[0], localXY1[1], entity.x, entity.y);
+                    var localX1 = war.WarUtils.ToRealX(lastNode.x);
+                    var localY1 = war.WarUtils.ToRealX(lastNode.y);
+                    var d1 = MathUtils.CalcDistance(localX1, localY1, localXY2[0], localXY2[1]);
+                    var d2 = MathUtils.CalcDistance(localX1, localY1, entity.x, entity.y);
                     if (d2 >= d1)
                         pCom.toNext();
                     else {

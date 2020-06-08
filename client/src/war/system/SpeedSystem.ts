@@ -31,10 +31,10 @@ module war
 				if(sCom != null)
 				{
 					let pCom:PathCom = entity.getCom(COMPONENT.PATH);
-					if(pCom == null)
+					if(pCom == null) 
 						continue;
 					let currNode:astar.Node = pCom.getCurr();
-					let localXY = warData.calcLocalXY(currNode.x, currNode.y);
+					let localXY = WarUtils.ToRealPos(currNode.x, currNode.y);
 					let angle = MathUtils.CalcAngle(entity.x, entity.y, localXY[0], localXY[1]);
 					sCom.angle = angle;
 

@@ -16,8 +16,10 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         WarDataMgr.prototype.init = function () {
-            this.numCols = 18;
-            this.numRows = 30;
+            this.mapId = 1001;
+            this.mapCfg = MapCfg[String(this.mapId)];
+            this.numCols = this.mapCfg[0].length; // 18;
+            this.numRows = this.mapCfg.length; // 30;
             this.space = 30;
             this.startX = 90;
             this.startY = 90;
@@ -90,7 +92,7 @@ var war;
         WarDataMgr.prototype.initGrid = function () {
             this.astar = new astar.AStar();
             this.grid = new astar.Grid();
-            this.grid.init(this.numRows, this.numCols, this.space);
+            this.grid.init(this.numRows, this.numCols, this.space, this.mapCfg);
             this.pathMap = new Hash();
         };
         WarDataMgr.prototype.findPath = function (startX, startY, endX, endY) {
@@ -104,11 +106,6 @@ var war;
             path = this.astar.findPath(startX, startY, endX, endY, this.grid);
             this.pathMap.set(key, path);
             return path;
-        };
-        WarDataMgr.prototype.calcLocalXY = function (x, y) {
-            var localX = this.startX + this.space * x;
-            var localY = this.startY + this.space * y;
-            return [localX, localY];
         };
         WarDataMgr.Ins = function () {
             if (WarDataMgr.instance == null)

@@ -11,17 +11,17 @@ var war;
         WarUtils.Destroy = function () {
         };
         // 根据各自坐标计算出实际位置
-        WarUtils.prototype.ToRealPos = function (x, y) {
+        WarUtils.ToRealPos = function (x, y) {
             var space = war.WarDataMgr.Ins().space;
-            var localX = war.WarDataMgr.Ins().startX + space * x + space >> 1;
-            var localY = war.WarDataMgr.Ins().startY + space * y + space >> 1;
+            var localX = war.WarDataMgr.Ins().startX + space * x + (space >> 1);
+            var localY = war.WarDataMgr.Ins().startY + space * y + (space >> 1);
             return [localX, localY];
         };
         WarUtils.ToRealX = function (x) {
-            return war.WarDataMgr.Ins().startX + war.WarDataMgr.Ins().space * x + war.WarDataMgr.Ins().space >> 1;
+            return war.WarDataMgr.Ins().startX + war.WarDataMgr.Ins().space * x + (war.WarDataMgr.Ins().space >> 1); // 最后括号括起来是因为>>的优先级是最低的
         };
         WarUtils.ToRealY = function (y) {
-            return war.WarDataMgr.Ins().startY + war.WarDataMgr.Ins().space * y + war.WarDataMgr.Ins().space >> 1;
+            return war.WarDataMgr.Ins().startY + war.WarDataMgr.Ins().space * y + (war.WarDataMgr.Ins().space >> 1);
         };
         return WarUtils;
     }());

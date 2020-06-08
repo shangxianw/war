@@ -34,10 +34,15 @@ var war;
             shape.graphics.lineStyle(1, 0x00ff00);
             shape.x = war.WarDataMgr.Ins().startX;
             shape.y = war.WarDataMgr.Ins().startY;
+            var mapCfg = MapCfg["1001"];
             for (var i = 0, len = rows; i < len; i++) {
                 for (var j = 0, len2 = cols; j < len2; j++) {
                     var x = space * i; // - space/2;
                     var y = space * j; // - space/2
+                    if (mapCfg[j][i] == true)
+                        shape.graphics.beginFill(0x0000ff, 0);
+                    else
+                        shape.graphics.beginFill(0x0000ff, 1);
                     shape.graphics.drawRect(x, y, space, space);
                 }
             }

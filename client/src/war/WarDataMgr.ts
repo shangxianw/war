@@ -11,6 +11,8 @@ module war
 		public pathSystem:PathSystem;
 		public speedSystem:SpeedSystem;
 		
+		public mapId:number;
+		public mapCfg:boolean[][];
 		public astar:astar.AStar;
 		public grid:astar.Grid;
 		public pathMap:Hash<string, astar.Node[]>;
@@ -24,8 +26,10 @@ module war
 
 		protected init()
 		{
-			this.numCols = 18;
-			this.numRows = 30;
+			this.mapId = 1001;
+			this.mapCfg = MapCfg[String(this.mapId)];
+			this.numCols = this.mapCfg[0].length // 18;
+			this.numRows = this.mapCfg.length;   // 30;
 			this.space = 30;
 			this.startX = 90;
 			this.startY = 90;
@@ -126,7 +130,7 @@ module war
 		{
 			this.astar = new astar.AStar();
 			this.grid = new astar.Grid();
-			this.grid.init(this.numRows, this.numCols, this.space);
+			this.grid.init(this.numRows, this.numCols, this.space, this.mapCfg);
 			this.pathMap = new Hash<string, astar.Node[]>();
 		}
 
@@ -144,13 +148,6 @@ module war
 			path = this.astar.findPath(startX, startY, endX, endY, this.grid);
 			this.pathMap.set(key, path);
 			return path;
-		}
-
-		public calcLocalXY(x:number, y:number)
-		{
-			let localX = this.startX + this.space * x;
-			let localY = this.startY + this.space * y;
-			return [localX, localY];
 		}
 
 		private static instance:WarDataMgr;
