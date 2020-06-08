@@ -48,10 +48,16 @@ module war
 					let x = space*i// - space/2;
 					let y = space*j// - space/2
 
-					if(mapCfg[j][i] == true)
-						shape.graphics.beginFill(0x0000ff, 0);
-					else
-						shape.graphics.beginFill(0x0000ff, 1);
+					if(mapCfg[j][i] == false)
+					{
+						let a = new egret.Shape();
+						a.x = shape.x;
+						a.y = shape.y;
+						a.graphics.beginFill(0x0000ff);
+						a.graphics.drawRect(x, y, space, space);
+						a.graphics.endFill();
+						group.addChild(a);
+					}
 					shape.graphics.drawRect(x, y, space, space);
 
 				}

@@ -35,8 +35,8 @@ module war
 				let speedX = speedArray[0];
 				let speedY = speedArray[1];
 
-				entity.x = Number((entity.x + speedX).toFixed(2));
-				entity.y = Number((entity.y + speedY).toFixed(2));
+				// entity.x = Number((entity.x + speedX).toFixed(2));
+				// entity.y = Number((entity.y + speedY).toFixed(2));
 			}
 		}
 	}

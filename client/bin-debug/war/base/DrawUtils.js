@@ -39,10 +39,15 @@ var war;
                 for (var j = 0, len2 = cols; j < len2; j++) {
                     var x = space * i; // - space/2;
                     var y = space * j; // - space/2
-                    if (mapCfg[j][i] == true)
-                        shape.graphics.beginFill(0x0000ff, 0);
-                    else
-                        shape.graphics.beginFill(0x0000ff, 1);
+                    if (mapCfg[j][i] == false) {
+                        var a = new egret.Shape();
+                        a.x = shape.x;
+                        a.y = shape.y;
+                        a.graphics.beginFill(0x0000ff);
+                        a.graphics.drawRect(x, y, space, space);
+                        a.graphics.endFill();
+                        group.addChild(a);
+                    }
                     shape.graphics.drawRect(x, y, space, space);
                 }
             }

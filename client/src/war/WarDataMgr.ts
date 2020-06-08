@@ -28,11 +28,11 @@ module war
 		{
 			this.mapId = 1001;
 			this.mapCfg = MapCfg[String(this.mapId)];
-			this.numCols = this.mapCfg[0].length // 18;
-			this.numRows = this.mapCfg.length;   // 30;
+			this.numCols = 36;this.mapCfg[0].length // 18;
+			this.numRows = 16;this.mapCfg.length;   // 30;
 			this.space = 30;
-			this.startX = 90;
-			this.startY = 90;
+			this.startX = 100;
+			this.startY = 120;
 			// 战场宽540高900
 			this.world = new World();
 			this.entityMap = new Hash<number, EntityBase>();
