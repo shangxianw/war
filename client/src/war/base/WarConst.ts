@@ -7,7 +7,8 @@ module war
 		PATH = 3,
 		GRIGD = 4,
 		ATTACK = 5,
-		CAMP = 6
+		CAMP = 6,
+		INPUT = 7
 	}
 
 	export enum SYSTEM
@@ -60,5 +61,12 @@ module war
 		static LEFT_UP:number[] = [202.5, 247.5];
 		static UP:number[] = [247.5, 292.5];
 		static RIGHT_UP:number[] = [292.5, 337.5];
+	}
+
+	export enum INPUT
+	{
+		NONE = 0,
+		CREATE_HERO = 1,
+		CREATE_QUEEN = 2
 	}
 }

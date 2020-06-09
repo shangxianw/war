@@ -70,4 +70,15 @@ class DataUtils
 		if(setNull == true)
 			arr = null;
 	}
+
+	// 销毁继承 DataBase 的子类
+	public static DestroyDataBaseClass(data:DataBase, setNull:boolean = true)
+	{
+		if(data != null)
+		{
+			data.destroyAll();
+			if(setNull == true)
+				data = null;
+		}
+	}
 }

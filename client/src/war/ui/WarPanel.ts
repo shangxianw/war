@@ -90,54 +90,16 @@ module war
 
 		// ---------------------------------------------------------------------- test
 		private OnGridTap(e:egret.TouchEvent)
-		{
-			let w = this.testGrid.width;
-			let h = this.testGrid.height;
-			let space = WarDataMgr.Ins().space;
-			let endX = 3;
-			let endY = 7;
-			
-			let x = Math.floor(Math.random()*35)//Math.floor(e.localX / space);
-			let y = Math.floor(Math.random()*15)//Math.floor(e.localY / space);
-			
-			
+		{	
 			// 创建英雄
-			let hero:HeroEntity = new HeroEntity//PoolManager.Ins().pop(HeroEntity);
-			hero.x = WarUtils.ToLocalX(x);
-			hero.y = WarUtils.ToLocalY(y);
-
-			let sCom:SpeedCom = PoolManager.Ins().pop(SpeedCom);
-			sCom.speed = Math.random();
-			sCom.angle = 0;
-			hero.setCom(sCom);
-
-			let pathCom:PathCom = PoolManager.Ins().pop(PathCom);
-			let path = WarDataMgr.Ins().findPath(x, y, endX, endY);
-			pathCom.setPath(path);
-			hero.setCom(pathCom);
-
-			// let aCom:AttackCom = PoolManager.Ins().pop(AttackCom);
-			// aCom.setRange(50);
-			// hero.setCom(aCom);
-			// DrawUtils.DrawAttackRange(hero);
-
-			let aCom:ActionCom = new ActionCom();
-			aCom.setActionAndDir(ACTION.RUN, DIRECTION.DOWN);
-			hero.setCom(aCom);
-
-			let rCom:RigidCom = new RigidCom();
-			rCom.radius = 20;
-			hero.setCom(rCom);
-
-			let cCom:CampCom = new CampCom();
-			cCom.camp = Math.random() > 0.5 ? CAMP.WE : CAMP.ENEMY;
-			hero.setCom(cCom);
-			DrawUtils.DrawGrigd(hero);
-			DrawUtils.DrawHeroAnchor(hero);
-
-			this.entityGroup.addChild(hero);
-			WarDataMgr.Ins().addEntity(hero);
-			// DrawUtils.DrawPath(hero, this.drawGroup);
+			let iCom = PoolManager.Ins().pop(InputCom) as InputCom;
+			iCom.inputType = INPUT.CREATE_HERO;
+			iCom.x1 = Math.floor(Math.random()*35);
+			iCom.y1 = Math.floor(Math.random()*15);
+			iCom.x2 = 3;
+			iCom.y2 = 7;
+			iCom.parent = this.entityGroup;
+			WarDataMgr.Ins().inputArray.push(iCom);
 		}
 	}
 }

@@ -11,6 +11,7 @@ var war;
         COMPONENT[COMPONENT["GRIGD"] = 4] = "GRIGD";
         COMPONENT[COMPONENT["ATTACK"] = 5] = "ATTACK";
         COMPONENT[COMPONENT["CAMP"] = 6] = "CAMP";
+        COMPONENT[COMPONENT["INPUT"] = 7] = "INPUT";
     })(COMPONENT = war.COMPONENT || (war.COMPONENT = {}));
     var SYSTEM;
     (function (SYSTEM) {
@@ -62,5 +63,11 @@ var war;
     }());
     war.ANGLE = ANGLE;
     __reflect(ANGLE.prototype, "war.ANGLE");
+    var INPUT;
+    (function (INPUT) {
+        INPUT[INPUT["NONE"] = 0] = "NONE";
+        INPUT[INPUT["CREATE_HERO"] = 1] = "CREATE_HERO";
+        INPUT[INPUT["CREATE_QUEEN"] = 2] = "CREATE_QUEEN";
+    })(INPUT = war.INPUT || (war.INPUT = {}));
 })(war || (war = {}));
 //# sourceMappingURL=WarConst.js.map
