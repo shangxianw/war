@@ -112,12 +112,19 @@ module war
 		{
 			if(DrawUtils.isTest == false)
 				return;
+			
+			let cCom:CampCom = hero.getCom(COMPONENT.CAMP);
+			if(cCom == null)
+				return;
 			let shape = new egret.Shape();
-			shape.graphics.beginFill(0xffff00);
-			shape.graphics.lineStyle(1, 0x000000);
-			shape.graphics.drawCircle(0, 0, 4);
+			if(cCom.camp == CAMP.WE)
+				shape.graphics.beginFill(0xffffff);
+			else if(cCom.camp == CAMP.ENEMY)
+				shape.graphics.beginFill(0x000000);
+			shape.graphics.lineStyle(2, 0x000000);
+				shape.graphics.drawCircle(0, 0, 4);
 			shape.graphics.endFill();
-			hero.addChild(shape);
+			hero.addChildAt(shape, 777);
 		}
 
 		public static DrawHeroId(hero:EntityBase)

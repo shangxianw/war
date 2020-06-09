@@ -55,10 +55,11 @@ var war;
                     isCollision = true;
                     break;
                 }
-                if (isCollision == true)
-                    war.DrawUtils.SetColor(entity1, true, 255, 0, 0);
-                else
+                if (isCollision == false)
                     war.DrawUtils.SetColor(entity1, false, 255, 0, 0);
+                else {
+                    war.DrawUtils.SetColor(entity1, true, 255, 0, 0);
+                }
                 isCollision = false;
             }
         };

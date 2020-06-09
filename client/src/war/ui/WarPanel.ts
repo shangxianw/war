@@ -113,6 +113,11 @@ module war
 			let rCom:RigidCom = new RigidCom();
 			rCom.radius = 20;
 			hero.setCom(rCom);
+
+			let cCom:CampCom = new CampCom();
+			cCom.camp = Math.random() > 0.5 ? CAMP.WE : CAMP.ENEMY;
+			hero.setCom(cCom);
+			DrawUtils.DrawHeroAnchor(hero);
 			DrawUtils.DrawGrigd(hero);
 
 			this.entityGroup.addChild(hero);

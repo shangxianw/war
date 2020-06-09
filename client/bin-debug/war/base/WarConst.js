@@ -7,6 +7,7 @@ var war;
         COMPONENT[COMPONENT["PATH"] = 3] = "PATH";
         COMPONENT[COMPONENT["GRIGD"] = 4] = "GRIGD";
         COMPONENT[COMPONENT["ATTACK"] = 5] = "ATTACK";
+        COMPONENT[COMPONENT["CAMP"] = 6] = "CAMP";
     })(COMPONENT = war.COMPONENT || (war.COMPONENT = {}));
     var SYSTEM;
     (function (SYSTEM) {
@@ -15,6 +16,11 @@ var war;
         SYSTEM[SYSTEM["COLLISION"] = 3] = "COLLISION";
         SYSTEM[SYSTEM["PATH"] = 4] = "PATH";
     })(SYSTEM = war.SYSTEM || (war.SYSTEM = {}));
+    var CAMP;
+    (function (CAMP) {
+        CAMP[CAMP["WE"] = 1] = "WE";
+        CAMP[CAMP["ENEMY"] = 2] = "ENEMY";
+    })(CAMP = war.CAMP || (war.CAMP = {}));
     var ACTION;
     (function (ACTION) {
         ACTION[ACTION["STAND"] = 1] = "STAND";

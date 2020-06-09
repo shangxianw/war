@@ -21,7 +21,7 @@ module war
 			// this.setCom(rCom2);
 			// DrawUtils.DrawGrigd(this);
 			DrawUtils.DrawHeroId(this);
-			DrawUtils.DrawHeroAnchor(this);
+			
 		}
 
 		protected destroy()

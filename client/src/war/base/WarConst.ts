@@ -6,7 +6,8 @@ module war
 		ACTION = 2,
 		PATH = 3,
 		GRIGD = 4,
-		ATTACK = 5
+		ATTACK = 5,
+		CAMP = 6
 	}
 
 	export enum SYSTEM
@@ -15,6 +16,12 @@ module war
 		ACTION = 2,
 		COLLISION = 3,
 		PATH = 4
+	}
+
+	export enum CAMP
+	{
+		WE = 1,
+		ENEMY = 2
 	}
 
 	export enum ACTION

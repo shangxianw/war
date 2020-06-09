@@ -27,7 +27,6 @@ var war;
             // this.setCom(rCom2);
             // DrawUtils.DrawGrigd(this);
             war.DrawUtils.DrawHeroId(this);
-            war.DrawUtils.DrawHeroAnchor(this);
         };
         HeroEntity.prototype.destroy = function () {
         };
