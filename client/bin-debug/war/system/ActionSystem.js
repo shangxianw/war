@@ -35,6 +35,9 @@ var war;
                 var aCom = entity.getCom(war.COMPONENT.ACTION);
                 if (aCom == null)
                     continue;
+                var sCom = entity.getCom(war.COMPONENT.SPEED);
+                if (sCom == null)
+                    continue;
                 if (aCom.action == war.ACTION.RUN) {
                     this.setRun(entity);
                 }
@@ -83,89 +86,93 @@ var war;
             }
         };
         ActionSystem.prototype.setRun = function (entity) {
-            var pCom = entity.getCom(war.COMPONENT.PATH);
+            var sCom = entity.getCom(war.COMPONENT.SPEED);
             var aCom = entity.getCom(war.COMPONENT.ACTION);
-            var currNode = pCom.getCurr();
-            if (currNode == null)
-                return;
+            var angle = sCom.angle;
             var warData = war.WarDataMgr.Ins();
-            var localX = warData.startX + warData.grid.space * currNode.x;
-            var localY = warData.startY + warData.grid.space * currNode.y;
-            if (entity.x == localX && entity.y == localY) {
-            }
-            else if (entity.x == localX && entity.y > localY) {
+            if (angle > war.ANGLE.UP[0] && angle <= war.ANGLE.UP[1]) {
                 aCom.setDir(war.DIRECTION.UP);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("run0", -1);
             }
-            else if (entity.x < localX && entity.y > localY) {
+            else if (angle > war.ANGLE.RIGHT_UP[0] && angle <= war.ANGLE.RIGHT_UP[1]) {
                 aCom.setDir(war.DIRECTION.RIGHT_UP);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("run1", -1);
             }
-            else if (entity.x < localX && entity.y == localY) {
+            else if (angle > war.ANGLE.RIGHT[0] || angle <= war.ANGLE.RIGHT[1]) {
                 aCom.setDir(war.DIRECTION.RIGHT);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("run2", -1);
             }
-            else if (entity.x < localX && entity.y < localY) {
+            else if (angle > war.ANGLE.RIGHT_DOWN[0] && angle <= war.ANGLE.RIGHT_DOWN[1]) {
                 aCom.setDir(war.DIRECTION.RIGHT_DOWN);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("run3", -1);
             }
-            else if (entity.x == localX && entity.y < localY) {
+            else if (angle > war.ANGLE.DOWN[0] && angle <= war.ANGLE.DOWN[1]) {
                 aCom.setDir(war.DIRECTION.DOWN);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("run4", -1);
             }
-            else if (entity.x > localX && entity.y < localY) {
+            else if (angle > war.ANGLE.LEFT_DOWN[0] && angle <= war.ANGLE.LEFT_DOWN[1]) {
                 aCom.setDir(war.DIRECTION.LEFT_DOWN);
                 entity.mc.scaleX = -1;
                 entity.mc.startPlay("run3", -1);
             }
-            else if (entity.x > localX && entity.y == localY) {
+            else if (angle > war.ANGLE.LEFT[0] && angle <= war.ANGLE.LEFT[1]) {
                 aCom.setDir(war.DIRECTION.LEFT);
                 entity.mc.scaleX = -1;
                 entity.mc.startPlay("run2", -1);
             }
-            else if (entity.x > localX && entity.y > localY) {
+            else if (angle > war.ANGLE.LEFT_UP[0] && angle <= war.ANGLE.LEFT_UP[1]) {
                 aCom.setDir(war.DIRECTION.LEFT_UP);
                 entity.mc.scaleX = -1;
                 entity.mc.startPlay("run1", -1);
             }
         };
         ActionSystem.prototype.setAttack = function (entity) {
+            var sCom = entity.getCom(war.COMPONENT.SPEED);
             var aCom = entity.getCom(war.COMPONENT.ACTION);
-            var dir = aCom.direction;
-            if (dir == war.DIRECTION.UP) {
+            var angle = sCom.angle;
+            var warData = war.WarDataMgr.Ins();
+            if (angle > war.ANGLE.UP[0] && angle <= war.ANGLE.UP[1]) {
+                aCom.setDir(war.DIRECTION.UP);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("attack0", -1);
             }
-            else if (dir == war.DIRECTION.RIGHT_UP) {
+            else if (angle > war.ANGLE.RIGHT_UP[0] && angle <= war.ANGLE.RIGHT_UP[1]) {
+                aCom.setDir(war.DIRECTION.RIGHT_UP);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("attack1", -1);
             }
-            else if (dir == war.DIRECTION.RIGHT) {
+            else if (angle > war.ANGLE.RIGHT[0] || angle <= war.ANGLE.RIGHT[1]) {
+                aCom.setDir(war.DIRECTION.RIGHT);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("attack2", -1);
             }
-            else if (dir == war.DIRECTION.RIGHT_DOWN) {
+            else if (angle > war.ANGLE.RIGHT_DOWN[0] && angle <= war.ANGLE.RIGHT_DOWN[1]) {
+                aCom.setDir(war.DIRECTION.RIGHT_DOWN);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("attack3", -1);
             }
-            else if (dir == war.DIRECTION.DOWN) {
+            else if (angle > war.ANGLE.DOWN[0] && angle <= war.ANGLE.DOWN[1]) {
+                aCom.setDir(war.DIRECTION.DOWN);
                 entity.mc.scaleX = 1;
                 entity.mc.startPlay("attack4", -1);
             }
-            else if (dir == war.DIRECTION.LEFT_DOWN) {
+            else if (angle > war.ANGLE.LEFT_DOWN[0] && angle <= war.ANGLE.LEFT_DOWN[1]) {
+                aCom.setDir(war.DIRECTION.LEFT_DOWN);
                 entity.mc.scaleX = -1;
                 entity.mc.startPlay("attack3", -1);
             }
-            else if (dir == war.DIRECTION.LEFT) {
+            else if (angle > war.ANGLE.LEFT[0] && angle <= war.ANGLE.LEFT[1]) {
+                aCom.setDir(war.DIRECTION.LEFT);
                 entity.mc.scaleX = -1;
                 entity.mc.startPlay("attack2", -1);
             }
-            else if (dir == war.DIRECTION.LEFT_UP) {
+            else if (angle > war.ANGLE.LEFT_UP[0] && angle <= war.ANGLE.LEFT_UP[1]) {
+                aCom.setDir(war.DIRECTION.LEFT_UP);
                 entity.mc.scaleX = -1;
                 entity.mc.startPlay("attack1", -1);
             }

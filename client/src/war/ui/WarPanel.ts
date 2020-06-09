@@ -20,7 +20,7 @@ module war
 		public PanelId:number;
 		public Layer:eui.Component;
 
-		private drawGroup:eui.Group;
+		public drawGroup:eui.Group;
 		private entityGroup:eui.Group;
 		public constructor()
 		{
@@ -48,6 +48,17 @@ module war
 		public initData(info:WarPanelData)
 		{
 			DrawUtils.DrawGrid(this.drawGroup);
+			// let queen1 = WarUtils.CreateEntity(ENTITY.QUEEN) as QueenEntity;
+			// queen1.x = WarUtils.ToLocalX(7);
+			// queen1.y = WarUtils.ToLocalY(3);
+			// this.entityGroup.addChild(queen1);
+			// WarDataMgr.Ins().entityMap.set(queen1.id, queen1);
+
+			// let queen2 = WarUtils.CreateEntity(ENTITY.QUEEN) as QueenEntity;
+			// queen2.x = WarUtils.ToLocalX(7);
+			// queen2.y = WarUtils.ToLocalY(12);
+			// this.entityGroup.addChild(queen2);
+			// WarDataMgr.Ins().entityMap.set(queen2.id, queen2);
 			// let space = WarDataMgr.Ins().grid.space;
 			// let localX = WarDataMgr.Ins().grid.startX + space * Math.floor(WarDataMgr.Ins().grid.numCols/4);
 			// let localY = WarDataMgr.Ins().grid.startY + space * Math.floor(WarDataMgr.Ins().grid.numRows/4);
@@ -86,17 +97,17 @@ module war
 			let endX = 3;
 			let endY = 7;
 			
-			let x = Math.floor(e.localX / space);
-			let y = Math.floor(e.localY / space);
+			let x = Math.floor(Math.random()*35)//Math.floor(e.localX / space);
+			let y = Math.floor(Math.random()*15)//Math.floor(e.localY / space);
 			
 			
 			// 创建英雄
 			let hero:HeroEntity = new HeroEntity//PoolManager.Ins().pop(HeroEntity);
-			hero.x = WarUtils.ToRealX(x);
-			hero.y = WarUtils.ToRealY(y);
+			hero.x = WarUtils.ToLocalX(x);
+			hero.y = WarUtils.ToLocalY(y);
 
 			let sCom:SpeedCom = PoolManager.Ins().pop(SpeedCom);
-			sCom.speed = 0.4;
+			sCom.speed = Math.random();
 			sCom.angle = 0;
 			hero.setCom(sCom);
 
@@ -110,6 +121,10 @@ module war
 			// hero.setCom(aCom);
 			// DrawUtils.DrawAttackRange(hero);
 
+			let aCom:ActionCom = new ActionCom();
+			aCom.setActionAndDir(ACTION.RUN, DIRECTION.DOWN);
+			hero.setCom(aCom);
+
 			let rCom:RigidCom = new RigidCom();
 			rCom.radius = 20;
 			hero.setCom(rCom);
@@ -117,8 +132,8 @@ module war
 			let cCom:CampCom = new CampCom();
 			cCom.camp = Math.random() > 0.5 ? CAMP.WE : CAMP.ENEMY;
 			hero.setCom(cCom);
-			DrawUtils.DrawHeroAnchor(hero);
 			DrawUtils.DrawGrigd(hero);
+			DrawUtils.DrawHeroAnchor(hero);
 
 			this.entityGroup.addChild(hero);
 			WarDataMgr.Ins().addEntity(hero);

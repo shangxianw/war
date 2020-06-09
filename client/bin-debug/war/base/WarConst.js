@@ -1,3 +1,6 @@
+var __reflect = (this && this.__reflect) || function (p, c, t) {
+    p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
+};
 var war;
 (function (war) {
     var COMPONENT;
@@ -39,5 +42,25 @@ var war;
         DIRECTION[DIRECTION["LEFT"] = 7] = "LEFT";
         DIRECTION[DIRECTION["LEFT_UP"] = 8] = "LEFT_UP";
     })(DIRECTION = war.DIRECTION || (war.DIRECTION = {}));
+    var ENTITY;
+    (function (ENTITY) {
+        ENTITY[ENTITY["QUEEN"] = 1] = "QUEEN";
+        ENTITY[ENTITY["HERO"] = 2] = "HERO";
+    })(ENTITY = war.ENTITY || (war.ENTITY = {}));
+    var ANGLE = (function () {
+        function ANGLE() {
+        }
+        ANGLE.RIGHT = [337.5, 22.5];
+        ANGLE.RIGHT_DOWN = [22.5, 67.5];
+        ANGLE.DOWN = [67.5, 112.5];
+        ANGLE.LEFT_DOWN = [112.5, 157.5];
+        ANGLE.LEFT = [157.5, 202.5];
+        ANGLE.LEFT_UP = [202.5, 247.5];
+        ANGLE.UP = [247.5, 292.5];
+        ANGLE.RIGHT_UP = [292.5, 337.5];
+        return ANGLE;
+    }());
+    war.ANGLE = ANGLE;
+    __reflect(ANGLE.prototype, "war.ANGLE");
 })(war || (war = {}));
 //# sourceMappingURL=WarConst.js.map

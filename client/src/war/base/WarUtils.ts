@@ -21,12 +21,12 @@ module war
 			return [localX, localY];
 		}
 
-		public static ToRealX(x:number):number
+		public static ToLocalX(x:number):number
 		{
 			return WarDataMgr.Ins().startX + WarDataMgr.Ins().space*x + (WarDataMgr.Ins().space>>1); // 最后括号括起来是因为>>的优先级是最低的
 		}
 
-		public static ToRealY(y:number):number
+		public static ToLocalY(y:number):number
 		{
 			return WarDataMgr.Ins().startY + WarDataMgr.Ins().space*y + (WarDataMgr.Ins().space>>1);
 		}
@@ -52,6 +52,16 @@ module war
 			let space = WarDataMgr.Ins().space;
 			let y = Math.floor((localY - WarDataMgr.Ins().startX) / space);
 			return y;
+		}
+
+		public static CreateEntity(entityType:number):EntityBase
+		{
+			let entity:EntityBase;
+			if(entityType == ENTITY.QUEEN)
+				entity = PoolManager.Ins().pop(QueenEntity);
+			else if(entityType == ENTITY.HERO)
+				entity = PoolManager.Ins().pop(HeroEntity);
+			return entity;
 		}
 	}
 }

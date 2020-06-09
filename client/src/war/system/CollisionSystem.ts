@@ -25,7 +25,7 @@ module war
 			let rCom2:RigidCom;
 			let warData = WarDataMgr.Ins();
 			let entityArray = warData.entityMap.values;
-			let isCollision:boolean = false;
+			let collisionEntity:EntityBase[] = [];
 			
 			for(let i=0, len=entityArray.length; i<len; i++)
 			{
@@ -51,19 +51,34 @@ module war
 					let flag = MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, entity2.x, entity2.y, rCom2.radius);
 					if(flag == false)
 						continue;
-					isCollision = true;
+					collisionEntity.push(entity2);
 					break;
 				}
 
-				if(isCollision == false)
+				if(collisionEntity.length <= 0)
 					DrawUtils.SetColor(entity1, false, 255, 0, 0);
 				else
 				{
 					DrawUtils.SetColor(entity1, true, 255, 0, 0);
-					
+					this.toAttack(entity1, collisionEntity[0]);
 				}
-				isCollision = false;
+				collisionEntity.length = 0;
 			}
+		}
+
+		public toAttack(entity1:EntityBase, entity2:EntityBase)
+		{
+			let aCom: ActionCom = entity1.getCom(COMPONENT.ACTION);
+			if(aCom == null)
+				return;
+			
+			let sCom: SpeedCom = entity1.getCom(COMPONENT.SPEED);
+			if(sCom == null)
+				return;
+			let angle = MathUtils.CalcAngle(entity1.x, entity1.y, entity2.x, entity2.y);
+			sCom.angle = angle;
+			sCom.speed = 0;
+			aCom.setAction(ACTION.ATTACK);
 		}
 	}
 }

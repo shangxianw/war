@@ -45,19 +45,19 @@ module war
 			{
 				for(let j=0, len2 = cols; j<len2; j++)
 				{
-					let x = space*i// - space/2;
-					let y = space*j// - space/2
+					let x = space*i
+					let y = space*j
 
-					// if(mapCfg[j][i] == false)
-					// {
-					// 	let a = new egret.Shape();
-					// 	a.x = shape.x;
-					// 	a.y = shape.y;
-					// 	a.graphics.beginFill(0x0000ff);
-					// 	a.graphics.drawRect(x, y, space, space);
-					// 	a.graphics.endFill();
-					// 	group.addChild(a);
-					// }
+					if(mapCfg[j][i] == false)
+					{
+						let a = new egret.Shape();
+						a.x = shape.x;
+						a.y = shape.y;
+						a.graphics.beginFill(0x0000ff);
+						a.graphics.drawRect(x, y, space, space);
+						a.graphics.endFill();
+						group.addChild(a);
+					}
 					shape.graphics.drawRect(x, y, space, space);
 
 				}
@@ -67,11 +67,12 @@ module war
 		}
 
 		public static pathMap:Hash<number, egret.Shape>;
-		public static DrawPath(entity:EntityBase, group:eui.Group = null)
+		public static DrawPath(entity:EntityBase)
 		{
 			if(DrawUtils.isTest == false)
 				return;
 			
+			let group = (ViewManager.Ins().uiMap.get(ViewIdConst.WarPanel) as WarPanel).drawGroup;
 			if(this.pathMap == null)
 				this.pathMap = new Hash<number, egret.Shape>();
 

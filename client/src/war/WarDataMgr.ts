@@ -48,8 +48,8 @@ module war
 			// this.speedSystem = new SpeedSystem();
 			// this.sysArray.push(this.speedSystem);
 
-			// this.actionSystem = new ActionSystem();
-			// this.sysArray.push(this.actionSystem);
+			this.actionSystem = new ActionSystem();
+			this.sysArray.push(this.actionSystem);
 
 
 			this.collisionSystem = new CollisionSystem();
