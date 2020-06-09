@@ -38,8 +38,8 @@ var war;
                 var speedArray = MathUtils.CalcLegSide(sCom.speed, sCom.angle);
                 var speedX = speedArray[0];
                 var speedY = speedArray[1];
-                // entity.x = Number((entity.x + speedX).toFixed(2));
-                // entity.y = Number((entity.y + speedY).toFixed(2));
+                entity.x = Number((entity.x + speedX).toFixed(2));
+                entity.y = Number((entity.y + speedY).toFixed(2));
             }
         };
         return MoveSystem;

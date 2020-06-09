@@ -20,7 +20,7 @@ module war
 			// rCom2.radius = 30;
 			// this.setCom(rCom2);
 			// DrawUtils.DrawGrigd(this);
-			// DrawUtils.DrawHeroId(this);
+			DrawUtils.DrawHeroId(this);
 			DrawUtils.DrawHeroAnchor(this);
 		}
 

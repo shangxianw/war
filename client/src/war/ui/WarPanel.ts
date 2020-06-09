@@ -91,12 +91,12 @@ module war
 			
 			
 			// 创建英雄
-			let hero:HeroEntity = PoolManager.Ins().pop(HeroEntity);
+			let hero:HeroEntity = new HeroEntity//PoolManager.Ins().pop(HeroEntity);
 			hero.x = WarUtils.ToRealX(x);
 			hero.y = WarUtils.ToRealY(y);
 
 			let sCom:SpeedCom = PoolManager.Ins().pop(SpeedCom);
-			sCom.speed = 0.8;
+			sCom.speed = 0.4;
 			sCom.angle = 0;
 			hero.setCom(sCom);
 
@@ -105,9 +105,19 @@ module war
 			pathCom.setPath(path);
 			hero.setCom(pathCom);
 
+			// let aCom:AttackCom = PoolManager.Ins().pop(AttackCom);
+			// aCom.setRange(50);
+			// hero.setCom(aCom);
+			// DrawUtils.DrawAttackRange(hero);
+
+			let rCom:RigidCom = new RigidCom();
+			rCom.radius = 20;
+			hero.setCom(rCom);
+			DrawUtils.DrawGrigd(hero);
+
 			this.entityGroup.addChild(hero);
 			WarDataMgr.Ins().addEntity(hero);
-			DrawUtils.DrawPath(hero, this.drawGroup);
+			// DrawUtils.DrawPath(hero, this.drawGroup);
 		}
 	}
 }

@@ -48,16 +48,16 @@ module war
 					let x = space*i// - space/2;
 					let y = space*j// - space/2
 
-					if(mapCfg[j][i] == false)
-					{
-						let a = new egret.Shape();
-						a.x = shape.x;
-						a.y = shape.y;
-						a.graphics.beginFill(0x0000ff);
-						a.graphics.drawRect(x, y, space, space);
-						a.graphics.endFill();
-						group.addChild(a);
-					}
+					// if(mapCfg[j][i] == false)
+					// {
+					// 	let a = new egret.Shape();
+					// 	a.x = shape.x;
+					// 	a.y = shape.y;
+					// 	a.graphics.beginFill(0x0000ff);
+					// 	a.graphics.drawRect(x, y, space, space);
+					// 	a.graphics.endFill();
+					// 	group.addChild(a);
+					// }
 					shape.graphics.drawRect(x, y, space, space);
 
 				}
@@ -191,6 +191,22 @@ module war
 				
 				colorFilter.matrix = colorMatrix;
 			}
+		}
+
+		public static DrawAttackRange(entity:EntityBase)
+		{
+			if(DrawUtils.isTest == false)
+				return;
+			let aCom:AttackCom = entity.getCom(COMPONENT.ATTACK);
+			if(aCom == null)
+				return;
+			let rangeShape = new egret.Shape();
+			rangeShape.name = `attackCom_${entity.id}`;
+			rangeShape.graphics.beginFill(0xffff00);
+			rangeShape.graphics.lineStyle(1, 0x000);
+			rangeShape.graphics.drawCircle(0, 0, aCom.range);
+			rangeShape.graphics.endFill();
+			entity.addChildAt(rangeShape, 0);
 		}
 	}
 }

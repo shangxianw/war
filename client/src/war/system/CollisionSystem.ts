@@ -25,6 +25,7 @@ module war
 			let rCom2:RigidCom;
 			let warData = WarDataMgr.Ins();
 			let entityArray = warData.entityMap.values;
+			let isCollision:boolean = false;
 			
 			for(let i=0, len=entityArray.length; i<len; i++)
 			{
@@ -34,10 +35,13 @@ module war
 				rCom1 = entity1.getCom(COMPONENT.GRIGD);
 				if(rCom1 == null)
 					continue;
-				for(let j=i+1, len2=entityArray.length; j<len2; j++)
+				for(let j=0, len2=entityArray.length; j<len2; j++) // 也是从0开始遍历的！
 				{
 					entity2 = entityArray[j];
 					if(entity2 == null)
+						continue;
+					
+					if(entity1.id == entity2.id)
 						continue;
 					
 					rCom2 = entity2.getCom(COMPONENT.GRIGD);
@@ -46,34 +50,19 @@ module war
 					
 					let flag = MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, entity2.x, entity2.y, rCom2.radius);
 					if(flag == false)
-					{
-						DrawUtils.SetColor(entity2, false, 255, 0, 0);
 						continue;
-					}
-					
-					// 以下是碰撞处理
-					let aCom:ActionCom = entity2.getCom(COMPONENT.ACTION);
-					if(aCom != null)
-					{
-						// DrawUtils.SetColor(entity2, true, 255, 0, 0);
-						DrawUtils.SetColor(entity2, true, 255, 0, 0);
-						// aCom.setAction(ACTION.ATTACK);
-						// entity2.removeCom(COMPONENT.SPEED);
-						// let pathCom:PathCom = entity2.getCom(COMPONENT.PATH);
-						// let endNode:astar.Node = pathCom.getEndNode();
-						
-						// let currNode:astar.Node = pathCom.getCurr();
-						// let path = WarDataMgr.Ins().findPath(currNode.x, currNode.y-1, endNode.x, endNode.y);
-						// if(MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, path[0].x, path[0].y, rCom2.radius) == false)
-						// 	pathCom.setPath(path);
-						// else
-						// {
-						// 	path = WarDataMgr.Ins().findPath(currNode.x+1, currNode.y-1, endNode.x, endNode.y);
-						// 	if(MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, path[0].x, path[0].y, rCom2.radius) == false)
-						// 		pathCom.setPath(path);
-						// }
-					}
+					isCollision = true;
+					break;
 				}
+
+				if(isCollision == false)
+					DrawUtils.SetColor(entity1, false, 255, 0, 0);
+				else
+				{
+					DrawUtils.SetColor(entity1, true, 255, 0, 0);
+					
+				}
+				isCollision = false;
 			}
 		}
 	}

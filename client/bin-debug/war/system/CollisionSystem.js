@@ -32,6 +32,7 @@ var war;
             var rCom2;
             var warData = war.WarDataMgr.Ins();
             var entityArray = warData.entityMap.values;
+            var isCollision = false;
             for (var i = 0, len = entityArray.length; i < len; i++) {
                 entity1 = entityArray[i];
                 if (entity1 == null)
@@ -39,39 +40,26 @@ var war;
                 rCom1 = entity1.getCom(war.COMPONENT.GRIGD);
                 if (rCom1 == null)
                     continue;
-                for (var j = i + 1, len2 = entityArray.length; j < len2; j++) {
+                for (var j = 0, len2 = entityArray.length; j < len2; j++) {
                     entity2 = entityArray[j];
                     if (entity2 == null)
+                        continue;
+                    if (entity1.id == entity2.id)
                         continue;
                     rCom2 = entity2.getCom(war.COMPONENT.GRIGD);
                     if (rCom2 == null)
                         continue;
                     var flag = MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, entity2.x, entity2.y, rCom2.radius);
-                    if (flag == false) {
-                        war.DrawUtils.SetColor(entity2, false, 255, 0, 0);
+                    if (flag == false)
                         continue;
-                    }
-                    // 以下是碰撞处理
-                    var aCom = entity2.getCom(war.COMPONENT.ACTION);
-                    if (aCom != null) {
-                        // DrawUtils.SetColor(entity2, true, 255, 0, 0);
-                        war.DrawUtils.SetColor(entity2, true, 255, 0, 0);
-                        // aCom.setAction(ACTION.ATTACK);
-                        // entity2.removeCom(COMPONENT.SPEED);
-                        // let pathCom:PathCom = entity2.getCom(COMPONENT.PATH);
-                        // let endNode:astar.Node = pathCom.getEndNode();
-                        // let currNode:astar.Node = pathCom.getCurr();
-                        // let path = WarDataMgr.Ins().findPath(currNode.x, currNode.y-1, endNode.x, endNode.y);
-                        // if(MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, path[0].x, path[0].y, rCom2.radius) == false)
-                        // 	pathCom.setPath(path);
-                        // else
-                        // {
-                        // 	path = WarDataMgr.Ins().findPath(currNode.x+1, currNode.y-1, endNode.x, endNode.y);
-                        // 	if(MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, path[0].x, path[0].y, rCom2.radius) == false)
-                        // 		pathCom.setPath(path);
-                        // }
-                    }
+                    isCollision = true;
+                    break;
                 }
+                if (isCollision == true)
+                    war.DrawUtils.SetColor(entity1, true, 255, 0, 0);
+                else
+                    war.DrawUtils.SetColor(entity1, false, 255, 0, 0);
+                isCollision = false;
             }
         };
         return CollisionSystem;

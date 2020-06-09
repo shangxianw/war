@@ -15,6 +15,8 @@ r.prototype = e.prototype, t.prototype = new r();
  */
 var UIBase = (function (_super) {
     __extends(UIBase, _super);
+    // private 111_touc1h
+    // 对象池的数据要清理干净
     function UIBase(skinName) {
         if (skinName === void 0) { skinName = null; }
         var _this = _super.call(this) || this;

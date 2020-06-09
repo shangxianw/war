@@ -39,15 +39,16 @@ var war;
                 for (var j = 0, len2 = cols; j < len2; j++) {
                     var x = space * i; // - space/2;
                     var y = space * j; // - space/2
-                    if (mapCfg[j][i] == false) {
-                        var a = new egret.Shape();
-                        a.x = shape.x;
-                        a.y = shape.y;
-                        a.graphics.beginFill(0x0000ff);
-                        a.graphics.drawRect(x, y, space, space);
-                        a.graphics.endFill();
-                        group.addChild(a);
-                    }
+                    // if(mapCfg[j][i] == false)
+                    // {
+                    // 	let a = new egret.Shape();
+                    // 	a.x = shape.x;
+                    // 	a.y = shape.y;
+                    // 	a.graphics.beginFill(0x0000ff);
+                    // 	a.graphics.drawRect(x, y, space, space);
+                    // 	a.graphics.endFill();
+                    // 	group.addChild(a);
+                    // }
                     shape.graphics.drawRect(x, y, space, space);
                 }
             }
@@ -155,6 +156,20 @@ var war;
                 colorMatrix[14] = strength;
                 colorFilter.matrix = colorMatrix;
             }
+        };
+        DrawUtils.DrawAttackRange = function (entity) {
+            if (DrawUtils.isTest == false)
+                return;
+            var aCom = entity.getCom(war.COMPONENT.ATTACK);
+            if (aCom == null)
+                return;
+            var rangeShape = new egret.Shape();
+            rangeShape.name = "attackCom_" + entity.id;
+            rangeShape.graphics.beginFill(0xffff00);
+            rangeShape.graphics.lineStyle(1, 0x000);
+            rangeShape.graphics.drawCircle(0, 0, aCom.range);
+            rangeShape.graphics.endFill();
+            entity.addChildAt(rangeShape, 0);
         };
         DrawUtils.isTest = true;
         return DrawUtils;

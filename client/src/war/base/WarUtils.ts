@@ -30,5 +30,28 @@ module war
 		{
 			return WarDataMgr.Ins().startY + WarDataMgr.Ins().space*y + (WarDataMgr.Ins().space>>1);
 		}
+
+		// 根据实际坐标计算出最近的格子坐标
+		public static ToGridXY(localX:number, localY:number)
+		{
+			let space = WarDataMgr.Ins().space;
+			let x = Math.floor((localX - WarDataMgr.Ins().startX) / space);
+			let y = Math.floor((localY - WarDataMgr.Ins().startY) / space);
+			return [x, y];
+		}
+
+		public static ToGridX(localX:number)
+		{
+			let space = WarDataMgr.Ins().space;
+			let x = Math.floor((localX - WarDataMgr.Ins().startX) / space);
+			return x;
+		}
+
+		public static ToGridY(localY:number)
+		{
+			let space = WarDataMgr.Ins().space;
+			let y = Math.floor((localY - WarDataMgr.Ins().startX) / space);
+			return y;
+		}
 	}
 }

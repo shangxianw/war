@@ -23,6 +23,23 @@ var war;
         WarUtils.ToRealY = function (y) {
             return war.WarDataMgr.Ins().startY + war.WarDataMgr.Ins().space * y + (war.WarDataMgr.Ins().space >> 1);
         };
+        // 根据实际坐标计算出最近的格子坐标
+        WarUtils.ToGridXY = function (localX, localY) {
+            var space = war.WarDataMgr.Ins().space;
+            var x = Math.floor((localX - war.WarDataMgr.Ins().startX) / space);
+            var y = Math.floor((localY - war.WarDataMgr.Ins().startY) / space);
+            return [x, y];
+        };
+        WarUtils.ToGridX = function (localX) {
+            var space = war.WarDataMgr.Ins().space;
+            var x = Math.floor((localX - war.WarDataMgr.Ins().startX) / space);
+            return x;
+        };
+        WarUtils.ToGridY = function (localY) {
+            var space = war.WarDataMgr.Ins().space;
+            var y = Math.floor((localY - war.WarDataMgr.Ins().startX) / space);
+            return y;
+        };
         return WarUtils;
     }());
     war.WarUtils = WarUtils;

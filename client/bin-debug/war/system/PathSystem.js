@@ -36,7 +36,13 @@ var war;
                     continue;
                 var currNode = pCom.getCurr();
                 if (currNode == null) {
-                    entity.removeCom(war.COMPONENT.PATH);
+                    // entity.removeCom(COMPONENT.PATH);
+                    var endX = Math.floor(Math.random() * war.WarDataMgr.Ins().numRows);
+                    var endY = Math.floor(Math.random() * war.WarDataMgr.Ins().numCols);
+                    var startX = war.WarUtils.ToGridX(entity.x);
+                    var startY = war.WarUtils.ToGridY(entity.y);
+                    var path = war.WarDataMgr.Ins().findPath(startX, startY, endX, endY);
+                    pCom.setPath(path);
                     continue;
                 }
                 var lastNode = pCom.getLast();

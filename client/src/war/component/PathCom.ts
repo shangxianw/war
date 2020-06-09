@@ -22,6 +22,7 @@ module war
 			this.destroyPath();
 			this.path = path;
 			this.currStep = 0;
+			// DrawUtils.DrawPath(hero, this.drawGroup);
 		}
 
 		public getPath()

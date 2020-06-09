@@ -7,6 +7,8 @@ abstract class UIBase extends eui.Component
 {
 	public id:number;
 	private _hash:Hash<string ,CBData[]>; // 惰性加载
+	// private 111_touc1h
+	// 对象池的数据要清理干净
 	public constructor(skinName:string = null)
 	{
 		super();

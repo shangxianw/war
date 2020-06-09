@@ -48,6 +48,7 @@
 		"bin-debug/war/base/WarConst.js",
 		"bin-debug/war/base/WarUtils.js",
 		"bin-debug/war/component/ActionCom.js",
+		"bin-debug/war/component/AttackCom.js",
 		"bin-debug/war/component/PathCom.js",
 		"bin-debug/war/component/RigidCom.js",
 		"bin-debug/war/component/SpeedCom.js",

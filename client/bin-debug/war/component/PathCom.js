@@ -28,6 +28,7 @@ var war;
             this.destroyPath();
             this.path = path;
             this.currStep = 0;
+            // DrawUtils.DrawPath(hero, this.drawGroup);
         };
         PathCom.prototype.getPath = function () {
             return this.path;

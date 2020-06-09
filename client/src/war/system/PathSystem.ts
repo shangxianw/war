@@ -33,7 +33,13 @@ module war
 				let currNode:astar.Node = pCom.getCurr();
 				if(currNode == null)
 				{
-					entity.removeCom(COMPONENT.PATH);
+					// entity.removeCom(COMPONENT.PATH);
+					let endX = Math.floor(Math.random() * WarDataMgr.Ins().numRows);
+					let endY = Math.floor(Math.random() * WarDataMgr.Ins().numCols);
+					let startX = WarUtils.ToGridX(entity.x);
+					let startY = WarUtils.ToGridY(entity.y);
+					let path = WarDataMgr.Ins().findPath(startX, startY, endX, endY);
+					pCom.setPath(path);
 					continue;
 				}
 				let lastNode:astar.Node = pCom.getLast();
