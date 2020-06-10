@@ -1,68 +1,60 @@
-class PoolManager // 战斗的对象和主城的对象应该分开
+/**
+ * 对象池管理
+ * push之前先要自行 destroy 一波，以确保没有内存泄漏
+ * 
+ */
+class PoolManager extends DataBase
 {
-	private hash:Hash<string, any[]>;
-	public constructor()
-	{
-		this.init();
-	}
-
+	private poolMap:Hash<string, any[]>;
 	protected init()
 	{
-		this.hash = new Hash<string, any[]>();
+		this.poolMap = new Hash<string, any[]>();
 	}
 
 	public destroy()
 	{
-		let value:any[];
-		for(let key in this.hash)
-		{
-			value = this.hash.get(key);
+		this.poolMap.forEach((value:any[], key:string)=>{
 			if(value == null)
-				continue;
-			for(let value2 of value)
+				return;
+			for(let value2 of value) // 理论上这些对象应该是干净的，没有内存泄漏的
 			{
-				if(value2[STR_CONST.DESTROY] != null && typeof(value2[STR_CONST.DESTROY]) == STR_CONST.FUNCTION)
-				{
-					value2[STR_CONST.DESTROY](); // 不知道要不要帮他destroy掉，因为理论上推到对象池之前应该自行destroy一遍。
-					value2 = null;
-				}
+				
 			}
+		}, this)
+		this.poolMap.destroy();
+		this.poolMap = null;
+	}
+
+	public push(obj:DataBase | UIBase)
+	{
+		if(obj == null)
+			return LogUtils.Warn(`PoolManager:传入了一个空对象`);
+
+		let className = Utils.GetClassNameByObj(obj);
+		if(this.poolMap.has(className) == false)
+		{
+			this.poolMap.set(className, new Array());
 		}
-		this.hash.destroy();
-		this.hash = null;
+		
+		let arr:any[] = this.poolMap.get(className);
+		if(arr.indexOf(obj) < 0)
+			arr.push(obj);
 	}
 
-	public push(obj:any)
+	public pop(className:string):Object
 	{
-		let className = obj.name;
-		if(this.hash.has(className) == false)
-			this.hash.set(className, new Array());
-		let arr:any[] = this.hash.get(className);
-		arr.push(obj);
-	}
+		// 需要判断className是否为可以实例化的类名
+		// doSomething
 
-	public pop(className:any)
-	{
-		if(this.hash.has(className) == false)
-			return new className();
-		let arr:any[] = this.hash.get(className);
-		return arr.pop();
-	}
-
-	public pushArray(arr:Array<any>)
-	{
-		if(this.hash.has(STR_CONST.ARRAY) == false)
-			this.hash.set(STR_CONST.ARRAY, new Array());
-		let arr2:any[] = this.hash.get(STR_CONST.ARRAY);
-		arr2.push(arr);
-	}
-
-	public popArray()
-	{
-		if(this.hash.has(STR_CONST.ARRAY) == false)
-			return [];
-		let arr:any[] = this.hash.get(STR_CONST.ARRAY);
-		return arr.pop();
+		if(this.poolMap.has(className) == false)
+		{
+			return (new (className as any))();
+		}
+		let arr:any[] = this.poolMap.get(className);
+		let item = arr.pop();
+		if(item == null)
+			return (new (className as any))();
+		return item;
 	}
 
 	private static Instance:PoolManager;
@@ -71,5 +63,12 @@ class PoolManager // 战斗的对象和主城的对象应该分开
 		if(PoolManager.Instance == null)
 			PoolManager.Instance = new PoolManager();
 		return PoolManager.Instance;
+	}
+
+	// ---------------------------------------------------------------------- test
+	// 检查内部对象是否还有监听器
+	private checkHasListener()
+	{
+
 	}
 }

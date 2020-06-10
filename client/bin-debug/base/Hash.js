@@ -6,48 +6,59 @@ var Hash = (function () {
         this.init();
     }
     Hash.prototype.init = function () {
-        this.map = {};
+        this.map = new Map();
     };
     Hash.prototype.destroy = function () {
-        for (var k in this.map) {
-            if (this.map[k] == null)
-                continue;
-            this.map[k] = null; // 在考虑要不要帮其执行destroy操作
-        }
+        this.map.clear();
         this.map = null;
     };
     Hash.prototype.set = function (key, value) {
-        this.map[key] = value;
+        this.map.set(key, value);
     };
     Hash.prototype.remove = function (key) {
-        var item = this.map[key];
-        this.map[key] = null;
+        var item = this.map.get(key);
+        this.map.delete(key);
         return item;
     };
     Hash.prototype.get = function (key) {
-        return this.map[key];
+        return this.map.get(key);
     };
     Hash.prototype.has = function (key) {
-        return this.map[key] != null;
+        return this.map.has(key);
     };
-    Object.defineProperty(Hash.prototype, "values", {
-        // 这种做法其实很无语，因为先是遍历一遍组成数组后返回到外面，外面又循环一遍。
+    Hash.prototype.forEach = function (cbFn, thisObj) {
+        var _this = this;
+        if (cbFn == null || thisObj == null)
+            return LogUtils.Error("Hash\uFF1A\u53C2\u6570\u6709\u8BEF");
+        this.map.forEach(function (value, key, map) {
+            cbFn.call(_this, value, key, map);
+        });
+    };
+    Object.defineProperty(Hash.prototype, "len", {
         get: function () {
-            var arr = [];
-            for (var key in this.map) {
-                arr.push(this.map[key]);
-            }
-            return arr;
+            return this.map.size;
         },
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Hash.prototype, "map", {
+    Object.defineProperty(Hash.prototype, "values", {
         get: function () {
-            return this._map;
+            var array = [];
+            this.map.forEach(function (value, key, map) {
+                array.push(value);
+            });
+            return array;
         },
-        set: function (value) {
-            this._map = value;
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(Hash.prototype, "keys", {
+        get: function () {
+            var array = [];
+            this.map.forEach(function (value, key, map) {
+                array.push(key);
+            });
+            return array;
         },
         enumerable: true,
         configurable: true

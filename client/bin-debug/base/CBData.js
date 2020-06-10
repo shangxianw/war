@@ -8,12 +8,20 @@ var CBData = (function () {
     };
     CBData.prototype.destroy = function () {
     };
-    CBData.prototype.PackData = function (cbFn, thisObj, param) {
+    CBData.prototype.packData = function (cbFn, thisObj, param) {
         if (param === void 0) { param = null; }
         this.cbFn = cbFn;
         this.thisObj = thisObj;
         this.param = param;
         return this;
+    };
+    CBData.prototype.exec = function (query) {
+        if (this.cbFn == null || this.thisObj == null) {
+            if (this.param != null)
+                this.cbFn.call(this.thisObj, this.param, query);
+            else
+                this.cbFn.call(this.thisObj, query);
+        }
     };
     return CBData;
 }());

@@ -5,13 +5,16 @@ var LogUtils = (function () {
     function LogUtils() {
     }
     LogUtils.Log = function (desc) {
-        console.log(desc);
+        if (GameData.DevelopMode == DevelopMode.DEBUG)
+            console.log(desc);
     };
     LogUtils.Warn = function (desc) {
-        console.log(desc);
+        if (GameData.DevelopMode == DevelopMode.DEBUG)
+            console.log(desc);
     };
     LogUtils.Error = function (desc) {
-        console.log(desc);
+        if (GameData.DevelopMode == DevelopMode.DEBUG)
+            console.log(desc);
     };
     return LogUtils;
 }());

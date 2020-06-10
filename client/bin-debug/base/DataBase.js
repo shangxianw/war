@@ -15,50 +15,117 @@ var DataBase = (function () {
         this.init();
     };
     DataBase.prototype.destroyAll = function () {
-        for (var _i = 0, _a = this.hash.values; _i < _a.length; _i++) {
-            var arr = _a[_i];
-            for (var _b = 0, arr_1 = arr; _b < arr_1.length; _b++) {
-                var cbData = arr_1[_b];
+        this.hash.forEach(function (value, key) {
+            for (var _i = 0, value_1 = value; _i < value_1.length; _i++) {
+                var cbData = value_1[_i];
                 cbData.destroy();
-                PoolManager.Ins().push(cbData);
+                cbData = null;
             }
-            arr.length = 0;
-            PoolManager.Ins().pushArray(arr);
-        }
+            value.length = 0;
+        }, this);
         this.hash.destroy();
         this._hash = null;
         this.destroy();
     };
     DataBase.prototype.addAttrListener = function (propName, cbFn, thisObj, param) {
         if (param === void 0) { param = null; }
-        if (this.hash.get(propName) == false)
-            this.hash.set(propName, PoolManager.Ins().popArray());
-        var arr = this.hash.get(propName);
-        var cbData;
-        for (var _i = 0, arr_2 = arr; _i < arr_2.length; _i++) {
-            cbData = arr_2[_i];
-            if (cbData.cbFn == cbFn && cbData.thisObj == thisObj)
-                return false; // 重复注册
+        if (propName == null || cbFn == null || thisObj == null) {
+            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53C2\u6570\u6709\u8BEF");
+            return false;
         }
-        cbData = PoolManager.Ins().pop(CBData).PackData(cbFn, thisObj, param);
+        if (this.hash.has(propName) == false) {
+            this.hash.set(propName, []);
+        }
+        var arr = this.hash.get(propName);
+        for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
+            var cbData_1 = arr_1[_i];
+            if (cbData_1.cbFn == cbFn && cbData_1.thisObj == thisObj) {
+                LogUtils.Warn(Utils.GetClassNameByObj(this) + " : " + thisObj + " \u91CD\u590D\u6CE8\u518C " + propName);
+                return false;
+            }
+        }
+        var cbData = (new CBData).packData(cbFn, thisObj, param);
         arr.push(cbData);
         return true;
     };
     DataBase.prototype.removeAttrListener = function (propName, cbFn, thisObj) {
-        if (this.hash.get(propName) == false)
-            return false; // 没有注册
-        var arr = this.hash.get(propName), i = 0, cbData;
-        for (var _i = 0, arr_3 = arr; _i < arr_3.length; _i++) {
-            cbData = arr_3[_i];
+        if (propName == null || cbFn == null || thisObj == null) {
+            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53C2\u6570\u6709\u8BEF");
+            return false;
+        }
+        if (this.hash.has(propName) == false) {
+            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : " + thisObj + " \u6CA1\u6709\u6CE8\u518C " + propName);
+            return true;
+        }
+        var arr = this.hash.get(propName), cbData;
+        for (var i = 0, len = arr.length; i < len; i++) {
+            cbData = arr[i];
+            if (cbData == null) {
+                LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53D1\u73B0\u7A7A\u5BF9\u8C61");
+                continue;
+            }
             if (cbData.cbFn == cbFn && cbData.thisObj == thisObj) {
                 arr.splice(i, 1);
                 cbData.destroy();
-                PoolManager.Ins().push(cbData);
+                cbData = null;
                 return true;
             }
-            i++;
         }
+        LogUtils.Warn(Utils.GetClassNameByObj(this) + " : " + this + " \u6CA1\u6709\u6CE8\u518C " + propName);
         return false; //没有注册
+    };
+    DataBase.prototype.hasAttrListener = function (propName, cbFn, thisObj) {
+        if (propName == null || cbFn == null || thisObj == null) {
+            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53C2\u6570\u6709\u8BEF");
+            return false;
+        }
+        if (this.hash.has(propName) == false) {
+            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : " + thisObj + " \u6CA1\u6709\u6CE8\u518C " + propName);
+            return false;
+        }
+        var arr = this.hash.get(propName), cbData;
+        for (var i = 0, len = arr.length; i < len; i++) {
+            cbData = arr[i];
+            if (cbData == null) {
+                LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53D1\u73B0\u7A7A\u5BF9\u8C61");
+                continue;
+            }
+            if (cbData.cbFn == cbFn && cbData.thisObj == thisObj) {
+                return true;
+            }
+        }
+        LogUtils.Warn(Utils.GetClassNameByObj(this) + " : " + thisObj + " \u6CA1\u6709\u6CE8\u518C " + propName);
+        return false; //没有注册
+    };
+    DataBase.prototype.setAttr = function (propName, value) {
+        if (propName == null) {
+            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53C2\u6570\u6709\u8BEF");
+            return false;
+        }
+        Object.defineProperty(this, propName, {
+            value: value,
+            writable: true
+        });
+        this.updateAttr(propName);
+    };
+    DataBase.prototype.updateAttr = function (propName) {
+        var _this = this;
+        if (propName == null) {
+            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53C2\u6570\u6709\u8BEF");
+            return false;
+        }
+        if (this.hash.has(propName) == false) {
+            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u6CA1\u6709\u6CE8\u518C " + propName);
+        }
+        this.hash.forEach(function (value, key) {
+            if (value == null) {
+                return LogUtils.Warn(Utils.GetClassNameByObj(_this) + " : \u53D1\u73B0\u7A7A\u5BF9\u8C61");
+            }
+            for (var _i = 0, value_2 = value; _i < value_2.length; _i++) {
+                var cbData = value_2[_i];
+                cbData.exec();
+            }
+        }, this);
     };
     Object.defineProperty(DataBase.prototype, "hash", {
         get: function () {

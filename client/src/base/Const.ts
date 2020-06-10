@@ -1,3 +1,9 @@
+enum DevelopMode
+{
+	DEBUG = 1,
+	PUBLISH = 2
+}
+
 class STR_CONST
 {
 	public static DESTROY = "destroy";

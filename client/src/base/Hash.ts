@@ -1,6 +1,6 @@
 class Hash<K, V>
 {
-	private _map:any;
+	private map:Map<K, V>; // 需要再 tescofig.json 中添加 es2015.iterable
 	public constructor()
 	{
 		this.init();
@@ -8,60 +8,66 @@ class Hash<K, V>
 
 	public init()
 	{
-		this.map = {};
+		this.map = new Map<K, V>();
 	}
 
 	public destroy()
 	{
-		for(let k in this.map)
-		{
-			if(this.map[k] == null)
-				continue;
-			this.map[k] = null; // 在考虑要不要帮其执行destroy操作
-		}
+		this.map.clear();
 		this.map = null;
 	}
 
 	public set(key:K, value:V)
 	{
-		this.map[key] = value;
+		this.map.set(key, value);
 	}
 
 	public remove(key:K)
 	{
-		let item = this.map[key];
-		this.map[key] = null;
+		let item = this.map.get(key);
+		this.map.delete(key);
 		return item;
 	}
 
 	public get(key:K)
 	{
-		return this.map[key]
+		return this.map.get(key);
 	}
 
 	public has(key:K)
 	{
-		return this.map[key] != null;
+		return this.map.has(key);
 	}
 
-	// 这种做法其实很无语，因为先是遍历一遍组成数组后返回到外面，外面又循环一遍。
+	public forEach(cbFn:Function, thisObj:any)
+	{
+		if(cbFn == null || thisObj == null)
+			return LogUtils.Error(`Hash：参数有误`);
+		this.map.forEach((value:V, key:K, map:Map<K, V>)=>{
+			cbFn.call(this, value, key, map)
+		})
+	}
+
+	public get len()
+	{
+		return this.map.size;
+	}
+
 	public get values():V[]
 	{
-		let arr:V[] = [];
-		for(let key in this.map)
-		{
-			arr.push(this.map[key]);
-		}
-		return arr;
+		let array:V[] = [];
+		this.map.forEach((value:V, key:K, map:Map<K, V>)=>{
+			array.push(value);
+		})
+		return array;
 	}
 
-	public get map()
+	public get keys():K[]
 	{
-		return this._map;
-	}
-
-	public set map(value:any)
-	{
-		this._map = value;
+		let array:K[] = [];
+		this.map.forEach((value:V, key:K, map:Map<K, V>)=>{
+			array.push(key);
+		})
+		return array;
 	}
 }

@@ -7,10 +7,12 @@ var ViewIdConst = (function () {
     ViewIdConst.GetView = function (panelId) {
         switch (panelId) {
             case ViewIdConst.WarPanel: return war.WarPanel;
+            case ViewIdConst.DemoPanel: return home.DemoPanel;
             default:
                 return null;
         }
     };
+    ViewIdConst.DemoPanel = 1;
     ViewIdConst.WarPanel = 3;
     return ViewIdConst;
 }());

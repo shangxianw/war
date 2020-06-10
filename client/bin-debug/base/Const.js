@@ -1,6 +1,11 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
+var DevelopMode;
+(function (DevelopMode) {
+    DevelopMode[DevelopMode["DEBUG"] = 1] = "DEBUG";
+    DevelopMode[DevelopMode["PUBLISH"] = 2] = "PUBLISH";
+})(DevelopMode || (DevelopMode = {}));
 var STR_CONST = (function () {
     function STR_CONST() {
     }

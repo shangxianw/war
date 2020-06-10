@@ -18,11 +18,22 @@ class CBData
 
 	}
 
-	public PackData(cbFn:Function, thisObj:any, param:any = null)
+	public packData(cbFn:Function, thisObj:any, param:any = null)
 	{
 		this.cbFn = cbFn;
 		this.thisObj = thisObj;
 		this.param = param;
 		return this;
+	}
+
+	public exec(query?:any)
+	{
+		if(this.cbFn == null || this.thisObj == null)
+		{
+			if(this.param != null)
+				this.cbFn.call(this.thisObj, this.param, query);
+			else
+				this.cbFn.call(this.thisObj, query);
+		}
 	}
 }

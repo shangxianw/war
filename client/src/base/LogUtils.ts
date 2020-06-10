@@ -2,16 +2,19 @@ class LogUtils
 {
 	public static Log(desc:string)
 	{
-		console.log(desc);
+		if(GameData.DevelopMode == DevelopMode.DEBUG)
+			console.log(desc);
 	}
 
 	public static Warn(desc:string)
 	{
-		console.log(desc);
+		if(GameData.DevelopMode == DevelopMode.DEBUG)
+			console.log(desc);
 	}
 
 	public static Error(desc:string)
 	{
-		console.log(desc)
+		if(GameData.DevelopMode == DevelopMode.DEBUG)
+			console.log(desc)
 	}
 }

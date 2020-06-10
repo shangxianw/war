@@ -23,16 +23,14 @@ abstract class DataBase
 
 	public destroyAll()
 	{
-		for(let arr of this.hash.values)
-		{
-			for(let cbData of arr)
+		this.hash.forEach((value:CBData[], key:string)=>{
+			for(let cbData of value)
 			{
 				cbData.destroy();
-				PoolManager.Ins().push(cbData);
+				cbData = null;
 			}
-			arr.length = 0;
-			PoolManager.Ins().pushArray(arr);
-		}
+			value.length = 0;
+		}, this)
 		this.hash.destroy();
 		this._hash = null;
 		this.destroy();
@@ -40,41 +38,146 @@ abstract class DataBase
 
 	public addAttrListener(propName:string, cbFn:Function, thisObj:any, param:any = null):boolean
 	{
-		if(this.hash.get(propName) == false)
-			this.hash.set(propName, PoolManager.Ins().popArray());
+		if(propName == null || cbFn == null || thisObj == null)
+		{
+			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+			return false;
+		}
+
+		if(this.hash.has(propName) == false)
+		{
+			this.hash.set(propName, []);
+		}
 		
 		let arr:CBData[] = this.hash.get(propName);
-		let cbData:CBData;
-		for(cbData of arr)
+		for(let cbData of arr)
 		{
 			if(cbData.cbFn == cbFn && cbData.thisObj == thisObj)
-				return false; // 重复注册
+			{
+				LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 重复注册 ${propName}`);
+				return false;
+			}
 		}
-		cbData = (PoolManager.Ins().pop(CBData) as CBData).PackData(cbFn, thisObj, param);
+
+		let cbData = (new CBData).packData(cbFn, thisObj, param);
 		arr.push(cbData);
 		return true;
 	}
 
-	public removeAttrListener(propName, cbFn:Function, thisObj:any):boolean
+	public removeAttrListener(propName:string, cbFn:Function, thisObj:any):boolean
 	{
-		if(this.hash.get(propName) == false)
-			return false; // 没有注册
+		if(propName == null || cbFn == null || thisObj == null)
+		{
+			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+			return false;
+		}
+
+		if(this.hash.has(propName) == false)
+		{
+			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
+			return true;
+		}
 		
 		let arr:CBData[] = this.hash.get(propName),
-			i:number = 0,
 			cbData:CBData;
-		for(cbData of arr)
+		for(let i=0, len=arr.length; i<len; i++)
 		{
+			cbData = arr[i];
+			if(cbData == null)
+			{
+				LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 发现空对象`);
+				continue;
+			}
+
 			if(cbData.cbFn == cbFn && cbData.thisObj == thisObj)
 			{
 				arr.splice(i, 1);
 				cbData.destroy();
-				PoolManager.Ins().push(cbData);
+				cbData = null;
 				return true;
 			}
-			i++;
 		}
+		
+		LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${this} 没有注册 ${propName}`);
 		return false; //没有注册
+	}
+
+	public hasAttrListener(propName:string, cbFn:Function, thisObj:Object):boolean
+	{
+		if(propName == null || cbFn == null || thisObj == null)
+		{
+			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+			return false;
+		}
+
+		if(this.hash.has(propName) == false)
+		{
+			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
+			return false;
+		}
+
+		let arr:CBData[] = this.hash.get(propName),
+			cbData:CBData;
+		for(let i=0, len=arr.length; i<len; i++)
+		{
+			cbData = arr[i];
+			if(cbData == null)
+			{
+				LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 发现空对象`);
+				continue;
+			}
+
+			if(cbData.cbFn == cbFn && cbData.thisObj == thisObj)
+			{
+				return true;
+			}
+		}
+
+		LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
+		return false; //没有注册
+	}
+
+	public setAttr(propName:string, value:any)
+	{
+		if(propName == null)
+		{
+			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+			return false;
+		}
+
+		Object.defineProperty(this, propName, 
+		{
+			value : value,
+			writable: true
+		})
+		this.updateAttr(propName);
+	}
+
+	public updateAttr(propName:string)
+	{
+		if(propName == null)
+		{
+			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+			return false;
+		}
+
+		if(this.hash.has(propName) == false)
+		{
+			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 没有注册 ${propName}`);
+		}
+
+		this.hash.forEach((value:CBData[], key:string)=>{
+			if(value == null)
+			{
+				return LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 发现空对象`);
+			}
+
+			for(let cbData of value)
+			{
+				cbData.exec();
+			}
+			
+		}, this)
 	}
 
 	private get hash():Hash<string, CBData[]>
