@@ -32,7 +32,7 @@ var war;
             var rCom2;
             var warData = war.WarDataMgr.Ins();
             var entityArray = warData.entityMap.values;
-            var isCollision = false;
+            var collisionEntity = [];
             for (var i = 0, len = entityArray.length; i < len; i++) {
                 entity1 = entityArray[i];
                 if (entity1 == null)
@@ -52,16 +52,29 @@ var war;
                     var flag = MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, entity2.x, entity2.y, rCom2.radius);
                     if (flag == false)
                         continue;
-                    isCollision = true;
+                    collisionEntity.push(entity2);
                     break;
                 }
-                if (isCollision == false)
+                if (collisionEntity.length <= 0)
                     war.DrawUtils.SetColor(entity1, false, 255, 0, 0);
                 else {
                     war.DrawUtils.SetColor(entity1, true, 255, 0, 0);
+                    this.toAttack(entity1, collisionEntity[0]);
                 }
-                isCollision = false;
+                collisionEntity.length = 0;
             }
+        };
+        CollisionSystem.prototype.toAttack = function (entity1, entity2) {
+            var aCom = entity1.getCom(war.COMPONENT.ACTION);
+            if (aCom == null)
+                return;
+            var sCom = entity1.getCom(war.COMPONENT.SPEED);
+            if (sCom == null)
+                return;
+            var angle = MathUtils.CalcAngle(entity1.x, entity1.y, entity2.x, entity2.y);
+            sCom.angle = angle;
+            sCom.speed = 0;
+            aCom.setAction(war.ACTION.ATTACK);
         };
         return CollisionSystem;
     }(war.SystemBase));

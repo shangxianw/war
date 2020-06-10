@@ -30,6 +30,10 @@ module war
 				let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
 				if(aCom == null)
 					continue;
+
+				let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
+				if(sCom == null)
+					continue;
 				
 				if(aCom.action == ACTION.RUN)
 				{
@@ -95,62 +99,54 @@ module war
 
 		private setRun(entity:EntityBase)
 		{
-			let pCom:PathCom = entity.getCom(COMPONENT.PATH);
+			let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
 			let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
-			
-			let currNode:astar.Node = pCom.getCurr();
-			if(currNode == null)
-				return;
+			let angle = sCom.angle;
 			let warData = WarDataMgr.Ins();
-			let localX = warData.startX + warData.grid.space * currNode.x;
-			let localY = warData.startY + warData.grid.space * currNode.y;
-			if(entity.x == localX && entity.y == localY)
-			{
-
-			}
-			else if(entity.x == localX && entity.y > localY) 
+			
+			if(angle > ANGLE.UP[0] && angle <= ANGLE.UP[1])
 			{
 				aCom.setDir(DIRECTION.UP);
 				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`run0`, -1);
 			}
-			else if(entity.x < localX && entity.y > localY)
+			else if(angle > ANGLE.RIGHT_UP[0] && angle <= ANGLE.RIGHT_UP[1])
 			{
 				aCom.setDir(DIRECTION.RIGHT_UP);
 				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`run1`, -1);
 			}
-			else if(entity.x < localX && entity.y == localY)
+			else if(angle > ANGLE.RIGHT[0] || angle <= ANGLE.RIGHT[1])
 			{
 				aCom.setDir(DIRECTION.RIGHT);
 				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`run2`, -1);
 			}
-			else if(entity.x < localX && entity.y < localY)
+			else if(angle > ANGLE.RIGHT_DOWN[0] && angle <= ANGLE.RIGHT_DOWN[1])
 			{
 				aCom.setDir(DIRECTION.RIGHT_DOWN);
 				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`run3`, -1);
 			}
-			else if(entity.x == localX && entity.y < localY)
+			else if(angle > ANGLE.DOWN[0] && angle <= ANGLE.DOWN[1])
 			{
 				aCom.setDir(DIRECTION.DOWN);
 				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`run4`, -1);
 			}
-			else if(entity.x > localX && entity.y < localY)
+			else if(angle > ANGLE.LEFT_DOWN[0] && angle <= ANGLE.LEFT_DOWN[1])
 			{
 				aCom.setDir(DIRECTION.LEFT_DOWN);
 				entity.mc.scaleX = -1;
 				entity.mc.startPlay(`run3`, -1);
 			}
-			else if(entity.x > localX && entity.y == localY)
+			else if(angle > ANGLE.LEFT[0] && angle <= ANGLE.LEFT[1])
 			{
 				aCom.setDir(DIRECTION.LEFT);
 				entity.mc.scaleX = -1;
 				entity.mc.startPlay(`run2`, -1);
 			}
-			else if(entity.x > localX && entity.y > localY)
+			else if(angle > ANGLE.LEFT_UP[0] && angle <= ANGLE.LEFT_UP[1])
 			{
 				aCom.setDir(DIRECTION.LEFT_UP);
 				entity.mc.scaleX = -1;
@@ -160,47 +156,57 @@ module war
 
 		private setAttack(entity:EntityBase)
 		{
+			let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
 			let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
-			let dir = aCom.direction;
+			let angle = sCom.angle;
+			let warData = WarDataMgr.Ins();
 			
-			if(dir == DIRECTION.UP)
+			if(angle > ANGLE.UP[0] && angle <= ANGLE.UP[1])
 			{
+				aCom.setDir(DIRECTION.UP);
 				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`attack0`, -1);
 			}
-			else if(dir == DIRECTION.RIGHT_UP)
+			else if(angle > ANGLE.RIGHT_UP[0] && angle <= ANGLE.RIGHT_UP[1])
 			{
+				aCom.setDir(DIRECTION.RIGHT_UP);
 				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`attack1`, -1);
 			}
-			else if(dir == DIRECTION.RIGHT)
+			else if(angle > ANGLE.RIGHT[0] || angle <= ANGLE.RIGHT[1])
 			{
+				aCom.setDir(DIRECTION.RIGHT);
 				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`attack2`, -1);
 			}
-			else if(dir == DIRECTION.RIGHT_DOWN)
+			else if(angle > ANGLE.RIGHT_DOWN[0] && angle <= ANGLE.RIGHT_DOWN[1])
 			{
+				aCom.setDir(DIRECTION.RIGHT_DOWN);
 				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`attack3`, -1);
 			}
-			else if(dir == DIRECTION.DOWN)
+			else if(angle > ANGLE.DOWN[0] && angle <= ANGLE.DOWN[1])
 			{
+				aCom.setDir(DIRECTION.DOWN);
 				entity.mc.scaleX = 1;
 				entity.mc.startPlay(`attack4`, -1);
 			}
 
-			else if(dir == DIRECTION.LEFT_DOWN)
+			else if(angle > ANGLE.LEFT_DOWN[0] && angle <= ANGLE.LEFT_DOWN[1])
 			{
+				aCom.setDir(DIRECTION.LEFT_DOWN);
 				entity.mc.scaleX = -1;
 				entity.mc.startPlay(`attack3`, -1);
 			}
-			else if(dir == DIRECTION.LEFT)
+			else if(angle > ANGLE.LEFT[0] && angle <= ANGLE.LEFT[1])
 			{
+				aCom.setDir(DIRECTION.LEFT);
 				entity.mc.scaleX = -1;
 				entity.mc.startPlay(`attack2`, -1);
 			}
-			else if(dir == DIRECTION.LEFT_UP)
+			else if(angle > ANGLE.LEFT_UP[0] && angle <= ANGLE.LEFT_UP[1])
 			{
+				aCom.setDir(DIRECTION.LEFT_UP);
 				entity.mc.scaleX = -1;
 				entity.mc.startPlay(`attack1`, -1);
 			}

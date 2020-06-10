@@ -8,7 +8,7 @@ module war
 		protected init()
 		{
 			this.componentId = COMPONENT.ACTION;
-			this.direction = DIRECTION.UP;
+			this.direction = DIRECTION.DOWN;
 			this.action = ACTION.STAND;
 			this.hasChanged = true;
 		}

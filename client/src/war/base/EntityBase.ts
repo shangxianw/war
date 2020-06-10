@@ -9,8 +9,6 @@ module war
 			this.comMap = new Hash<number, ComBase>();
 			this.touchEnabled = false;
 			this.touchChildren = false;
-			let dirCom:ActionCom = PoolManager.Ins().pop(ActionCom);
-			this.comMap.set(dirCom.componentId, dirCom);
 			super.initAll();
 		}
 

@@ -28,29 +28,29 @@ var war;
             // 战场宽540高900
             this.world = new war.World();
             this.entityMap = new Hash();
+            this.inputArray = [];
             this.sysArray = [];
             this.initGrid();
+            this.inputSystem = new war.InputSystem();
+            this.sysArray.push(this.inputSystem);
             this.moveSystem = new war.MoveSystem();
             this.sysArray.push(this.moveSystem);
             this.pathSystem = new war.PathSystem();
             this.sysArray.push(this.pathSystem);
             // this.speedSystem = new SpeedSystem();
             // this.sysArray.push(this.speedSystem);
-            // this.actionSystem = new ActionSystem();
-            // this.sysArray.push(this.actionSystem);
+            this.actionSystem = new war.ActionSystem();
+            this.sysArray.push(this.actionSystem);
             this.collisionSystem = new war.CollisionSystem();
             this.sysArray.push(this.collisionSystem);
         };
         WarDataMgr.prototype.destroy = function () {
             DataUtils.DestroyUIBaseMap(this.entityMap);
-            if (this.moveSystem != null) {
-                this.moveSystem.destroyAll();
-                this.moveSystem = null;
-            }
-            if (this.actionSystem != null) {
-                this.actionSystem.destroyAll();
-                this.actionSystem = null;
-            }
+            DataUtils.DestroyDataBaseArray(this.inputArray);
+            DataUtils.DestroyDataBaseClass(this.inputSystem, true);
+            DataUtils.DestroyDataBaseClass(this.moveSystem, true);
+            DataUtils.DestroyDataBaseClass(this.actionSystem, true);
+            DataUtils.DestroyDataBaseClass(this.collisionSystem, true);
             this.sysArray.length = 0;
             this.astar.destroy();
             this.grid.destroy();

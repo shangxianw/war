@@ -67,6 +67,15 @@ var DataUtils = (function () {
         if (setNull == true)
             arr = null;
     };
+    // 销毁继承 DataBase 的子类
+    DataUtils.DestroyDataBaseClass = function (data, setNull) {
+        if (setNull === void 0) { setNull = true; }
+        if (data != null) {
+            data.destroyAll();
+            if (setNull == true)
+                data = null;
+        }
+    };
     return DataUtils;
 }());
 __reflect(DataUtils.prototype, "DataUtils");

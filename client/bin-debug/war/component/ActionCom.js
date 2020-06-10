@@ -17,7 +17,7 @@ var war;
         }
         ActionCom.prototype.init = function () {
             this.componentId = war.COMPONENT.ACTION;
-            this.direction = war.DIRECTION.UP;
+            this.direction = war.DIRECTION.DOWN;
             this.action = war.ACTION.STAND;
             this.hasChanged = true;
         };

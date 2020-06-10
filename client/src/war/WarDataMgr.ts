@@ -2,9 +2,11 @@ module war
 {
 	export class WarDataMgr extends DataBase
 	{
-		public entityMap:Hash<number, EntityBase>;		
+		public entityMap:Hash<number, EntityBase>;
+		public inputArray:InputCom[];
 		
 		public sysArray:SystemBase[];
+		public inputSystem:InputSystem;
 		public moveSystem:MoveSystem;
 		public actionSystem:ActionSystem;
 		public collisionSystem:CollisionSystem;
@@ -36,8 +38,12 @@ module war
 			// 战场宽540高900
 			this.world = new World();
 			this.entityMap = new Hash<number, EntityBase>();
+			this.inputArray = [];
 			this.sysArray = [];
 			this.initGrid();
+
+			this.inputSystem = new InputSystem();
+			this.sysArray.push(this.inputSystem);
 
 			this.moveSystem = new MoveSystem();
 			this.sysArray.push(this.moveSystem); 
@@ -48,8 +54,8 @@ module war
 			// this.speedSystem = new SpeedSystem();
 			// this.sysArray.push(this.speedSystem);
 
-			// this.actionSystem = new ActionSystem();
-			// this.sysArray.push(this.actionSystem);
+			this.actionSystem = new ActionSystem();
+			this.sysArray.push(this.actionSystem);
 
 
 			this.collisionSystem = new CollisionSystem();
@@ -59,18 +65,13 @@ module war
 		protected destroy()
 		{
 			DataUtils.DestroyUIBaseMap(this.entityMap);
-
-			if(this.moveSystem != null)
-			{
-				this.moveSystem.destroyAll();
-				this.moveSystem = null;
-			}
-
-			if(this.actionSystem != null)
-			{
-				this.actionSystem.destroyAll();
-				this.actionSystem = null;
-			}
+			DataUtils.DestroyDataBaseArray(this.inputArray);
+			
+			DataUtils.DestroyDataBaseClass(this.inputSystem, true);
+			DataUtils.DestroyDataBaseClass(this.moveSystem, true);
+			DataUtils.DestroyDataBaseClass(this.actionSystem, true);
+			DataUtils.DestroyDataBaseClass(this.collisionSystem, true);
+			
 			this.sysArray.length = 0;
 			this.astar.destroy();
 			this.grid.destroy();

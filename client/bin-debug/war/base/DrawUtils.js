@@ -37,28 +37,27 @@ var war;
             var mapCfg = MapCfg["1001"];
             for (var i = 0, len = rows; i < len; i++) {
                 for (var j = 0, len2 = cols; j < len2; j++) {
-                    var x = space * i; // - space/2;
-                    var y = space * j; // - space/2
-                    // if(mapCfg[j][i] == false)
-                    // {
-                    // 	let a = new egret.Shape();
-                    // 	a.x = shape.x;
-                    // 	a.y = shape.y;
-                    // 	a.graphics.beginFill(0x0000ff);
-                    // 	a.graphics.drawRect(x, y, space, space);
-                    // 	a.graphics.endFill();
-                    // 	group.addChild(a);
-                    // }
+                    var x = space * i;
+                    var y = space * j;
+                    if (mapCfg[j][i] == false) {
+                        var a = new egret.Shape();
+                        a.x = shape.x;
+                        a.y = shape.y;
+                        a.graphics.beginFill(0x0000ff);
+                        a.graphics.drawRect(x, y, space, space);
+                        a.graphics.endFill();
+                        group.addChild(a);
+                    }
                     shape.graphics.drawRect(x, y, space, space);
                 }
             }
             shape.graphics.endFill();
             group.addChild(shape);
         };
-        DrawUtils.DrawPath = function (entity, group) {
-            if (group === void 0) { group = null; }
+        DrawUtils.DrawPath = function (entity) {
             if (DrawUtils.isTest == false)
                 return;
+            var group = ViewManager.Ins().uiMap.get(ViewIdConst.WarPanel).drawGroup;
             if (this.pathMap == null)
                 this.pathMap = new Hash();
             if (this.pathMap.has(entity.id) == false) {

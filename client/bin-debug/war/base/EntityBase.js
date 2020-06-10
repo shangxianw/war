@@ -19,8 +19,6 @@ var war;
             this.comMap = new Hash();
             this.touchEnabled = false;
             this.touchChildren = false;
-            var dirCom = PoolManager.Ins().pop(war.ActionCom);
-            this.comMap.set(dirCom.componentId, dirCom);
             _super.prototype.initAll.call(this);
         };
         EntityBase.prototype.destroyAll = function () {

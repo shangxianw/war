@@ -34,22 +34,30 @@ var war;
                 var pCom = entity.getCom(war.COMPONENT.PATH);
                 if (pCom == null)
                     continue;
+                war.DrawUtils.DrawPath(entity);
                 var currNode = pCom.getCurr();
                 if (currNode == null) {
-                    // entity.removeCom(COMPONENT.PATH);
-                    var endX = Math.floor(Math.random() * war.WarDataMgr.Ins().numRows);
-                    var endY = Math.floor(Math.random() * war.WarDataMgr.Ins().numCols);
-                    var startX = war.WarUtils.ToGridX(entity.x);
-                    var startY = war.WarUtils.ToGridY(entity.y);
-                    var path = war.WarDataMgr.Ins().findPath(startX, startY, endX, endY);
-                    pCom.setPath(path);
+                    try {
+                        // entity.removeCom(COMPONENT.PATH);
+                        var endX = Math.floor(Math.random() * 35); //[1, 2, 3, 4, 5, 6, 7][Math.floor(Math.random()*7)]
+                        var endY = Math.floor(Math.random() * 15); //[1, 2, 3, 4, 5, 6, 7][Math.floor(Math.random()*7)]
+                        var startX = war.WarUtils.ToGridX(entity.x);
+                        var startY = war.WarUtils.ToGridY(entity.y);
+                        var path = war.WarDataMgr.Ins().findPath(startX, startY, endX, endY);
+                        console.log(path);
+                        pCom.setPath(path);
+                    }
+                    catch (e) {
+                        1;
+                        1;
+                    }
                     continue;
                 }
                 var lastNode = pCom.getLast();
                 var localXY2 = war.WarUtils.ToRealPos(currNode.x, currNode.y);
                 if (lastNode != null) {
-                    var localX1 = war.WarUtils.ToRealX(lastNode.x);
-                    var localY1 = war.WarUtils.ToRealX(lastNode.y);
+                    var localX1 = war.WarUtils.ToLocalX(lastNode.x);
+                    var localY1 = war.WarUtils.ToLocalY(lastNode.y);
                     var d1 = MathUtils.CalcDistance(localX1, localY1, localXY2[0], localXY2[1]);
                     var d2 = MathUtils.CalcDistance(localX1, localY1, entity.x, entity.y);
                     if (d2 >= d1)
