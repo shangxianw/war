@@ -1,6 +1,6 @@
 class DataUtils
 {
-	// 复制
+	// 浅复制
 	public static CopyArray(oriArray:any[])
 	{
 		let copyArray:any[] = [];

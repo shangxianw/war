@@ -25,7 +25,7 @@ class PoolManager extends DataBase
 		this.poolMap = null;
 	}
 
-	public push(obj:DataBase | UIBase)
+	public push(obj:any) // DataBase | UIBase
 	{
 		if(obj == null)
 			return LogUtils.Warn(`PoolManager:传入了一个空对象`);
@@ -41,7 +41,7 @@ class PoolManager extends DataBase
 			arr.push(obj);
 	}
 
-	public pop(className:string):Object
+	public pop(className:any):any
 	{
 		// 需要判断className是否为可以实例化的类名
 		// doSomething
@@ -54,6 +54,7 @@ class PoolManager extends DataBase
 		let item = arr.pop();
 		if(item == null)
 			return (new (className as any))();
+		item.init(); // 因为是二次使用，所以不会调用init的，需要手动调用一次。
 		return item;
 	}
 
