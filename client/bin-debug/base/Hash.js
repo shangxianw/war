@@ -23,7 +23,7 @@ var Hash = (function () {
         this.valueArray.push(value);
     };
     Hash.prototype.remove = function (key) {
-        var index = this.keys.indexOf(key);
+        var index = this.keyArray.indexOf(key);
         if (index < 0)
             return null;
         this.keyArray.splice(index, 1);
@@ -33,7 +33,7 @@ var Hash = (function () {
         var index = this.keyArray.indexOf(key);
         if (index < 0)
             return null;
-        return this.values[index];
+        return this.valueArray[index];
     };
     Hash.prototype.has = function (key) {
         return this.keyArray.indexOf(key) >= 0;
@@ -45,20 +45,12 @@ var Hash = (function () {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(Hash.prototype, "values", {
-        get: function () {
-            return this.valueArray;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(Hash.prototype, "keys", {
-        get: function () {
-            return this.keyArray;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    Hash.prototype.values = function () {
+        return this.valueArray;
+    };
+    Hash.prototype.keys = function () {
+        return this.keyArray;
+    };
     return Hash;
 }());
 __reflect(Hash.prototype, "Hash");

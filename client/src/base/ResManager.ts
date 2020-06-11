@@ -86,7 +86,7 @@ class ResManager extends DataBase
 	private resMap:Hash<string, ResData>;
 	protected init()
 	{
-		this.DESTROY_ONCE_COUNT = 20; // 一次销毁n个
+		this.DESTROY_ONCE_COUNT = 1; // 一次销毁n个
 		this.ERROR_LOAD_COUNT = 5;	 // 五次重连都失败就跳过
 		this.READY_DERTROY_SECOND = 5; // 5秒后资源会被销毁(如果引用为0)
 		this.isLoading = false;
@@ -103,7 +103,7 @@ class ResManager extends DataBase
 
 	protected destroy()
 	{
-		for(let resData of this.resMap.values)
+		for(let resData of this.resMap.values())
 		{
 			resData.destroyAll();
 			PoolManager.Ins().push(resData);
@@ -170,7 +170,7 @@ class ResManager extends DataBase
 
 		// 如果这个资源组正在加载
 		let resInfo:ResData;
-		if(this.currLaodInfo.groupName == groupName)
+		if(this.currLaodInfo != null && this.currLaodInfo.groupName == groupName)
 		{
 			this.waitDestroyGroup.push(groupName);
 			return;
@@ -209,7 +209,7 @@ class ResManager extends DataBase
 
 				groupInfo.destroyAll();
 				PoolManager.Ins().push(groupInfo);
-				this.groupArray.splice(index, 1);
+				this.useGroupArray.splice(index, 1);
 				return;
 			}
 			index++;
@@ -223,6 +223,7 @@ class ResManager extends DataBase
 
 	private OnResourceLoadProgress(e:RES.ResourceEvent)
 	{
+		LogUtils.Log(`正在加载资源组 ${e.groupName} 的 ${e.resItem.name}`)
 		this.currLaodInfo.itemsLoaded = e.itemsLoaded;
 		this.currLaodInfo.itemsTotal = e.itemsTotal;
 		if(this.currLaodInfo.resArray.indexOf(e.resItem.name) >= 0)
@@ -242,6 +243,10 @@ class ResManager extends DataBase
 			resInfo.packData(e.resItem.name);
 		}
 
+		if(this.currLaodInfo.itemsLoaded == 4 && e.groupName == "load2")
+		{
+			ResManager.Ins().destroyGroup("load2");
+		}
 	}
 
 	private OnResourceLoadError(e:RES.ResourceEvent)
@@ -267,7 +272,7 @@ class ResManager extends DataBase
 			this.isLoading = flag;
 		}
 		
-		let array = this.resMap.values; // 必须复制一个出来，因为在遍历的过程中有可能删掉自己，导致数组长度不等。
+		let array:ResData[] = DataUtils.CopyArray(this.resMap.values()); // 必须复制一个出来，因为在遍历的过程中有可能删掉自己，导致数组长度不等。
 		let destroyCount = 0;
 		for(let resData of array)
 		{
@@ -286,25 +291,27 @@ class ResManager extends DataBase
 				continue;
 			}
 
-			if(egret.getTimer() + this.READY_DERTROY_SECOND*1000 < resData.destroyTime)
+			if(egret.getTimer() < resData.destroyTime)
 				continue;
 			
 			RES.destroyRes(resData.resName);
+			this.resMap.remove(resData.resName);
+			resData.destroyAll();
+			PoolManager.Ins().push(resData);
 			destroyCount++;
 			if(destroyCount >= this.DESTROY_ONCE_COUNT) // 防止卡顿
 				break;
 		}
 
-		this.destroyWaitGroup();
 		return true;
 	}
 
 	private loadNextGroup():boolean
 	{
 		this.currLaodInfo = this.groupArray.shift();
-		if(this.currLaodInfo == null || this.currLaodInfo.groupName == "")
+		if(this.currLaodInfo == null)
 		{
-			LogUtils.Error(`${Utils.GetClassNameByObj(this)} 不存在资源组名 ${this.currLaodInfo.groupName}`); // 为啥没有判断资源组是否存在的API
+			// LogUtils.Error(`${Utils.GetClassNameByObj(this)} 不存在资源组名`); // 为啥没有判断资源组是否存在的API
 			return false;
 		}
 		RES.loadGroup(this.currLaodInfo.groupName);
@@ -315,6 +322,8 @@ class ResManager extends DataBase
 	{
 		let item = this.currLaodInfo
 		this.useGroupArray.push(item);
+		this.destroyWaitGroup();
+
 		this.currLaodInfo = null;
 		this.isLoading = false;
 	}
@@ -329,9 +338,11 @@ class ResManager extends DataBase
 			waitGroupName = this.waitDestroyGroup.shift();
 			if(waitGroupName == null)
 				continue;
-
-			for(let useGroup of this.useGroupArray)
+			let array:ResGroupData[] = DataUtils.CopyArray(this.useGroupArray);
+			let index = -1;
+			for(let useGroup of array)
 			{
+				index++;
 				if(useGroup == null)
 					continue;
 				
@@ -344,6 +355,9 @@ class ResManager extends DataBase
 						resData = this.resMap.get(resName);
 						resData.reduceCount();
 					}
+					this.useGroupArray.splice(index, 1);
+					useGroup.destroyAll();
+					PoolManager.Ins().push(useGroup);
 				}
 
 			}

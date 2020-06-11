@@ -114,7 +114,8 @@ class Main extends eui.UILayer {
      */
     
     protected createGameScene(): void {
-        ResManager.Ins().loadGroup("proload");
+        ResManager.Ins().loadGroup("preload");
+        ResManager.Ins().loadGroup("load2");
         GameUtils.main = this;
         LayerManager.Ins();
         PoolManager.Ins();
@@ -124,3 +125,4 @@ class Main extends eui.UILayer {
 
     static hero:war.MovieClip
 }
+

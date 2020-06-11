@@ -13,7 +13,7 @@ class PoolManager extends DataBase
 
 	public destroy()
 	{
-		for(let value of this.poolMap.values)
+		for(let value of this.poolMap.values())
 		{
 			if(value == null)
 				return;

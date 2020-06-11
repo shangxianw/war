@@ -191,7 +191,8 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
-        ResManager.Ins().loadGroup("proload");
+        ResManager.Ins().loadGroup("preload");
+        ResManager.Ins().loadGroup("load2");
         GameUtils.main = this;
         LayerManager.Ins();
         PoolManager.Ins();

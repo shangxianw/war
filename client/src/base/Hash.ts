@@ -32,7 +32,7 @@ class Hash<K, V>
 
 	public remove(key:K)
 	{
-		let index = this.keys.indexOf(key);
+		let index = this.keyArray.indexOf(key);
 		if(index < 0)
 			return null;
 		this.keyArray.splice(index, 1);
@@ -44,7 +44,7 @@ class Hash<K, V>
 		let index = this.keyArray.indexOf(key);
 		if(index < 0)
 			return null;
-		return this.values[index];
+		return this.valueArray[index];
 	}
 
 	public has(key:K)
@@ -57,12 +57,12 @@ class Hash<K, V>
 		return this.keyArray.length;
 	}
 
-	public get values():V[]
+	public values():V[]
 	{
 		return this.valueArray;
 	}
 
-	public get keys():K[]
+	public keys():K[]
 	{
 		return this.keyArray;
 	}

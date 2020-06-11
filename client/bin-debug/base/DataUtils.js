@@ -32,7 +32,7 @@ var DataUtils = (function () {
     DataUtils.DestroyUIBaseMap = function (map, setNull) {
         if (setNull === void 0) { setNull = true; }
         var item;
-        for (var _i = 0, _a = map.values; _i < _a.length; _i++) {
+        for (var _i = 0, _a = map.values(); _i < _a.length; _i++) {
             var item_1 = _a[_i];
             if (item_1 == null)
                 continue;

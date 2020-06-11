@@ -25,7 +25,7 @@ abstract class UIBase extends eui.Component
 
 	public destroyAll()
 	{
-		for(let value of this.hash.values)
+		for(let value of this.hash.values())
 		{
 			for(let cbData of value)
 			{
@@ -169,7 +169,7 @@ abstract class UIBase extends eui.Component
 			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 没有注册 ${propName}`);
 		}
 
-		for(let value of this.hash.values)
+		for(let value of this.hash.values())
 		{
 			if(value == null)
 			{

@@ -32,7 +32,7 @@ class DataUtils
 	public static DestroyUIBaseMap(map:Hash<any, UIBase>, setNull:boolean = true)
 	{
 		let item:DataBase;
-		for(let item of map.values)
+		for(let item of map.values())
 		{
 			if(item == null)
 				continue;

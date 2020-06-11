@@ -23,7 +23,7 @@ abstract class DataBase
 
 	public destroyAll()
 	{
-		for(let value of this.hash.values)
+		for(let value of this.hash.values())
 		{
 			for(let cbData of value)
 			{
@@ -167,7 +167,7 @@ abstract class DataBase
 			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 没有注册 ${propName}`);
 		}
 
-		for(let value of this.hash.values)
+		for(let value of this.hash.values())
 		{
 			if(value == null)
 			{

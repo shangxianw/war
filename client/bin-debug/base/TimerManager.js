@@ -43,7 +43,7 @@ var TimerData = (function (_super) {
     TimerData.prototype.exec = function () {
         if (this.cbFn == null || this.thisObj == null)
             return false;
-        if (this.args == null)
+        if (this.args == null || this.args.length == 0)
             return this.cbFn.call(this.thisObj, this);
         if (this.args.length == 1)
             return this.cbFn.call(this.thisObj, this, this.args[0]);

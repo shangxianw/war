@@ -15,7 +15,7 @@ var DataBase = (function () {
         this.init();
     };
     DataBase.prototype.destroyAll = function () {
-        for (var _i = 0, _a = this.hash.values; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.hash.values(); _i < _a.length; _i++) {
             var value = _a[_i];
             for (var _b = 0, value_1 = value; _b < value_1.length; _b++) {
                 var cbData = value_1[_b];
@@ -117,7 +117,7 @@ var DataBase = (function () {
         if (this.hash.has(propName) == false) {
             LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u6CA1\u6709\u6CE8\u518C " + propName);
         }
-        for (var _i = 0, _a = this.hash.values; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.hash.values(); _i < _a.length; _i++) {
             var value = _a[_i];
             if (value == null) {
                 return LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53D1\u73B0\u7A7A\u5BF9\u8C61");

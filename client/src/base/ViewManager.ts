@@ -13,7 +13,7 @@ class ViewManager extends DataBase
 
 	protected destroy()
 	{
-		for(let ui of this.uiMap.values)
+		for(let ui of this.uiMap.values())
 		{
 			(ui as UIBase).destroyAll();
 		}

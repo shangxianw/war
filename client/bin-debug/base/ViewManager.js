@@ -17,7 +17,7 @@ var ViewManager = (function (_super) {
         this.uiMap = new Hash();
     };
     ViewManager.prototype.destroy = function () {
-        for (var _i = 0, _a = this.uiMap.values; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.uiMap.values(); _i < _a.length; _i++) {
             var ui = _a[_i];
             ui.destroyAll();
         }

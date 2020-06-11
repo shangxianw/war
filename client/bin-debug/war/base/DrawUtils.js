@@ -8,7 +8,7 @@ var war;
         }
         DrawUtils.Destroy = function () {
             if (this.pathMap != null) {
-                for (var _i = 0, _a = this.pathMap.keys; _i < _a.length; _i++) {
+                for (var _i = 0, _a = this.pathMap.keys(); _i < _a.length; _i++) {
                     var key = _a[_i];
                     var item = this.pathMap.get(Number(key));
                     item.parent != null && item.parent.removeChild(item);
@@ -17,7 +17,7 @@ var war;
                 this.pathMap.destroy();
             }
             if (this.colorMap != null) {
-                for (var _b = 0, _c = this.colorMap.values; _b < _c.length; _b++) {
+                for (var _b = 0, _c = this.colorMap.values(); _b < _c.length; _b++) {
                     var value = _c[_b];
                     value.matrix = null;
                     value = null;

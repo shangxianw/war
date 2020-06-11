@@ -27,7 +27,7 @@ var war;
         SpeedSystem.prototype.update = function (deltaTime) {
             var entity;
             var warData = war.WarDataMgr.Ins();
-            for (var _i = 0, _a = warData.entityMap.values; _i < _a.length; _i++) {
+            for (var _i = 0, _a = warData.entityMap.values(); _i < _a.length; _i++) {
                 var entity_1 = _a[_i];
                 if (entity_1 == null)
                     continue;

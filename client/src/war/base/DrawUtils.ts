@@ -7,7 +7,7 @@ module war
 		{
 			if(this.pathMap != null)
 			{
-				for(let key of this.pathMap.keys)
+				for(let key of this.pathMap.keys())
 				{
 					let item:egret.Shape = this.pathMap.get(Number(key));
 					item.parent != null && item.parent.removeChild(item);
@@ -18,7 +18,7 @@ module war
 
 			if(this.colorMap != null)
 			{
-				for(let value of this.colorMap.values)
+				for(let value of this.colorMap.values())
 				{
 					value.matrix = null;
 					value = null;

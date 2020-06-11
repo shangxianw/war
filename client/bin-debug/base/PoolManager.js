@@ -22,7 +22,7 @@ var PoolManager = (function (_super) {
         this.poolMap = new Hash();
     };
     PoolManager.prototype.destroy = function () {
-        for (var _i = 0, _a = this.poolMap.values; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.poolMap.values(); _i < _a.length; _i++) {
             var value = _a[_i];
             if (value == null)
                 return;

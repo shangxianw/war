@@ -21,7 +21,7 @@ module war
 		{
 			let entity:EntityBase;
 			let warData = WarDataMgr.Ins();
-			for(let entity of warData.entityMap.values)
+			for(let entity of warData.entityMap.values())
 			{
 				if(entity == null)
 					continue;

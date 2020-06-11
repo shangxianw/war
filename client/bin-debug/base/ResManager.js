@@ -73,7 +73,7 @@ var ResManager = (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     ResManager.prototype.init = function () {
-        this.DESTROY_ONCE_COUNT = 20; // 一次销毁n个
+        this.DESTROY_ONCE_COUNT = 1; // 一次销毁n个
         this.ERROR_LOAD_COUNT = 5; // 五次重连都失败就跳过
         this.READY_DERTROY_SECOND = 5; // 5秒后资源会被销毁(如果引用为0)
         this.isLoading = false;
@@ -88,7 +88,7 @@ var ResManager = (function (_super) {
         TimerManager.Ins().addTimer(100, this.update, this);
     };
     ResManager.prototype.destroy = function () {
-        for (var _i = 0, _a = this.resMap.values; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this.resMap.values(); _i < _a.length; _i++) {
             var resData = _a[_i];
             resData.destroyAll();
             PoolManager.Ins().push(resData);
@@ -139,7 +139,7 @@ var ResManager = (function (_super) {
         }
         // 如果这个资源组正在加载
         var resInfo;
-        if (this.currLaodInfo.groupName == groupName) {
+        if (this.currLaodInfo != null && this.currLaodInfo.groupName == groupName) {
             this.waitDestroyGroup.push(groupName);
             return;
         }
@@ -171,7 +171,7 @@ var ResManager = (function (_super) {
                 }
                 groupInfo.destroyAll();
                 PoolManager.Ins().push(groupInfo);
-                this.groupArray.splice(index, 1);
+                this.useGroupArray.splice(index, 1);
                 return;
             }
             index++;
@@ -181,6 +181,7 @@ var ResManager = (function (_super) {
         this.loadEnd();
     };
     ResManager.prototype.OnResourceLoadProgress = function (e) {
+        LogUtils.Log("\u6B63\u5728\u52A0\u8F7D\u8D44\u6E90\u7EC4 " + e.groupName + " \u7684 " + e.resItem.name);
         this.currLaodInfo.itemsLoaded = e.itemsLoaded;
         this.currLaodInfo.itemsTotal = e.itemsTotal;
         if (this.currLaodInfo.resArray.indexOf(e.resItem.name) >= 0) {
@@ -195,6 +196,9 @@ var ResManager = (function (_super) {
             }
             resInfo = this.resMap.get(e.resItem.name);
             resInfo.packData(e.resItem.name);
+        }
+        if (this.currLaodInfo.itemsLoaded == 4 && e.groupName == "load2") {
+            ResManager.Ins().destroyGroup("load2");
         }
     };
     ResManager.prototype.OnResourceLoadError = function (e) {
@@ -214,7 +218,7 @@ var ResManager = (function (_super) {
             var flag = this.loadNextGroup();
             this.isLoading = flag;
         }
-        var array = this.resMap.values; // 必须复制一个出来，因为在遍历的过程中有可能删掉自己，导致数组长度不等。
+        var array = DataUtils.CopyArray(this.resMap.values()); // 必须复制一个出来，因为在遍历的过程中有可能删掉自己，导致数组长度不等。
         var destroyCount = 0;
         for (var _i = 0, array_1 = array; _i < array_1.length; _i++) {
             var resData = array_1[_i];
@@ -228,20 +232,22 @@ var ResManager = (function (_super) {
                 LogUtils.Error(Utils.GetClassNameByObj(this) + " : \u5F85\u9500\u6BC1\u8D44\u6E90 " + resData.resName + " \u672A\u8BBE\u7F6E\u9500\u6BC1\u65F6\u95F4");
                 continue;
             }
-            if (egret.getTimer() + this.READY_DERTROY_SECOND * 1000 < resData.destroyTime)
+            if (egret.getTimer() < resData.destroyTime)
                 continue;
             RES.destroyRes(resData.resName);
+            this.resMap.remove(resData.resName);
+            resData.destroyAll();
+            PoolManager.Ins().push(resData);
             destroyCount++;
             if (destroyCount >= this.DESTROY_ONCE_COUNT)
                 break;
         }
-        this.destroyWaitGroup();
         return true;
     };
     ResManager.prototype.loadNextGroup = function () {
         this.currLaodInfo = this.groupArray.shift();
-        if (this.currLaodInfo == null || this.currLaodInfo.groupName == "") {
-            LogUtils.Error(Utils.GetClassNameByObj(this) + " \u4E0D\u5B58\u5728\u8D44\u6E90\u7EC4\u540D " + this.currLaodInfo.groupName); // 为啥没有判断资源组是否存在的API
+        if (this.currLaodInfo == null) {
+            // LogUtils.Error(`${Utils.GetClassNameByObj(this)} 不存在资源组名`); // 为啥没有判断资源组是否存在的API
             return false;
         }
         RES.loadGroup(this.currLaodInfo.groupName);
@@ -250,6 +256,7 @@ var ResManager = (function (_super) {
     ResManager.prototype.loadEnd = function () {
         var item = this.currLaodInfo;
         this.useGroupArray.push(item);
+        this.destroyWaitGroup();
         this.currLaodInfo = null;
         this.isLoading = false;
     };
@@ -261,18 +268,24 @@ var ResManager = (function (_super) {
             waitGroupName = this.waitDestroyGroup.shift();
             if (waitGroupName == null)
                 continue;
-            for (var _i = 0, _a = this.useGroupArray; _i < _a.length; _i++) {
-                var useGroup = _a[_i];
+            var array = DataUtils.CopyArray(this.useGroupArray);
+            var index = -1;
+            for (var _i = 0, array_2 = array; _i < array_2.length; _i++) {
+                var useGroup = array_2[_i];
+                index++;
                 if (useGroup == null)
                     continue;
                 if (useGroup.groupName == waitGroupName) {
-                    for (var _b = 0, _c = useGroup.resArray; _b < _c.length; _b++) {
-                        var resName = _c[_b];
+                    for (var _a = 0, _b = useGroup.resArray; _a < _b.length; _a++) {
+                        var resName = _b[_a];
                         if (this.resMap.has(resName) == false)
                             continue;
                         resData = this.resMap.get(resName);
                         resData.reduceCount();
                     }
+                    this.useGroupArray.splice(index, 1);
+                    useGroup.destroyAll();
+                    PoolManager.Ins().push(useGroup);
                 }
             }
         }
