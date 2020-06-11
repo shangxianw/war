@@ -174,7 +174,7 @@ var TimerManager = (function (_super) {
                 for (var i = 0, len = count; i < len; i++) {
                     timer.count += 1;
                     flag = timer.exec();
-                    if (flag == false) {
+                    if (flag == false || flag == null) {
                         this.timerArray.splice(index, 1);
                         timer.destroyAll();
                         PoolManager.Ins().push(timer);

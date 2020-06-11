@@ -199,7 +199,7 @@ class TimerManager extends DataBase
 				{
 					timer.count += 1;
 					flag = timer.exec();
-					if(flag == false) // 停止
+					if(flag == false || flag == null) // 停止
 					{
 						this.timerArray.splice(index, 1);
 						timer.destroyAll();

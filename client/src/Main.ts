@@ -73,7 +73,7 @@ class Main extends eui.UILayer {
             this.stage.addChild(loadingView);
             await RES.loadConfig("resource/default.res.json", "resource/");
             await this.loadResource2();
-            await RES.loadGroup("preload", 0, loadingView);
+            // await RES.loadGroup("preload", 0, loadingView);
             this.stage.removeChild(loadingView);
         }
         catch (e) {
@@ -114,6 +114,7 @@ class Main extends eui.UILayer {
      */
     
     protected createGameScene(): void {
+        ResManager.Ins().loadGroup("proload");
         GameUtils.main = this;
         LayerManager.Ins();
         PoolManager.Ins();
