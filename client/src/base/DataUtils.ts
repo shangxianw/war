@@ -32,9 +32,8 @@ class DataUtils
 	public static DestroyUIBaseMap(map:Hash<any, UIBase>, setNull:boolean = true)
 	{
 		let item:DataBase;
-		for(let key in map.values)
+		for(let item of map.values)
 		{
-			item = map.get(key);
 			if(item == null)
 				continue;
 			item.destroyAll();

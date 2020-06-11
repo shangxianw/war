@@ -20,13 +20,12 @@ module war
 		{
 			let entity:EntityBase;
 			let warData = WarDataMgr.Ins();
-			for(let idStr in warData.entityMap.map)
+			for(let entity of warData.entityMap.values)
 			{
-				entity = warData.entityMap.get(Number(idStr));
 				if(entity == null)
 					continue;
 
-				let pCom:PathCom = entity.getCom(COMPONENT.PATH);
+				let pCom = entity.getCom(COMPONENT.PATH) as PathCom;
 				if(pCom == null)
 					continue;
 				DrawUtils.DrawPath(entity);
@@ -63,7 +62,7 @@ module war
 						pCom.toNext();
 					else
 					{
-						let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
+						let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
 						if(sCom != null)
 						{
 							sCom.angle = MathUtils.CalcAngle(entity.x, entity.y, localXY2[0], localXY2[1]);

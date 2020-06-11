@@ -118,7 +118,7 @@ class Main extends eui.UILayer {
         LayerManager.Ins();
         PoolManager.Ins();
         war.WarDataMgr.Ins();
-        ViewManager.Ins().open(ViewIdConst.WarPanel);
+        ViewManager.Ins().open(ViewIdConst.DemoPanel);
     }
 
     static hero:war.MovieClip

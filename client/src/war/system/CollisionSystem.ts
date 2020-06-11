@@ -32,7 +32,7 @@ module war
 				entity1 = entityArray[i];
 				if(entity1 == null)
 					continue;
-				rCom1 = entity1.getCom(COMPONENT.GRIGD);
+				rCom1 = entity1.getCom(COMPONENT.GRIGD) as RigidCom;
 				if(rCom1 == null)
 					continue;
 				for(let j=0, len2=entityArray.length; j<len2; j++) // 也是从0开始遍历的！
@@ -44,7 +44,7 @@ module war
 					if(entity1.id == entity2.id)
 						continue;
 					
-					rCom2 = entity2.getCom(COMPONENT.GRIGD);
+					rCom2 = entity2.getCom(COMPONENT.GRIGD) as RigidCom;
 					if(rCom2 == null)
 						continue;
 					
@@ -68,11 +68,11 @@ module war
 
 		public toAttack(entity1:EntityBase, entity2:EntityBase)
 		{
-			let aCom: ActionCom = entity1.getCom(COMPONENT.ACTION);
+			let aCom = entity1.getCom(COMPONENT.ACTION) as ActionCom;
 			if(aCom == null)
 				return;
 			
-			let sCom: SpeedCom = entity1.getCom(COMPONENT.SPEED);
+			let sCom = entity1.getCom(COMPONENT.SPEED) as SpeedCom;
 			if(sCom == null)
 				return;
 			let angle = MathUtils.CalcAngle(entity1.x, entity1.y, entity2.x, entity2.y);

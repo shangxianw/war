@@ -4,7 +4,7 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var DataUtils = (function () {
     function DataUtils() {
     }
-    // 复制
+    // 浅复制
     DataUtils.CopyArray = function (oriArray) {
         var copyArray = [];
         for (var _i = 0, oriArray_1 = oriArray; _i < oriArray_1.length; _i++) {
@@ -32,12 +32,12 @@ var DataUtils = (function () {
     DataUtils.DestroyUIBaseMap = function (map, setNull) {
         if (setNull === void 0) { setNull = true; }
         var item;
-        for (var key in map.values) {
-            item = map.get(key);
-            if (item == null)
+        for (var _i = 0, _a = map.values; _i < _a.length; _i++) {
+            var item_1 = _a[_i];
+            if (item_1 == null)
                 continue;
-            item.destroyAll();
-            PoolManager.Ins().push(item);
+            item_1.destroyAll();
+            PoolManager.Ins().push(item_1);
         }
         map.destroy();
         if (setNull == true)

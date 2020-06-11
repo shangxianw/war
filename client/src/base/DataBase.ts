@@ -23,14 +23,15 @@ abstract class DataBase
 
 	public destroyAll()
 	{
-		this.hash.forEach((value:CBData[], key:string)=>{
+		for(let value of this.hash.values)
+		{
 			for(let cbData of value)
 			{
 				cbData.destroy();
 				cbData = null;
 			}
 			value.length = 0;
-		}, this)
+		}
 		this.hash.destroy();
 		this._hash = null;
 		this.destroy();
@@ -166,7 +167,8 @@ abstract class DataBase
 			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 没有注册 ${propName}`);
 		}
 
-		this.hash.forEach((value:CBData[], key:string)=>{
+		for(let value of this.hash.values)
+		{
 			if(value == null)
 			{
 				return LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 发现空对象`);
@@ -176,8 +178,7 @@ abstract class DataBase
 			{
 				cbData.exec();
 			}
-			
-		}, this)
+		}
 	}
 
 	private get hash():Hash<string, CBData[]>

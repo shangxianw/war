@@ -22,13 +22,14 @@ var PoolManager = (function (_super) {
         this.poolMap = new Hash();
     };
     PoolManager.prototype.destroy = function () {
-        this.poolMap.forEach(function (value, key) {
+        for (var _i = 0, _a = this.poolMap.values; _i < _a.length; _i++) {
+            var value = _a[_i];
             if (value == null)
                 return;
-            for (var _i = 0, value_1 = value; _i < value_1.length; _i++) {
-                var value2 = value_1[_i];
+            for (var _b = 0, value_1 = value; _b < value_1.length; _b++) {
+                var value2 = value_1[_b];
             }
-        }, this);
+        }
         this.poolMap.destroy();
         this.poolMap = null;
     };
@@ -43,16 +44,17 @@ var PoolManager = (function (_super) {
         if (arr.indexOf(obj) < 0)
             arr.push(obj);
     };
-    PoolManager.prototype.pop = function (className) {
+    PoolManager.prototype.pop = function (cls) {
         // 需要判断className是否为可以实例化的类名
         // doSomething
-        if (this.poolMap.has(className) == false) {
-            return (new className)();
+        if (this.poolMap.has(cls.name) == false) {
+            return new cls();
         }
-        var arr = this.poolMap.get(className);
+        var arr = this.poolMap.get(cls.name);
         var item = arr.pop();
         if (item == null)
-            return (new className)();
+            return (new cls)();
+        item.init(); // 因为是二次使用，所以不会调用init的，需要手动调用一次。
         return item;
     };
     PoolManager.Ins = function () {

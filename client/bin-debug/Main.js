@@ -197,7 +197,7 @@ var Main = (function (_super) {
         LayerManager.Ins();
         PoolManager.Ins();
         war.WarDataMgr.Ins();
-        ViewManager.Ins().open(ViewIdConst.WarPanel);
+        ViewManager.Ins().open(ViewIdConst.DemoPanel);
     };
     return Main;
 }(eui.UILayer));

@@ -27,14 +27,15 @@ var UIBase = (function (_super) {
         this.init();
     };
     UIBase.prototype.destroyAll = function () {
-        this.hash.forEach(function (value, key) {
-            for (var _i = 0, value_1 = value; _i < value_1.length; _i++) {
-                var cbData = value_1[_i];
+        for (var _i = 0, _a = this.hash.values; _i < _a.length; _i++) {
+            var value = _a[_i];
+            for (var _b = 0, value_1 = value; _b < value_1.length; _b++) {
+                var cbData = value_1[_b];
                 cbData.destroy();
                 cbData = null;
             }
             value.length = 0;
-        }, this);
+        }
         this.hash.destroy();
         this._hash = null;
         this.destroy();
@@ -121,7 +122,6 @@ var UIBase = (function (_super) {
         this.updateAttr(propName);
     };
     UIBase.prototype.updateAttr = function (propName) {
-        var _this = this;
         if (propName == null) {
             LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53C2\u6570\u6709\u8BEF");
             return false;
@@ -129,15 +129,16 @@ var UIBase = (function (_super) {
         if (this.hash.has(propName) == false) {
             LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u6CA1\u6709\u6CE8\u518C " + propName);
         }
-        this.hash.forEach(function (value, key) {
+        for (var _i = 0, _a = this.hash.values; _i < _a.length; _i++) {
+            var value = _a[_i];
             if (value == null) {
-                return LogUtils.Warn(Utils.GetClassNameByObj(_this) + " : \u53D1\u73B0\u7A7A\u5BF9\u8C61");
+                return LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53D1\u73B0\u7A7A\u5BF9\u8C61");
             }
-            for (var _i = 0, value_2 = value; _i < value_2.length; _i++) {
-                var cbData = value_2[_i];
+            for (var _b = 0, value_2 = value; _b < value_2.length; _b++) {
+                var cbData = value_2[_b];
                 cbData.exec();
             }
-        }, this);
+        }
     };
     Object.defineProperty(UIBase.prototype, "hash", {
         get: function () {

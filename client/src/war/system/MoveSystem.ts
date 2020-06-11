@@ -21,13 +21,12 @@ module war
 		{
 			let entity:EntityBase;
 			let warData = WarDataMgr.Ins();
-			for(let idStr in warData.entityMap.map)
+			for(let entity of warData.entityMap.values)
 			{
-				entity = warData.entityMap.get(Number(idStr));
 				if(entity == null)
 					continue;
 
-				let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
+				let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
 				if(sCom == null)
 					continue;
 				

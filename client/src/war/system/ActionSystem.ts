@@ -21,17 +21,16 @@ module war
 		{
 			let entity:EntityBase;
 			let warData = WarDataMgr.Ins();
-			for(let idStr in warData.entityMap.map)
+			for(let entity of warData.entityMap.values)
 			{
-				entity = warData.entityMap.get(Number(idStr));
 				if(entity == null)
 					continue;
 
-				let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
+				let aCom = entity.getCom(COMPONENT.ACTION) as ActionCom;
 				if(aCom == null)
 					continue;
 
-				let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
+				let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
 				if(sCom == null)
 					continue;
 				
@@ -52,7 +51,7 @@ module war
 
 		private setStand(entity:EntityBase)
 		{
-			let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
+			let aCom = entity.getCom(COMPONENT.ACTION) as ActionCom;
 			let dir = aCom.direction;
 			if(dir == DIRECTION.UP)
 			{
@@ -99,8 +98,8 @@ module war
 
 		private setRun(entity:EntityBase)
 		{
-			let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
-			let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
+			let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
+			let aCom = entity.getCom(COMPONENT.ACTION) as ActionCom;
 			let angle = sCom.angle;
 			let warData = WarDataMgr.Ins();
 			
@@ -156,8 +155,8 @@ module war
 
 		private setAttack(entity:EntityBase)
 		{
-			let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
-			let aCom:ActionCom = entity.getCom(COMPONENT.ACTION);
+			let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
+			let aCom = entity.getCom(COMPONENT.ACTION) as ActionCom;
 			let angle = sCom.angle;
 			let warData = WarDataMgr.Ins();
 			

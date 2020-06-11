@@ -28,24 +28,24 @@ var war;
         ActionSystem.prototype.update = function (deltaTime) {
             var entity;
             var warData = war.WarDataMgr.Ins();
-            for (var idStr in warData.entityMap.map) {
-                entity = warData.entityMap.get(Number(idStr));
-                if (entity == null)
+            for (var _i = 0, _a = warData.entityMap.values; _i < _a.length; _i++) {
+                var entity_1 = _a[_i];
+                if (entity_1 == null)
                     continue;
-                var aCom = entity.getCom(war.COMPONENT.ACTION);
+                var aCom = entity_1.getCom(war.COMPONENT.ACTION);
                 if (aCom == null)
                     continue;
-                var sCom = entity.getCom(war.COMPONENT.SPEED);
+                var sCom = entity_1.getCom(war.COMPONENT.SPEED);
                 if (sCom == null)
                     continue;
                 if (aCom.action == war.ACTION.RUN) {
-                    this.setRun(entity);
+                    this.setRun(entity_1);
                 }
                 else if (aCom.action == war.ACTION.STAND) {
-                    this.setStand(entity);
+                    this.setStand(entity_1);
                 }
                 else if (aCom.action == war.ACTION.ATTACK) {
-                    this.setAttack(entity);
+                    this.setAttack(entity_1);
                 }
             }
         };

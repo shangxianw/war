@@ -7,7 +7,7 @@ module war
 		{
 			if(this.pathMap != null)
 			{
-				for(let key in this.pathMap.map)
+				for(let key of this.pathMap.keys)
 				{
 					let item:egret.Shape = this.pathMap.get(Number(key));
 					item.parent != null && item.parent.removeChild(item);
@@ -18,11 +18,10 @@ module war
 
 			if(this.colorMap != null)
 			{
-				for(let key in this.colorMap.map)
+				for(let value of this.colorMap.values)
 				{
-					let item:egret.ColorMatrixFilter = this.pathMap.get(Number(key));
-					item.matrix = null;
-					item = null;
+					value.matrix = null;
+					value = null;
 				}
 				this.pathMap.destroy();
 			}
@@ -87,7 +86,7 @@ module war
 
 			let testShap:egret.Shape = this.pathMap.get(entity.id);
 			let space = WarDataMgr.Ins().grid.space;
-			let pCom:PathCom = entity.getCom(COMPONENT.PATH);
+			let pCom = entity.getCom(COMPONENT.PATH) as PathCom;
 			if(pCom != null)
 			{
 				testShap.graphics.clear();
@@ -114,7 +113,7 @@ module war
 			if(DrawUtils.isTest == false)
 				return;
 			
-			let cCom:CampCom = hero.getCom(COMPONENT.CAMP);
+			let cCom = hero.getCom(COMPONENT.CAMP) as CampCom;
 			if(cCom == null)
 				return;
 			let shape = new egret.Shape();
@@ -145,7 +144,7 @@ module war
 		{
 			if(entity.hasCom(COMPONENT.GRIGD) == false)
 				return;
-			let rCom:RigidCom = entity.getCom(COMPONENT.GRIGD);
+			let rCom = entity.getCom(COMPONENT.GRIGD) as RigidCom;
 			let shape = new egret.Shape();
 			shape.graphics.beginFill(0xffff00);
 			shape.graphics.lineStyle(1, 0x000000);
@@ -205,7 +204,7 @@ module war
 		{
 			if(DrawUtils.isTest == false)
 				return;
-			let aCom:AttackCom = entity.getCom(COMPONENT.ATTACK);
+			let aCom = entity.getCom(COMPONENT.ATTACK) as AttackCom;
 			if(aCom == null)
 				return;
 			let rangeShape = new egret.Shape();

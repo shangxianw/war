@@ -4,6 +4,7 @@ class TimerData extends DataBase
 	public thisObj:any;
 	public delay:number;
 	public count:number;
+	
 	public lastTime:number;
 	protected init()
 	{
@@ -23,10 +24,9 @@ class TimerData extends DataBase
 		this.lastTime = null;
 	}
 
-	public packData(delay:number, count:number, cbFn:Function, thisObj:any, lastTime:number)
+	public packData(delay:number, cbFn:Function, thisObj:any, lastTime:number)
 	{
 		this.delay = delay;
-		this.count = count;
 		this.cbFn = cbFn;
 		this.thisObj = thisObj;
 		this.lastTime = lastTime;
@@ -37,8 +37,8 @@ class TimerData extends DataBase
 	public exec()
 	{
 		if(this.cbFn == null || this.thisObj == null)
-			return;
-		this.cbFn.call(this.thisObj);
+			return false;
+		return this.cbFn.call(this.thisObj);
 	}
 }
 
@@ -70,9 +70,14 @@ class TimerManager extends DataBase
 		return TimerManager.instance;
 	}
 
-	public addTimer(delay:number, count:number, cbFn:Function, thisObj:any):boolean
+	/**
+	 * 增加定时器
+	 * @param delay 间隔(毫秒)
+	 * @param cnFn 执行回调函数
+	 */
+	public addTimer(delay:number, cbFn:Function, thisObj:any):boolean
 	{
-		if(delay == null || count == null || cbFn == null || thisObj == null)
+		if(delay == null || cbFn == null || thisObj == null)
 		{
 			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
 			return false;
@@ -80,12 +85,12 @@ class TimerManager extends DataBase
 
 		if(this.hasTimer(cbFn, thisObj) == true)
 		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 已存在同一个定时器 ${delay} ${count} ${cbFn} ${thisObj}`);
+			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 已存在同一个定时器 ${delay} ${cbFn} ${thisObj}`);
 			return false;
 		}
 
 		let timer:TimerData = PoolManager.Ins().pop(TimerData);
-		timer.packData(delay, count, cbFn, thisObj, egret.getTimer());
+		timer.packData(delay, cbFn, thisObj, egret.getTimer());
 		this.timerArray.push(timer);
 		return true;
 	}
@@ -131,16 +136,40 @@ class TimerManager extends DataBase
 		return false;
 	}
 
-	private update(timeStamp:number):boolean
+	private update(t:number):boolean
 	{
 		let array:TimerData[] = DataUtils.CopyArray(this.timerArray);
+		let flag:boolean;
+		let index = 0;
 		for(let timer of array)
 		{
 			if(timer == null)
+			{
+				index++;
 				continue;
+			}
 			
-			
-			
+			let count = Math.floor((t - timer.lastTime)/timer.delay);
+			if(count >= 1)
+			{
+				timer.lastTime += count * timer.delay;
+				if(timer.count < 0) // 无限次执行
+				{
+					for(let i=0 ,len= count; i<len; i++)
+					{
+						flag = timer.exec();
+						timer.count++;
+						if(flag == false) // 停止
+						{
+							this.timerArray.splice(index, 1);
+							timer.destroyAll();
+							PoolManager.Ins().push(timer);
+							break;
+						}
+					}	
+				}
+			}
+			index++;
 		}
 		return true;
 	}

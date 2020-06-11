@@ -13,14 +13,15 @@ class PoolManager extends DataBase
 
 	public destroy()
 	{
-		this.poolMap.forEach((value:any[], key:string)=>{
+		for(let value of this.poolMap.values)
+		{
 			if(value == null)
 				return;
 			for(let value2 of value) // 理论上这些对象应该是干净的，没有内存泄漏的
 			{
 				
 			}
-		}, this)
+		}
 		this.poolMap.destroy();
 		this.poolMap = null;
 	}
@@ -41,19 +42,19 @@ class PoolManager extends DataBase
 			arr.push(obj);
 	}
 
-	public pop(className:any):any
+	public pop(cls:any):any
 	{
 		// 需要判断className是否为可以实例化的类名
 		// doSomething
 
-		if(this.poolMap.has(className) == false)
+		if(this.poolMap.has(cls.name) == false)
 		{
-			return (new (className as any))();
+			return new cls();
 		}
-		let arr:any[] = this.poolMap.get(className);
+		let arr:any[] = this.poolMap.get(cls.name);
 		let item = arr.pop();
 		if(item == null)
-			return (new (className as any))();
+			return (new (cls as any))();
 		item.init(); // 因为是二次使用，所以不会调用init的，需要手动调用一次。
 		return item;
 	}

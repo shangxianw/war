@@ -13,7 +13,7 @@ class ViewManager extends DataBase
 
 	protected destroy()
 	{
-		for(let ui of this.uiMap.map)
+		for(let ui of this.uiMap.values)
 		{
 			(ui as UIBase).destroyAll();
 		}
@@ -31,7 +31,7 @@ class ViewManager extends DataBase
 			let newView = new viewClass();
 			this.uiMap.set(panelId, newView);
 		}
-		let view:ViewBase = this.uiMap.get(panelId);
+		let view = this.uiMap.get(panelId) as ViewBase;
 		view.initData(data); // 此处需要做的是添加一个loading过程
 		if(view.Layer != null)
 			view.Layer.addChild(view);
@@ -43,7 +43,7 @@ class ViewManager extends DataBase
 		{
 			return LogUtils.Warn(`no this panel: ${panelId}`)
 		}
-		let view:ViewBase = this.uiMap.get(panelId);
+		let view = this.uiMap.get(panelId) as ViewBase;
 		view.destroyAll();
 		if(view.Layer != null)
 			view.Layer.removeChild(view);

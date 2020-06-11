@@ -1,21 +1,18 @@
 {
     "compilerOptions": {
-        "target": "es5",
-        "outDir": "bin-debug",
-        "experimentalDecorators": true,
-        "lib": [
-            "es5",
-            "dom",
-            "webworker",
-            "es2015.promise",
-            "es2015.collection", 
-            "es2015.symbol", 
-            "es2015.iterable"
-        ],
-        "types": []
+            "target": "es5",
+            "outDir": "bin-debug",
+            "experimentalDecorators": true,
+            "lib": [
+                    "es5",
+                    "dom",
+                    "es2015.promise"
+            ],
+            "types": []
     },
     "include": [
-        "src",
-        "libs"
+            "src",
+            "libs",
+            "protobuf/**/*.d.ts"
     ]
 }

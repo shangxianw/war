@@ -1,6 +1,7 @@
 class Hash<K, V>
 {
-	private map:Map<K, V>; // 需要再 tescofig.json 中添加 es2015.iterable
+	private keyArray:K[];
+	private valueArray:V[];
 	public constructor()
 	{
 		this.init();
@@ -8,66 +9,61 @@ class Hash<K, V>
 
 	public init()
 	{
-		this.map = new Map<K, V>();
+		this.keyArray = [];
+		this.valueArray = [];
 	}
 
 	public destroy()
 	{
-		this.map.clear();
-		this.map = null;
+		for(let value of this.valueArray)
+		{
+			value = null;
+		}
+		this.valueArray.length = 0;
+		this.keyArray.length = 0;
 	}
 
+	// 不支持更新
 	public set(key:K, value:V)
 	{
-		this.map.set(key, value);
+		this.keyArray.push(key);
+		this.valueArray.push(value);
 	}
 
 	public remove(key:K)
 	{
-		let item = this.map.get(key);
-		this.map.delete(key);
-		return item;
+		let index = this.keys.indexOf(key);
+		if(index < 0)
+			return null;
+		this.keyArray.splice(index, 1);
+		return this.valueArray.splice(index, 1)[0];
 	}
 
 	public get(key:K)
 	{
-		return this.map.get(key);
+		let index = this.keyArray.indexOf(key);
+		if(index < 0)
+			return null;
+		return this.values[index];
 	}
 
 	public has(key:K)
 	{
-		return this.map.has(key);
-	}
-
-	public forEach(cbFn:Function, thisObj:any)
-	{
-		if(cbFn == null || thisObj == null)
-			return LogUtils.Error(`Hash：参数有误`);
-		this.map.forEach((value:V, key:K, map:Map<K, V>)=>{
-			cbFn.call(this, value, key, map)
-		})
+		return this.keyArray.indexOf(key) >= 0;
 	}
 
 	public get len()
 	{
-		return this.map.size;
+		return this.keyArray.length;
 	}
 
 	public get values():V[]
 	{
-		let array:V[] = [];
-		this.map.forEach((value:V, key:K, map:Map<K, V>)=>{
-			array.push(value);
-		})
-		return array;
+		return this.valueArray;
 	}
 
 	public get keys():K[]
 	{
-		let array:K[] = [];
-		this.map.forEach((value:V, key:K, map:Map<K, V>)=>{
-			array.push(key);
-		})
-		return array;
+		return this.keyArray;
 	}
 }

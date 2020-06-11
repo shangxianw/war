@@ -26,15 +26,22 @@ var home;
     var DemoPanel = (function (_super) {
         __extends(DemoPanel, _super);
         function DemoPanel() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            return _super.call(this, "DemoPanelSkin") || this;
         }
         DemoPanel.prototype.init = function () {
             this.PanelId = ViewIdConst.DemoPanel;
             this.Layer = LayerManager.Ins().Panel;
         };
         DemoPanel.prototype.destroy = function () {
+            TimerManager.Ins().removeTimer(this.testTimer, this);
         };
         DemoPanel.prototype.initData = function () {
+            TimerManager.Ins().removeTimer(this.testTimer, this);
+            TimerManager.Ins().addTimer(1000, this.testTimer, this);
+        };
+        DemoPanel.prototype.testTimer = function () {
+            this.timerLb.text = (new Date).getTime() + "";
+            return true;
         };
         return DemoPanel;
     }(ViewBase));

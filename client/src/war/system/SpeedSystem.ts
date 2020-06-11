@@ -20,17 +20,16 @@ module war
 		{
 			let entity:EntityBase;
 			let warData = WarDataMgr.Ins();
-			for(let idStr in warData.entityMap.map)
+			for(let entity of warData.entityMap.values)
 			{
-				entity = warData.entityMap.get(Number(idStr));
 				if(entity == null)
 					continue;
 
 				// 知道当前目标去修改速度的方向
-				let sCom:SpeedCom = entity.getCom(COMPONENT.SPEED);
+				let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
 				if(sCom != null)
 				{
-					let pCom:PathCom = entity.getCom(COMPONENT.PATH);
+					let pCom = entity.getCom(COMPONENT.PATH) as PathCom;
 					if(pCom == null) 
 						continue;
 					let currNode:astar.Node = pCom.getCurr();

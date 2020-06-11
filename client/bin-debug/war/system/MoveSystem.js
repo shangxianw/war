@@ -28,18 +28,18 @@ var war;
         MoveSystem.prototype.update = function (deltaTime) {
             var entity;
             var warData = war.WarDataMgr.Ins();
-            for (var idStr in warData.entityMap.map) {
-                entity = warData.entityMap.get(Number(idStr));
-                if (entity == null)
+            for (var _i = 0, _a = warData.entityMap.values; _i < _a.length; _i++) {
+                var entity_1 = _a[_i];
+                if (entity_1 == null)
                     continue;
-                var sCom = entity.getCom(war.COMPONENT.SPEED);
+                var sCom = entity_1.getCom(war.COMPONENT.SPEED);
                 if (sCom == null)
                     continue;
                 var speedArray = MathUtils.CalcLegSide(sCom.speed, sCom.angle);
                 var speedX = speedArray[0];
                 var speedY = speedArray[1];
-                entity.x = Number((entity.x + speedX).toFixed(2));
-                entity.y = Number((entity.y + speedY).toFixed(2));
+                entity_1.x = Number((entity_1.x + speedX).toFixed(2));
+                entity_1.y = Number((entity_1.y + speedY).toFixed(2));
             }
         };
         return MoveSystem;
