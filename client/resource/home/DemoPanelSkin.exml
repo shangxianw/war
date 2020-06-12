@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="DemoPanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Rect left="0" right="0" top="0" bottom="0"/>
-	<e:Label id="timerLb" text="timerLb" x="244" y="286"/>
-	<e:Label id="timerLb0" text="timerLb" x="234" y="356"/>
-	<e:Label id="timerLb1" text="timerLb" x="264" y="446"/>
 </e:Skin>

@@ -1,14 +1,8 @@
-abstract class ViewBase extends UIBase
+abstract class ViewData extends DataBase
 {
-	public abstract PanelId:number;
-	public abstract Layer:eui.Component;
-	public constructor(skinName:string)
-	{
-		super(skinName);
-	}
-
-	public abstract initData(p1?:any, q2?:any, q3?:any);
-
+	protected static ID:number;
+	public resGroupArray:string[];
+	public parent:eui.UILayer;
 	protected initAll()
 	{
 		super.initAll();
@@ -18,9 +12,24 @@ abstract class ViewBase extends UIBase
 	{
 		super.destroyAll();
 	}
+}
 
-	public getParent()
+abstract class ViewBase extends UIBase
+{
+	public info:ViewData;
+	public constructor(skinName:string)
 	{
-		return this.parent;
+		super(skinName);
+	}
+
+	protected initAll()
+	{
+		this.info = new ViewData();
+		super.initAll();
+	}
+
+	public destroyAll()
+	{
+		super.destroyAll();
 	}
 }

@@ -94,7 +94,8 @@ class Main extends eui.UILayer
         GameUtils.main = this;
         LayerManager.Ins();
         war.WarDataMgr.Ins();
-        ViewManager.Ins().open(ViewIdConst.DemoPanel);
+
+        ViewManager.Ins().open(ViewIdConst.DemoPanel, 1);
     }
 }
 

@@ -1,6 +1,6 @@
 class ViewManager extends DataBase
 {
-	public uiMap:Hash<number, UIBase>
+	public uiMap:Hash<string, ViewBase>
 	public constructor()
 	{
 		super();
@@ -8,7 +8,7 @@ class ViewManager extends DataBase
 
 	protected init()
 	{
-		this.uiMap = new Hash<number, UIBase>();
+		this.uiMap = new Hash<string, ViewBase>();
 	}
 
 	protected destroy()
@@ -21,20 +21,29 @@ class ViewManager extends DataBase
 		this.uiMap = null;
 	}
 
-	public open(panelId:number, data:any = null)
+	public open(cls:ViewBase, data:any = null)
 	{
-		if(this.uiMap.has(panelId) == false)
+		let className = Utils.GetClassNameByObj(cls);
+		if(className == null)
 		{
-			let viewClass:any = ViewIdConst.GetView(panelId);
-			if(viewClass == null)
-				return LogUtils.Warn(`no this panel : ${panelId}`);
-			let newView = new viewClass();
-			this.uiMap.set(panelId, newView);
+			LogUtils.Error("不存在类名");
+			return;
 		}
-		let view = this.uiMap.get(panelId) as ViewBase;
-		view.initData(data); // 此处需要做的是添加一个loading过程
-		if(view.Layer != null)
-			view.Layer.addChild(view);
+		if(this.uiMap.has(className) == false)
+		{
+			try
+			{
+				let v:any = cls;
+				let viewObj = new v();
+				this.uiMap.set(className, viewObj);
+			}
+			catch(e)
+			{
+				LogUtils.Error("创建面板发生错误");
+				return;
+			}
+		}
+		this.handleView(className);
 	}
 
 	public close(panelId:number)
@@ -45,8 +54,27 @@ class ViewManager extends DataBase
 		}
 		let view = this.uiMap.get(panelId) as ViewBase;
 		view.destroyAll();
-		if(view.Layer != null)
-			view.Layer.removeChild(view);
+		// if(view.Layer != null)
+		// 	view.Layer.removeChild(view);
+	}
+
+	private handleView(className:string)
+	{
+		if(this.uiMap.has(className) == false)
+		{
+			LogUtils.Error(`不存在面板 ${className}`);
+			return;
+		}
+		
+		let view = this.uiMap.get(className);
+		let parent = null;
+		let resGroupArray = null;
+
+		// 先加载资源，再添加面板
+		// for(view)
+		// {
+		// ResManager.Ins().loadGroup()
+		// }
 	}
 
 	private static Instance:ViewManager;

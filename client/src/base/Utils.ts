@@ -1,5 +1,6 @@
 class Utils
 {
+    // 获取对象的对象名
 	public static GetClassNameByObj(value:any):string
 	{
 		var type = typeof value;
@@ -20,4 +21,11 @@ class Utils
         });
         return className;
 	}
+
+    // 获取类名
+    public static GetClassNameByClass(value:any):string
+    {
+        let className;
+        return className;
+    }
 }
