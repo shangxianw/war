@@ -4,8 +4,8 @@ module home
 	{
 		protected init()
 		{
-			this.resGroupArray = [];
-			this.parent = LayerManager.Ins().Panel;
+			this.resGroup = "preload";
+			this.layer = LayerManager.Ins().Panel;
 		}
 
 		protected destroy()
@@ -13,8 +13,6 @@ module home
 			
 		}
 
-		public name:string;
-		public age:number;
 		public packData()
 		{
 
@@ -26,6 +24,9 @@ module home
 	{
 		public nameLb:eui.Label;
 		public ageLb:eui.Label;
+		private testImg:eui.Image;
+
+		public info:DemoPanelData;
 		public constructor()
 		{
 			super("DemoPanelSkin");	
@@ -33,17 +34,18 @@ module home
 
 		protected init()
 		{
-			
+			this.viewInfo = new DemoPanelData();
+			this.info = this.viewInfo as any;
 		}
 
-		public destroy()
+		public initData(type:number)
 		{
-			
+			this.info.packData();
 		}
 
-		public initData(page:number)
+		public initView()
 		{
-			
+
 		}
 	}
 }

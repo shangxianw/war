@@ -8,6 +8,24 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
+var ViewData = (function (_super) {
+    __extends(ViewData, _super);
+    function ViewData() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    ViewData.prototype.init = function () {
+    };
+    ViewData.prototype.destroy = function () {
+    };
+    ViewData.prototype.initAll = function () {
+        _super.prototype.initAll.call(this);
+    };
+    ViewData.prototype.destroyAll = function () {
+        _super.prototype.destroyAll.call(this);
+    };
+    return ViewData;
+}(DataBase));
+__reflect(ViewData.prototype, "ViewData");
 var ViewBase = (function (_super) {
     __extends(ViewBase, _super);
     function ViewBase(skinName) {
@@ -19,8 +37,15 @@ var ViewBase = (function (_super) {
     ViewBase.prototype.destroyAll = function () {
         _super.prototype.destroyAll.call(this);
     };
-    ViewBase.prototype.getParent = function () {
-        return this.parent;
+    // 如果有许多需求，可以在下面添加各种阶段的执行方法
+    // public initDataBefore(data:any = null)
+    // {
+    // }
+    ViewBase.prototype.initData = function () {
+        var query = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            query[_i] = arguments[_i];
+        }
     };
     return ViewBase;
 }(UIBase));

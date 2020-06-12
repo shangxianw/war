@@ -71,7 +71,7 @@ module war
 			if(DrawUtils.isTest == false)
 				return;
 			
-			let group = (ViewManager.Ins().uiMap.get(ViewIdConst.WarPanel) as WarPanel).drawGroup;
+			let group = (ViewManager.Ins().getView(WarPanel) as WarPanel).drawGroup;
 			if(this.pathMap == null)
 				this.pathMap = new Hash<number, egret.Shape>();
 

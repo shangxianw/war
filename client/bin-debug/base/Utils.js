@@ -4,6 +4,7 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var Utils = (function () {
     function Utils() {
     }
+    // 获取对象的对象名
     Utils.GetClassNameByObj = function (value) {
         var type = typeof value;
         if (!value || (type != "object" && !value.prototype)) {
@@ -21,6 +22,11 @@ var Utils = (function () {
             enumerable: false,
             writable: true
         });
+        return className;
+    };
+    // 获取类名
+    Utils.GetClassNameByClass = function (value) {
+        var className;
         return className;
     };
     return Utils;

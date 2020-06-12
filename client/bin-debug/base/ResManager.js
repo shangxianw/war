@@ -59,13 +59,15 @@ var ResGroupData = (function (_super) {
         this.itemsLoaded = null;
         this.itemsTotal = null;
     };
-    ResGroupData.prototype.packData = function (groupName, cbFn, thisObj, progFn, priority) {
+    ResGroupData.prototype.packData = function (groupName, cbFn, thisObj, progFn, errFn, priority) {
         if (cbFn === void 0) { cbFn = null; }
         if (thisObj === void 0) { thisObj = null; }
         if (progFn === void 0) { progFn = null; }
+        if (errFn === void 0) { errFn = null; }
         this.groupName = groupName;
         this.priority = priority;
         this.cbFn = cbFn;
+        this.errFn = errFn;
         this.thisObj = thisObj;
         this.progFn = progFn;
         return this;
@@ -79,6 +81,11 @@ var ResGroupData = (function (_super) {
         if (this.progFn == null || this.thisObj == null)
             return;
         this.progFn.call(this.thisObj, query);
+    };
+    ResGroupData.prototype.execErr = function (query) {
+        if (this.errFn == null || this.thisObj == null)
+            return;
+        this.errFn.call(this.thisObj, query);
     };
     return ResGroupData;
 }(DataBase));
@@ -135,20 +142,22 @@ var ResManager = (function (_super) {
             ResManager.instance = new ResManager();
         return ResManager.instance;
     };
-    ResManager.prototype.loadGroup = function (groupName, cbFn, thisObj, progFn, priority) {
+    // 默认放在队列的后面
+    ResManager.prototype.loadGroup = function (groupName, cbFn, thisObj, progFn, errFn, priority) {
         if (cbFn === void 0) { cbFn = null; }
         if (thisObj === void 0) { thisObj = null; }
         if (progFn === void 0) { progFn = null; }
+        if (errFn === void 0) { errFn = null; }
         if (priority === void 0) { priority = null; }
-        if (groupName == null) {
+        if (groupName == null || groupName == "") {
             return LogUtils.Error(Utils.GetClassNameByObj(this) + " : loadGroup \u65B9\u6CD5\u53C2\u6570\u6709\u8BEF");
         }
         var grouInfo = PoolManager.Ins().pop(ResGroupData);
         if (priority != null) {
-            grouInfo.packData(groupName, cbFn, thisObj, progFn, priority);
+            grouInfo.packData(groupName, cbFn, thisObj, progFn, errFn, priority);
         }
         else {
-            grouInfo.packData(groupName, cbFn, thisObj, progFn, this.groupArray.length);
+            grouInfo.packData(groupName, cbFn, thisObj, progFn, errFn, this.groupArray.length);
         }
         LogUtils.Log("\u5C06\u8D44\u6E90\u7EC4 " + groupName + " \u52A0\u5165\u5230\u52A0\u8F7D\u5217\u8868, \u4F18\u5148\u7EA7\u4E3A " + grouInfo.priority);
         this.groupArray.push(grouInfo);
@@ -235,6 +244,9 @@ var ResManager = (function (_super) {
         this.currLaodInfo.errLoadCount++;
         if (this.currLaodInfo.errLoadCount >= this.ERROR_LOAD_COUNT) {
             LogUtils.Error(Utils.GetClassNameByObj(this) + " : " + this.currLaodInfo.groupName + " \u52A0\u8F7D\u5931\u8D25\uFF0C\u51C6\u5907\u52A0\u8F7D\u4E0B\u4E00\u4E2A\u8D44\u6E90\u7EC4");
+            if (this.currLaodInfo != null) {
+                this.currLaodInfo.execErr(e);
+            }
             this.loadEnd();
             return;
         }

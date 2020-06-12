@@ -17,9 +17,6 @@ module war
 	{
 		private testGrid:eui.Group;
 
-		public PanelId:number;
-		public Layer:eui.Component;
-
 		public drawGroup:eui.Group;
 		private entityGroup:eui.Group;
 		public constructor()
@@ -29,8 +26,6 @@ module war
 
 		protected init()
 		{
-			this.PanelId = ViewIdConst.WarPanel;
-			this.Layer = LayerManager.Ins().War;
 			this.addEventListener(egret.Event.ENTER_FRAME, this.OnUpdate, this);
 			// WarDataMgr.Ins().startWar();
 			this.addEventListener(egret.Event.ENTER_FRAME, ()=>{

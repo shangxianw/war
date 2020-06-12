@@ -1,4 +1,4 @@
-className = input("in something");
+className = input("输入面板名：");
 # className = "demo";
 
 s1 = ""

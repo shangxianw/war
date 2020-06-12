@@ -46,6 +46,7 @@ class ResGroupData extends DataBase
 
 	public cbFn:Function;
 	public progFn:Function;
+	public errFn:Function;
 	public thisObj:any;
 
 	public errLoadCount:number;
@@ -69,11 +70,12 @@ class ResGroupData extends DataBase
 		this.itemsTotal = null;
 	}
 
-	public packData(groupName:string, cbFn:Function=null, thisObj:any=null, progFn:Function=null, priority:number)
+	public packData(groupName:string, cbFn:Function=null, thisObj:any=null, progFn:Function=null, errFn:Function=null, priority:number)
 	{
 		this.groupName = groupName;
 		this.priority = priority;
 		this.cbFn = cbFn;
+		this.errFn = errFn;
 		this.thisObj = thisObj;
 		this.progFn = progFn;
 		return this;
@@ -91,6 +93,13 @@ class ResGroupData extends DataBase
 		if(this.progFn == null || this.thisObj == null)
 			return;
 		this.progFn.call(this.thisObj, query);
+	}
+
+	public execErr(query:any)
+	{
+		if(this.errFn == null || this.thisObj == null)
+			return;
+		this.errFn.call(this.thisObj, query);
 	}
 }
 
@@ -162,9 +171,10 @@ class ResManager extends DataBase
 		return ResManager.instance;
 	}
 
-	public loadGroup(groupName:string, cbFn:Function=null, thisObj:any=null, progFn:Function=null, priority:number = null)
+	// 默认放在队列的后面
+	public loadGroup(groupName:string, cbFn:Function=null, thisObj:any=null, progFn:Function=null, errFn:Function=null, priority:number = null)
 	{
-		if(groupName == null)
+		if(groupName == null || groupName == "")
 		{
 			return LogUtils.Error(`${Utils.GetClassNameByObj(this)} : loadGroup 方法参数有误`);
 		}
@@ -173,11 +183,11 @@ class ResManager extends DataBase
 
 		if(priority != null) // 如果有优先级，数字越小优先级越高，最高位0
 		{
-			grouInfo.packData(groupName, cbFn, thisObj, progFn, priority);
+			grouInfo.packData(groupName, cbFn, thisObj, progFn, errFn, priority);
 		}
 		else
 		{
-			grouInfo.packData(groupName, cbFn, thisObj, progFn, this.groupArray.length);
+			grouInfo.packData(groupName, cbFn, thisObj, progFn, errFn, this.groupArray.length);
 		}
 		LogUtils.Log(`将资源组 ${groupName} 加入到加载列表, 优先级为 ${grouInfo.priority}`);
 		this.groupArray.push(grouInfo);
@@ -289,6 +299,10 @@ class ResManager extends DataBase
 		if(this.currLaodInfo.errLoadCount >= this.ERROR_LOAD_COUNT)
 		{
 			LogUtils.Error(`${Utils.GetClassNameByObj(this)} : ${this.currLaodInfo.groupName} 加载失败，准备加载下一个资源组`);
+			if(this.currLaodInfo != null)
+			{
+				this.currLaodInfo.execErr(e);
+			}
 			this.loadEnd();
 			return;
 		}

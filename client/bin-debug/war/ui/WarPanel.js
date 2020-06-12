@@ -29,8 +29,6 @@ var war;
             return _super.call(this, "WarPanelSkin") || this;
         }
         WarPanel.prototype.init = function () {
-            this.PanelId = ViewIdConst.WarPanel;
-            this.Layer = LayerManager.Ins().War;
             this.addEventListener(egret.Event.ENTER_FRAME, this.OnUpdate, this);
             // WarDataMgr.Ins().startWar();
             this.addEventListener(egret.Event.ENTER_FRAME, function () {

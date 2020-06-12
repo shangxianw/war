@@ -8,6 +8,10 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
+/**
+ * 面板管理器
+ * 关闭会销毁面板，并且删除资源，不做缓存
+ */
 var ViewManager = (function (_super) {
     __extends(ViewManager, _super);
     function ViewManager() {
@@ -24,28 +28,88 @@ var ViewManager = (function (_super) {
         this.uiMap.destroy();
         this.uiMap = null;
     };
-    ViewManager.prototype.open = function (panelId, data) {
+    ViewManager.prototype.open = function (cls, data) {
         if (data === void 0) { data = null; }
-        if (this.uiMap.has(panelId) == false) {
-            var viewClass = ViewIdConst.GetView(panelId);
-            if (viewClass == null)
-                return LogUtils.Warn("no this panel : " + panelId);
-            var newView = new viewClass();
-            this.uiMap.set(panelId, newView);
+        var className = Utils.GetClassNameByObj(cls);
+        if (className == null) {
+            LogUtils.Error("不存在类名");
+            return false;
         }
-        var view = this.uiMap.get(panelId);
-        view.initData(data); // 此处需要做的是添加一个loading过程
-        if (view.Layer != null)
-            view.Layer.addChild(view);
+        if (this.uiMap.has(className) == true) {
+            LogUtils.Error("面板已经打开");
+            return false;
+        }
+        try {
+            var v = cls;
+            var viewObj = new v();
+            this.uiMap.set(className, viewObj);
+        }
+        catch (e) {
+            LogUtils.Error("创建面板发生错误");
+            return false;
+        }
+        return this.handleView(className, data);
     };
-    ViewManager.prototype.close = function (panelId) {
-        if (this.uiMap.has(panelId) == false) {
-            return LogUtils.Warn("no this panel: " + panelId);
+    ViewManager.prototype.close = function (cls) {
+        var className = Utils.GetClassNameByObj(cls);
+        if (className == null) {
+            LogUtils.Error("不存在类名");
+            return false;
         }
-        var view = this.uiMap.get(panelId);
+        if (this.uiMap.has(className) == false) {
+            LogUtils.Warn("\u5173\u95ED\u4E0D\u5B58\u5728\u7684\u9762\u677F " + className);
+            return false;
+        }
+        var view = this.uiMap.get(className);
         view.destroyAll();
-        if (view.Layer != null)
-            view.Layer.removeChild(view);
+        if (view.parent != null) {
+            view.parent.removeChild(view);
+        }
+        else {
+            LogUtils.Warn("\u9762\u677F\u6CA1\u6709\u7236\u7EA7");
+            return false;
+        }
+        ResManager.Ins().destroyGroup(view.viewInfo.resGroup);
+        this.uiMap.remove(className);
+        view = null;
+        return true;
+    };
+    ViewManager.prototype.getView = function (cls) {
+        var className = Utils.GetClassNameByObj(cls);
+        if (className == null) {
+            LogUtils.Error("不存在类名");
+            return null;
+        }
+        if (this.uiMap.has(className) == false) {
+            LogUtils.Warn("\u4E0D\u5B58\u5728\u9762\u677F " + className);
+            return null;
+        }
+        // 有可能返回的是缓存中的面板，即该面板没有打开
+        return this.uiMap.get(className);
+    };
+    ViewManager.prototype.handleView = function (className, data) {
+        if (data === void 0) { data = null; }
+        if (this.uiMap.has(className) == false) {
+            LogUtils.Error("\u4E0D\u5B58\u5728\u9762\u677F " + className);
+            return false;
+        }
+        var view = this.uiMap.get(className);
+        var parent = view.viewInfo.layer;
+        var resGroup = view.viewInfo.resGroup;
+        // 先加载资源，再添加面板
+        if (resGroup != null && resGroup != "") {
+            ResManager.Ins().loadGroup(resGroup, function (e) {
+                parent.addChild(view);
+                view.initData(data);
+            }, this, null, function (e) {
+                LogUtils.Error("\u52A0\u8F7D\u9762\u677F\u5931\u8D25 " + className);
+            }, 0);
+        }
+        else {
+            parent.addChild(view);
+            view.initData(data);
+        }
+        return true;
     };
     ViewManager.Ins = function () {
         if (ViewManager.Instance == null)

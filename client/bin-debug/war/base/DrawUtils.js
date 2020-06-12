@@ -58,7 +58,7 @@ var war;
         DrawUtils.DrawPath = function (entity) {
             if (DrawUtils.isTest == false)
                 return;
-            var group = ViewManager.Ins().uiMap.get(ViewIdConst.WarPanel).drawGroup;
+            var group = ViewManager.Ins().getView(war.WarPanel).drawGroup;
             if (this.pathMap == null)
                 this.pathMap = new Hash();
             if (this.pathMap.has(entity.id) == false) {

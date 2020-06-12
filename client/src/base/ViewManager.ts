@@ -1,6 +1,10 @@
+/**
+ * 面板管理器
+ * 关闭会销毁面板，并且删除资源，不做缓存
+ */
 class ViewManager extends DataBase
 {
-	public uiMap:Hash<string, ViewBase>
+	private uiMap:Hash<string, ViewBase>;
 	public constructor()
 	{
 		super();
@@ -21,60 +25,113 @@ class ViewManager extends DataBase
 		this.uiMap = null;
 	}
 
-	public open(cls:ViewBase, data:any = null)
+	public open(cls:Function, data:any = null):boolean
 	{
 		let className = Utils.GetClassNameByObj(cls);
 		if(className == null)
 		{
 			LogUtils.Error("不存在类名");
-			return;
+			return false;
+		}
+
+		if(this.uiMap.has(className) == true)
+		{
+			LogUtils.Error("面板已经打开");
+			return false;
+		}
+
+		try
+		{
+			let v:any = cls;
+			let viewObj = new v();
+			this.uiMap.set(className, viewObj);
+		}
+		catch(e)
+		{
+			LogUtils.Error("创建面板发生错误");
+			return false;
+		}
+		return this.handleView(className, data);
+	}
+
+	public close(cls:Function):boolean
+	{
+		let className = Utils.GetClassNameByObj(cls);
+		if(className == null)
+		{
+			LogUtils.Error("不存在类名");
+			return false;
 		}
 		if(this.uiMap.has(className) == false)
 		{
-			try
-			{
-				let v:any = cls;
-				let viewObj = new v();
-				this.uiMap.set(className, viewObj);
-			}
-			catch(e)
-			{
-				LogUtils.Error("创建面板发生错误");
-				return;
-			}
+			LogUtils.Warn(`关闭不存在的面板 ${className}`)
+			return false;
 		}
-		this.handleView(className);
-	}
-
-	public close(panelId:number)
-	{
-		if(this.uiMap.has(panelId) == false)
-		{
-			return LogUtils.Warn(`no this panel: ${panelId}`)
-		}
-		let view = this.uiMap.get(panelId) as ViewBase;
+		
+		let view = this.uiMap.get(className) as ViewBase;
 		view.destroyAll();
-		// if(view.Layer != null)
-		// 	view.Layer.removeChild(view);
+		if(view.parent != null)
+		{
+			view.parent.removeChild(view);
+		}
+		else
+		{
+			LogUtils.Warn(`面板没有父级`);
+			return false;
+		}
+		
+		ResManager.Ins().destroyGroup(view.viewInfo.resGroup);
+		this.uiMap.remove(className);
+		view = null;
+		return true;
 	}
 
-	private handleView(className:string)
+	public getView(cls:Function):ViewBase
+	{
+		let className = Utils.GetClassNameByObj(cls);
+		if(className == null)
+		{
+			LogUtils.Error("不存在类名");
+			return null;
+		}
+
+		if(this.uiMap.has(className) == false)
+		{
+			LogUtils.Warn(`不存在面板 ${className}`)
+			return null;
+		}
+		// 有可能返回的是缓存中的面板，即该面板没有打开
+		return this.uiMap.get(className);
+	}
+
+	private handleView(className:string, data:any = null):boolean
 	{
 		if(this.uiMap.has(className) == false)
 		{
 			LogUtils.Error(`不存在面板 ${className}`);
-			return;
+			return false
 		}
 		
 		let view = this.uiMap.get(className);
-		let parent = null;
-		let resGroupArray = null;
+		let parent:eui.UILayer = view.viewInfo.layer;
+		let resGroup = view.viewInfo.resGroup;
 
 		// 先加载资源，再添加面板
-		// for(view)
-		// {
-		// ResManager.Ins().loadGroup()
-		// }
+		if(resGroup != null && resGroup != "")
+		{
+			ResManager.Ins().loadGroup(resGroup, (e:RES.ResourceEvent)=>{
+				parent.addChild(view);
+				view.initView(data);
+			}, this, null, (e:RES.ResourceEvent)=>{
+				LogUtils.Error(`加载面板失败 ${className}`);
+			}, 0)
+		}
+		else
+		{
+			parent.addChild(view);
+			view.initView(data);
+		}
+		return true;
 	}
 
 	private static Instance:ViewManager;

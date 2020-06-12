@@ -14,8 +14,9 @@ abstract class UIBase extends eui.Component
 		this.initAll();
 	}
 
-	protected abstract init();
-	protected abstract destroy();
+	protected abstract init();		// view 刚被创建出来时调用
+	protected abstract destroy();	// 关闭界面时调用
+	public abstract initView();  	// 添加到舞台之后调用
 
 	protected initAll()
 	{

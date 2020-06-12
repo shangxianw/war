@@ -1,3 +1,4 @@
+import DemoPanel = home.DemoPanel;
 //////////////////////////////////////////////////////////////////////////////////////
 //
 //  Copyright (c) 2014-present, Egret Technology.
@@ -82,20 +83,10 @@ class Main extends eui.UILayer
     }
     
     protected createGameScene(): void {
-        ResManager.Ins().loadGroup("preload", ()=>{
-            // alert(1)
-        }, this, (e:RES.ResourceEvent)=>{
-            console.log("===================," + e.groupName);
-        });
-        ResManager.Ins().loadGroup("load2", ()=>{
-            // alert(2)
-        }, this, null, 1);
-
         GameUtils.main = this;
         LayerManager.Ins();
         war.WarDataMgr.Ins();
-
-        ViewManager.Ins().open(ViewIdConst.DemoPanel, 1);
+        ViewManager.Ins().open(DemoPanel, 2);
     }
 }
 
