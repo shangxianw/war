@@ -7,18 +7,17 @@ abstract class UIBase extends eui.Component
 {
 	public id:number;
 	private _hash:Hash<string ,CBData[]>; // 惰性加载
-	public constructor(skinName:string = null)
+	public constructor(skinName:string = null, data:any=null)
 	{
 		super();
 		this.skinName = skinName;
-		this.initAll();
+		this.initAll(data);
 	}
 
 	protected abstract init();		// view 刚被创建出来时调用
 	protected abstract destroy();	// 关闭界面时调用
-	public abstract initView();  	// 添加到舞台之后调用
 
-	protected initAll()
+	protected initAll(data:any=null)
 	{
 		this.id = IDManager.Ins().getNewId();
 		this.init();

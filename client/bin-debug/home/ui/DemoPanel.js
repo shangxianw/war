@@ -16,49 +16,32 @@ var home;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         DemoPanelData.prototype.init = function () {
-            this.resGroup = "preload";
+            this.resGroup = "";
             this.layer = LayerManager.Ins().Panel;
         };
         DemoPanelData.prototype.destroy = function () {
         };
-        DemoPanelData.prototype.packData1 = function (name) {
-            this.name = "wsx";
-        };
-        DemoPanelData.prototype.packData2 = function (name) {
-            this.name = "www";
+        DemoPanelData.prototype.packData = function () {
         };
         return DemoPanelData;
     }(ViewData));
     home.DemoPanelData = DemoPanelData;
     __reflect(DemoPanelData.prototype, "home.DemoPanelData");
-    // 只有状态，不操作数据。如果要修改数据，也要在Data中写一个方法，然后执行该方法
     var DemoPanel = (function (_super) {
         __extends(DemoPanel, _super);
         function DemoPanel() {
-            return _super.call(this, "DemoPanelSkin") || this;
+            return _super.call(this, "DemoPanelSkin", DemoPanelData) || this;
         }
         DemoPanel.prototype.init = function () {
-            this.viewInfo = new DemoPanelData();
-            this.info = this.viewInfo;
         };
         DemoPanel.prototype.destroy = function () {
+            if (this.info != null)
+                this.info.destroyAll();
         };
-        // private a:number = 1;
-        DemoPanel.prototype.initData = function (type) {
-            if (type == 1)
-                this.info.packData1("wsx");
-            else if (type == 2)
-                this.info.packData2("www");
-            this.nameLb.text = this.info.name;
-            // if(this.a == 1)
-            // 	this.testImg.source = "bg_card_di_0_png";
-            // else if(this.a == 2)
-            // 	this.testImg.source = "bg_card_di_1_png";
-            // else if(this.a == 3)
-            // 	this.testImg.source = "bg_card_di_3_png";
-            // else if(this.a == 4)
-            // 	this.testImg.source = "bg_card_di_4_png";
-            // this.a++;
+        DemoPanel.prototype.initData = function (data) {
+            this.info.packData();
+        };
+        DemoPanel.prototype.initView = function () {
         };
         return DemoPanel;
     }(ViewBase));

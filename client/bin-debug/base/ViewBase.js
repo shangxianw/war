@@ -28,24 +28,16 @@ var ViewData = (function (_super) {
 __reflect(ViewData.prototype, "ViewData");
 var ViewBase = (function (_super) {
     __extends(ViewBase, _super);
-    function ViewBase(skinName) {
-        return _super.call(this, skinName) || this;
+    function ViewBase(skinName, data) {
+        return _super.call(this, skinName, data) || this;
     }
-    ViewBase.prototype.initAll = function () {
+    ViewBase.prototype.initAll = function (data) {
+        this.viewInfo = new data();
+        this["info"] = this.viewInfo;
         _super.prototype.initAll.call(this);
     };
     ViewBase.prototype.destroyAll = function () {
         _super.prototype.destroyAll.call(this);
-    };
-    // 如果有许多需求，可以在下面添加各种阶段的执行方法
-    // public initDataBefore(data:any = null)
-    // {
-    // }
-    ViewBase.prototype.initData = function () {
-        var query = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            query[_i] = arguments[_i];
-        }
     };
     return ViewBase;
 }(UIBase));

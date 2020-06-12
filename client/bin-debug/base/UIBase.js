@@ -15,14 +15,16 @@ r.prototype = e.prototype, t.prototype = new r();
  */
 var UIBase = (function (_super) {
     __extends(UIBase, _super);
-    function UIBase(skinName) {
+    function UIBase(skinName, data) {
         if (skinName === void 0) { skinName = null; }
+        if (data === void 0) { data = null; }
         var _this = _super.call(this) || this;
         _this.skinName = skinName;
-        _this.initAll();
+        _this.initAll(data);
         return _this;
     }
-    UIBase.prototype.initAll = function () {
+    UIBase.prototype.initAll = function (data) {
+        if (data === void 0) { data = null; }
         this.id = IDManager.Ins().getNewId();
         this.init();
     };

@@ -99,15 +99,17 @@ var ViewManager = (function (_super) {
         // 先加载资源，再添加面板
         if (resGroup != null && resGroup != "") {
             ResManager.Ins().loadGroup(resGroup, function (e) {
-                parent.addChild(view);
                 view.initData(data);
+                parent.addChild(view);
+                view.initView();
             }, this, null, function (e) {
                 LogUtils.Error("\u52A0\u8F7D\u9762\u677F\u5931\u8D25 " + className);
             }, 0);
         }
         else {
-            parent.addChild(view);
             view.initData(data);
+            parent.addChild(view);
+            view.initView();
         }
         return true;
     };

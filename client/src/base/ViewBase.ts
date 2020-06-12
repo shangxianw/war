@@ -27,9 +27,23 @@ class ViewData extends DataBase
 abstract class ViewBase extends UIBase
 {
 	public viewInfo:ViewData;
-	public constructor(skinName:string)
+	public constructor(skinName:string, data:any)
 	{
-		super(skinName);
+		super(skinName, data);
+	}
+
+	public abstract initView();  	// 添加到舞台之后调用
+
+	protected initAll(data:any)
+	{
+		this.viewInfo = new data();
+		this["info"] = this.viewInfo;
+		super.initAll();
+	}
+
+	public destroyAll()
+	{
+		super.destroyAll();
 	}
 
 	public abstract initData(data:any);

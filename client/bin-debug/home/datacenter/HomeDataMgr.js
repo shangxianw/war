@@ -16,6 +16,8 @@ var home;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         HomeDataMgr.prototype.init = function () {
+            this.playerId = 1;
+            this.playerName = "wsx";
         };
         HomeDataMgr.prototype.destroy = function () {
         };

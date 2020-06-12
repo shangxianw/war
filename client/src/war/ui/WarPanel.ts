@@ -21,7 +21,7 @@ module war
 		private entityGroup:eui.Group;
 		public constructor()
 		{
-			super("WarPanelSkin");
+			super("WarPanelSkin", WarPanelData);
 		}
 
 		protected init()
@@ -76,6 +76,11 @@ module war
 			// WarDataMgr.Ins().addEntity(queen2);
 
 			this.testGrid.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnGridTap, this);
+		}
+
+		public initView()
+		{
+			
 		}
 
 		public OnUpdate(e:egret.Event)

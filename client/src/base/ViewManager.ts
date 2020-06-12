@@ -120,16 +120,18 @@ class ViewManager extends DataBase
 		if(resGroup != null && resGroup != "")
 		{
 			ResManager.Ins().loadGroup(resGroup, (e:RES.ResourceEvent)=>{
+				view.initData(data);
 				parent.addChild(view);
-				view.initView(data);
+				view.initView();
 			}, this, null, (e:RES.ResourceEvent)=>{
 				LogUtils.Error(`加载面板失败 ${className}`);
 			}, 0)
 		}
 		else
 		{
+			view.initData(data);
 			parent.addChild(view);
-			view.initView(data);
+			view.initView();
 		}
 		return true;
 	}

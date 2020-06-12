@@ -2,9 +2,12 @@ module home
 {
 	export class HomeDataMgr extends DataBase
 	{
+		public playerId:number;
+		public playerName:string;
 		protected init()
 		{
-			
+			this.playerId = 1;
+			this.playerName = "wsx";
 		}
 
 		protected destroy()

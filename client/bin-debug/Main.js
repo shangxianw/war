@@ -136,7 +136,7 @@ var Main = (function (_super) {
         GameUtils.main = this;
         LayerManager.Ins();
         war.WarDataMgr.Ins();
-        ViewManager.Ins().open(DemoPanel, 2);
+        ViewManager.Ins().open(home.LoginPanel);
     };
     return Main;
 }(eui.UILayer));

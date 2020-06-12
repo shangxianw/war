@@ -1,6 +1,6 @@
 module home
 {
-	export class DemoPanelData extends ViewData
+	export class HomePanelData extends ViewData
 	{
 		protected init()
 		{
@@ -19,12 +19,12 @@ module home
 		}
 	}
 
-	export class DemoPanel extends ViewBase
+	export class HomePanel extends ViewBase
 	{
-		public info:DemoPanelData;
+		public info:HomePanelData;
 		public constructor()
 		{
-			super("DemoPanelSkin", DemoPanelData);	
+			super("HomePanelSkin", HomePanelData);	
 		}
 
 		protected init()
@@ -46,6 +46,11 @@ module home
 		public initView()
 		{
 			
+		}
+
+		private OnLoginTap(e:egret.TouchEvent)
+		{
+			console.log(`登录成功`);
 		}
 	}
 }

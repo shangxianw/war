@@ -26,7 +26,7 @@ var war;
     var WarPanel = (function (_super) {
         __extends(WarPanel, _super);
         function WarPanel() {
-            return _super.call(this, "WarPanelSkin") || this;
+            return _super.call(this, "WarPanelSkin", WarPanelData) || this;
         }
         WarPanel.prototype.init = function () {
             this.addEventListener(egret.Event.ENTER_FRAME, this.OnUpdate, this);
@@ -70,6 +70,8 @@ var war;
             // WarDataMgr.Ins().addEntity(queen1);
             // WarDataMgr.Ins().addEntity(queen2);
             this.testGrid.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnGridTap, this);
+        };
+        WarPanel.prototype.initView = function () {
         };
         WarPanel.prototype.OnUpdate = function (e) {
             war.WarDataMgr.Ins().update();
