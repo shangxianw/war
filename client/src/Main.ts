@@ -32,26 +32,26 @@ class Main extends eui.UILayer
     protected createChildren(): void
     {
         super.createChildren();
-
-        this.initLifecycle();
-        
-        window.onerror = function(msg, url, line, col, error)
-        {
-            console.warn(error.stack);
-        }
-
-        
-
-        
-
-
         this.runGame().catch(e => {
             console.log(e);
         })
     }
 
+    private async runGame() {
+        this.initLifecycle();
+        await RES.loadConfig("resource/default.res.json", "resource/");
+        await RES.loadConfig("resource/war.res.json", "resource/");
+        await this.loadTheme();
+        this.createGameScene();
+    }
+
     private initLifecycle()
     {
+        window.onerror = function(msg, url, line, col, error)
+        {
+            console.warn(error.stack);
+        }
+
         egret.lifecycle.addLifecycleListener((context) => {
             // custom lifecycle plugin
         })
@@ -71,46 +71,8 @@ class Main extends eui.UILayer
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
     }
 
-    private async runGame() {
-        await this.loadResource()
-        this.createGameScene();
-        // const result = await RES.getResAsync("description_json")
-        await platform.login();
-        const userInfo = await platform.getUserInfo();
-    }
-
-    private async loadResource() {
-        try {
-            const loadingView = new LoadingUI();
-            this.stage.addChild(loadingView);
-            await RES.loadConfig("resource/default.res.json", "resource/");
-            await this.loadResource2();
-            // await RES.loadGroup("preload", 0, loadingView);
-            this.stage.removeChild(loadingView);
-        }
-        catch (e) {
-            console.error(e);
-        }
-    }
-
-    private async loadResource2() {
-        try {
-            const loadingView = new LoadingUI();
-            this.stage.addChild(loadingView);
-            await RES.loadConfig("resource/war.res.json", "resource/");
-            await this.loadTheme();
-            await RES.loadGroup("preload2", 0, loadingView);
-            this.stage.removeChild(loadingView);
-        }
-        catch (e) {
-            console.error(e);
-        }
-    }
-
     private loadTheme() {
         return new Promise((resolve, reject) => {
-            // load skin theme configuration file, you can manually modify the file. And replace the default skin.
-            //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
             let theme = new eui.Theme("resource/default.thm.json", this.stage);
             theme.addEventListener(eui.UIEvent.COMPLETE, () => {
                 resolve();
@@ -118,12 +80,6 @@ class Main extends eui.UILayer
 
         })
     }
-
-    private textfield: egret.TextField;
-    /**
-     * 创建场景界面
-     * Create scene interface
-     */
     
     protected createGameScene(): void {
         ResManager.Ins().loadGroup("preload", ()=>{
@@ -133,14 +89,12 @@ class Main extends eui.UILayer
         });
         ResManager.Ins().loadGroup("load2", ()=>{
             // alert(2)
-        }, this, null, 0);
+        }, this, null, 1);
+
         GameUtils.main = this;
         LayerManager.Ins();
-        PoolManager.Ins();
         war.WarDataMgr.Ins();
         ViewManager.Ins().open(ViewIdConst.DemoPanel);
     }
-
-    static hero:war.MovieClip
 }
 

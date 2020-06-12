@@ -78,6 +78,35 @@ var Main = (function (_super) {
     }
     Main.prototype.createChildren = function () {
         _super.prototype.createChildren.call(this);
+        this.runGame().catch(function (e) {
+            console.log(e);
+        });
+    };
+    Main.prototype.runGame = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        this.initLifecycle();
+                        return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource/")];
+                    case 1:
+                        _a.sent();
+                        return [4 /*yield*/, RES.loadConfig("resource/war.res.json", "resource/")];
+                    case 2:
+                        _a.sent();
+                        return [4 /*yield*/, this.loadTheme()];
+                    case 3:
+                        _a.sent();
+                        this.createGameScene();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
+    Main.prototype.initLifecycle = function () {
+        window.onerror = function (msg, url, line, col, error) {
+            console.warn(error.stack);
+        };
         egret.lifecycle.addLifecycleListener(function (context) {
             // custom lifecycle plugin
         });
@@ -92,103 +121,16 @@ var Main = (function (_super) {
         var assetAdapter = new AssetAdapter();
         egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
-        this.runGame().catch(function (e) {
-            console.log(e);
-        });
-    };
-    Main.prototype.runGame = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var userInfo;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.loadResource()];
-                    case 1:
-                        _a.sent();
-                        this.createGameScene();
-                        // const result = await RES.getResAsync("description_json")
-                        return [4 /*yield*/, platform.login()];
-                    case 2:
-                        // const result = await RES.getResAsync("description_json")
-                        _a.sent();
-                        return [4 /*yield*/, platform.getUserInfo()];
-                    case 3:
-                        userInfo = _a.sent();
-                        return [2 /*return*/];
-                }
-            });
-        });
-    };
-    Main.prototype.loadResource = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var loadingView, e_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 3, , 4]);
-                        loadingView = new LoadingUI();
-                        this.stage.addChild(loadingView);
-                        return [4 /*yield*/, RES.loadConfig("resource/default.res.json", "resource/")];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, this.loadResource2()];
-                    case 2:
-                        _a.sent();
-                        // await RES.loadGroup("preload", 0, loadingView);
-                        this.stage.removeChild(loadingView);
-                        return [3 /*break*/, 4];
-                    case 3:
-                        e_1 = _a.sent();
-                        console.error(e_1);
-                        return [3 /*break*/, 4];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        });
-    };
-    Main.prototype.loadResource2 = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var loadingView, e_2;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        _a.trys.push([0, 4, , 5]);
-                        loadingView = new LoadingUI();
-                        this.stage.addChild(loadingView);
-                        return [4 /*yield*/, RES.loadConfig("resource/war.res.json", "resource/")];
-                    case 1:
-                        _a.sent();
-                        return [4 /*yield*/, this.loadTheme()];
-                    case 2:
-                        _a.sent();
-                        return [4 /*yield*/, RES.loadGroup("preload2", 0, loadingView)];
-                    case 3:
-                        _a.sent();
-                        this.stage.removeChild(loadingView);
-                        return [3 /*break*/, 5];
-                    case 4:
-                        e_2 = _a.sent();
-                        console.error(e_2);
-                        return [3 /*break*/, 5];
-                    case 5: return [2 /*return*/];
-                }
-            });
-        });
     };
     Main.prototype.loadTheme = function () {
         var _this = this;
         return new Promise(function (resolve, reject) {
-            // load skin theme configuration file, you can manually modify the file. And replace the default skin.
-            //加载皮肤主题配置文件,可以手动修改这个文件。替换默认皮肤。
             var theme = new eui.Theme("resource/default.thm.json", _this.stage);
             theme.addEventListener(eui.UIEvent.COMPLETE, function () {
                 resolve();
             }, _this);
         });
     };
-    /**
-     * 创建场景界面
-     * Create scene interface
-     */
     Main.prototype.createGameScene = function () {
         ResManager.Ins().loadGroup("preload", function () {
             // alert(1)
@@ -197,7 +139,7 @@ var Main = (function (_super) {
         });
         ResManager.Ins().loadGroup("load2", function () {
             // alert(2)
-        }, this, null, 0);
+        }, this, null, 1);
         GameUtils.main = this;
         LayerManager.Ins();
         PoolManager.Ins();
