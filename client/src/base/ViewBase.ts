@@ -32,5 +32,5 @@ abstract class ViewBase extends UIBase
 		super(skinName);
 	}
 
-	
+	public abstract initData(data:any);
 }

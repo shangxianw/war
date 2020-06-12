@@ -1,6 +1,7 @@
+
 module home
 {
-	export class DemoPanelData extends ViewData
+	export class HEHEData extends ViewData
 	{
 		protected init()
 		{
@@ -19,21 +20,17 @@ module home
 		}
 	}
 
-	export class DemoPanel extends ViewBase
+	export class HEHE extends ViewBase
 	{
-		public nameLb:eui.Label;
-		public ageLb:eui.Label;
-		private testImg:eui.Image;
-
-		public info:DemoPanelData;
+		public info:HEHEData;
 		public constructor()
 		{
-			super("DemoPanelSkin");	
+			super("HEHESkin");	
 		}
 
 		protected init()
 		{
-			this.viewInfo = new DemoPanelData();
+			this.viewInfo = new HEHEData();
 			this.info = this.viewInfo as any;
 		}
 

@@ -27,16 +27,22 @@ class CreatePanel
         process.stdout.write("请输入面板名称：");
         process.stdin.on('data', (input:string)=>{
 			let s = input.trim();
-            this.fileName = `${s}.ts`;
+            this.fileName = `${s}`;
             this.saveFile();
         })
     }
 
     private saveFile()
     {
-        let path = this.saveDir + this.fileName;
+        let path = this.saveDir + this.fileName + ".ts";
         console.log("正在打包");
-        Fs.writeFileSync(path, str);
+
+		var ch = "XXXXXXXPanel";
+		var reg = "/"+ch+"/g";
+
+		let rxp = new RegExp("XXXXXXXPanel",'g')
+		let tarStr = str.replace(eval(reg), this.fileName);
+        Fs.writeFileSync(path, tarStr);
 		process.exit(1);
     }
 
@@ -50,11 +56,11 @@ cp.start();
 let str = `
 module home
 {
-	export class DemoPanelData extends ViewData
+	export class XXXXXXXPanelData extends ViewData
 	{
 		protected init()
 		{
-			this.resGroup = "preload";
+			this.resGroup = "";
 			this.layer = LayerManager.Ins().Panel;
 		}
 
@@ -63,50 +69,39 @@ module home
 			
 		}
 
-		public name:string;
-		public packData1(name:string)
+		public packData()
 		{
-			this.name = "wsx"
-		}
 
-		public packData2(name:string)
-		{
-			this.name = "www";
 		}
 	}
 
-	// 只有状态，不操作数据。如果要修改数据，也要在Data中写一个方法，然后执行该方法
-	export class DemoPanel extends ViewBase
+	export class XXXXXXXPanel extends ViewBase
 	{
-		public nameLb:eui.Label;
-		public ageLb:eui.Label;
-		private testImg:eui.Image;
-
-		public info:DemoPanelData;
+		public info:XXXXXXXPanelData;
 		public constructor()
 		{
-			super("DemoPanelSkin");	
+			super("XXXXXXXPanelSkin");	
 		}
 
 		protected init()
 		{
-			this.viewInfo = new DemoPanelData();
+			this.viewInfo = new XXXXXXXPanelData();
 			this.info = this.viewInfo as any;
 		}
 
-		public initData(type:number)
+		protected destroy()
 		{
-			if(type == 1)
-				this.info.packData1("wsx");
-			else if(type == 2)
-				this.info.packData2("www");
 
-			this.nameLb.text = this.info.name;
+		}
+
+		public initData(data:any)
+		{
+			this.info.packData();
 		}
 
 		public initView()
 		{
-
+			
 		}
 	}
 }
