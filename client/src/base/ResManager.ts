@@ -44,6 +44,10 @@ class ResGroupData extends DataBase
 	public itemsTotal:number;
 	public resArray:string[];
 
+	public cbFn:Function;
+	public progFn:Function;
+	public thisObj:any;
+
 	public errLoadCount:number;
 	protected init()
 	{
@@ -65,11 +69,28 @@ class ResGroupData extends DataBase
 		this.itemsTotal = null;
 	}
 
-	public packData(groupName:string, priority:number)
+	public packData(groupName:string, cbFn:Function=null, thisObj:any=null, progFn:Function=null, priority:number)
 	{
 		this.groupName = groupName;
 		this.priority = priority;
+		this.cbFn = cbFn;
+		this.thisObj = thisObj;
+		this.progFn = progFn;
 		return this;
+	}
+
+	public execCb(query:any)
+	{
+		if(this.cbFn == null || this.thisObj == null)
+			return;
+		this.cbFn.call(this.thisObj, query);
+	}
+
+	public execProg(query:any)
+	{
+		if(this.progFn == null || this.thisObj == null)
+			return;
+		this.progFn.call(this.thisObj, query);
 	}
 }
 
@@ -141,7 +162,7 @@ class ResManager extends DataBase
 		return ResManager.instance;
 	}
 
-	public loadGroup(groupName:string, priority:number = null)
+	public loadGroup(groupName:string, cbFn:Function=null, thisObj:any=null, progFn:Function=null, priority:number = null)
 	{
 		if(groupName == null)
 		{
@@ -152,13 +173,22 @@ class ResManager extends DataBase
 
 		if(priority != null) // 如果有优先级，数字越小优先级越高，最高位0
 		{
-			grouInfo.packData(groupName, priority);
+			grouInfo.packData(groupName, cbFn, thisObj, progFn, priority);
 		}
 		else
 		{
-			grouInfo.packData(groupName, this.groupArray.length);
+			grouInfo.packData(groupName, cbFn, thisObj, progFn, this.groupArray.length);
 		}
+		LogUtils.Log(`将资源组 ${groupName} 加入到加载列表, 优先级为 ${grouInfo.priority}`);
 		this.groupArray.push(grouInfo);
+		this.groupArray.sort(this.sortGroupArray);
+		1;
+		1
+	}
+
+	private sortGroupArray(a:ResGroupData, b:ResGroupData)
+	{
+		return a.priority < b.priority ? -1 : 1;
 	}
 
 	public destroyGroup(groupName:string)
@@ -168,7 +198,7 @@ class ResManager extends DataBase
 			return LogUtils.Error(`${Utils.GetClassNameByObj(this)} : loadGroup 方法参数有误`);
 		}
 
-		// 如果这个资源组正在加载
+		// 正在加载中的资源组
 		let resInfo:ResData;
 		if(this.currLaodInfo != null && this.currLaodInfo.groupName == groupName)
 		{
@@ -218,12 +248,16 @@ class ResManager extends DataBase
 
 	private OnResourceLoadComplete(e:RES.ResourceEvent)
 	{
+		LogUtils.Log(`资源组 ${e.groupName} 加载完成`);
+		if(this.currLaodInfo != null)
+		{
+			this.currLaodInfo.execCb(e);
+		}
 		this.loadEnd();
 	}
 
 	private OnResourceLoadProgress(e:RES.ResourceEvent)
 	{
-		LogUtils.Log(`正在加载资源组 ${e.groupName} 的 ${e.resItem.name}`)
 		this.currLaodInfo.itemsLoaded = e.itemsLoaded;
 		this.currLaodInfo.itemsTotal = e.itemsTotal;
 		if(this.currLaodInfo.resArray.indexOf(e.resItem.name) >= 0)
@@ -241,11 +275,11 @@ class ResManager extends DataBase
 			}
 			resInfo = this.resMap.get(e.resItem.name);
 			resInfo.packData(e.resItem.name);
-		}
-
-		if(this.currLaodInfo.itemsLoaded == 4 && e.groupName == "load2")
-		{
-			ResManager.Ins().destroyGroup("load2");
+			if(this.currLaodInfo != null)
+			{
+				this.currLaodInfo.execProg(e);
+			}
+			LogUtils.Log(`正在加载资源组 ${e.groupName} 的 ${e.resItem.name}`);
 		}
 	}
 
@@ -254,10 +288,11 @@ class ResManager extends DataBase
 		this.currLaodInfo.errLoadCount++;
 		if(this.currLaodInfo.errLoadCount >= this.ERROR_LOAD_COUNT)
 		{
-			LogUtils.Error(`${Utils.GetClassNameByObj(this)} : ${this.currLaodInfo.groupName} 加载失败`); // 为啥没有判断资源组是否存在的API
+			LogUtils.Error(`${Utils.GetClassNameByObj(this)} : ${this.currLaodInfo.groupName} 加载失败，准备加载下一个资源组`);
 			this.loadEnd();
 			return;
 		}
+		LogUtils.Error(`${Utils.GetClassNameByObj(this)} : ${this.currLaodInfo.groupName} 加载失败，尝试重新加载`);
 		RES.loadGroup(e.groupName);
 	}
 
@@ -295,6 +330,7 @@ class ResManager extends DataBase
 				continue;
 			
 			RES.destroyRes(resData.resName);
+			LogUtils.Log(`删除资源 ${resData.resName}`);
 			this.resMap.remove(resData.resName);
 			resData.destroyAll();
 			PoolManager.Ins().push(resData);

@@ -59,10 +59,26 @@ var ResGroupData = (function (_super) {
         this.itemsLoaded = null;
         this.itemsTotal = null;
     };
-    ResGroupData.prototype.packData = function (groupName, priority) {
+    ResGroupData.prototype.packData = function (groupName, cbFn, thisObj, progFn, priority) {
+        if (cbFn === void 0) { cbFn = null; }
+        if (thisObj === void 0) { thisObj = null; }
+        if (progFn === void 0) { progFn = null; }
         this.groupName = groupName;
         this.priority = priority;
+        this.cbFn = cbFn;
+        this.thisObj = thisObj;
+        this.progFn = progFn;
         return this;
+    };
+    ResGroupData.prototype.execCb = function (query) {
+        if (this.cbFn == null || this.thisObj == null)
+            return;
+        this.cbFn.call(this.thisObj, query);
+    };
+    ResGroupData.prototype.execProg = function (query) {
+        if (this.progFn == null || this.thisObj == null)
+            return;
+        this.progFn.call(this.thisObj, query);
     };
     return ResGroupData;
 }(DataBase));
@@ -119,25 +135,35 @@ var ResManager = (function (_super) {
             ResManager.instance = new ResManager();
         return ResManager.instance;
     };
-    ResManager.prototype.loadGroup = function (groupName, priority) {
+    ResManager.prototype.loadGroup = function (groupName, cbFn, thisObj, progFn, priority) {
+        if (cbFn === void 0) { cbFn = null; }
+        if (thisObj === void 0) { thisObj = null; }
+        if (progFn === void 0) { progFn = null; }
         if (priority === void 0) { priority = null; }
         if (groupName == null) {
             return LogUtils.Error(Utils.GetClassNameByObj(this) + " : loadGroup \u65B9\u6CD5\u53C2\u6570\u6709\u8BEF");
         }
         var grouInfo = PoolManager.Ins().pop(ResGroupData);
         if (priority != null) {
-            grouInfo.packData(groupName, priority);
+            grouInfo.packData(groupName, cbFn, thisObj, progFn, priority);
         }
         else {
-            grouInfo.packData(groupName, this.groupArray.length);
+            grouInfo.packData(groupName, cbFn, thisObj, progFn, this.groupArray.length);
         }
+        LogUtils.Log("\u5C06\u8D44\u6E90\u7EC4 " + groupName + " \u52A0\u5165\u5230\u52A0\u8F7D\u5217\u8868, \u4F18\u5148\u7EA7\u4E3A " + grouInfo.priority);
         this.groupArray.push(grouInfo);
+        this.groupArray.sort(this.sortGroupArray);
+        1;
+        1;
+    };
+    ResManager.prototype.sortGroupArray = function (a, b) {
+        return a.priority < b.priority ? -1 : 1;
     };
     ResManager.prototype.destroyGroup = function (groupName) {
         if (groupName == null) {
             return LogUtils.Error(Utils.GetClassNameByObj(this) + " : loadGroup \u65B9\u6CD5\u53C2\u6570\u6709\u8BEF");
         }
-        // 如果这个资源组正在加载
+        // 正在加载中的资源组
         var resInfo;
         if (this.currLaodInfo != null && this.currLaodInfo.groupName == groupName) {
             this.waitDestroyGroup.push(groupName);
@@ -178,10 +204,13 @@ var ResManager = (function (_super) {
         }
     };
     ResManager.prototype.OnResourceLoadComplete = function (e) {
+        LogUtils.Log("\u8D44\u6E90\u7EC4 " + e.groupName + " \u52A0\u8F7D\u5B8C\u6210");
+        if (this.currLaodInfo != null) {
+            this.currLaodInfo.execCb(e);
+        }
         this.loadEnd();
     };
     ResManager.prototype.OnResourceLoadProgress = function (e) {
-        LogUtils.Log("\u6B63\u5728\u52A0\u8F7D\u8D44\u6E90\u7EC4 " + e.groupName + " \u7684 " + e.resItem.name);
         this.currLaodInfo.itemsLoaded = e.itemsLoaded;
         this.currLaodInfo.itemsTotal = e.itemsTotal;
         if (this.currLaodInfo.resArray.indexOf(e.resItem.name) >= 0) {
@@ -196,18 +225,20 @@ var ResManager = (function (_super) {
             }
             resInfo = this.resMap.get(e.resItem.name);
             resInfo.packData(e.resItem.name);
-        }
-        if (this.currLaodInfo.itemsLoaded == 4 && e.groupName == "load2") {
-            ResManager.Ins().destroyGroup("load2");
+            if (this.currLaodInfo != null) {
+                this.currLaodInfo.execProg(e);
+            }
+            LogUtils.Log("\u6B63\u5728\u52A0\u8F7D\u8D44\u6E90\u7EC4 " + e.groupName + " \u7684 " + e.resItem.name);
         }
     };
     ResManager.prototype.OnResourceLoadError = function (e) {
         this.currLaodInfo.errLoadCount++;
         if (this.currLaodInfo.errLoadCount >= this.ERROR_LOAD_COUNT) {
-            LogUtils.Error(Utils.GetClassNameByObj(this) + " : " + this.currLaodInfo.groupName + " \u52A0\u8F7D\u5931\u8D25"); // 为啥没有判断资源组是否存在的API
+            LogUtils.Error(Utils.GetClassNameByObj(this) + " : " + this.currLaodInfo.groupName + " \u52A0\u8F7D\u5931\u8D25\uFF0C\u51C6\u5907\u52A0\u8F7D\u4E0B\u4E00\u4E2A\u8D44\u6E90\u7EC4");
             this.loadEnd();
             return;
         }
+        LogUtils.Error(Utils.GetClassNameByObj(this) + " : " + this.currLaodInfo.groupName + " \u52A0\u8F7D\u5931\u8D25\uFF0C\u5C1D\u8BD5\u91CD\u65B0\u52A0\u8F7D");
         RES.loadGroup(e.groupName);
     };
     // 该方法有两个功能
@@ -235,6 +266,7 @@ var ResManager = (function (_super) {
             if (egret.getTimer() < resData.destroyTime)
                 continue;
             RES.destroyRes(resData.resName);
+            LogUtils.Log("\u5220\u9664\u8D44\u6E90 " + resData.resName);
             this.resMap.remove(resData.resName);
             resData.destroyAll();
             PoolManager.Ins().push(resData);

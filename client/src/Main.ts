@@ -27,12 +27,31 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-class Main extends eui.UILayer {
-
-
-    protected createChildren(): void {
+class Main extends eui.UILayer
+{
+    protected createChildren(): void
+    {
         super.createChildren();
 
+        this.initLifecycle();
+        
+        window.onerror = function(msg, url, line, col, error)
+        {
+            console.warn(error.stack);
+        }
+
+        
+
+        
+
+
+        this.runGame().catch(e => {
+            console.log(e);
+        })
+    }
+
+    private initLifecycle()
+    {
         egret.lifecycle.addLifecycleListener((context) => {
             // custom lifecycle plugin
         })
@@ -50,11 +69,6 @@ class Main extends eui.UILayer {
         let assetAdapter = new AssetAdapter();
         egret.registerImplementation("eui.IAssetAdapter", assetAdapter);
         egret.registerImplementation("eui.IThemeAdapter", new ThemeAdapter());
-
-
-        this.runGame().catch(e => {
-            console.log(e);
-        })
     }
 
     private async runGame() {
@@ -63,8 +77,6 @@ class Main extends eui.UILayer {
         // const result = await RES.getResAsync("description_json")
         await platform.login();
         const userInfo = await platform.getUserInfo();
-        console.log(userInfo);
-
     }
 
     private async loadResource() {
@@ -114,8 +126,14 @@ class Main extends eui.UILayer {
      */
     
     protected createGameScene(): void {
-        ResManager.Ins().loadGroup("preload");
-        ResManager.Ins().loadGroup("load2");
+        ResManager.Ins().loadGroup("preload", ()=>{
+            // alert(1)
+        }, this, (e:RES.ResourceEvent)=>{
+            console.log("===================," + e.groupName);
+        });
+        ResManager.Ins().loadGroup("load2", ()=>{
+            // alert(2)
+        }, this, null, 0);
         GameUtils.main = this;
         LayerManager.Ins();
         PoolManager.Ins();

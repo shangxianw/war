@@ -113,7 +113,6 @@ var Main = (function (_super) {
                         return [4 /*yield*/, platform.getUserInfo()];
                     case 3:
                         userInfo = _a.sent();
-                        console.log(userInfo);
                         return [2 /*return*/];
                 }
             });
@@ -191,8 +190,14 @@ var Main = (function (_super) {
      * Create scene interface
      */
     Main.prototype.createGameScene = function () {
-        ResManager.Ins().loadGroup("preload");
-        ResManager.Ins().loadGroup("load2");
+        ResManager.Ins().loadGroup("preload", function () {
+            // alert(1)
+        }, this, function (e) {
+            console.log("===================," + e.groupName);
+        });
+        ResManager.Ins().loadGroup("load2", function () {
+            // alert(2)
+        }, this, null, 0);
         GameUtils.main = this;
         LayerManager.Ins();
         PoolManager.Ins();
