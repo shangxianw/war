@@ -7,6 +7,7 @@ abstract class UIBase extends eui.Component
 {
 	public id:number;
 	private _hash:Hash<string ,CBData[]>; // 惰性加载
+	private touchList:TouchData[];
 	public constructor(skinName:string = null, data:any=null)
 	{
 		super();
@@ -20,25 +21,18 @@ abstract class UIBase extends eui.Component
 	protected initAll(data:any=null)
 	{
 		this.id = IDManager.Ins().getNewId();
+		this.touchList = [];
 		this.init();
 	}
 
 	public destroyAll()
 	{
-		for(let value of this.hash.values())
-		{
-			for(let cbData of value)
-			{
-				cbData.destroy();
-				cbData = null;
-			}
-			value.length = 0;
-		}
-		this.hash.destroy();
-		this._hash = null;
+		this.removeAllEvent();
+		this.removeAllAttrListener();
 		this.destroy();
 	}
 
+	// ---------------------------------------------------------------------- 注册属性变更相关
 	public addAttrListener(propName:string, cbFn:Function, thisObj:any, param:any = null):boolean
 	{
 		if(propName == null || cbFn == null || thisObj == null)
@@ -183,10 +177,122 @@ abstract class UIBase extends eui.Component
 		}
 	}
 
+	public removeAllAttrListener()
+	{
+		for(let value of this.hash.values())
+		{
+			for(let cbData of value)
+			{
+				cbData.destroy();
+				cbData = null;
+			}
+			value.length = 0;
+		}
+		this.hash.destroy();
+	}
+
+	// ---------------------------------------------------------------------- 注册事件相关
+	public addEvent(target:egret.DisplayObject, type:string, cbFn:Function, thisObj:any):boolean
+	{
+		if(target == null || cbFn == null || thisObj == null || type == null || type == "")
+		{
+			LogUtils.Error(`参数有误`);
+			return false;
+		}
+
+		for(let item of this.touchList)
+		{
+			if(item == null)
+				continue;
+			if(item.target == target && item.cbFn == cbFn && item.thisObj == thisObj && item.type == type)
+			{
+				LogUtils.Error(`重复注册`);
+				return false;
+			}
+		}
+		let info = PoolManager.Ins().pop(TouchData) as TouchData;
+		info.packData(target, type, cbFn, thisObj);
+		this.touchList.push(info);
+		return true;
+	}
+
+	private removeEvent(target:egret.DisplayObject, type:string, cbFn:Function, thisObj:any)
+	{
+		if(target == null || cbFn == null || thisObj == null || type == null || type == "")
+		{
+			LogUtils.Error(`参数有误`);
+			return false;
+		}
+
+		for(let item of this.touchList)
+		{
+			if(item == null)
+				continue;
+			if(item.target == target && item.type == type && item.cbFn == cbFn && item.thisObj == thisObj && item.type == type)
+			{
+				let index = this.touchList.indexOf(item);
+				if(index >= 0)
+				{
+					this.touchList.splice(index, 1);
+					item.destroyAll();
+					PoolManager.Ins().push(item);
+					return true;
+				}
+				return false;
+			}
+		}
+		return false;
+	}
+
+	private removeAllEvent()
+	{
+		let array = DataUtils.CopyArray(this.touchList);
+		for(let item of array)
+		{
+			if(item == null)
+				continue;
+			item.destroyAll();
+			PoolManager.Ins().push(item);
+		}
+		this.touchList.length = 0;
+	}
+
 	private get hash():Hash<string, CBData[]>
 	{
 		if(this._hash == null)
 			this._hash = new Hash<string, CBData[]>();
 		return this._hash;
+	}
+}
+
+class TouchData extends DataBase
+{
+	public target:egret.DisplayObject;
+	public cbFn:Function;
+	public thisObj:any;
+	public type:string;
+	protected init()
+	{
+	}
+
+	protected destroy()
+	{
+		ListenerMgr.Ins().removeEventListen(this.target, this.type, this.cbFn, this.thisObj);
+	}
+
+	public packData(target:egret.DisplayObject, type:string, cbFn:Function, thisObj:any)
+	{
+		this.target = target;
+		this.type = type;
+		this.cbFn = cbFn;
+		this.thisObj = thisObj;
+		ListenerMgr.Ins().addEventListen(this.target, this.type, this.cbFn, this.thisObj);
+		return this;
+	}
+
+	public exec(e:egret.TouchEvent)
+	{
+		if(this.cbFn != null && this.thisObj != null)
+			this.cbFn.call(this.thisObj, e);
 	}
 }
