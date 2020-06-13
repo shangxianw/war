@@ -19,6 +19,10 @@ class Hash<K, V>
 		{
 			value = null;
 		}
+		for(let value of this.keyArray) // 防止key不为基础类型的情况，如对象作key
+		{
+			value = null;
+		}
 		this.valueArray.length = 0;
 		this.keyArray.length = 0;
 	}

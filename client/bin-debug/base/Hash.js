@@ -14,6 +14,10 @@ var Hash = (function () {
             var value = _a[_i];
             value = null;
         }
+        for (var _b = 0, _c = this.keyArray; _b < _c.length; _b++) {
+            var value = _c[_b];
+            value = null;
+        }
         this.valueArray.length = 0;
         this.keyArray.length = 0;
     };

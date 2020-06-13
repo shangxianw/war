@@ -5,7 +5,8 @@ var CreatePanel = /** @class */ (function () {
     }
     CreatePanel.prototype.init = function () {
         this.fileName = "demo.ts";
-        this.saveDir = "D:\\wsx\\war\\tools\\createPanel\\out\\";
+        // this.saveDir = "C:\\Users\\User\\Desktop\\";
+        this.saveDir = "./";
     };
     CreatePanel.prototype.destroy = function () {
     };
@@ -23,7 +24,7 @@ var CreatePanel = /** @class */ (function () {
     CreatePanel.prototype.saveFile = function () {
         var path = this.saveDir + this.fileName + ".ts";
         console.log("正在打包");
-        var ch = "XXXXXXXPanel";
+        var ch = "XXXXXXX";
         var reg = "/" + ch + "/g";
         var rxp = new RegExp("XXXXXXXPanel", 'g');
         var tarStr = str.replace(eval(reg), this.fileName);
@@ -36,5 +37,5 @@ var CreatePanel = /** @class */ (function () {
 }());
 var cp = new CreatePanel();
 cp.start();
-var str = "\nmodule home\n{\n\texport class XXXXXXXPanelData extends ViewData\n\t{\n\t\tprotected init()\n\t\t{\n\t\t\tthis.resGroup = \"\";\n\t\t\tthis.layer = LayerManager.Ins().Panel;\n\t\t}\n\n\t\tprotected destroy()\n\t\t{\n\t\t\t\n\t\t}\n\n\t\tpublic packData()\n\t\t{\n\n\t\t}\n\t}\n\n\texport class XXXXXXXPanel extends ViewBase\n\t{\n\t\tpublic info:XXXXXXXPanelData;\n\t\tpublic constructor()\n\t\t{\n\t\t\tsuper(\"XXXXXXXPanelSkin\");\t\n\t\t}\n\n\t\tprotected init()\n\t\t{\n\t\t\tthis.viewInfo = new XXXXXXXPanelData();\n\t\t\tthis.info = this.viewInfo as any;\n\t\t}\n\n\t\tprotected destroy()\n\t\t{\n\n\t\t}\n\n\t\tpublic initData(data:any)\n\t\t{\n\t\t\tthis.info.packData();\n\t\t}\n\n\t\tpublic initView()\n\t\t{\n\t\t\t\n\t\t}\n\t}\n}\n";
+var str = "\nmodule home\n{\n\texport class XXXXXXXData extends ViewData\n\t{\n\t\tprotected init()\n\t\t{\n\t\t\tthis.resGroup = \"\";\n\t\t\tthis.layer = LayerManager.Ins().Panel;\n\t\t}\n\n\t\tprotected destroy()\n\t\t{\n\t\t\t\n\t\t}\n\n\t\tpublic packData()\n\t\t{\n\n\t\t}\n\t}\n\n\texport class XXXXXXX extends ViewBase\n\t{\n\t\tpublic info:XXXXXXXData;\n\t\tpublic constructor()\n\t\t{\n\t\t\tsuper(\"XXXXXXXSkin\");\t\n\t\t}\n\n\t\tprotected init()\n\t\t{\n\t\t\t\n\t\t}\n\n\t\tprotected destroy()\n\t\t{\n\t\t\tif(this.info != null)\n\t\t\t\tthis.info.destroyAll();\n\t\t}\n\n\t\tpublic initData(data:any)\n\t\t{\n\t\t\tthis.info.packData();\n\t\t}\n\n\t\tpublic initView()\n\t\t{\n\t\t\t\n\t\t}\n\t}\n}\n";
 //# sourceMappingURL=main.js.map

@@ -12,7 +12,7 @@ class CreatePanel
     public init()
     {
         this.fileName = "demo.ts";
-        this.saveDir = "D:\\wsx\\war\\tools\\createPanel\\out\\";
+        this.saveDir = "././";
     }
 
     public destroy()
@@ -37,7 +37,7 @@ class CreatePanel
         let path = this.saveDir + this.fileName + ".ts";
         console.log("正在打包");
 
-		var ch = "XXXXXXXPanel";
+		var ch = "XXXXXXX";
 		var reg = "/"+ch+"/g";
 
 		let rxp = new RegExp("XXXXXXXPanel",'g')
@@ -56,7 +56,7 @@ cp.start();
 let str = `
 module home
 {
-	export class XXXXXXXPanelData extends ViewData
+	export class XXXXXXXData extends ViewData
 	{
 		protected init()
 		{
@@ -75,23 +75,23 @@ module home
 		}
 	}
 
-	export class XXXXXXXPanel extends ViewBase
+	export class XXXXXXX extends ViewBase
 	{
-		public info:XXXXXXXPanelData;
+		public info:XXXXXXXData;
 		public constructor()
 		{
-			super("XXXXXXXPanelSkin");	
+			super("XXXXXXXSkin");	
 		}
 
 		protected init()
 		{
-			this.viewInfo = new XXXXXXXPanelData();
-			this.info = this.viewInfo as any;
+			
 		}
 
 		protected destroy()
 		{
-
+			if(this.info != null)
+				this.info.destroyAll();
 		}
 
 		public initData(data:any)

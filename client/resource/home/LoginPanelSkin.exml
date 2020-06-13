@@ -5,7 +5,7 @@
 		<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0x45b509"/>
 		<ns1:WGroup id="loginBtn" width="155" height="55" verticalCenter="102.5" touchChildren="false" touchEnabled="true" y="225" scaleX="1" scaleY="1" horizontalCenter="0">
 			<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0xf40e0e" touchChildren="false" touchEnabled="false"/>
-			<e:Label text="登录" scaleX="1" scaleY="1" verticalCenter="0" horizontalCenter="0" touchEnabled="false"/>
+			<e:Label text="lg" scaleX="1" scaleY="1" verticalCenter="0" horizontalCenter="0" touchEnabled="false"/>
 		</ns1:WGroup>
 	</e:Group>
 </e:Skin>

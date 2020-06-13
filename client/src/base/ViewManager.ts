@@ -27,7 +27,7 @@ class ViewManager extends DataBase
 
 	public open(cls:Function, data:any = null):boolean
 	{
-		let className = Utils.GetClassNameByObj(cls);
+		let className = cls.prototype.__class__;// Utils.GetClassNameByObj(cls);
 		if(className == null)
 		{
 			LogUtils.Error("不存在类名");
@@ -54,9 +54,23 @@ class ViewManager extends DataBase
 		return this.handleView(className, data);
 	}
 
-	public close(cls:Function):boolean
+	public close(cls:Function | Object):boolean
 	{
-		let className = Utils.GetClassNameByObj(cls);
+		let className:string;
+		if(typeof cls == "function")
+		{
+			className = cls.prototype.__class__;
+		}
+		else if(typeof cls == "object")
+		{
+			className = cls.constructor.prototype.__class__;
+		}
+		else
+		{
+			LogUtils.Error("参数有误");
+			return false;
+		}
+
 		if(className == null)
 		{
 			LogUtils.Error("不存在类名");

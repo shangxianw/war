@@ -23,27 +23,27 @@ var WGroup = (function (_super) {
         this.initData();
     };
     WGroup.prototype.initData = function () {
-        this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchBegin, this);
-        this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.destroy, this);
+        ListenerMgr.Ins().addEventListen(this, egret.TouchEvent.TOUCH_BEGIN, this.OnTouchBegin, this);
+        ListenerMgr.Ins().addEventListen(this, egret.Event.REMOVED_FROM_STAGE, this.destroy, this);
     };
     WGroup.prototype.destroy = function () {
-        this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchBegin, this);
-        this.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.destroy, this);
+        ListenerMgr.Ins().removeEventListen(this, egret.TouchEvent.TOUCH_BEGIN, this.OnTouchBegin, this);
+        ListenerMgr.Ins().removeEventListen(this, egret.Event.REMOVED_FROM_STAGE, this.destroy, this);
     };
     WGroup.prototype.OnTouchBegin = function (e) {
-        this.$stage.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.OnTouchCancle, this);
-        this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.OnStageTouchEnd, this);
-        this.scaleX = this.scaleY = 0.9;
+        ListenerMgr.Ins().addEventListen(e.target.$stage, egret.TouchEvent.TOUCH_CANCEL, e.target.OnTouchCancle, e.target);
+        ListenerMgr.Ins().addEventListen(e.target.$stage, egret.TouchEvent.TOUCH_END, e.target.OnStageTouchEnd, e.target);
+        e.target.scaleX = e.target.scaleY = 0.9;
     };
     WGroup.prototype.OnTouchCancle = function (e) {
-        this.$stage.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.OnTouchCancle, this);
-        this.$stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.OnStageTouchEnd, this);
-        this.scaleX = this.scaleY = 1;
+        ListenerMgr.Ins().removeEventListen(e.target.$stage, egret.TouchEvent.TOUCH_CANCEL, e.target.OnTouchCancle, e.target);
+        ListenerMgr.Ins().removeEventListen(e.target.$stage, egret.TouchEvent.TOUCH_END, e.target.OnStageTouchEnd, e.target);
+        e.target.scaleX = e.target.scaleY = 1;
     };
     WGroup.prototype.OnStageTouchEnd = function (e) {
-        this.$stage.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.OnTouchCancle, this);
-        this.$stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.OnStageTouchEnd, this);
-        this.scaleX = this.scaleY = 1;
+        ListenerMgr.Ins().removeEventListen(e.target.$stage, egret.TouchEvent.TOUCH_CANCEL, e.target.OnTouchCancle, e.target);
+        ListenerMgr.Ins().removeEventListen(e.target.$stage, egret.TouchEvent.TOUCH_END, e.target.OnStageTouchEnd, e.target);
+        e.target.scaleX = e.target.scaleY = 1;
     };
     return WGroup;
 }(eui.Group));

@@ -37,18 +37,21 @@ var home;
         LoginPanel.prototype.destroy = function () {
             if (this.info != null)
                 this.info.destroyAll();
-            this.loginBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
+            this.loginBtn.destroy();
         };
         LoginPanel.prototype.initData = function (data) {
             this.info.packData();
         };
         LoginPanel.prototype.initView = function () {
-            this.loginBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this); // 实现UIbase内封装好
+            this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
+            this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap2, this);
+            this.addEvent(this.loginBtn, eui.ItemTapEvent.ITEM_TAP, this.OnLoginTap2, this);
         };
         LoginPanel.prototype.OnLoginTap = function (e) {
-            // ViewManager.Ins().close(this) // 希望实现这个功能
-            ViewManager.Ins().close(home.LoginPanel);
+            ViewManager.Ins().close(this);
             ViewManager.Ins().open(home.LoadingPanel);
+        };
+        LoginPanel.prototype.OnLoginTap2 = function (e) {
         };
         return LoginPanel;
     }(ViewBase));

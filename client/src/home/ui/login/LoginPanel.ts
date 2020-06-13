@@ -38,7 +38,7 @@ module home
 		{
 			if(this.info != null)
 				this.info.destroyAll();
-			this.loginBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
+			this.loginBtn.destroy();
 		}
 
 		public initData(data:any)
@@ -48,14 +48,20 @@ module home
 
 		public initView()
 		{
-			this.loginBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this); // 实现UIbase内封装好
+			this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
+			this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap2, this);
+			this.addEvent(this.loginBtn, eui.ItemTapEvent.ITEM_TAP, this.OnLoginTap2, this);
 		}
 
 		private OnLoginTap(e:egret.TouchEvent)
 		{
-			// ViewManager.Ins().close(this) // 希望实现这个功能
-			ViewManager.Ins().close(home.LoginPanel);
+			ViewManager.Ins().close(this);
 			ViewManager.Ins().open(home.LoadingPanel);
+		}
+
+		private OnLoginTap2(e:egret.TouchEvent)
+		{
+
 		}
 	}
 }

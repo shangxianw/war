@@ -19,35 +19,35 @@ class WGroup extends eui.Group
 
 	private initData()
 	{
-		this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchBegin, this);
-		this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.destroy, this);
+		ListenerMgr.Ins().addEventListen(this, egret.TouchEvent.TOUCH_BEGIN, this.OnTouchBegin, this);
+		ListenerMgr.Ins().addEventListen(this, egret.Event.REMOVED_FROM_STAGE, this.destroy, this);
 	}
 
 	public destroy()
 	{
-		this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchBegin, this);
-		this.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.destroy, this);
+		ListenerMgr.Ins().removeEventListen(this, egret.TouchEvent.TOUCH_BEGIN, this.OnTouchBegin, this);
+		ListenerMgr.Ins().removeEventListen(this, egret.Event.REMOVED_FROM_STAGE, this.destroy, this);
 	}
 
 	private OnTouchBegin(e:egret.TouchEvent)
 	{
-		this.$stage.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.OnTouchCancle, this);
-        this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.OnStageTouchEnd, this);
+		ListenerMgr.Ins().addEventListen(e.target.$stage, egret.TouchEvent.TOUCH_CANCEL, e.target.OnTouchCancle, e.target);
+        ListenerMgr.Ins().addEventListen(e.target.$stage, egret.TouchEvent.TOUCH_END, e.target.OnStageTouchEnd, e.target);
 
-		this.scaleX = this.scaleY = 0.9;
+		e.target.scaleX = e.target.scaleY = 0.9;
 	}
 
 	private OnTouchCancle(e:egret.TouchEvent)
 	{
-		this.$stage.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.OnTouchCancle, this);
-		this.$stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.OnStageTouchEnd, this);
-		this.scaleX = this.scaleY = 1;
+		ListenerMgr.Ins().removeEventListen(e.target.$stage, egret.TouchEvent.TOUCH_CANCEL, e.target.OnTouchCancle, e.target);
+		ListenerMgr.Ins().removeEventListen(e.target.$stage, egret.TouchEvent.TOUCH_END, e.target.OnStageTouchEnd, e.target);
+		e.target.scaleX = e.target.scaleY = 1;
 	}
 
 	private OnStageTouchEnd(e:egret.TouchEvent)
 	{
-		this.$stage.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.OnTouchCancle, this);
-		this.$stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.OnStageTouchEnd, this);
-		this.scaleX = this.scaleY = 1;
+		ListenerMgr.Ins().removeEventListen(e.target.$stage, egret.TouchEvent.TOUCH_CANCEL, e.target.OnTouchCancle, e.target);
+		ListenerMgr.Ins().removeEventListen(e.target.$stage, egret.TouchEvent.TOUCH_END, e.target.OnStageTouchEnd, e.target);
+		e.target.scaleX = e.target.scaleY = 1;
 	}
 }

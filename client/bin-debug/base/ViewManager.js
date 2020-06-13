@@ -30,7 +30,7 @@ var ViewManager = (function (_super) {
     };
     ViewManager.prototype.open = function (cls, data) {
         if (data === void 0) { data = null; }
-        var className = Utils.GetClassNameByObj(cls);
+        var className = cls.prototype.__class__; // Utils.GetClassNameByObj(cls);
         if (className == null) {
             LogUtils.Error("不存在类名");
             return false;
@@ -51,7 +51,17 @@ var ViewManager = (function (_super) {
         return this.handleView(className, data);
     };
     ViewManager.prototype.close = function (cls) {
-        var className = Utils.GetClassNameByObj(cls);
+        var className;
+        if (typeof cls == "function") {
+            className = cls.prototype.__class__;
+        }
+        else if (typeof cls == "object") {
+            className = cls.constructor.prototype.__class__;
+        }
+        else {
+            LogUtils.Error("参数有误");
+            return false;
+        }
         if (className == null) {
             LogUtils.Error("不存在类名");
             return false;
