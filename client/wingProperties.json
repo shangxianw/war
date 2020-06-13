@@ -8,6 +8,10 @@
             {
                 "configPath": "resource/war.res.json",
                 "relativePath": "resource/"
+            },
+            {
+                "configPath": "resource/home.res.json",
+                "relativePath": "resource/"
             }
         ]
     },

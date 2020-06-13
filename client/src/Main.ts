@@ -42,6 +42,7 @@ class Main extends eui.UILayer
         this.initLifecycle();
         await RES.loadConfig("resource/default.res.json", "resource/");
         await RES.loadConfig("resource/war.res.json", "resource/");
+        await RES.loadConfig("resource/home.res.json", "resource/");
         await this.loadTheme();
         this.createGameScene();
     }
@@ -86,7 +87,8 @@ class Main extends eui.UILayer
         GameUtils.main = this;
         LayerManager.Ins();
         war.WarDataMgr.Ins();
-        ViewManager.Ins().open(home.LoginPanel);
+        // ViewManager.Ins().open(home.LoginPanel);
+        
     }
 }
 
