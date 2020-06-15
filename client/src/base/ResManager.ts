@@ -18,7 +18,6 @@ class ResData extends DataBase
 	public packData(resName:string)
 	{
 		this.resName = resName;
-		this.referenceCount++;
 		return this;
 	}
 
@@ -285,6 +284,7 @@ class ResManager extends DataBase
 			}
 			resInfo = this.resMap.get(e.resItem.name);
 			resInfo.packData(e.resItem.name);
+			resInfo.addCount();
 			if(this.currLaodInfo != null)
 			{
 				this.currLaodInfo.execProg(e);
@@ -412,5 +412,64 @@ class ResManager extends DataBase
 
 			}
 		}
+	}
+
+	public loadRes(resName:string):boolean
+	{
+		if(resName == null || resName == "" || RES.hasRes(resName) == false)
+		{
+			LogUtils.Error("参数有误");
+			return false;
+		}
+
+		if(this.resMap.has(resName) == false)
+		{
+			let resData = PoolManager.Ins().pop(ResData) as ResData;
+			resData.packData(resName);
+			this.resMap.set(resName, resData);
+		}
+		let resData = this.resMap.get(resName);
+		resData.addCount();
+		return true;
+	}
+
+	public loadResAsync(resName:string, cbFn:RES.GetResAsyncCallback, thisObj:Object)
+	{
+		if(resName == null || resName == "" || RES.hasRes(resName) == false || cbFn == null || thisObj == null)
+		{
+			LogUtils.Error("参数有误");
+			return false;
+		}
+
+		RES.getResAsync(resName, ()=>{
+			if(this.resMap.has(resName) == false)
+			{
+				let resData = PoolManager.Ins().pop(ResData) as ResData;
+				resData.packData(resName);
+				this.resMap.set(resName, resData);
+			}
+			let resData = this.resMap.get(resName);
+			resData.addCount();
+			cbFn.call(thisObj);
+		}, this)
+	}
+
+	public desRes(resName:string):boolean
+	{
+		if(resName == null || resName == "" || RES.hasRes(resName) == false)
+		{
+			LogUtils.Error("参数有误");
+			return false;
+		}
+
+		if(this.resMap.has(resName) == false)
+		{
+			LogUtils.Error(`没有记录 ${resName} 的引用!`);
+			return false;
+		}
+
+		let resData = this.resMap.get(resName);
+		resData.reduceCount();
+		return true;
 	}
 }

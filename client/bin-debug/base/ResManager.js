@@ -23,7 +23,6 @@ var ResData = (function (_super) {
     };
     ResData.prototype.packData = function (resName) {
         this.resName = resName;
-        this.referenceCount++;
         return this;
     };
     ResData.prototype.reduceCount = function () {
@@ -234,6 +233,7 @@ var ResManager = (function (_super) {
             }
             resInfo = this.resMap.get(e.resItem.name);
             resInfo.packData(e.resItem.name);
+            resInfo.addCount();
             if (this.currLaodInfo != null) {
                 this.currLaodInfo.execProg(e);
             }
@@ -333,6 +333,50 @@ var ResManager = (function (_super) {
                 }
             }
         }
+    };
+    ResManager.prototype.loadRes = function (resName) {
+        if (resName == null || resName == "" || RES.hasRes(resName) == false) {
+            LogUtils.Error("参数有误");
+            return false;
+        }
+        if (this.resMap.has(resName) == false) {
+            var resData_1 = PoolManager.Ins().pop(ResData);
+            resData_1.packData(resName);
+            this.resMap.set(resName, resData_1);
+        }
+        var resData = this.resMap.get(resName);
+        resData.addCount();
+        return true;
+    };
+    ResManager.prototype.loadResAsync = function (resName, cbFn, thisObj) {
+        var _this = this;
+        if (resName == null || resName == "" || RES.hasRes(resName) == false || cbFn == null || thisObj == null) {
+            LogUtils.Error("参数有误");
+            return false;
+        }
+        RES.getResAsync(resName, function () {
+            if (_this.resMap.has(resName) == false) {
+                var resData_2 = PoolManager.Ins().pop(ResData);
+                resData_2.packData(resName);
+                _this.resMap.set(resName, resData_2);
+            }
+            var resData = _this.resMap.get(resName);
+            resData.addCount();
+            cbFn.call(thisObj);
+        }, this);
+    };
+    ResManager.prototype.desRes = function (resName) {
+        if (resName == null || resName == "" || RES.hasRes(resName) == false) {
+            LogUtils.Error("参数有误");
+            return false;
+        }
+        if (this.resMap.has(resName) == false) {
+            LogUtils.Error("\u6CA1\u6709\u8BB0\u5F55 " + resName + " \u7684\u5F15\u7528!");
+            return false;
+        }
+        var resData = this.resMap.get(resName);
+        resData.reduceCount();
+        return true;
     };
     return ResManager;
 }(DataBase));

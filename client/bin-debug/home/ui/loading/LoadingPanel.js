@@ -18,11 +18,12 @@ var home;
         LoadingPanelData.prototype.init = function () {
             this.resGroup = "preload";
             this.layer = LayerManager.Ins().Panel;
+            this.isNext = false;
         };
         LoadingPanelData.prototype.destroy = function () {
         };
         LoadingPanelData.prototype.packData = function () {
-            // this.
+            this.isNext = false;
         };
         return LoadingPanelData;
     }(ViewData));
@@ -40,6 +41,7 @@ var home;
             if (this.info != null)
                 this.info.destroyAll();
             Utils.showBreathTween(this.bg, false);
+            TimerManager.Ins().removeTimer(this.OnLoadRes, this);
         };
         LoadingPanel.prototype.initData = function (data) {
             this.info.packData();

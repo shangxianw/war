@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="barLoadingSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="bg_login_d_png" left="0" right="0" top="0" bottom="0" scale9Grid="16,13,12,11"/>
+	<e:Image id="thumb" source="bg_login_nr_png" left="6" right="6" top="6" bottom="10" scale9Grid="9,11,9,7"/>
+</e:Skin>

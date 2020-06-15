@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_card_di_0_png,bg_card_di_1_png,bg_card_di_2_png,bg_card_di_3_png",
+			"keys": "bg_login_nr_png,bg_com_jpg,bg_login_d_png",
 			"name": "preload"
 		},
 		{
@@ -369,6 +369,16 @@
 			"url": "common/ui/heroicon/heroicon_10100.png",
 			"type": "image",
 			"name": "heroicon_10100_png"
+		},
+		{
+			"url": "common/proload/bg_login_nr.png",
+			"type": "image",
+			"name": "bg_login_nr_png"
+		},
+		{
+			"url": "common/proload/bg_login_d.png",
+			"type": "image",
+			"name": "bg_login_d_png"
 		}
 	]
 }

@@ -4,10 +4,13 @@ module home
 	{
 		public resGroupArray:string[];	// 加载资源组
 		public resArray:string[];		// 加载资源(针对动态资源、如玩家领主)
+
+		private isNext:boolean;
 		protected init()
 		{
 			this.resGroup = "preload";
 			this.layer = LayerManager.Ins().Panel;
+			this.isNext = false;
 
 		}
 
@@ -18,7 +21,7 @@ module home
 
 		public packData()
 		{
-			// this.
+			this.isNext = false;
 		}
 	}
 
@@ -26,6 +29,7 @@ module home
 	{
 		private tips:eui.Label;
 		private bg:eui.Image;
+		private bar:eui.ProgressBar;
 
 		public info:LoadingPanelData;
 		public constructor()
@@ -43,6 +47,7 @@ module home
 			if(this.info != null)
 				this.info.destroyAll();
 			Utils.showBreathTween(this.bg, false);
+			TimerManager.Ins().removeTimer(this.OnLoadRes, this);
 		}
 
 		public initData(data:any)
@@ -58,7 +63,7 @@ module home
 
 		private OnLoadRes()
 		{
-
+			
 		}
 	}
 }
