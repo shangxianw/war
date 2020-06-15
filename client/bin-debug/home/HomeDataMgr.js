@@ -26,6 +26,19 @@ var home;
                 HomeDataMgr.instance = new HomeDataMgr();
             return HomeDataMgr.instance;
         };
+        // ----------------------------------------------------------------------
+        HomeDataMgr.prototype.checkNameValide = function (name) {
+            if (name == "" || name == null) {
+                return [false, "名字不能为空"];
+            }
+            if (name.length > 10) {
+                return [false, "名字过长"];
+            }
+            if (0) {
+                return [false, "敏感字"];
+            }
+            return [true, "ok"];
+        };
         return HomeDataMgr;
     }(DataBase));
     home.HomeDataMgr = HomeDataMgr;

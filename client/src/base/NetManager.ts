@@ -1,15 +1,21 @@
 class NetManager extends DataBase
 {
-	private netMap:Hash<number, CBData>;
+	private netMap:Hash<number, CBData[]>;
 	protected init()
 	{
-		this.netMap = new Hash<number, CBData>();
+		this.netMap = new Hash<number, CBData[]>();
 	}
 
 	protected destroy()
 	{
+		this.destroySubNet();
 		this.removeAllNet();
 		this.netMap = null;
+	}
+
+	public initData()
+	{
+		this.initSubNet();
 	}
 
 	public setNet(netId:number, cbFn:Function, thisObj:Object):boolean
@@ -22,17 +28,26 @@ class NetManager extends DataBase
 
 		if(this.netMap.has(netId) == false)
 		{
-			LogUtils.Error(`重复注册`);
-			return false;
+			this.netMap.set(netId, []);
+		}
+
+		let netDataArray = this.netMap.get(netId);
+		for(let netData of netDataArray)
+		{
+			if(netData.cbFn == cbFn && netData.thisObj == thisObj)
+			{
+				LogUtils.Error("重复注册");
+				return false;
+			}
 		}
 
 		let netData = PoolManager.Ins().pop(CBData) as CBData;
 		netData.packData(cbFn, thisObj);
-		this.netMap.set(netId, netData);
+		netDataArray.push(netData);
 		return true;
 	}
 
-	public removeNet(netId):boolean
+	public removeNet(netId, cbFn:Function, thisObj:Object):boolean
 	{
 		if(netId == null)
 		{
@@ -46,20 +61,35 @@ class NetManager extends DataBase
 			return false;
 		}
 
-		let netData = this.netMap.remove(netId);
-		netData.destroy();
-		PoolManager.Ins().push(netData);
-		return true;
+		let netDataArray = this.netMap.get(netId);
+		for(let netData of netDataArray)
+		{
+			if(netData.cbFn == cbFn && netData.thisObj == thisObj)
+			{
+				let index = netDataArray.indexOf(netData);
+				if(index >= 0)
+					netDataArray.splice(index, 1);
+				netData.destroy();
+				PoolManager.Ins().push(netData);
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public removeAllNet()
 	{
-		for(let netData of this.netMap.values())
+		for(let netDataArray of this.netMap.values())
 		{
-			if(netData == null)
-				continue;
-			netData.destroy();
-			PoolManager.Ins().push(netData);
+			for(let netData of netDataArray)
+			{
+				if(netData == null)
+					continue;
+				netData.destroy();
+				PoolManager.Ins().push(netData);
+			}
+			netDataArray.length = 0;
 		}
 		this.netMap.destroy();
 	}
@@ -83,9 +113,58 @@ class NetManager extends DataBase
 			return false;
 		}
 
-		let netData = this.netMap.get(netId);
-		netData.exec(cmdDataBA);
+		let netDataArray = this.netMap.get(netId);
+		for(let netData of netDataArray)
+		{
+			netData.exec(cmdDataBA);
+		}
 		return true;
+	}
+
+	private initSubNet()
+	{
+		for(let key in net)
+		{
+			if(net.hasOwnProperty(key) == false)
+				continue;
+
+			let netObj = net[key];
+			if(typeof(netObj.init) == "function")
+			{
+				netObj.prototype.init();
+			}
+			else if(typeof(netObj.prototype.init) == "function")
+			{
+				netObj.prototype.init();
+			}
+			else
+			{
+				LogUtils.Error(`net ${key} 没有初始化`);
+			}
+		}
+	}
+
+	private destroySubNet()
+	{
+		for(let key in net)
+		{
+			if(net.hasOwnProperty(key) == false)
+				continue;
+
+			let netObj = net[key];
+			if(typeof(netObj.destroy) == "function")
+			{
+				netObj.prototype.destroy();
+			}
+			else if(typeof(netObj.prototype.init) == "function")
+			{
+				netObj.prototype.destroy();
+			}
+			else
+			{
+				LogUtils.Error(`net ${key} 没有销毁`);
+			}
+		}
 	}
 
 	private static instance:NetManager;

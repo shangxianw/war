@@ -28,4 +28,24 @@ class Utils
         let className;
         return className;
     }
+
+    public static CheckNameValide(name:string):any[]
+    {			
+        if(name == "" || name == null)
+        {
+            return [false, "名字不能为空"];
+        }
+
+        if(name.length > 10)
+        {
+            return [false, "名字过长"];
+        }
+
+        if(0)
+        {
+            return [false, "敏感字"];
+        }
+
+        return [true, "ok"];
+    }
 }

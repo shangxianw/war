@@ -23,6 +23,7 @@ module home
 	{
 		private loginBtn:WGroup;
 		private testLb:eui.Label;
+		private accountInput:eui.TextInput;
 
 		public info:LoginPanelData;
 		public constructor()
@@ -49,13 +50,22 @@ module home
 
 		public initView()
 		{
+			this.accountInput.text = "";
 			this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
 		}
 
 		private OnLoginTap(e:egret.TouchEvent)
 		{
-			ViewManager.Ins().close(this);
-			ViewManager.Ins().open(home.LoadingPanel);
+			let flag = Utils.CheckNameValide(this.accountInput.text);
+			if(flag[0] == false)
+			{
+				alert(flag[1])
+				return;
+			}
+			net.NetLogin.C2SLogin(this.accountInput.text, ()=>{
+				ViewManager.Ins().close(this);
+				ViewManager.Ins().open(home.LoadingPanel);
+			}, this)
 		}
 	}
 }

@@ -86,6 +86,8 @@ class Main extends eui.UILayer
     protected createGameScene(): void {
         GameUtils.main = this;
         LayerManager.Ins();
+        NetManager.Ins();
+        NetManager.Ins().initData();
         war.WarDataMgr.Ins();
         ViewManager.Ins().open(home.LoginPanel);
     }
