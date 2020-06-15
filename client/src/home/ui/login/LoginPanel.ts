@@ -22,6 +22,7 @@ module home
 	export class LoginPanel extends ViewBase
 	{
 		private loginBtn:WGroup;
+		private testLb:eui.Label;
 
 		public info:LoginPanelData;
 		public constructor()
@@ -48,9 +49,7 @@ module home
 
 		public initView()
 		{
-			// this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
-			// this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap2, this);
-			// this.addEvent(this.loginBtn, eui.ItemTapEvent.ITEM_TAP, this.OnLoginTap2, this);
+			this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
 		}
 
 		private OnLoginTap(e:egret.TouchEvent)

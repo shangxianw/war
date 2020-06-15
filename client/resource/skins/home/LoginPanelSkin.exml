@@ -16,4 +16,5 @@
 			</e:Skin>
 		</ns1:skinName>
 	</ns1:WButton>
+	<e:Label id="testLb" text="Label" x="533" y="97"/>
 </e:Skin>

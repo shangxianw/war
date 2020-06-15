@@ -66,5 +66,7 @@ declare class HeroEntitySkin extends eui.Skin{
 }
 declare class Ka1Skin extends eui.Skin{
 }
+declare class WarMatchPanelSkin extends eui.Skin{
+}
 declare class WarPanelSkin extends eui.Skin{
 }

@@ -195,7 +195,7 @@ class TimerManager extends DataBase
 			if(count >= 1)
 			{
 				timer.lastTime += count * timer.delay;
-				for(let i=0 ,len= count; i<len; i++)
+				for(let i=0 ,len= count; i<len; i++) // 有可能会出现count很大的情况，如切屏。
 				{
 					timer.count += 1;
 					flag = timer.exec();

@@ -78,6 +78,7 @@
 		"bin-debug/war/system/SpeedSystem.js",
 		"bin-debug/war/ui/CostBar.js",
 		"bin-debug/war/ui/Ka1.js",
+		"bin-debug/war/ui/WarMatchPanel.js",
 		"bin-debug/war/ui/WarPanel.js"
 	]
 }
