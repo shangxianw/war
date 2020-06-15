@@ -1,6 +1,6 @@
 module war
 {
-	export class QueenEntity extends EntityBase
+	export class KingEntity extends EntityBase
 	{
 		public constructor()
 		{

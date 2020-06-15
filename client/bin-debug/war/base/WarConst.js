@@ -68,6 +68,7 @@ var war;
         INPUT[INPUT["NONE"] = 0] = "NONE";
         INPUT[INPUT["CREATE_HERO"] = 1] = "CREATE_HERO";
         INPUT[INPUT["CREATE_QUEEN"] = 2] = "CREATE_QUEEN";
+        INPUT[INPUT["CREATE_KING"] = 3] = "CREATE_KING";
     })(INPUT = war.INPUT || (war.INPUT = {}));
 })(war || (war = {}));
 //# sourceMappingURL=WarConst.js.map

@@ -37,8 +37,8 @@ module war
 
 			let shape = new egret.Shape();
 			shape.graphics.lineStyle(1, 0x00ff00);
-			shape.x = WarDataMgr.Ins().startX;
-			shape.y = WarDataMgr.Ins().startY;
+			// shape.x = WarDataMgr.Ins().startX;
+			// shape.y = WarDataMgr.Ins().startY;
 			let mapCfg:boolean[][] = MapCfg["1001"];
 			for(let i=0, len = rows; i<len; i++)
 			{
@@ -68,44 +68,44 @@ module war
 		public static pathMap:Hash<number, egret.Shape>;
 		public static DrawPath(entity:EntityBase)
 		{
-			if(DrawUtils.isTest == false)
-				return;
+			// if(DrawUtils.isTest == false)
+			// 	return;
 			
-			let group = (ViewManager.Ins().getView(WarPanel) as WarPanel).drawGroup;
-			if(this.pathMap == null)
-				this.pathMap = new Hash<number, egret.Shape>();
+			// let group = (ViewManager.Ins().getView(WarPanel) as WarPanel).drawGroup;
+			// if(this.pathMap == null)
+			// 	this.pathMap = new Hash<number, egret.Shape>();
 
-			if(this.pathMap.has(entity.id) == false)
-			{
-				let testShap = new egret.Shape();
-				testShap.x = WarDataMgr.Ins().startX;
-				testShap.y = WarDataMgr.Ins().startY;
-				group != null && group.addChild(testShap);
-				this.pathMap.set(entity.id, testShap);
-			}
+			// if(this.pathMap.has(entity.id) == false)
+			// {
+			// 	let testShap = new egret.Shape();
+			// 	testShap.x = WarDataMgr.Ins().startX;
+			// 	testShap.y = WarDataMgr.Ins().startY;
+			// 	group != null && group.addChild(testShap);
+			// 	this.pathMap.set(entity.id, testShap);
+			// }
 
-			let testShap:egret.Shape = this.pathMap.get(entity.id);
-			let space = WarDataMgr.Ins().grid.space;
-			let pCom = entity.getCom(COMPONENT.PATH) as PathCom;
-			if(pCom != null)
-			{
-				testShap.graphics.clear();
-				testShap.graphics.lineStyle(2, 0xff0000);
-				testShap.graphics.moveTo(entity.x - WarDataMgr.Ins().startX, entity.y - WarDataMgr.Ins().startY);
-				let path = pCom.getLeftPath();
-				let index:number = 1;
+			// let testShap:egret.Shape = this.pathMap.get(entity.id);
+			// let space = WarDataMgr.Ins().grid.space;
+			// let pCom = entity.getCom(COMPONENT.PATH) as PathCom;
+			// if(pCom != null)
+			// {
+			// 	testShap.graphics.clear();
+			// 	testShap.graphics.lineStyle(2, 0xff0000);
+			// 	testShap.graphics.moveTo(entity.x - WarDataMgr.Ins().startX, entity.y - WarDataMgr.Ins().startY);
+			// 	let path = pCom.getLeftPath();
+			// 	let index:number = 1;
 				
-				for(let i=1; i<path.length; i++)
-				{
-					let node = path[i];
-					testShap.graphics.lineTo(space*node.x + space/2, space*node.y + space/2);
-				}
-				testShap.graphics.endFill();
-			}
-			else
-			{
-				testShap.parent != null && testShap.parent.removeChild(testShap);
-			}
+			// 	for(let i=1; i<path.length; i++)
+			// 	{
+			// 		let node = path[i];
+			// 		testShap.graphics.lineTo(space*node.x + space/2, space*node.y + space/2);
+			// 	}
+			// 	testShap.graphics.endFill();
+			// }
+			// else
+			// {
+			// 	testShap.parent != null && testShap.parent.removeChild(testShap);
+			// }
 		}
 
 		public static DrawHeroAnchor(hero:EntityBase)

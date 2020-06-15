@@ -107,7 +107,7 @@ var ResManager = (function (_super) {
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.OnResourceLoadComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.OnResourceLoadProgress, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.OnResourceLoadError, this);
-        TimerManager.Ins().addTimer(100, this.update, this);
+        TimerManager.Ins().addTimer(1000, this.update, this);
     };
     ResManager.prototype.destroy = function () {
         for (var _i = 0, _a = this.resMap.values(); _i < _a.length; _i++) {

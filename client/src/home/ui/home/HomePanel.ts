@@ -22,6 +22,7 @@ module home
 	export class HomePanel extends ViewBase
 	{
 		public info:HomePanelData;
+		private nextBtn:WButton;
 		public constructor()
 		{
 			super("HomePanelSkin", HomePanelData);	
@@ -41,6 +42,7 @@ module home
 		public initData(data:any)
 		{
 			this.info.packData();
+			this.addEvent(this.nextBtn, egret.TouchEvent.TOUCH_TAP, this.OnTap, this);
 		}
 
 		public initView()
@@ -51,6 +53,12 @@ module home
 		private OnLoginTap(e:egret.TouchEvent)
 		{
 			console.log(`登录成功`);
+		}
+
+		private OnTap()
+		{
+			ViewManager.Ins().close(this);
+			ViewManager.Ins().open(war.WarMatchPanel);
 		}
 	}
 }

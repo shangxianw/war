@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="WarMatchPanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui">
+<e:Skin class="WarMatchPanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*">
 	<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0xba6da7"/>
 	<e:Label text="matching..." horizontalCenter="0" verticalCenter="0"/>
+	<ns1:WButton id="nextBtn" label="next" horizontalCenter="493" verticalCenter="-275.5">
+		<ns1:skinName>
+		<e:Skin states="up,down,disabled" xmlns:w="http://ns.egret.com/wing">
+			<e:Image width="100%" height="100%" source="bg_card_di_0_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+		</e:Skin>
+		</ns1:skinName>
+	</ns1:WButton>
 </e:Skin>

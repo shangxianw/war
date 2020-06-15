@@ -140,7 +140,7 @@ var Main = (function (_super) {
         LayerManager.Ins();
         NetManager.Ins();
         NetManager.Ins().initData();
-        war.WarDataMgr.Ins();
+        // war.WarDataMgr.Ins();
         ViewManager.Ins().open(home.LoginPanel);
     };
     return Main;

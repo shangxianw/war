@@ -35,6 +35,7 @@ module home
 	export class LoadingPanel extends ViewBase
 	{
 		private tips:eui.Label;
+		private nextBtn:WButton;
 		private bg:eui.Image;
 		private bar:eui.ProgressBar;
 
@@ -65,7 +66,8 @@ module home
 		public initView()
 		{
 			Utils.showBreathTween(this.bg, true, {time:1000});
-			TimerManager.Ins().addTimer(100, this.OnLoadRes, this);
+			// TimerManager.Ins().addTimer(100, this.OnLoadRes, this);
+			this.addEvent(this.nextBtn, egret.TouchEvent.TOUCH_TAP, this.OnTap, this);
 		}
 
 		private OnLoadRes()
@@ -98,6 +100,12 @@ module home
 
 			this.info.isNext = true;
 			this.info.currIndex++;
+		}
+
+		private OnTap()
+		{
+			ViewManager.Ins().close(this);
+			ViewManager.Ins().open(home.HomePanel);
 		}
 	}
 }

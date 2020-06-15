@@ -55,7 +55,8 @@ var home;
         };
         LoadingPanel.prototype.initView = function () {
             Utils.showBreathTween(this.bg, true, { time: 1000 });
-            TimerManager.Ins().addTimer(100, this.OnLoadRes, this);
+            // TimerManager.Ins().addTimer(100, this.OnLoadRes, this);
+            this.addEvent(this.nextBtn, egret.TouchEvent.TOUCH_TAP, this.OnTap, this);
         };
         LoadingPanel.prototype.OnLoadRes = function () {
             if (this.info.isNext == true) {
@@ -80,6 +81,10 @@ var home;
             heroModel.scaleX = heroModel.scaleY = 0.5;
             this.info.isNext = true;
             this.info.currIndex++;
+        };
+        LoadingPanel.prototype.OnTap = function () {
+            ViewManager.Ins().close(this);
+            ViewManager.Ins().open(home.HomePanel);
         };
         return LoadingPanel;
     }(ViewBase));

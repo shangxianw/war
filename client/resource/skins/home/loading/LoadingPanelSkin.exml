@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="LoadingPanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+<e:Skin class="LoadingPanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
 
 	<e:Image id="bg" source="bg_com_jpg" x="640" y="360" anchorOffsetX="640" anchorOffsetY="360"/>
 	<e:Label id="tips" text="loading" y="458" horizontalCenter="-119.5"/>
@@ -23,4 +23,12 @@
 		<e:Image scaleX="0.5" scaleY="0.5" x="396.25" verticalCenter="35.5" y="109.99999999999997" source="herobg_10130_png"/>
 	</e:Group>-->
 	<e:ProgressBar id="bar" y="648" skinName="barLoadingSkin" horizontalCenter="0" value="70" maximum="100" width="1200"/>
+	<ns1:WButton id="nextBtn" label="next" horizontalCenter="493" verticalCenter="-275.5">
+		<ns1:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="bg_card_di_0_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</ns1:skinName>
+	</ns1:WButton>
 </e:Skin>

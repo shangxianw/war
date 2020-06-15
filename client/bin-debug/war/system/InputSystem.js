@@ -28,6 +28,10 @@ var war;
                     continue;
                 if (iCom.inputType == war.INPUT.CREATE_HERO)
                     this.createHero(iCom);
+                else if (iCom.inputType == war.INPUT.CREATE_QUEEN)
+                    this.createQueen(iCom);
+                else if (iCom.inputType == war.INPUT.CREATE_KING)
+                    this.createKing(iCom);
             }
         };
         InputSystem.prototype.createHero = function (inputCom) {
@@ -42,6 +46,42 @@ var war;
             var path = war.WarDataMgr.Ins().findPath(inputCom.x1, inputCom.y1, inputCom.x2, inputCom.y2);
             pathCom.setPath(path);
             hero.setCom(pathCom);
+            var aCom = new war.ActionCom();
+            aCom.setActionAndDir(war.ACTION.RUN, war.DIRECTION.DOWN);
+            hero.setCom(aCom);
+            var rCom = new war.RigidCom();
+            rCom.radius = 20;
+            hero.setCom(rCom);
+            var cCom = new war.CampCom();
+            cCom.camp = Math.random() > 0.5 ? war.CAMP.WE : war.CAMP.ENEMY;
+            hero.setCom(cCom);
+            war.DrawUtils.DrawGrigd(hero);
+            war.DrawUtils.DrawHeroAnchor(hero);
+            inputCom.parent.addChild(hero);
+            war.WarDataMgr.Ins().addEntity(hero);
+        };
+        InputSystem.prototype.createQueen = function (inputCom) {
+            var hero = PoolManager.Ins().pop(war.QueenEntity);
+            hero.x = war.WarUtils.ToLocalX(inputCom.x1);
+            hero.y = war.WarUtils.ToLocalY(inputCom.y1);
+            var aCom = new war.ActionCom();
+            aCom.setActionAndDir(war.ACTION.RUN, war.DIRECTION.DOWN);
+            hero.setCom(aCom);
+            var rCom = new war.RigidCom();
+            rCom.radius = 20;
+            hero.setCom(rCom);
+            var cCom = new war.CampCom();
+            cCom.camp = Math.random() > 0.5 ? war.CAMP.WE : war.CAMP.ENEMY;
+            hero.setCom(cCom);
+            war.DrawUtils.DrawGrigd(hero);
+            war.DrawUtils.DrawHeroAnchor(hero);
+            inputCom.parent.addChild(hero);
+            war.WarDataMgr.Ins().addEntity(hero);
+        };
+        InputSystem.prototype.createKing = function (inputCom) {
+            var hero = PoolManager.Ins().pop(war.QueenEntity);
+            hero.x = war.WarUtils.ToLocalX(inputCom.x1);
+            hero.y = war.WarUtils.ToLocalY(inputCom.y1);
             var aCom = new war.ActionCom();
             aCom.setActionAndDir(war.ACTION.RUN, war.DIRECTION.DOWN);
             hero.setCom(aCom);

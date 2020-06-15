@@ -10,12 +10,12 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var war;
 (function (war) {
-    var QueenEntity = (function (_super) {
-        __extends(QueenEntity, _super);
-        function QueenEntity() {
+    var KingEntity = (function (_super) {
+        __extends(KingEntity, _super);
+        function KingEntity() {
             return _super.call(this) || this;
         }
-        QueenEntity.prototype.init = function () {
+        KingEntity.prototype.init = function () {
             this.anchorOffsetX = this.width >> 1;
             this.anchorOffsetY = this.height;
             this.mc = new war.MovieClip();
@@ -29,11 +29,11 @@ var war;
             // DrawUtils.DrawGrigd(this);
             war.DrawUtils.DrawHeroAnchor(this);
         };
-        QueenEntity.prototype.destroy = function () {
+        KingEntity.prototype.destroy = function () {
         };
-        return QueenEntity;
+        return KingEntity;
     }(war.EntityBase));
-    war.QueenEntity = QueenEntity;
-    __reflect(QueenEntity.prototype, "war.QueenEntity");
+    war.KingEntity = KingEntity;
+    __reflect(KingEntity.prototype, "war.KingEntity");
 })(war || (war = {}));
-//# sourceMappingURL=QueenEntity.js.map
+//# sourceMappingURL=KingEntity.js.map

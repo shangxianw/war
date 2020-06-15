@@ -22,6 +22,32 @@ var war;
         InputCom.prototype.destroy = function () {
             this.inputType = war.INPUT.NONE;
         };
+        InputCom.prototype.packData = function (inputType, x1, x2, y1, y2, parent, camp) {
+            this.inputType = inputType;
+            this.x1 = x1;
+            this.x2 = x2;
+            this.y1 = y1;
+            this.y2 = y2;
+            this.camp = camp;
+            this.parent = parent;
+            return this;
+        };
+        InputCom.prototype.packQueen = function (inputType, x1, y1, parent, camp) {
+            this.inputType = inputType;
+            this.x1 = x1;
+            this.y1 = y1;
+            this.camp = camp;
+            this.parent = parent;
+            return this;
+        };
+        InputCom.prototype.packKing = function (inputType, x1, y1, parent, camp) {
+            this.inputType = inputType;
+            this.x1 = x1;
+            this.y1 = y1;
+            this.camp = camp;
+            this.parent = parent;
+            return this;
+        };
         return InputCom;
     }(war.ComBase));
     war.InputCom = InputCom;

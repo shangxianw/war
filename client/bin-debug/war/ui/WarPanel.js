@@ -16,11 +16,19 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         WarPanelData.prototype.init = function () {
+            this.resGroup = "";
+            this.layer = LayerManager.Ins().Panel;
         };
         WarPanelData.prototype.destroy = function () {
+            war.WarDataMgr.Ins().endWar();
+            war.WarDataMgr.Ins().destroyAll();
+        };
+        WarPanelData.prototype.packData = function () {
+            war.WarDataMgr.Ins();
+            war.WarDataMgr.Ins().startWar();
         };
         return WarPanelData;
-    }(DataBase));
+    }(ViewData));
     war.WarPanelData = WarPanelData;
     __reflect(WarPanelData.prototype, "war.WarPanelData");
     var WarPanel = (function (_super) {
@@ -29,64 +37,37 @@ var war;
             return _super.call(this, "WarPanelSkin", WarPanelData) || this;
         }
         WarPanel.prototype.init = function () {
-            this.addEventListener(egret.Event.ENTER_FRAME, this.OnUpdate, this);
-            // WarDataMgr.Ins().startWar();
-            this.addEventListener(egret.Event.ENTER_FRAME, function () {
-                war.WarDataMgr.Ins().update();
-            }, this);
         };
         WarPanel.prototype.destroy = function () {
-            this.testGrid.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnGridTap, this);
-            this.removeEventListener(egret.Event.ENTER_FRAME, this.OnUpdate, this);
+            if (this.info != null)
+                this.info.destroyAll();
         };
-        WarPanel.prototype.initData = function (info) {
-            war.DrawUtils.DrawGrid(this.drawGroup);
-            // let queen1 = WarUtils.CreateEntity(ENTITY.QUEEN) as QueenEntity;
-            // queen1.x = WarUtils.ToLocalX(7);
-            // queen1.y = WarUtils.ToLocalY(3);
-            // this.entityGroup.addChild(queen1);
-            // WarDataMgr.Ins().entityMap.set(queen1.id, queen1);
-            // let queen2 = WarUtils.CreateEntity(ENTITY.QUEEN) as QueenEntity;
-            // queen2.x = WarUtils.ToLocalX(7);
-            // queen2.y = WarUtils.ToLocalY(12);
-            // this.entityGroup.addChild(queen2);
-            // WarDataMgr.Ins().entityMap.set(queen2.id, queen2);
-            // let space = WarDataMgr.Ins().grid.space;
-            // let localX = WarDataMgr.Ins().grid.startX + space * Math.floor(WarDataMgr.Ins().grid.numCols/4);
-            // let localY = WarDataMgr.Ins().grid.startY + space * Math.floor(WarDataMgr.Ins().grid.numRows/4);
-            // let queen1:QueenEntity = new QueenEntity();
-            // (queen1.getCom(COMPONENT.ACTION) as ActionCom).setDir(DIRECTION.DOWN);
-            // queen1.x = localX;
-            // queen1.y = localY;
-            // this.entityGroup.addChild(queen1);
-            // this.queen1Id = queen1.id;
-            // let queen2:QueenEntity = new QueenEntity();
-            // localX = WarDataMgr.Ins().grid.startX + space * Math.floor(WarDataMgr.Ins().grid.numCols - WarDataMgr.Ins().grid.numCols/4);
-            // localY = WarDataMgr.Ins().grid.startY + space * Math.floor(WarDataMgr.Ins().grid.numRows/4);
-            // queen2.x = localX;
-            // queen2.y = localY;
-            // (queen2.getCom(COMPONENT.ACTION) as ActionCom).setDir(DIRECTION.DOWN);
-            // this.entityGroup.addChild(queen2);
-            // WarDataMgr.Ins().addEntity(queen1);
-            // WarDataMgr.Ins().addEntity(queen2);
-            this.testGrid.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnGridTap, this);
+        WarPanel.prototype.initData = function (data) {
+            this.info.packData();
         };
         WarPanel.prototype.initView = function () {
+            war.DrawUtils.DrawGrid(this.testGrid);
+            this.initEntity();
         };
-        WarPanel.prototype.OnUpdate = function (e) {
-            war.WarDataMgr.Ins().update();
-        };
-        // ---------------------------------------------------------------------- test
-        WarPanel.prototype.OnGridTap = function (e) {
-            // 创建英雄
-            var iCom = PoolManager.Ins().pop(war.InputCom);
-            iCom.inputType = war.INPUT.CREATE_HERO;
-            iCom.x1 = Math.floor(Math.random() * 35);
-            iCom.y1 = Math.floor(Math.random() * 15);
-            iCom.x2 = 3;
-            iCom.y2 = 7;
-            iCom.parent = this.entityGroup;
-            war.WarDataMgr.Ins().inputArray.push(iCom);
+        WarPanel.prototype.initEntity = function () {
+            var iptCom = PoolManager.Ins().pop(war.InputCom);
+            iptCom.packQueen(war.INPUT.CREATE_QUEEN, 7, 3, this.entityGroup, war.CAMP.WE);
+            war.WarDataMgr.Ins().inputArray.push(iptCom);
+            var iptCom2 = PoolManager.Ins().pop(war.InputCom);
+            iptCom2.packQueen(war.INPUT.CREATE_QUEEN, 7, 12, this.entityGroup, war.CAMP.WE);
+            war.WarDataMgr.Ins().inputArray.push(iptCom2);
+            var iptCom3 = PoolManager.Ins().pop(war.InputCom);
+            iptCom3.packQueen(war.INPUT.CREATE_QUEEN, 26, 3, this.entityGroup, war.CAMP.ENEMY);
+            war.WarDataMgr.Ins().inputArray.push(iptCom3);
+            var iptCom4 = PoolManager.Ins().pop(war.InputCom);
+            iptCom4.packQueen(war.INPUT.CREATE_QUEEN, 26, 12, this.entityGroup, war.CAMP.ENEMY);
+            war.WarDataMgr.Ins().inputArray.push(iptCom4);
+            var iptCom5 = PoolManager.Ins().pop(war.InputCom);
+            iptCom5.packKing(war.INPUT.CREATE_KING, 3, 7, this.entityGroup, war.CAMP.WE);
+            war.WarDataMgr.Ins().inputArray.push(iptCom5);
+            var iptCom6 = PoolManager.Ins().pop(war.InputCom);
+            iptCom6.packKing(war.INPUT.CREATE_KING, 32, 7, this.entityGroup, war.CAMP.ENEMY);
+            war.WarDataMgr.Ins().inputArray.push(iptCom6);
         };
         return WarPanel;
     }(ViewBase));

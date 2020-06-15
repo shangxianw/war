@@ -8,25 +8,27 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var home;
-(function (home) {
+var war;
+(function (war) {
     var WarMatchPanelData = (function (_super) {
         __extends(WarMatchPanelData, _super);
         function WarMatchPanelData() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+        // 应该load资源
         WarMatchPanelData.prototype.init = function () {
-            this.resGroup = "";
+            this.resGroup = "war_preload";
             this.layer = LayerManager.Ins().Panel;
         };
         WarMatchPanelData.prototype.destroy = function () {
+            // WarDataMgr.Ins().destroyAll();
         };
         WarMatchPanelData.prototype.packData = function () {
         };
         return WarMatchPanelData;
     }(ViewData));
-    home.WarMatchPanelData = WarMatchPanelData;
-    __reflect(WarMatchPanelData.prototype, "home.WarMatchPanelData");
+    war.WarMatchPanelData = WarMatchPanelData;
+    __reflect(WarMatchPanelData.prototype, "war.WarMatchPanelData");
     var WarMatchPanel = (function (_super) {
         __extends(WarMatchPanel, _super);
         function WarMatchPanel() {
@@ -41,12 +43,17 @@ var home;
         };
         WarMatchPanel.prototype.initData = function (data) {
             this.info.packData();
+            this.addEvent(this.nextBtn, egret.TouchEvent.TOUCH_TAP, this.OnTap, this);
         };
         WarMatchPanel.prototype.initView = function () {
         };
+        WarMatchPanel.prototype.OnTap = function () {
+            ViewManager.Ins().close(this);
+            ViewManager.Ins().open(war.WarPanel);
+        };
         return WarMatchPanel;
     }(ViewBase));
-    home.WarMatchPanel = WarMatchPanel;
-    __reflect(WarMatchPanel.prototype, "home.WarMatchPanel");
-})(home || (home = {}));
+    war.WarMatchPanel = WarMatchPanel;
+    __reflect(WarMatchPanel.prototype, "war.WarMatchPanel");
+})(war || (war = {}));
 //# sourceMappingURL=WarMatchPanel.js.map

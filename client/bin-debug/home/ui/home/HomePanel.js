@@ -40,11 +40,16 @@ var home;
         };
         HomePanel.prototype.initData = function (data) {
             this.info.packData();
+            this.addEvent(this.nextBtn, egret.TouchEvent.TOUCH_TAP, this.OnTap, this);
         };
         HomePanel.prototype.initView = function () {
         };
         HomePanel.prototype.OnLoginTap = function (e) {
             console.log("\u767B\u5F55\u6210\u529F");
+        };
+        HomePanel.prototype.OnTap = function () {
+            ViewManager.Ins().close(this);
+            ViewManager.Ins().open(war.WarMatchPanel);
         };
         return HomePanel;
     }(ViewBase));

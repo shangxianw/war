@@ -67,6 +67,7 @@ module war
 	{
 		NONE = 0,
 		CREATE_HERO = 1,
-		CREATE_QUEEN = 2
+		CREATE_QUEEN = 2,
+		CREATE_KING = 3
 	}
 }
