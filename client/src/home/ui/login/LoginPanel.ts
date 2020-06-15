@@ -57,10 +57,5 @@ module home
 			ViewManager.Ins().close(this);
 			ViewManager.Ins().open(home.LoadingPanel);
 		}
-
-		private OnLoginTap2(e:egret.TouchEvent)
-		{
-
-		}
 	}
 }
