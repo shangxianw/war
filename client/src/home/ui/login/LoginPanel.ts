@@ -2,10 +2,12 @@ module home
 {
 	export class LoginPanelData extends ViewData
 	{
+		
 		protected init()
 		{
 			this.resGroup = "";
 			this.layer = LayerManager.Ins().Panel;
+			
 		}
 
 		protected destroy()
@@ -15,7 +17,7 @@ module home
 
 		public packData()
 		{
-
+			
 		}
 	}
 
@@ -53,10 +55,10 @@ module home
 			this.accountInput.text = "wsx";
 			this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
 
-			ResManager.Ins().loadResAsync("herobg_10120_png", ()=>{
-				1;
-				1;
-			}, this)
+			// ResManager.Ins().loadResAsync("herobg_10120_png", ()=>{
+			// 	1;
+			// 	1;
+			// }, this)
 		}
 
 		private OnLoginTap(e:egret.TouchEvent)

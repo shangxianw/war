@@ -18,12 +18,18 @@ var home;
         LoadingPanelData.prototype.init = function () {
             this.resGroup = "preload";
             this.layer = LayerManager.Ins().Panel;
-            this.isNext = false;
+            this.isNext = true;
+            this.heroArray = [];
+            this.currIndex = 0;
         };
         LoadingPanelData.prototype.destroy = function () {
+            this.heroArray.length = 0;
+            this.currIndex = 0;
         };
         LoadingPanelData.prototype.packData = function () {
-            this.isNext = false;
+            this.isNext = true;
+            this.currIndex = 0;
+            this.heroArray = [10080, 10090, 10010, 10040, 10070, 10150, 10120, 10130];
         };
         return LoadingPanelData;
     }(ViewData));
@@ -51,6 +57,28 @@ var home;
             TimerManager.Ins().addTimer(100, this.OnLoadRes, this);
         };
         LoadingPanel.prototype.OnLoadRes = function () {
+            if (this.info.isNext == true) {
+                if (this.info.currIndex >= this.info.heroArray.length) {
+                    TimerManager.Ins().removeTimer(this.OnLoadRes, this);
+                    return false;
+                }
+                this.info.isNext = false;
+                var heroId = this.info.heroArray[this.info.currIndex];
+                var resName = "herobg_" + heroId + "_png";
+                ResManager.Ins().loadResAsync(resName, this.OnLoadHeroOk, this);
+            }
+            return true;
+        };
+        LoadingPanel.prototype.OnLoadHeroOk = function () {
+            console.log(this.info.currIndex);
+            var heroModel = new eui.Image;
+            heroModel.source = "herobg_" + this.info.heroArray[this.info.currIndex] + "_png";
+            this.addChild(heroModel);
+            heroModel.x = Math.random() * 1280;
+            heroModel.y = Math.random() * 720;
+            heroModel.scaleX = heroModel.scaleY = 0.5;
+            this.info.isNext = true;
+            this.info.currIndex++;
         };
         return LoadingPanel;
     }(ViewBase));
