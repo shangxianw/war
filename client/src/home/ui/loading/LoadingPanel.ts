@@ -2,7 +2,8 @@ module home
 {
 	export class LoadingPanelData extends ViewData
 	{
-		public resGroupArray:string[];
+		public resGroupArray:string[];	// 加载资源组
+		public resArray:string[];		// 加载资源(针对动态资源、如玩家领主)
 		protected init()
 		{
 			this.resGroup = "preload";
@@ -17,7 +18,7 @@ module home
 
 		public packData()
 		{
-			
+			// this.
 		}
 	}
 
@@ -51,7 +52,7 @@ module home
 
 		public initView()
 		{
-			Utils.showBreathTween(this.bg, true, {time:2000});
+			Utils.showBreathTween(this.bg, true, {time:1000});
 			TimerManager.Ins().addTimer(100, this.OnLoadRes, this);
 		}
 

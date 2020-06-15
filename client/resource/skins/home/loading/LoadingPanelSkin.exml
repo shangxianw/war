@@ -3,4 +3,7 @@
 
 	<e:Image id="bg" source="bg_com_jpg" x="640" y="360" anchorOffsetX="640" anchorOffsetY="360"/>
 	<e:Label id="tips" text="loading" y="458" horizontalCenter="-119.5"/>
+	<e:Image source="herobg_10010_png" scaleX="0.5" scaleY="0.5" x="280" verticalCenter="41"/>
+	<e:Image scaleX="0.5" scaleY="0.5" x="360" verticalCenter="41" source="herobg_10040_png"/>
+	<e:Image scaleX="0.5" scaleY="0.5" x="460" verticalCenter="41" source="herobg_10070_png"/>
 </e:Skin>

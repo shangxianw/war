@@ -1,25 +1,4 @@
 {
 	"groups": [],
-	"resources": [
-		{
-			"url": "war/hero/10010/hero_10010.png",
-			"type": "image",
-			"name": "hero_10010_png"
-		},
-		{
-			"url": "war/hero/10010/hero_10010_red.png",
-			"type": "image",
-			"name": "hero_10010_red_png"
-		},
-		{
-			"url": "war/hero/10010/hero_10010.json",
-			"type": "json",
-			"name": "hero_10010_json"
-		},
-		{
-			"url": "war/hero/10010/hero_10010_red.json",
-			"type": "json",
-			"name": "hero_10010_red_json"
-		}
-	]
+	"resources": []
 }

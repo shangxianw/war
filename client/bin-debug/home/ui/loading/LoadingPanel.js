@@ -22,7 +22,7 @@ var home;
         LoadingPanelData.prototype.destroy = function () {
         };
         LoadingPanelData.prototype.packData = function () {
-            this.count = 0;
+            // this.
         };
         return LoadingPanelData;
     }(ViewData));
@@ -45,9 +45,10 @@ var home;
             this.info.packData();
         };
         LoadingPanel.prototype.initView = function () {
-            Utils.showBreathTween(this.bg, true, { time: 2000 });
-            // 因为已经知道 homeDataMgr 的数据了，所以可以根据其信息来加载不同的资源
-            // 比如卡组只加载自己有的，当前在哪个地图等。
+            Utils.showBreathTween(this.bg, true, { time: 1000 });
+            TimerManager.Ins().addTimer(100, this.OnLoadRes, this);
+        };
+        LoadingPanel.prototype.OnLoadRes = function () {
         };
         return LoadingPanel;
     }(ViewBase));

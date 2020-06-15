@@ -41,6 +41,7 @@ var Utils = (function () {
         }
         return [true, "ok"];
     };
+    // ---------------------------------------------------------------------- 呼吸效果
     Utils.showBreathTween = function (target, show, query) {
         egret.Tween.removeTweens(target);
         if (show == true) {
