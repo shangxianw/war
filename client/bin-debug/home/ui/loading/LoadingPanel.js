@@ -16,7 +16,7 @@ var home;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         LoadingPanelData.prototype.init = function () {
-            this.resGroup = "preload";
+            this.resGroup = "loading";
             this.layer = LayerManager.Ins().Panel;
             this.isNext = true;
             this.heroArray = [];
@@ -30,6 +30,7 @@ var home;
             this.isNext = true;
             this.currIndex = 0;
             this.heroArray = [10080, 10090, 10010, 10040, 10070, 10150, 10120, 10130];
+            this.resGroupArray = [];
         };
         return LoadingPanelData;
     }(ViewData));

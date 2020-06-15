@@ -16,6 +16,8 @@ var home;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         HomeDataMgr.prototype.init = function () {
+            this.iconId = 1;
+            this.iconFrameId = 1;
             this.level = 0;
             this.exp = 0;
             this.playerId = 1;
@@ -34,6 +36,8 @@ var home;
             this.playerName = "wsx";
             this.level = 1;
             this.exp = 0;
+            this.iconId = 1;
+            this.iconFrameId = 1;
         };
         return HomeDataMgr;
     }(DataBase));

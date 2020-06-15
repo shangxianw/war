@@ -10,7 +10,7 @@ module home
 		public currIndex:number;
 		protected init()
 		{
-			this.resGroup = "preload";
+			this.resGroup = "loading";
 			this.layer = LayerManager.Ins().Panel;
 			this.isNext = true;
 			this.heroArray = [];
@@ -28,6 +28,7 @@ module home
 			this.isNext = true;
 			this.currIndex = 0;
 			this.heroArray = [10080, 10090, 10010, 10040, 10070, 10150, 10120, 10130];
+			this.resGroupArray = [];
 		}
 	}
 

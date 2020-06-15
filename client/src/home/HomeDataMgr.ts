@@ -4,10 +4,14 @@ module home
 	{
 		public playerId:number;
 		public playerName:string;
+		public iconId:number;
+		public iconFrameId:number;
 		public level:number;
 		public exp:number;
 		protected init()
 		{
+			this.iconId = 1;
+			this.iconFrameId = 1;
 			this.level = 0;
 			this.exp = 0;
 			this.playerId = 1;
@@ -34,6 +38,9 @@ module home
 			this.playerName = "wsx";
 			this.level = 1;
 			this.exp = 0;
+
+			this.iconId = 1;
+			this.iconFrameId = 1;
 		}
 	}
 }

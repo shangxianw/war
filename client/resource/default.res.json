@@ -1,12 +1,12 @@
 {
 	"groups": [
 		{
-			"keys": "bg_login_nr_png,bg_com_jpg,bg_login_d_png",
+			"keys": "",
 			"name": "preload"
 		},
 		{
-			"keys": "bg_card_di_3_png,bg_card_di_2_png,bg_card_di_1_png,bg_card_di_0_png,heroicon_10010_png,heroicon_10020_png,heroicon_10030_png",
-			"name": "load2"
+			"keys": "bg_login_nr_png,bg_login_d_png,bg_com_jpg",
+			"name": "loading"
 		}
 	],
 	"resources": [
