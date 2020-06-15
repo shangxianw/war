@@ -1,4 +1,4 @@
-class WGroup extends eui.Group
+class WButton extends eui.Button
 {
 	public constructor()
 	{

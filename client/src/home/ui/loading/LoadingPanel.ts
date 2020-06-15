@@ -5,7 +5,7 @@ module home
 		public count:number;
 		protected init()
 		{
-			this.resGroup = "";
+			this.resGroup = "preload";
 			this.layer = LayerManager.Ins().Panel;
 
 		}

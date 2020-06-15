@@ -43,9 +43,9 @@ var home;
             this.info.packData();
         };
         LoginPanel.prototype.initView = function () {
-            this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
-            this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap2, this);
-            this.addEvent(this.loginBtn, eui.ItemTapEvent.ITEM_TAP, this.OnLoginTap2, this);
+            // this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
+            // this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap2, this);
+            // this.addEvent(this.loginBtn, eui.ItemTapEvent.ITEM_TAP, this.OnLoginTap2, this);
         };
         LoginPanel.prototype.OnLoginTap = function (e) {
             ViewManager.Ins().close(this);

@@ -133,7 +133,9 @@ class ViewManager extends DataBase
 		// 先加载资源，再添加面板
 		if(resGroup != null && resGroup != "")
 		{
+			this.open(home.LoadingTips); // 需要保证 home.LoadingTips 面板内的resGroup不能有值，让它走else的部分，否则会陷入死循环。
 			ResManager.Ins().loadGroup(resGroup, (e:RES.ResourceEvent)=>{
+				this.close(home.LoadingTips);
 				view.initData(data);
 				parent.addChild(view);
 				view.initView();

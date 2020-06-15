@@ -31,18 +31,18 @@ var WGroup = (function (_super) {
         ListenerMgr.Ins().removeEventListen(this, egret.Event.REMOVED_FROM_STAGE, this.destroy, this);
     };
     WGroup.prototype.OnTouchBegin = function (e) {
-        ListenerMgr.Ins().addEventListen(e.target.$stage, egret.TouchEvent.TOUCH_CANCEL, e.target.OnTouchCancle, e.target);
-        ListenerMgr.Ins().addEventListen(e.target.$stage, egret.TouchEvent.TOUCH_END, e.target.OnStageTouchEnd, e.target);
+        ListenerMgr.Ins().addEventListen(this, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, e.target.OnTouchCancle, this);
+        ListenerMgr.Ins().addEventListen(this, egret.TouchEvent.TOUCH_END, e.target.OnStageTouchEnd, this);
         e.target.scaleX = e.target.scaleY = 0.9;
     };
     WGroup.prototype.OnTouchCancle = function (e) {
-        ListenerMgr.Ins().removeEventListen(e.target.$stage, egret.TouchEvent.TOUCH_CANCEL, e.target.OnTouchCancle, e.target);
-        ListenerMgr.Ins().removeEventListen(e.target.$stage, egret.TouchEvent.TOUCH_END, e.target.OnStageTouchEnd, e.target);
+        ListenerMgr.Ins().removeEventListen(this, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, e.target.OnTouchCancle, this);
+        ListenerMgr.Ins().removeEventListen(this, egret.TouchEvent.TOUCH_END, e.target.OnStageTouchEnd, this);
         e.target.scaleX = e.target.scaleY = 1;
     };
     WGroup.prototype.OnStageTouchEnd = function (e) {
-        ListenerMgr.Ins().removeEventListen(e.target.$stage, egret.TouchEvent.TOUCH_CANCEL, e.target.OnTouchCancle, e.target);
-        ListenerMgr.Ins().removeEventListen(e.target.$stage, egret.TouchEvent.TOUCH_END, e.target.OnStageTouchEnd, e.target);
+        ListenerMgr.Ins().removeEventListen(this, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, e.target.OnTouchCancle, this);
+        ListenerMgr.Ins().removeEventListen(this, egret.TouchEvent.TOUCH_END, e.target.OnStageTouchEnd, this);
         e.target.scaleX = e.target.scaleY = 1;
     };
     return WGroup;

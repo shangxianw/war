@@ -98,6 +98,7 @@ var ViewManager = (function (_super) {
         return this.uiMap.get(className);
     };
     ViewManager.prototype.handleView = function (className, data) {
+        var _this = this;
         if (data === void 0) { data = null; }
         if (this.uiMap.has(className) == false) {
             LogUtils.Error("\u4E0D\u5B58\u5728\u9762\u677F " + className);
@@ -108,7 +109,9 @@ var ViewManager = (function (_super) {
         var resGroup = view.viewInfo.resGroup;
         // 先加载资源，再添加面板
         if (resGroup != null && resGroup != "") {
+            this.open(home.LoadingTips); // 需要保证 home.LoadingTips 面板内的resGroup不能有值，让它走else的部分，否则会陷入死循环。
             ResManager.Ins().loadGroup(resGroup, function (e) {
+                _this.close(home.LoadingTips);
                 view.initData(data);
                 parent.addChild(view);
                 view.initView();

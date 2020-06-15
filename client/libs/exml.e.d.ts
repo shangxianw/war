@@ -56,6 +56,8 @@ declare class HomePanelSkin extends eui.Skin{
 }
 declare class LoadingPanelSkin extends eui.Skin{
 }
+declare class LoadingTipsSkin extends eui.Skin{
+}
 declare class LoginPanelSkin extends eui.Skin{
 }
 declare class CostBarSkin extends eui.Skin{

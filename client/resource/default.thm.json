@@ -32,6 +32,7 @@
 		"resource/skins/home/DemoPanelSkin.exml",
 		"resource/skins/home/home/HomePanelSkin.exml",
 		"resource/skins/home/loading/LoadingPanelSkin.exml",
+		"resource/skins/home/loading/LoadingTipsSkin.exml",
 		"resource/skins/home/LoginPanelSkin.exml",
 		"resource/skins/war/CostBarSkin.exml",
 		"resource/skins/war/HeroEntitySkin.exml",
