@@ -43,12 +43,12 @@ var home;
             this.info.packData();
         };
         LoginPanel.prototype.initView = function () {
-            this.accountInput.text = "";
+            this.accountInput.text = "wsx";
             this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
         };
         LoginPanel.prototype.OnLoginTap = function (e) {
             var _this = this;
-            var flag = home.HomeDataMgr.Ins().checkNameValide(this.accountInput.text);
+            var flag = Utils.CheckNameValide(this.accountInput.text);
             if (flag[0] == false) {
                 alert(flag[1]);
                 return;

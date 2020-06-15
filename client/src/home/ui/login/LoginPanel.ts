@@ -50,7 +50,7 @@ module home
 
 		public initView()
 		{
-			this.accountInput.text = "";
+			this.accountInput.text = "wsx";
 			this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
 		}
 

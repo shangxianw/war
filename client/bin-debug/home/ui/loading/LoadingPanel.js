@@ -39,26 +39,15 @@ var home;
         LoadingPanel.prototype.destroy = function () {
             if (this.info != null)
                 this.info.destroyAll();
-            TimerManager.Ins().removeTimer(this.OnTimer, this);
+            Utils.showBreathTween(this.bg, false);
         };
         LoadingPanel.prototype.initData = function (data) {
             this.info.packData();
         };
         LoadingPanel.prototype.initView = function () {
-            TimerManager.Ins().addTimer(1000, this.OnTimer, this);
-            home.HomeDataMgr.Ins(); // 看看哪里初始化的
-        };
-        LoadingPanel.prototype.OnTimer = function () {
-            if (this.info.count <= 10) {
-                this.tips.text = "loading..." + this.info.count + "/10";
-                this.info.count++;
-                return true;
-            }
-            else {
-                ViewManager.Ins().close(home.LoadingPanel);
-                ViewManager.Ins().open(home.HomePanel);
-                return false;
-            }
+            Utils.showBreathTween(this.bg, true, { time: 2000 });
+            // 因为已经知道 homeDataMgr 的数据了，所以可以根据其信息来加载不同的资源
+            // 比如卡组只加载自己有的，当前在哪个地图等。
         };
         return LoadingPanel;
     }(ViewBase));

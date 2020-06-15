@@ -16,6 +16,8 @@ var home;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         HomeDataMgr.prototype.init = function () {
+            this.level = 0;
+            this.exp = 0;
             this.playerId = 1;
             this.playerName = "wsx";
         };
@@ -26,18 +28,12 @@ var home;
                 HomeDataMgr.instance = new HomeDataMgr();
             return HomeDataMgr.instance;
         };
-        // ----------------------------------------------------------------------
-        HomeDataMgr.prototype.checkNameValide = function (name) {
-            if (name == "" || name == null) {
-                return [false, "名字不能为空"];
-            }
-            if (name.length > 10) {
-                return [false, "名字过长"];
-            }
-            if (0) {
-                return [false, "敏感字"];
-            }
-            return [true, "ok"];
+        // ---------------------------------------------------------------------- 组装前端数据
+        HomeDataMgr.prototype.packDataByClient = function () {
+            this.playerId = 1000001; // 希望突破百万用户~
+            this.playerName = "wsx";
+            this.level = 1;
+            this.exp = 0;
         };
         return HomeDataMgr;
     }(DataBase));

@@ -48,4 +48,28 @@ class Utils
 
         return [true, "ok"];
     }
+
+    // ---------------------------------------------------------------------- 呼吸效果
+    public static showBreathTween(target:egret.DisplayObject, show:boolean, query?:{scale?:number, time?:number})
+    {
+        egret.Tween.removeTweens(target);
+        if(show == true)
+        {
+            target.scaleX = 1;
+            target.scaleY = 1;
+            
+            let scale = query.scale != null ? query.scale : 1.02;
+            let time = query.time != null ? query.time : 1000;
+
+            egret.Tween.get(target, {loop:true})
+            .to({
+                scaleX : scale,
+                scaleY : scale
+            }, time)
+            .to({
+                scaleX : 1,
+                scaleY : 1
+            }, time)
+        }
+    }
 }

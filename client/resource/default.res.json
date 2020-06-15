@@ -84,6 +84,11 @@
 			"url": "common/ui/common/icon_sh_dbg_sh_d11.png",
 			"type": "image",
 			"name": "icon_sh_dbg_sh_d11_png"
+		},
+		{
+			"url": "common/proload/bg_com.jpg",
+			"type": "image",
+			"name": "bg_com_jpg"
 		}
 	]
 }

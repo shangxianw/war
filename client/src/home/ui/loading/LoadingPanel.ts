@@ -2,7 +2,7 @@ module home
 {
 	export class LoadingPanelData extends ViewData
 	{
-		public count:number;
+		public resGroupArray:string[];
 		protected init()
 		{
 			this.resGroup = "preload";
@@ -17,13 +17,14 @@ module home
 
 		public packData()
 		{
-			this.count = 0;
+			
 		}
 	}
 
 	export class LoadingPanel extends ViewBase
 	{
 		private tips:eui.Label;
+		private bg:eui.Image;
 
 		public info:LoadingPanelData;
 		public constructor()
@@ -40,7 +41,7 @@ module home
 		{
 			if(this.info != null)
 				this.info.destroyAll();
-			// TimerManager.Ins().removeTimer(this.OnTimer, this);
+			Utils.showBreathTween(this.bg, false);
 		}
 
 		public initData(data:any)
@@ -50,26 +51,13 @@ module home
 
 		public initView()
 		{
-			// 因为已经知道 homeDataMgr 的数据了，所以可以根据其信息来加载不同的资源
-			// 比如卡组只加载自己有的，当前在哪个地图等。
-			
+			Utils.showBreathTween(this.bg, true, {time:2000});
+			TimerManager.Ins().addTimer(100, this.OnLoadRes, this);
 		}
 
-		
-		// private OnTimer()
-		// {
-		// 	if(this.info.count <= 10)
-		// 	{
-		// 		this.tips.text = `loading...${this.info.count}/10`;
-		// 		this.info.count++;
-		// 		return true;
-		// 	}
-		// 	else
-		// 	{
-		// 		ViewManager.Ins().close(home.LoadingPanel);
-		// 		ViewManager.Ins().open(home.HomePanel);
-		// 		return false;
-		// 	}
-		// }
+		private OnLoadRes()
+		{
+
+		}
 	}
 }

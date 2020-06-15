@@ -1,0 +1,12 @@
+// 因为已经知道 homeDataMgr 的数据了，所以可以根据其信息来加载不同的资源
+// 比如卡组只加载自己有的，当前在哪个地图等。
+
+loading界面可以显示当前选中的领主
+资源全都放到资源管理器，即使是外链也可以的吧？
+{
+    "url": "https://www.baidu.com/img/bd_logo1.png",
+    "type": "image",
+    "name": "bd_logo1_png"
+},
+
+手动卸载里面~

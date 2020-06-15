@@ -19,6 +19,7 @@ var net;
             if (!isTest) {
             }
             else {
+                home.HomeDataMgr.Ins().packDataByClient();
                 NetLogin.C2SLogin_CBFn.call(NetLogin.C2SLogin_thisObj);
             }
         };

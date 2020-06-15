@@ -29,6 +29,36 @@ var Utils = (function () {
         var className;
         return className;
     };
+    Utils.CheckNameValide = function (name) {
+        if (name == "" || name == null) {
+            return [false, "名字不能为空"];
+        }
+        if (name.length > 10) {
+            return [false, "名字过长"];
+        }
+        if (0) {
+            return [false, "敏感字"];
+        }
+        return [true, "ok"];
+    };
+    Utils.showBreathTween = function (target, show, query) {
+        egret.Tween.removeTweens(target);
+        if (show == true) {
+            target.scaleX = 1;
+            target.scaleY = 1;
+            var scale = query.scale != null ? query.scale : 1.02;
+            var time = query.time != null ? query.time : 1000;
+            egret.Tween.get(target, { loop: true })
+                .to({
+                scaleX: scale,
+                scaleY: scale
+            }, time)
+                .to({
+                scaleX: 1,
+                scaleY: 1
+            }, time);
+        }
+    };
     return Utils;
 }());
 __reflect(Utils.prototype, "Utils");
