@@ -47,7 +47,7 @@ var home;
         HomePanel.prototype.destroy = function () {
             if (this.info != null)
                 this.info.destroyAll();
-            this.headIcon.destroyAll();
+            // this.headIcon.destroyAll();
         };
         HomePanel.prototype.initData = function (data) {
             this.info.packData();
@@ -65,7 +65,7 @@ var home;
         HomePanel.prototype.initKa = function () {
             for (var i = 0, len = this.info.kaDataArray.length; i < len; i++) {
                 var ka = PoolManager.Ins().pop(home.HeroKa);
-                ka.data = this.info.kaDataArray[i];
+                ka.packData(this.info.kaDataArray[i]);
                 ka.x = 14 + 226 * (i % 2); // 等间距14
                 ka.y = 16 + 153 * Math.floor(i / 2); // 等间距16
                 this.kaGroup.addChild(ka);

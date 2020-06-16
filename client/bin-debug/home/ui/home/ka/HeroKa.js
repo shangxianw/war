@@ -41,20 +41,22 @@ var home;
             _this.skinName = "HeroKaSkin";
             return _this;
         }
+        HeroKa.prototype.init = function () {
+        };
         HeroKa.prototype.destroy = function () {
             if (this.info != null)
                 this.info.destroyAll();
         };
-        HeroKa.prototype.dataChanged = function () {
-            if (this.data == null)
+        HeroKa.prototype.packData = function (data) {
+            if (data == null)
                 return;
-            this.info = this.data;
+            this.info = data;
             this.costLb.text = String(this.info.cost);
             this.typeBg.source = Utils.GetQualityBg(this.info.quality);
             this.kaImg.source = Utils.GetKaIcon(this.info.kaId);
         };
         return HeroKa;
-    }(WItemRenderBase));
+    }(UIBase));
     home.HeroKa = HeroKa;
     __reflect(HeroKa.prototype, "home.HeroKa");
 })(home || (home = {}));

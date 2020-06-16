@@ -51,7 +51,7 @@ module home
 		{
 			if(this.info != null)
 				this.info.destroyAll();
-			this.headIcon.destroyAll();
+			// this.headIcon.destroyAll();
 		}
 
 		public initData(data:any)
@@ -78,7 +78,7 @@ module home
 			for(let i=0, len=this.info.kaDataArray.length; i<len; i++)
 			{
 				let ka = PoolManager.Ins().pop(HeroKa) as HeroKa;
-				ka.data = this.info.kaDataArray[i];
+				ka.packData(this.info.kaDataArray[i]);
 				ka.x = 14 + 226 * (i%2);			// 等间距14
 				ka.y = 16 + 153 * Math.floor(i/2);	// 等间距16
 				this.kaGroup.addChild(ka);

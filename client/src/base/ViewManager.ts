@@ -19,7 +19,7 @@ class ViewManager extends DataBase
 	{
 		for(let ui of this.uiMap.values())
 		{
-			(ui as UIBase).destroyAll();
+			(ui as ViewBase).destroyAll();
 		}
 		this.uiMap.destroy();
 		this.uiMap = null;

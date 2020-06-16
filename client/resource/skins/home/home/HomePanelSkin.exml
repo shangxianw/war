@@ -26,6 +26,7 @@
 
 		<ns1:WButton id="cups" label="000" x="104" y="17.52" skinName="TextIconSkin" icon="bg_phb_jb_png"/>
 		<e:Label id="playerName" text="wsx" x="107" y="53.33"/>
+		<home:HeadIcon skinName="HeadIconSkin" x="0" y="0"/>
 	</e:Group>
 
 </e:Skin>

@@ -24,6 +24,8 @@ var UIBase = (function (_super) {
         _this.initAll(data);
         return _this;
     }
+    UIBase.prototype.init = function () { };
+    ; // view 刚被创建出来时调用
     UIBase.prototype.initAll = function (data) {
         if (data === void 0) { data = null; }
         this.id = IDManager.Ins().getNewId();

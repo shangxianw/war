@@ -29,7 +29,7 @@ module home
 		}
 	}
 
-	export class HeroKa extends WItemRenderBase
+	export class HeroKa extends UIBase
 	{
 		private costLb:eui.BitmapLabel;
 		private typeBg:eui.Image;
@@ -42,17 +42,22 @@ module home
 			this.skinName = "HeroKaSkin";
 		}
 
-		public destroy()
+		protected init()
+		{
+
+		}
+
+		protected destroy()
 		{
 			if(this.info != null)
 				this.info.destroyAll();
 		}
 
-		public dataChanged()
+		public packData(data:HeroKaData)
 		{
-			if(this.data == null)
+			if(data == null)
 				return;
-			this.info = this.data;
+			this.info = data;
 			
 			this.costLb.text = String(this.info.cost);
 			this.typeBg.source = Utils.GetQualityBg(this.info.quality);

@@ -59,7 +59,7 @@ module home
 			
 		}
 
-		protected destroy()
+		public destroy()
 		{
 			if(this.info != null)
 			{
@@ -69,15 +69,18 @@ module home
 			}
 		}
 
-		public packData(data:HeadIconData)
+		public dataChanged()
 		{
-			if(data == null)
-				return;
-			this.info = data;
+			// if(this.data == null)
+			// 	return;
+			// this.info = this.data;
 
-			this.info.addAttrListener("icon", this.OnRefreshIcon, this);
-			this.info.addAttrListener("frame", this.OnRefreshFrame, this);
+			// this.info.addAttrListener("icon", this.OnRefreshIcon, this);
+			// this.info.addAttrListener("frame", this.OnRefreshFrame, this);
 		}
+		// public packData(data:HeadIconData)
+		// {
+		// }
 
 		private OnRefreshIcon()
 		{

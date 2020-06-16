@@ -60,13 +60,16 @@ var home;
                 this.info.destroyAll();
             }
         };
-        HeadIcon.prototype.packData = function (data) {
-            if (data == null)
-                return;
-            this.info = data;
-            this.info.addAttrListener("icon", this.OnRefreshIcon, this);
-            this.info.addAttrListener("frame", this.OnRefreshFrame, this);
+        HeadIcon.prototype.dataChanged = function () {
+            // if(this.data == null)
+            // 	return;
+            // this.info = this.data;
+            // this.info.addAttrListener("icon", this.OnRefreshIcon, this);
+            // this.info.addAttrListener("frame", this.OnRefreshFrame, this);
         };
+        // public packData(data:HeadIconData)
+        // {
+        // }
         HeadIcon.prototype.OnRefreshIcon = function () {
             this.headIcon.source = Utils.GetHeadIcon(this.info.icon);
         };
