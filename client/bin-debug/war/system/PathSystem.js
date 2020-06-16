@@ -24,54 +24,50 @@ var war;
         };
         PathSystem.prototype.destroy = function () {
         };
-        PathSystem.prototype.update = function (deltaTime) {
-            var entity;
+        PathSystem.prototype.update = function (entity, deltaTime) {
             var warData = war.WarDataMgr.Ins();
-            for (var _i = 0, _a = warData.entityMap.values(); _i < _a.length; _i++) {
-                var entity_1 = _a[_i];
-                if (entity_1 == null)
-                    continue;
-                var pCom = entity_1.getCom(war.COMPONENT.PATH);
-                if (pCom == null)
-                    continue;
-                war.DrawUtils.DrawPath(entity_1);
-                var currNode = pCom.getCurr();
-                if (currNode == null) {
-                    try {
-                        // entity.removeCom(COMPONENT.PATH);
-                        var endX = Math.floor(Math.random() * 35); //[1, 2, 3, 4, 5, 6, 7][Math.floor(Math.random()*7)]
-                        var endY = Math.floor(Math.random() * 15); //[1, 2, 3, 4, 5, 6, 7][Math.floor(Math.random()*7)]
-                        var startX = war.WarUtils.ToGridX(entity_1.x);
-                        var startY = war.WarUtils.ToGridY(entity_1.y);
-                        var path = war.WarDataMgr.Ins().findPath(startX, startY, endX, endY);
-                        console.log(path);
-                        pCom.setPath(path);
-                    }
-                    catch (e) {
-                        1;
-                        1;
-                    }
-                    continue;
+            if (entity == null)
+                return;
+            var pCom = entity.getCom(war.COMPONENT.PATH);
+            if (pCom == null)
+                return;
+            war.DrawUtils.DrawPath(entity);
+            var currNode = pCom.getCurr();
+            if (currNode == null) {
+                try {
+                    entity.removeCom(war.COMPONENT.PATH);
+                    entity.removeCom(war.COMPONENT.SPEED);
+                    // let endX = Math.floor(Math.random()*35);//[1, 2, 3, 4, 5, 6, 7][Math.floor(Math.random()*7)]
+                    // let endY = Math.floor(Math.random()*15);//[1, 2, 3, 4, 5, 6, 7][Math.floor(Math.random()*7)]
+                    // let startX = WarUtils.ToGridX(entity.x);
+                    // let startY = WarUtils.ToGridY(entity.y);
+                    // let path = WarDataMgr.Ins().findPath(startX, startY, endX, endY);
+                    // pCom.setPath(path);
                 }
-                var lastNode = pCom.getLast();
-                var localXY2 = war.WarUtils.ToRealPos(currNode.x, currNode.y);
-                if (lastNode != null) {
-                    var localX1 = war.WarUtils.ToLocalX(lastNode.x);
-                    var localY1 = war.WarUtils.ToLocalY(lastNode.y);
-                    var d1 = MathUtils.CalcDistance(localX1, localY1, localXY2[0], localXY2[1]);
-                    var d2 = MathUtils.CalcDistance(localX1, localY1, entity_1.x, entity_1.y);
-                    if (d2 >= d1)
-                        pCom.toNext();
-                    else {
-                        var sCom = entity_1.getCom(war.COMPONENT.SPEED);
-                        if (sCom != null) {
-                            sCom.angle = MathUtils.CalcAngle(entity_1.x, entity_1.y, localXY2[0], localXY2[1]);
-                        }
-                    }
+                catch (e) {
+                    1;
+                    1;
                 }
-                else {
+                return;
+            }
+            var lastNode = pCom.getLast();
+            var localXY2 = war.WarUtils.ToRealPos(currNode.x, currNode.y);
+            if (lastNode != null) {
+                var localX1 = war.WarUtils.ToLocalX(lastNode.x);
+                var localY1 = war.WarUtils.ToLocalY(lastNode.y);
+                var d1 = MathUtils.CalcDistance(localX1, localY1, localXY2[0], localXY2[1]);
+                var d2 = MathUtils.CalcDistance(localX1, localY1, entity.x, entity.y);
+                if (d2 >= d1)
                     pCom.toNext();
+                else {
+                    var sCom = entity.getCom(war.COMPONENT.SPEED);
+                    if (sCom != null) {
+                        sCom.angle = MathUtils.CalcAngle(entity.x, entity.y, localXY2[0], localXY2[1]);
+                    }
                 }
+            }
+            else {
+                pCom.toNext();
             }
         };
         return PathSystem;

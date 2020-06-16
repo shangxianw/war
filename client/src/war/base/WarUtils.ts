@@ -50,7 +50,7 @@ module war
 		public static ToGridY(localY:number)
 		{
 			let space = WarDataMgr.Ins().space;
-			let y = Math.floor((localY - WarDataMgr.Ins().startX) / space);
+			let y = Math.floor((localY - WarDataMgr.Ins().startY) / space);
 			return y;
 		}
 
@@ -62,6 +62,18 @@ module war
 			else if(entityType == ENTITY.HERO)
 				entity = PoolManager.Ins().pop(HeroEntity);
 			return entity;
+		}
+
+		// ---------------------------------------------------------------------- 检查XY是否在正常取值范围内
+		public static CheckXYRangeValide(x:number, y:number)
+		{
+			if(x < 0 || y < 0)
+				return false;
+			
+			if(x >= WarDataMgr.Ins().numCols || y >= WarDataMgr.Ins().numRows)
+				return false;
+
+			return true;
 		}
 	}
 }

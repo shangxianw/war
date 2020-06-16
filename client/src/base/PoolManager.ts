@@ -54,7 +54,7 @@ class PoolManager extends DataBase
 		let arr:any[] = this.poolMap.get(cls.name);
 		let item = arr.pop();
 		if(item == null)
-			return (new (cls as any))();
+			return (new (cls as any)); // (new (cls as any))(); 如果这样写，就会先new，然后返回一个对象，在执行()的操作。
 		item.init(); // 因为是二次使用，所以不会调用init的，需要手动调用一次。
 		return item;
 	}

@@ -25,44 +25,46 @@ var war;
         };
         CollisionSystem.prototype.destroy = function () {
         };
-        CollisionSystem.prototype.update = function (deltaTime) {
-            var entity1;
+        CollisionSystem.prototype.update = function (entity1, eltaTime) {
+            if (entity1 == null)
+                return;
             var entity2;
             var rCom1;
             var rCom2;
             var warData = war.WarDataMgr.Ins();
-            var entityArray = warData.entityMap.values;
+            var entityArray = warData.entityMap.values();
             var collisionEntity = [];
-            for (var i = 0, len = entityArray.length; i < len; i++) {
-                entity1 = entityArray[i];
-                if (entity1 == null)
+            rCom1 = entity1.getCom(war.COMPONENT.GRIGD);
+            if (rCom1 == null)
+                return;
+            for (var j = 0, len2 = entityArray.length; j < len2; j++) {
+                entity2 = entityArray[j];
+                if (entity2 == null)
                     continue;
-                rCom1 = entity1.getCom(war.COMPONENT.GRIGD);
-                if (rCom1 == null)
+                if (entity1.id == entity2.id)
                     continue;
-                for (var j = 0, len2 = entityArray.length; j < len2; j++) {
-                    entity2 = entityArray[j];
-                    if (entity2 == null)
-                        continue;
-                    if (entity1.id == entity2.id)
-                        continue;
-                    rCom2 = entity2.getCom(war.COMPONENT.GRIGD);
-                    if (rCom2 == null)
-                        continue;
-                    var flag = MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, entity2.x, entity2.y, rCom2.radius);
-                    if (flag == false)
-                        continue;
-                    collisionEntity.push(entity2);
-                    break;
-                }
-                if (collisionEntity.length <= 0)
-                    war.DrawUtils.SetColor(entity1, false, 255, 0, 0);
-                else {
-                    war.DrawUtils.SetColor(entity1, true, 255, 0, 0);
-                    this.toAttack(entity1, collisionEntity[0]);
-                }
-                collisionEntity.length = 0;
+                rCom2 = entity2.getCom(war.COMPONENT.GRIGD);
+                if (rCom2 == null)
+                    continue;
+                var flag = MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, entity2.x, entity2.y, rCom2.radius);
+                if (flag == false)
+                    continue;
+                collisionEntity.push(entity2);
+                break;
             }
+            if (collisionEntity.length <= 0)
+                war.DrawUtils.SetColor(entity1, false, 255, 0, 0);
+            else {
+                war.DrawUtils.SetColor(entity1, true, 255, 0, 0);
+                var campCom = entity1.getCom(war.COMPONENT.CAMP);
+                var campCom2 = collisionEntity[0].getCom(war.COMPONENT.CAMP);
+                // if(campCom.camp != campCom2.camp)
+                // {
+                this.toAttack(entity1, collisionEntity[0]);
+                // return;
+                // }
+            }
+            collisionEntity.length = 0;
         };
         CollisionSystem.prototype.toAttack = function (entity1, entity2) {
             var aCom = entity1.getCom(war.COMPONENT.ACTION);

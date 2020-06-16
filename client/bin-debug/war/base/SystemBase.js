@@ -15,12 +15,13 @@ var war;
         function SystemBase() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        SystemBase.prototype.initAll = function () {
-            _super.prototype.initAll.call(this);
+        SystemBase.prototype.update = function () {
+            var param = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                param[_i] = arguments[_i];
+            }
         };
-        SystemBase.prototype.destroyAll = function () {
-            _super.prototype.destroyAll.call(this);
-        };
+        ;
         return SystemBase;
     }(DataBase));
     war.SystemBase = SystemBase;

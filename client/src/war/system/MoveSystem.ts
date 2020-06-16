@@ -17,26 +17,21 @@ module war
 
 		}
 
-		public update(deltaTime:number)
+		public update(entity:EntityBase, deltaTime:number)
 		{
-			let entity:EntityBase;
-			let warData = WarDataMgr.Ins();
-			for(let entity of warData.entityMap.values())
-			{
-				if(entity == null)
-					continue;
+			if(entity == null)
+				return;
 
-				let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
-				if(sCom == null)
-					continue;
-				
-				let speedArray = MathUtils.CalcLegSide(sCom.speed, sCom.angle);
-				let speedX = speedArray[0];
-				let speedY = speedArray[1];
+			let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
+			if(sCom == null)
+				return;
+			
+			let speedArray = MathUtils.CalcLegSide(sCom.speed, sCom.angle);
+			let speedX = speedArray[0];
+			let speedY = speedArray[1];
 
-				entity.x = Number((entity.x + speedX).toFixed(2));
-				entity.y = Number((entity.y + speedY).toFixed(2));
-			}
+			entity.x = Number((entity.x + speedX).toFixed(2));
+			entity.y = Number((entity.y + speedY).toFixed(2));
 		}
 	}
 }

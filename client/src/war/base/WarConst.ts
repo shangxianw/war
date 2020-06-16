@@ -8,7 +8,8 @@ module war
 		GRIGD = 4,
 		ATTACK = 5,
 		CAMP = 6,
-		INPUT = 7
+		INPUT = 7,
+		HP = 8
 	}
 
 	export enum SYSTEM

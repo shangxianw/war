@@ -17,8 +17,8 @@ var war;
         }
         MovieClip.prototype.initData = function (fileName, clipName) {
             // 很危险。
-            ResManager.Ins().loadRes(fileName + "_json");
-            ResManager.Ins().loadRes(fileName + "_png");
+            // ResManager.Ins().loadRes(`${fileName}_json`);
+            // ResManager.Ins().loadRes(`${fileName}_png`);
             var data = RES.getRes(fileName + "_json");
             var txtr = RES.getRes(fileName + "_png");
             var mcFactory = new egret.MovieClipDataFactory(data, txtr);

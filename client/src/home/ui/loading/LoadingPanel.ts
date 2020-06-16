@@ -19,7 +19,7 @@ module home
 		public packData()
 		{
 			this.currCount = 0;
-			this.resGroupArray = ["common_preload"];
+			this.resGroupArray = ["common_preload", "war_preload"]; // war_preload 对应的英雄应该在matchpanel的时候加载的~
 			this.cfgGroupArray = ["hero_json"];
 		}
 	}

@@ -37,7 +37,7 @@ var war;
         };
         WarUtils.ToGridY = function (localY) {
             var space = war.WarDataMgr.Ins().space;
-            var y = Math.floor((localY - war.WarDataMgr.Ins().startX) / space);
+            var y = Math.floor((localY - war.WarDataMgr.Ins().startY) / space);
             return y;
         };
         WarUtils.CreateEntity = function (entityType) {
@@ -47,6 +47,14 @@ var war;
             else if (entityType == war.ENTITY.HERO)
                 entity = PoolManager.Ins().pop(war.HeroEntity);
             return entity;
+        };
+        // ---------------------------------------------------------------------- 检查XY是否在正常取值范围内
+        WarUtils.CheckXYRangeValide = function (x, y) {
+            if (x < 0 || y < 0)
+                return false;
+            if (x >= war.WarDataMgr.Ins().numCols || y >= war.WarDataMgr.Ins().numRows)
+                return false;
+            return true;
         };
         return WarUtils;
     }());

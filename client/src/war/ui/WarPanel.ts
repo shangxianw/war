@@ -51,8 +51,24 @@ module war
 		{
 			DrawUtils.DrawGrid(this.testGrid);
 			this.initEntity();
+			this.addEvent(this.entityGroup, egret.TouchEvent.TOUCH_TAP, this.OnEntityGroupTap, this);
 		}
 
+		private OnEntityGroupTap(e:egret.TouchEvent)
+		{
+			let x = WarUtils.ToGridX(e.localX);
+			let y = WarUtils.ToGridY(e.localY);
+			if(WarUtils.CheckXYRangeValide(x, y) == false)
+			{
+				LogUtils.Error("丢卡的位置有误");
+				return false;
+			}
+			let iptCom:InputCom = PoolManager.Ins().pop(InputCom) as InputCom;
+			iptCom.packHero(INPUT.CREATE_HERO, x, y, 26, 3, this.entityGroup, CAMP.WE);
+			WarDataMgr.Ins().inputArray.push(iptCom);
+		}
+
+		// ---------------------------------------------------------------------- 初始化实体
 		private initEntity()
 		{
 			let iptCom:InputCom = PoolManager.Ins().pop(InputCom) as InputCom;

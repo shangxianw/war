@@ -22,7 +22,7 @@ module war
 			this.inputType = INPUT.NONE;
 		}
 
-		public packData(inputType:number, x1:number, x2:number, y1:number, y2:number, parent:egret.DisplayObjectContainer, camp:number)
+		public packHero(inputType:number, x1:number, y1:number, x2:number, y2:number, parent:egret.DisplayObjectContainer, camp:number)
 		{
 			this.inputType = inputType;
 			this.x1 = x1;

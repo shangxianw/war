@@ -34,12 +34,13 @@ var war;
                     this.createKing(iCom);
             }
         };
+        // ---------------------------------------------------------------------- 创建英雄实体
         InputSystem.prototype.createHero = function (inputCom) {
             var hero = PoolManager.Ins().pop(war.HeroEntity);
             hero.x = war.WarUtils.ToLocalX(inputCom.x1);
             hero.y = war.WarUtils.ToLocalY(inputCom.y1);
             var sCom = PoolManager.Ins().pop(war.SpeedCom);
-            sCom.speed = Math.random();
+            sCom.speed = 0.5;
             sCom.angle = 0;
             hero.setCom(sCom);
             var pathCom = PoolManager.Ins().pop(war.PathCom);
@@ -60,6 +61,7 @@ var war;
             inputCom.parent.addChild(hero);
             war.WarDataMgr.Ins().addEntity(hero);
         };
+        // ---------------------------------------------------------------------- 创建公主塔实体
         InputSystem.prototype.createQueen = function (inputCom) {
             var hero = PoolManager.Ins().pop(war.QueenEntity);
             hero.x = war.WarUtils.ToLocalX(inputCom.x1);
@@ -78,6 +80,7 @@ var war;
             inputCom.parent.addChild(hero);
             war.WarDataMgr.Ins().addEntity(hero);
         };
+        // ---------------------------------------------------------------------- 创建国王塔实体
         InputSystem.prototype.createKing = function (inputCom) {
             var hero = PoolManager.Ins().pop(war.QueenEntity);
             hero.x = war.WarUtils.ToLocalX(inputCom.x1);

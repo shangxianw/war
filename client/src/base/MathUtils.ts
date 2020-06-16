@@ -87,7 +87,6 @@ class MathUtils
 			if(checkCross(p1,p2,p3,p4)==true){  
 				count++  
 			}  
-			//  console.log(count)  
 			return (count%2==0)?false:true 
 		}
 	}

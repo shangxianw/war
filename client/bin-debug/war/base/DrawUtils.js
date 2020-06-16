@@ -56,40 +56,36 @@ var war;
             group.addChild(shape);
         };
         DrawUtils.DrawPath = function (entity) {
-            // if(DrawUtils.isTest == false)
-            // 	return;
-            // let group = (ViewManager.Ins().getView(WarPanel) as WarPanel).drawGroup;
-            // if(this.pathMap == null)
-            // 	this.pathMap = new Hash<number, egret.Shape>();
-            // if(this.pathMap.has(entity.id) == false)
-            // {
-            // 	let testShap = new egret.Shape();
-            // 	testShap.x = WarDataMgr.Ins().startX;
-            // 	testShap.y = WarDataMgr.Ins().startY;
-            // 	group != null && group.addChild(testShap);
-            // 	this.pathMap.set(entity.id, testShap);
-            // }
-            // let testShap:egret.Shape = this.pathMap.get(entity.id);
-            // let space = WarDataMgr.Ins().grid.space;
-            // let pCom = entity.getCom(COMPONENT.PATH) as PathCom;
-            // if(pCom != null)
-            // {
-            // 	testShap.graphics.clear();
-            // 	testShap.graphics.lineStyle(2, 0xff0000);
-            // 	testShap.graphics.moveTo(entity.x - WarDataMgr.Ins().startX, entity.y - WarDataMgr.Ins().startY);
-            // 	let path = pCom.getLeftPath();
-            // 	let index:number = 1;
-            // 	for(let i=1; i<path.length; i++)
-            // 	{
-            // 		let node = path[i];
-            // 		testShap.graphics.lineTo(space*node.x + space/2, space*node.y + space/2);
-            // 	}
-            // 	testShap.graphics.endFill();
-            // }
-            // else
-            // {
-            // 	testShap.parent != null && testShap.parent.removeChild(testShap);
-            // }
+            if (DrawUtils.isTest == false)
+                return;
+            var group = entity.parent;
+            if (this.pathMap == null)
+                this.pathMap = new Hash();
+            if (this.pathMap.has(entity.id) == false) {
+                var testShap_1 = new egret.Shape();
+                testShap_1.x = war.WarDataMgr.Ins().startX;
+                testShap_1.y = war.WarDataMgr.Ins().startY;
+                group != null && group.addChild(testShap_1);
+                this.pathMap.set(entity.id, testShap_1);
+            }
+            var testShap = this.pathMap.get(entity.id);
+            var space = war.WarDataMgr.Ins().grid.space;
+            var pCom = entity.getCom(war.COMPONENT.PATH);
+            if (pCom != null) {
+                testShap.graphics.clear();
+                testShap.graphics.lineStyle(2, 0xff0000);
+                testShap.graphics.moveTo(entity.x - war.WarDataMgr.Ins().startX, entity.y - war.WarDataMgr.Ins().startY);
+                var path = pCom.getLeftPath();
+                var index = 1;
+                for (var i = 1; i < path.length; i++) {
+                    var node = path[i];
+                    testShap.graphics.lineTo(space * node.x + space / 2, space * node.y + space / 2);
+                }
+                testShap.graphics.endFill();
+            }
+            else {
+                testShap.parent != null && testShap.parent.removeChild(testShap);
+            }
         };
         DrawUtils.DrawHeroAnchor = function (hero) {
             if (DrawUtils.isTest == false)

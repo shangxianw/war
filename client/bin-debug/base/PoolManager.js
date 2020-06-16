@@ -53,7 +53,7 @@ var PoolManager = (function (_super) {
         var arr = this.poolMap.get(cls.name);
         var item = arr.pop();
         if (item == null)
-            return (new cls)();
+            return (new cls); // (new (cls as any))(); 如果这样写，就会先new，然后返回一个对象，在执行()的操作。
         item.init(); // 因为是二次使用，所以不会调用init的，需要手动调用一次。
         return item;
     };

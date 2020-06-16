@@ -17,35 +17,30 @@ module war
 
 		}
 
-		public update(deltaTime:number)
+		public update(entity:EntityBase, deltaTime:number)
 		{
-			let entity:EntityBase;
-			let warData = WarDataMgr.Ins();
-			for(let entity of warData.entityMap.values())
+			if(entity == null)
+				return;
+
+			let aCom = entity.getCom(COMPONENT.ACTION) as ActionCom;
+			if(aCom == null)
+				return;
+
+			let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
+			if(sCom == null)
+				return;
+			
+			if(aCom.action == ACTION.RUN)
 			{
-				if(entity == null)
-					continue;
-
-				let aCom = entity.getCom(COMPONENT.ACTION) as ActionCom;
-				if(aCom == null)
-					continue;
-
-				let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
-				if(sCom == null)
-					continue;
-				
-				if(aCom.action == ACTION.RUN)
-				{
-					this.setRun(entity);
-				}
-				else if(aCom.action == ACTION.STAND)
-				{
-					this.setStand(entity);
-				}
-				else if(aCom.action == ACTION.ATTACK)
-				{
-					this.setAttack(entity);
-				}
+				this.setRun(entity);
+			}
+			else if(aCom.action == ACTION.STAND)
+			{
+				this.setStand(entity);
+			}
+			else if(aCom.action == ACTION.ATTACK)
+			{
+				this.setAttack(entity);
 			}
 		}
 

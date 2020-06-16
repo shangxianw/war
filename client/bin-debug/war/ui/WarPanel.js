@@ -48,7 +48,20 @@ var war;
         WarPanel.prototype.initView = function () {
             war.DrawUtils.DrawGrid(this.testGrid);
             this.initEntity();
+            this.addEvent(this.entityGroup, egret.TouchEvent.TOUCH_TAP, this.OnEntityGroupTap, this);
         };
+        WarPanel.prototype.OnEntityGroupTap = function (e) {
+            var x = war.WarUtils.ToGridX(e.localX);
+            var y = war.WarUtils.ToGridY(e.localY);
+            if (war.WarUtils.CheckXYRangeValide(x, y) == false) {
+                LogUtils.Error("丢卡的位置有误");
+                return false;
+            }
+            var iptCom = PoolManager.Ins().pop(war.InputCom);
+            iptCom.packHero(war.INPUT.CREATE_HERO, x, y, 26, 3, this.entityGroup, war.CAMP.WE);
+            war.WarDataMgr.Ins().inputArray.push(iptCom);
+        };
+        // ---------------------------------------------------------------------- 初始化实体
         WarPanel.prototype.initEntity = function () {
             var iptCom = PoolManager.Ins().pop(war.InputCom);
             iptCom.packQueen(war.INPUT.CREATE_QUEEN, 7, 3, this.entityGroup, war.CAMP.WE);

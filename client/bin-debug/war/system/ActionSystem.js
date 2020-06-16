@@ -25,28 +25,23 @@ var war;
         };
         ActionSystem.prototype.destroy = function () {
         };
-        ActionSystem.prototype.update = function (deltaTime) {
-            var entity;
-            var warData = war.WarDataMgr.Ins();
-            for (var _i = 0, _a = warData.entityMap.values(); _i < _a.length; _i++) {
-                var entity_1 = _a[_i];
-                if (entity_1 == null)
-                    continue;
-                var aCom = entity_1.getCom(war.COMPONENT.ACTION);
-                if (aCom == null)
-                    continue;
-                var sCom = entity_1.getCom(war.COMPONENT.SPEED);
-                if (sCom == null)
-                    continue;
-                if (aCom.action == war.ACTION.RUN) {
-                    this.setRun(entity_1);
-                }
-                else if (aCom.action == war.ACTION.STAND) {
-                    this.setStand(entity_1);
-                }
-                else if (aCom.action == war.ACTION.ATTACK) {
-                    this.setAttack(entity_1);
-                }
+        ActionSystem.prototype.update = function (entity, deltaTime) {
+            if (entity == null)
+                return;
+            var aCom = entity.getCom(war.COMPONENT.ACTION);
+            if (aCom == null)
+                return;
+            var sCom = entity.getCom(war.COMPONENT.SPEED);
+            if (sCom == null)
+                return;
+            if (aCom.action == war.ACTION.RUN) {
+                this.setRun(entity);
+            }
+            else if (aCom.action == war.ACTION.STAND) {
+                this.setStand(entity);
+            }
+            else if (aCom.action == war.ACTION.ATTACK) {
+                this.setAttack(entity);
             }
         };
         ActionSystem.prototype.setStand = function (entity) {

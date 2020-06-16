@@ -17,53 +17,55 @@ module war
 
 		}
 
-		public update(deltaTime:number)
+		public update(entity1:EntityBase, eltaTime:number)
 		{
-			let entity1:EntityBase;
+			if(entity1 == null)
+				return;
+
 			let entity2:EntityBase;
 			let rCom1:RigidCom;
 			let rCom2:RigidCom;
 			let warData = WarDataMgr.Ins();
-			let entityArray = warData.entityMap.values;
+			let entityArray = warData.entityMap.values();
 			let collisionEntity:EntityBase[] = [];
 			
-			for(let i=0, len=entityArray.length; i<len; i++)
+			rCom1 = entity1.getCom(COMPONENT.GRIGD) as RigidCom;
+			if(rCom1 == null)
+				return;
+			for(let j=0, len2=entityArray.length; j<len2; j++) // 也是从0开始遍历的！
 			{
-				entity1 = entityArray[i];
-				if(entity1 == null)
+				entity2 = entityArray[j];
+				if(entity2 == null)
 					continue;
-				rCom1 = entity1.getCom(COMPONENT.GRIGD) as RigidCom;
-				if(rCom1 == null)
+				
+				if(entity1.id == entity2.id)
 					continue;
-				for(let j=0, len2=entityArray.length; j<len2; j++) // 也是从0开始遍历的！
-				{
-					entity2 = entityArray[j];
-					if(entity2 == null)
-						continue;
-					
-					if(entity1.id == entity2.id)
-						continue;
-					
-					rCom2 = entity2.getCom(COMPONENT.GRIGD) as RigidCom;
-					if(rCom2 == null)
-						continue;
-					
-					let flag = MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, entity2.x, entity2.y, rCom2.radius);
-					if(flag == false)
-						continue;
-					collisionEntity.push(entity2);
-					break;
-				}
-
-				if(collisionEntity.length <= 0)
-					DrawUtils.SetColor(entity1, false, 255, 0, 0);
-				else
-				{
-					DrawUtils.SetColor(entity1, true, 255, 0, 0);
-					this.toAttack(entity1, collisionEntity[0]);
-				}
-				collisionEntity.length = 0;
+				
+				rCom2 = entity2.getCom(COMPONENT.GRIGD) as RigidCom;
+				if(rCom2 == null)
+					continue;
+				
+				let flag = MathUtils.IsCircleIntersect(entity1.x, entity1.y, rCom1.radius, entity2.x, entity2.y, rCom2.radius);
+				if(flag == false)
+					continue;
+				collisionEntity.push(entity2);
+				break;
 			}
+
+			if(collisionEntity.length <= 0)
+				DrawUtils.SetColor(entity1, false, 255, 0, 0);
+			else
+			{
+				DrawUtils.SetColor(entity1, true, 255, 0, 0);
+				let campCom:CampCom = entity1.getCom(COMPONENT.CAMP) as CampCom;
+				let campCom2:CampCom = collisionEntity[0].getCom(COMPONENT.CAMP) as CampCom;
+				// if(campCom.camp != campCom2.camp)
+				// {
+					this.toAttack(entity1, collisionEntity[0]);
+					// return;
+				// }
+			}
+			collisionEntity.length = 0;
 		}
 
 		public toAttack(entity1:EntityBase, entity2:EntityBase)

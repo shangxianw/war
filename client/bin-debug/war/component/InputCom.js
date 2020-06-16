@@ -22,7 +22,7 @@ var war;
         InputCom.prototype.destroy = function () {
             this.inputType = war.INPUT.NONE;
         };
-        InputCom.prototype.packData = function (inputType, x1, x2, y1, y2, parent, camp) {
+        InputCom.prototype.packHero = function (inputType, x1, y1, x2, y2, parent, camp) {
             this.inputType = inputType;
             this.x1 = x1;
             this.x2 = x2;
