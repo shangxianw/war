@@ -1,8 +1,8 @@
 {
 	"groups": [
 		{
-			"keys": "",
-			"name": "preload"
+			"keys": "sh_font_png,sh_font_fnt,icon_sh_dbg_sh_d2_png,icon_sh_dbg_sh_d11_png,icon_sh_dbg_sh_d1_png,icon_sh_dbg_sh_d0_png,icon_sh_d_png,bg_jz_lt_jk_wxts_png,bg_card_di_3_png,bg_card_di_2_png,bg_card_di_1_png,button_dz_tz_png,button_dz_ppz_png,bg_phb_heroicon_png,bg_phb_heroicon_up01_png,bg_phb_heroicon_up02_png,bg_phb_heroicon_up03_png,playericon_01_png,playericon_02_png,playericon_03_png,playericon_04_png,playericon_05_png,playericon_06_png,playericon_07_png,playericon_08_png,bg_card_di_4_png,bg_com_fgd_png,bg_kplb_bt_png,bg_phb_heroicon_back_png,bg_phb_jb_png",
+			"name": "common_preload"
 		},
 		{
 			"keys": "bg_login_nr_png,bg_login_d_png,bg_com_jpg",
@@ -24,11 +24,6 @@
 			"url": "common/ui/heroicon/heroicon_10030.png",
 			"type": "image",
 			"name": "heroicon_10030_png"
-		},
-		{
-			"url": "common/ui/common/bg_card_di_0.png",
-			"type": "image",
-			"name": "bg_card_di_0_png"
 		},
 		{
 			"url": "common/ui/common/bg_card_di_1.png",
@@ -379,6 +374,101 @@
 			"url": "common/proload/bg_login_d.png",
 			"type": "image",
 			"name": "bg_login_d_png"
+		},
+		{
+			"url": "common/ui/common/bg_card_di_4.png",
+			"type": "image",
+			"name": "bg_card_di_4_png"
+		},
+		{
+			"url": "common/ui/common/bg_com_fgd.png",
+			"type": "image",
+			"name": "bg_com_fgd_png"
+		},
+		{
+			"url": "common/ui/common/bg_kplb_bt.png",
+			"type": "image",
+			"name": "bg_kplb_bt_png"
+		},
+		{
+			"url": "common/ui/common/button_dz_ppz.png",
+			"type": "image",
+			"name": "button_dz_ppz_png"
+		},
+		{
+			"url": "common/ui/common/button_dz_tz.png",
+			"type": "image",
+			"name": "button_dz_tz_png"
+		},
+		{
+			"url": "common/ui/playericon/bg_phb_heroicon.png",
+			"type": "image",
+			"name": "bg_phb_heroicon_png"
+		},
+		{
+			"url": "common/ui/playericon/bg_phb_heroicon_up01.png",
+			"type": "image",
+			"name": "bg_phb_heroicon_up01_png"
+		},
+		{
+			"url": "common/ui/playericon/bg_phb_heroicon_up02.png",
+			"type": "image",
+			"name": "bg_phb_heroicon_up02_png"
+		},
+		{
+			"url": "common/ui/playericon/bg_phb_heroicon_up03.png",
+			"type": "image",
+			"name": "bg_phb_heroicon_up03_png"
+		},
+		{
+			"url": "common/ui/playericon/playericon_01.png",
+			"type": "image",
+			"name": "playericon_01_png"
+		},
+		{
+			"url": "common/ui/playericon/playericon_02.png",
+			"type": "image",
+			"name": "playericon_02_png"
+		},
+		{
+			"url": "common/ui/playericon/playericon_03.png",
+			"type": "image",
+			"name": "playericon_03_png"
+		},
+		{
+			"url": "common/ui/playericon/playericon_04.png",
+			"type": "image",
+			"name": "playericon_04_png"
+		},
+		{
+			"url": "common/ui/playericon/playericon_05.png",
+			"type": "image",
+			"name": "playericon_05_png"
+		},
+		{
+			"url": "common/ui/playericon/playericon_06.png",
+			"type": "image",
+			"name": "playericon_06_png"
+		},
+		{
+			"url": "common/ui/playericon/playericon_07.png",
+			"type": "image",
+			"name": "playericon_07_png"
+		},
+		{
+			"url": "common/ui/playericon/playericon_08.png",
+			"type": "image",
+			"name": "playericon_08_png"
+		},
+		{
+			"url": "common/ui/common/bg_phb_heroicon_back.png",
+			"type": "image",
+			"name": "bg_phb_heroicon_back_png"
+		},
+		{
+			"url": "common/ui/common/bg_phb_jb.png",
+			"type": "image",
+			"name": "bg_phb_jb_png"
 		}
 	]
 }

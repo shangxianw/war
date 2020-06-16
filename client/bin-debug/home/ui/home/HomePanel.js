@@ -18,10 +18,20 @@ var home;
         HomePanelData.prototype.init = function () {
             this.resGroup = "";
             this.layer = LayerManager.Ins().Panel;
+            this.kaDataArray = [];
         };
         HomePanelData.prototype.destroy = function () {
+            DataUtils.DestroyDataBaseArray(this.kaDataArray);
+            this.kaDataArray.length = 0;
         };
         HomePanelData.prototype.packData = function () {
+            var teamArray = home.HomeDataMgr.Ins().kaDataMgr.teamArray;
+            for (var _i = 0, teamArray_1 = teamArray; _i < teamArray_1.length; _i++) {
+                var kaId = teamArray_1[_i];
+                var kaDataInfo = PoolManager.Ins().pop(home.HeroKaData);
+                kaDataInfo.packData(kaId);
+                this.kaDataArray.push(kaDataInfo);
+            }
         };
         return HomePanelData;
     }(ViewData));
@@ -37,17 +47,31 @@ var home;
         HomePanel.prototype.destroy = function () {
             if (this.info != null)
                 this.info.destroyAll();
+            this.headIcon.destroyAll();
         };
         HomePanel.prototype.initData = function (data) {
             this.info.packData();
-            this.addEvent(this.nextBtn, egret.TouchEvent.TOUCH_TAP, this.OnTap, this);
+            // this.addEvent(this.nextBtn, egret.TouchEvent.TOUCH_TAP, this.OnTap, this);
         };
         HomePanel.prototype.initView = function () {
+            this.initKa();
+            // let heroIconData = PoolManager.Ins().pop(HeadIconData) as HeadIconData;
+            // this.headIcon.packData(heroIconData);
+            var homeData = home.HomeDataMgr.Ins();
+            this.cups.label = String(homeData.cups);
+            this.playerName.text = homeData.playerName;
+            this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
         };
-        HomePanel.prototype.OnLoginTap = function (e) {
-            console.log("\u767B\u5F55\u6210\u529F");
+        HomePanel.prototype.initKa = function () {
+            for (var i = 0, len = this.info.kaDataArray.length; i < len; i++) {
+                var ka = PoolManager.Ins().pop(home.HeroKa);
+                ka.data = this.info.kaDataArray[i];
+                ka.x = 14 + 226 * (i % 2); // 等间距14
+                ka.y = 16 + 153 * Math.floor(i / 2); // 等间距16
+                this.kaGroup.addChild(ka);
+            }
         };
-        HomePanel.prototype.OnTap = function () {
+        HomePanel.prototype.OnFightTap = function () {
             ViewManager.Ins().close(this);
             ViewManager.Ins().open(war.WarMatchPanel);
         };

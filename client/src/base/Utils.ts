@@ -72,4 +72,30 @@ class Utils
             }, time)
         }
     }
+
+    public static GetKaIcon(kaId:number)
+    {
+        return `heroicon_${kaId}_png`;
+    }
+
+    public static GetQualityBg(quality:number)
+    {
+        return `bg_card_di_${quality}_png`
+    }
+
+    public static GetHeadIcon(icon:number)
+    {
+        if(icon < 10)
+            return `playericon_0${icon}`;
+        else
+            return `playericon_${icon}`;
+    }
+
+    public static GetHeadFrame(icon:number)
+    {
+        if(icon < 10)
+            return `bg_phb_heroicon_up0${icon}`;
+        else
+            return `bg_phb_heroicon_up${icon}`;
+    }
 }

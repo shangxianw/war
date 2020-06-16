@@ -11,7 +11,8 @@ abstract class UIBase extends eui.Component
 	public constructor(skinName:string = null, data:any=null)
 	{
 		super();
-		this.skinName = skinName;
+		if(skinName != null)
+			this.skinName = skinName;
 		this.initAll(data);
 	}
 

@@ -350,11 +350,12 @@ var ResManager = (function (_super) {
     };
     ResManager.prototype.loadResAsync = function (resName, cbFn, thisObj) {
         var _this = this;
-        if (resName == null || resName == "" || RES.hasRes(resName) == false || cbFn == null || thisObj == null) {
+        if (resName == null || resName == "" || cbFn == null || thisObj == null) {
             LogUtils.Error("参数有误");
             return false;
         }
-        RES.getResAsync(resName, function () {
+        LogUtils.Log("\u52A0\u8F7D " + resName);
+        RES.getResAsync(resName, function (data, key) {
             if (_this.resMap.has(resName) == false) {
                 var resData_2 = PoolManager.Ins().pop(ResData);
                 resData_2.packData(resName);
@@ -362,7 +363,8 @@ var ResManager = (function (_super) {
             }
             var resData = _this.resMap.get(resName);
             resData.addCount();
-            cbFn.call(thisObj);
+            LogUtils.Log("\u52A0\u8F7D " + resName + " \u5B8C\u6210");
+            cbFn.call(thisObj, data, key);
         }, this);
     };
     ResManager.prototype.desRes = function (resName) {
@@ -377,6 +379,9 @@ var ResManager = (function (_super) {
         var resData = this.resMap.get(resName);
         resData.reduceCount();
         return true;
+    };
+    ResManager.prototype.createGroup = function (groupName, keysArray) {
+        RES.createGroup(groupName, keysArray);
     };
     return ResManager;
 }(DataBase));

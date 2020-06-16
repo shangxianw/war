@@ -18,19 +18,13 @@ var home;
         LoadingPanelData.prototype.init = function () {
             this.resGroup = "loading";
             this.layer = LayerManager.Ins().Panel;
-            this.isNext = true;
-            this.heroArray = [];
-            this.currIndex = 0;
         };
         LoadingPanelData.prototype.destroy = function () {
-            this.heroArray.length = 0;
-            this.currIndex = 0;
         };
         LoadingPanelData.prototype.packData = function () {
-            this.isNext = true;
-            this.currIndex = 0;
-            this.heroArray = [10080, 10090, 10010, 10040, 10070, 10150, 10120, 10130];
-            this.resGroupArray = [];
+            this.currCount = 0;
+            this.resGroupArray = ["common_preload"];
+            this.cfgGroupArray = ["hero_json"];
         };
         return LoadingPanelData;
     }(ViewData));
@@ -48,41 +42,53 @@ var home;
             if (this.info != null)
                 this.info.destroyAll();
             Utils.showBreathTween(this.bg, false);
-            TimerManager.Ins().removeTimer(this.OnLoadRes, this);
         };
         LoadingPanel.prototype.initData = function (data) {
             this.info.packData();
         };
         LoadingPanel.prototype.initView = function () {
+            this.loadRes();
             Utils.showBreathTween(this.bg, true, { time: 1000 });
-            // TimerManager.Ins().addTimer(100, this.OnLoadRes, this);
-            this.addEvent(this.nextBtn, egret.TouchEvent.TOUCH_TAP, this.OnTap, this);
         };
-        LoadingPanel.prototype.OnLoadRes = function () {
-            if (this.info.isNext == true) {
-                if (this.info.currIndex >= this.info.heroArray.length) {
-                    TimerManager.Ins().removeTimer(this.OnLoadRes, this);
-                    return false;
-                }
-                this.info.isNext = false;
-                var heroId = this.info.heroArray[this.info.currIndex];
-                var resName = "herobg_" + heroId + "_png";
-                ResManager.Ins().loadResAsync(resName, this.OnLoadHeroOk, this);
+        // ---------------------------------------------------------------------- 加载资源组
+        LoadingPanel.prototype.loadRes = function () {
+            this.bar.minimum = 0;
+            this.bar.value = 0;
+            for (var _i = 0, _a = this.info.resGroupArray; _i < _a.length; _i++) {
+                var groupName = _a[_i];
+                ResManager.Ins().loadGroup(groupName, this.OnLoadGroupOk, this, this.OnLoadGroupProgress, this.OnLoadGroupError);
             }
-            return true;
         };
-        LoadingPanel.prototype.OnLoadHeroOk = function () {
-            console.log(this.info.currIndex);
-            var heroModel = new eui.Image;
-            heroModel.source = "herobg_" + this.info.heroArray[this.info.currIndex] + "_png";
-            this.addChild(heroModel);
-            heroModel.x = Math.random() * 1280;
-            heroModel.y = Math.random() * 720;
-            heroModel.scaleX = heroModel.scaleY = 0.5;
-            this.info.isNext = true;
-            this.info.currIndex++;
+        LoadingPanel.prototype.OnLoadGroupOk = function (e) {
+            this.info.currCount++;
+            if (this.info.currCount >= this.info.resGroupArray.length) {
+                this.info.currCount = 0;
+                this.loadCfg();
+            }
         };
-        LoadingPanel.prototype.OnTap = function () {
+        LoadingPanel.prototype.OnLoadGroupProgress = function (e) {
+            this.bar.maximum = e.itemsTotal;
+            this.bar.value = e.itemsLoaded;
+        };
+        LoadingPanel.prototype.OnLoadGroupError = function (e) {
+        };
+        // ---------------------------------------------------------------------- 加载配置表
+        LoadingPanel.prototype.loadCfg = function () {
+            for (var _i = 0, _a = this.info.cfgGroupArray; _i < _a.length; _i++) {
+                var cfgName = _a[_i];
+                ResManager.Ins().loadResAsync(cfgName, this.OnLoadCfgOK, this);
+            }
+        };
+        LoadingPanel.prototype.OnLoadCfgOK = function (data, key) {
+            this.info.currCount++;
+            ConfigManager.Ins().set(key, data);
+            if (this.info.currCount >= this.info.cfgGroupArray.length) {
+                this.info.currCount = 0;
+                this.loadOK();
+            }
+        };
+        // ---------------------------------------------------------------------- 加载完成
+        LoadingPanel.prototype.loadOK = function () {
             ViewManager.Ins().close(this);
             ViewManager.Ins().open(home.HomePanel);
         };

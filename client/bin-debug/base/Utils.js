@@ -60,6 +60,24 @@ var Utils = (function () {
             }, time);
         }
     };
+    Utils.GetKaIcon = function (kaId) {
+        return "heroicon_" + kaId + "_png";
+    };
+    Utils.GetQualityBg = function (quality) {
+        return "bg_card_di_" + quality + "_png";
+    };
+    Utils.GetHeadIcon = function (icon) {
+        if (icon < 10)
+            return "playericon_0" + icon;
+        else
+            return "playericon_" + icon;
+    };
+    Utils.GetHeadFrame = function (icon) {
+        if (icon < 10)
+            return "bg_phb_heroicon_up0" + icon;
+        else
+            return "bg_phb_heroicon_up" + icon;
+    };
     return Utils;
 }());
 __reflect(Utils.prototype, "Utils");

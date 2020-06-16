@@ -1,0 +1,10 @@
+{
+	"groups": [],
+	"resources": [
+		{
+			"url": "config/hero.json",
+			"type": "json",
+			"name": "hero_json"
+		}
+	]
+}

@@ -52,4 +52,11 @@ var RIGID_TYPE;
     RIGID_TYPE[RIGID_TYPE["RECT"] = 1] = "RECT";
     RIGID_TYPE[RIGID_TYPE["CIRCLE"] = 2] = "CIRCLE";
 })(RIGID_TYPE || (RIGID_TYPE = {}));
+var CONFIG = (function () {
+    function CONFIG() {
+    }
+    CONFIG.HERO = "hero_json";
+    return CONFIG;
+}());
+__reflect(CONFIG.prototype, "CONFIG");
 //# sourceMappingURL=Const.js.map

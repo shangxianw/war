@@ -3,46 +3,37 @@ module home
 	export class LoadingPanelData extends ViewData
 	{
 		public resGroupArray:string[];	// 加载资源组
-		public resArray:string[];		// 加载资源(针对动态资源、如玩家领主)
-
-		public heroArray:number[];
-		public isNext:boolean;
-		public currIndex:number;
+		public cfgGroupArray:string[];  // 加载配置表资源
+		public currCount:number;
 		protected init()
 		{
 			this.resGroup = "loading";
 			this.layer = LayerManager.Ins().Panel;
-			this.isNext = true;
-			this.heroArray = [];
-			this.currIndex = 0;
 		}
 
 		protected destroy()
 		{
-			this.heroArray.length = 0;
-			this.currIndex = 0;
+			
 		}
 
 		public packData()
 		{
-			this.isNext = true;
-			this.currIndex = 0;
-			this.heroArray = [10080, 10090, 10010, 10040, 10070, 10150, 10120, 10130];
-			this.resGroupArray = [];
+			this.currCount = 0;
+			this.resGroupArray = ["common_preload"];
+			this.cfgGroupArray = ["hero_json"];
 		}
 	}
 
 	export class LoadingPanel extends ViewBase
 	{
 		private tips:eui.Label;
-		private nextBtn:WButton;
 		private bg:eui.Image;
 		private bar:eui.ProgressBar;
 
 		public info:LoadingPanelData;
 		public constructor()
 		{
-			super("LoadingPanelSkin", LoadingPanelData);	
+			super("LoadingPanelSkin", LoadingPanelData);
 		}
 
 		protected init()
@@ -55,7 +46,6 @@ module home
 			if(this.info != null)
 				this.info.destroyAll();
 			Utils.showBreathTween(this.bg, false);
-			TimerManager.Ins().removeTimer(this.OnLoadRes, this);
 		}
 
 		public initData(data:any)
@@ -65,44 +55,64 @@ module home
 
 		public initView()
 		{
+			this.loadRes();
 			Utils.showBreathTween(this.bg, true, {time:1000});
-			// TimerManager.Ins().addTimer(100, this.OnLoadRes, this);
-			this.addEvent(this.nextBtn, egret.TouchEvent.TOUCH_TAP, this.OnTap, this);
 		}
 
-		private OnLoadRes()
+		// ---------------------------------------------------------------------- 加载资源组
+		private loadRes()
 		{
-			if(this.info.isNext == true)
+			this.bar.minimum = 0;
+			this.bar.value = 0;
+			for(let groupName of this.info.resGroupArray)
 			{
-				if(this.info.currIndex >= this.info.heroArray.length)
-				{
-					TimerManager.Ins().removeTimer(this.OnLoadRes, this);
-					return false;
-				}
-				this.info.isNext = false;
-				let heroId = this.info.heroArray[this.info.currIndex];
-				let resName = `herobg_${heroId}_png`;
-				ResManager.Ins().loadResAsync(resName, this.OnLoadHeroOk, this);
+				ResManager.Ins().loadGroup(groupName, this.OnLoadGroupOk, this, this.OnLoadGroupProgress, this.OnLoadGroupError);
 			}
-			return true;
 		}
 
-		private OnLoadHeroOk()
+		private OnLoadGroupOk(e:RES.ResourceEvent)
 		{
-			console.log(this.info.currIndex);
-
-			let heroModel = new eui.Image;
-			heroModel.source = `herobg_${this.info.heroArray[this.info.currIndex]}_png`
-			this.addChild(heroModel);
-			heroModel.x = Math.random() * 1280;
-			heroModel.y = Math.random() * 720;
-			heroModel.scaleX = heroModel.scaleY = 0.5;
-
-			this.info.isNext = true;
-			this.info.currIndex++;
+			this.info.currCount++;
+			if(this.info.currCount >= this.info.resGroupArray.length) // 结束
+			{
+				this.info.currCount = 0;
+				this.loadCfg();
+			}
 		}
 
-		private OnTap()
+		private OnLoadGroupProgress(e:RES.ResourceEvent)
+		{
+			this.bar.maximum = e.itemsTotal;
+			this.bar.value = e.itemsLoaded;
+		}
+
+		private OnLoadGroupError(e:RES.ResourceEvent)
+		{
+			
+		}
+
+		// ---------------------------------------------------------------------- 加载配置表
+		private loadCfg()
+		{
+			for(let cfgName of this.info.cfgGroupArray)
+			{
+				ResManager.Ins().loadResAsync(cfgName, this.OnLoadCfgOK, this);
+			}
+		}
+
+		private OnLoadCfgOK(data, key:string)
+		{
+			this.info.currCount++;
+			ConfigManager.Ins().set(key, data);
+			if(this.info.currCount >= this.info.cfgGroupArray.length) // 结束
+			{
+				this.info.currCount = 0;
+				this.loadOK();
+			}
+		}
+
+		// ---------------------------------------------------------------------- 加载完成
+		private loadOK()
 		{
 			ViewManager.Ins().close(this);
 			ViewManager.Ins().open(home.HomePanel);

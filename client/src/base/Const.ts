@@ -52,3 +52,8 @@ enum RIGID_TYPE
 	RECT = 1,
 	CIRCLE = 2
 }
+
+class CONFIG
+{
+	public static HERO = "hero_json";
+}

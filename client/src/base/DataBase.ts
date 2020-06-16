@@ -5,7 +5,7 @@
  */
 abstract class DataBase
 {
-	public id:number
+	public hasCode:number;
 	private _hash:Hash<string ,CBData[]>; // 惰性加载
 	public constructor()
 	{
@@ -17,7 +17,7 @@ abstract class DataBase
 
 	protected initAll()
 	{
-		this.id = IDManager.Ins().getNewId();
+		this.hasCode = IDManager.Ins().getNewId();
 		this.init();
 	}
 

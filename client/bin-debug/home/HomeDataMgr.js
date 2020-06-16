@@ -22,8 +22,12 @@ var home;
             this.exp = 0;
             this.playerId = 1;
             this.playerName = "wsx";
+            this.cups = 0;
+            this.kaDataMgr = new home.KaDataMgr();
         };
         HomeDataMgr.prototype.destroy = function () {
+            this.kaDataMgr.destroyAll();
+            this.kaDataMgr = null;
         };
         HomeDataMgr.Ins = function () {
             if (HomeDataMgr.instance == null)

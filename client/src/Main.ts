@@ -43,6 +43,7 @@ class Main extends eui.UILayer
         await RES.loadConfig("resource/default.res.json", "resource/");
         await RES.loadConfig("resource/war.res.json", "resource/");
         await RES.loadConfig("resource/home.res.json", "resource/");
+        await RES.loadConfig("resource/config.res.json", "resource/");
         await this.loadTheme();
         this.createGameScene();
     }

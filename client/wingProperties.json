@@ -12,6 +12,10 @@
             {
                 "configPath": "resource/home.res.json",
                 "relativePath": "resource/"
+            },
+            {
+                "configPath": "resource/config.res.json",
+                "relativePath": "resource/"
             }
         ]
     },

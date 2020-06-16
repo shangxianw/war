@@ -17,6 +17,8 @@
 	"autoGenerateExmlsList": true,
 	"exmls": [
 		"resource/skins/common/barLoadingSkin.exml",
+		"resource/skins/common/HeadIconSkin.exml",
+		"resource/skins/common/TextIconSkin.exml",
 		"resource/skins/eui_skins/ButtonSkin.exml",
 		"resource/skins/eui_skins/CheckBoxSkin.exml",
 		"resource/skins/eui_skins/HScrollBarSkin.exml",
@@ -32,6 +34,7 @@
 		"resource/skins/eui_skins/VSliderSkin.exml",
 		"resource/skins/home/DemoPanelSkin.exml",
 		"resource/skins/home/home/HomePanelSkin.exml",
+		"resource/skins/home/home/ka/HeroKaSkin.exml",
 		"resource/skins/home/loading/LoadingPanelSkin.exml",
 		"resource/skins/home/loading/LoadingTipsSkin.exml",
 		"resource/skins/home/LoginPanelSkin.exml",

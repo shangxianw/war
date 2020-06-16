@@ -93,8 +93,8 @@ class ViewManager extends DataBase
 			LogUtils.Warn(`面板没有父级`);
 			return false;
 		}
-		
-		ResManager.Ins().destroyGroup(view.viewInfo.resGroup);
+		if(view.viewInfo.resGroup != null && view.viewInfo.resGroup != "")
+			ResManager.Ins().destroyGroup(view.viewInfo.resGroup);
 		this.uiMap.remove(className);
 		view = null;
 		return true;

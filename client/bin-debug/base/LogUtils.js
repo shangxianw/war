@@ -13,8 +13,13 @@ var LogUtils = (function () {
             console.log(desc);
     };
     LogUtils.Error = function (desc) {
-        if (GameData.DevelopMode == DevelopMode.DEBUG)
+        if (GameData.DevelopMode == DevelopMode.DEBUG) {
+            var stack = new Error().stack;
+            console.error("======================================================================");
             console.log(desc);
+            console.log(stack);
+            console.error("======================================================================");
+        }
     };
     return LogUtils;
 }());

@@ -11,7 +11,7 @@ var DataBase = (function () {
         this.initAll();
     }
     DataBase.prototype.initAll = function () {
-        this.id = IDManager.Ins().getNewId();
+        this.hasCode = IDManager.Ins().getNewId();
         this.init();
     };
     DataBase.prototype.destroyAll = function () {

@@ -435,13 +435,13 @@ class ResManager extends DataBase
 
 	public loadResAsync(resName:string, cbFn:RES.GetResAsyncCallback, thisObj:Object)
 	{
-		if(resName == null || resName == "" || RES.hasRes(resName) == false || cbFn == null || thisObj == null)
+		if(resName == null || resName == "" || cbFn == null || thisObj == null)
 		{
 			LogUtils.Error("参数有误");
 			return false;
 		}
-
-		RES.getResAsync(resName, ()=>{
+		LogUtils.Log(`加载 ${resName}`);
+		RES.getResAsync(resName, (data, key)=>{
 			if(this.resMap.has(resName) == false)
 			{
 				let resData = PoolManager.Ins().pop(ResData) as ResData;
@@ -450,7 +450,8 @@ class ResManager extends DataBase
 			}
 			let resData = this.resMap.get(resName);
 			resData.addCount();
-			cbFn.call(thisObj);
+			LogUtils.Log(`加载 ${resName} 完成`);
+			cbFn.call(thisObj, data, key);
 		}, this)
 	}
 
@@ -471,5 +472,10 @@ class ResManager extends DataBase
 		let resData = this.resMap.get(resName);
 		resData.reduceCount();
 		return true;
+	}
+
+	public createGroup(groupName:string, keysArray:string[])
+	{
+		RES.createGroup(groupName, keysArray);
 	}
 }

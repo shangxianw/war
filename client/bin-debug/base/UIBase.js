@@ -19,7 +19,8 @@ var UIBase = (function (_super) {
         if (skinName === void 0) { skinName = null; }
         if (data === void 0) { data = null; }
         var _this = _super.call(this) || this;
-        _this.skinName = skinName;
+        if (skinName != null)
+            _this.skinName = skinName;
         _this.initAll(data);
         return _this;
     }
