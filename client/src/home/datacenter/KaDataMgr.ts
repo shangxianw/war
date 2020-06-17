@@ -2,7 +2,7 @@ module home
 {
 	export class KaDataMgr extends DataBase
 	{
-		private kaMap:Hash<number, KaDataInfo>; // 已有的卡
+		public kaMap:Hash<number, KaDataInfo>; // 已有的卡
 		public teamArray:number[]; // 卡组
 		protected init()
 		{

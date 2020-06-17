@@ -1,4 +1,25 @@
 {
-	"groups": [],
-	"resources": []
+	"groups": [
+		{
+			"keys": "bg_phb_btdi_duan_png,bg_lz_tc_jt_png,bg_lz_tc02_png",
+			"name": "home_ka"
+		}
+	],
+	"resources": [
+		{
+			"url": "home/ka/bg_phb_btdi_duan.png",
+			"type": "image",
+			"name": "bg_phb_btdi_duan_png"
+		},
+		{
+			"url": "home/ka/bg_lz_tc_jt.png",
+			"type": "image",
+			"name": "bg_lz_tc_jt_png"
+		},
+		{
+			"url": "home/ka/bg_lz_tc02.png",
+			"type": "image",
+			"name": "bg_lz_tc02_png"
+		}
+	]
 }

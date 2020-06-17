@@ -47,33 +47,33 @@ var home;
         HomePanel.prototype.destroy = function () {
             if (this.info != null)
                 this.info.destroyAll();
-            // this.headIcon.destroyAll();
         };
         HomePanel.prototype.initData = function (data) {
             this.info.packData();
-            // this.addEvent(this.nextBtn, egret.TouchEvent.TOUCH_TAP, this.OnTap, this);
         };
         HomePanel.prototype.initView = function () {
             this.initKa();
-            // let heroIconData = PoolManager.Ins().pop(HeadIconData) as HeadIconData;
-            // this.headIcon.packData(heroIconData);
             var homeData = home.HomeDataMgr.Ins();
             this.cups.label = String(homeData.cups);
             this.playerName.text = homeData.playerName;
             this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
+            this.addEvent(this.kaBtn, egret.TouchEvent.TOUCH_TAP, this.OnKaTap, this);
         };
         HomePanel.prototype.initKa = function () {
             for (var i = 0, len = this.info.kaDataArray.length; i < len; i++) {
                 var ka = PoolManager.Ins().pop(home.HeroKa);
                 ka.packData(this.info.kaDataArray[i]);
                 ka.x = 14 + 226 * (i % 2); // 等间距14
-                ka.y = 16 + 153 * Math.floor(i / 2); // 等间距16
+                ka.y = 0 + 141 * Math.floor(i / 2); // 等间距 高568 5个间隙 item高137，共137*4= 548，余568-548=20，间距为22/5=4
                 this.kaGroup.addChild(ka);
             }
         };
         HomePanel.prototype.OnFightTap = function () {
             ViewManager.Ins().close(this);
             ViewManager.Ins().open(war.WarMatchPanel);
+        };
+        HomePanel.prototype.OnKaTap = function () {
+            ViewManager.Ins().open(home.KakuPanel);
         };
         return HomePanel;
     }(ViewBase));

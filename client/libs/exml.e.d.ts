@@ -1,5 +1,9 @@
 declare class barLoadingSkin extends eui.Skin{
 }
+declare class btn1Skin extends eui.Skin{
+}
+declare class btn2Skin extends eui.Skin{
+}
 declare class HeadIconSkin extends eui.Skin{
 }
 declare class TextIconSkin extends eui.Skin{
@@ -60,7 +64,11 @@ declare class DemoPanelSkin extends eui.Skin{
 }
 declare class HomePanelSkin extends eui.Skin{
 }
+declare class HeroKa2Skin extends eui.Skin{
+}
 declare class HeroKaSkin extends eui.Skin{
+}
+declare class KakuPanelSkin extends eui.Skin{
 }
 declare class LoadingPanelSkin extends eui.Skin{
 }

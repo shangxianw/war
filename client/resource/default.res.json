@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "sh_font_png,sh_font_fnt,icon_sh_dbg_sh_d2_png,icon_sh_dbg_sh_d11_png,icon_sh_dbg_sh_d1_png,icon_sh_dbg_sh_d0_png,icon_sh_d_png,bg_jz_lt_jk_wxts_png,bg_card_di_3_png,bg_card_di_2_png,bg_card_di_1_png,button_dz_tz_png,button_dz_ppz_png,bg_phb_heroicon_png,bg_phb_heroicon_up01_png,bg_phb_heroicon_up02_png,bg_phb_heroicon_up03_png,playericon_01_png,playericon_02_png,playericon_03_png,playericon_04_png,playericon_05_png,playericon_06_png,playericon_07_png,playericon_08_png,bg_card_di_4_png,bg_com_fgd_png,bg_kplb_bt_png,bg_phb_heroicon_back_png,bg_phb_jb_png",
+			"keys": "sh_font_png,sh_font_fnt,icon_sh_dbg_sh_d2_png,icon_sh_dbg_sh_d11_png,icon_sh_dbg_sh_d1_png,icon_sh_dbg_sh_d0_png,icon_sh_d_png,bg_jz_lt_jk_wxts_png,bg_card_di_3_png,bg_card_di_2_png,bg_card_di_1_png,button_dz_tz_png,button_dz_ppz_png,bg_phb_heroicon_png,bg_phb_heroicon_up01_png,bg_phb_heroicon_up02_png,bg_phb_heroicon_up03_png,playericon_01_png,playericon_02_png,playericon_03_png,playericon_04_png,playericon_05_png,playericon_06_png,playericon_07_png,playericon_08_png,bg_card_di_4_png,bg_com_fgd_png,bg_kplb_bt_png,bg_phb_heroicon_back_png,bg_phb_jb_png,button_rename_png,button_ty_blue_png,button_ty_green_png,button_ty_yellow_png,button_ty_red_png,button_ty_yellow_h_png,button_down_01_png",
 			"name": "common_preload"
 		},
 		{
@@ -469,6 +469,41 @@
 			"url": "common/ui/common/bg_phb_jb.png",
 			"type": "image",
 			"name": "bg_phb_jb_png"
+		},
+		{
+			"url": "common/ui/common/button_rename.png",
+			"type": "image",
+			"name": "button_rename_png"
+		},
+		{
+			"url": "common/ui/common/button_ty_blue.png",
+			"type": "image",
+			"name": "button_ty_blue_png"
+		},
+		{
+			"url": "common/ui/common/button_ty_green.png",
+			"type": "image",
+			"name": "button_ty_green_png"
+		},
+		{
+			"url": "common/ui/common/button_ty_yellow.png",
+			"type": "image",
+			"name": "button_ty_yellow_png"
+		},
+		{
+			"url": "common/ui/common/button_ty_red.png",
+			"type": "image",
+			"name": "button_ty_red_png"
+		},
+		{
+			"url": "common/ui/common/button_ty_yellow_h.png",
+			"type": "image",
+			"name": "button_ty_yellow_h_png"
+		},
+		{
+			"url": "common/ui/common/button_down_01.png",
+			"type": "image",
+			"name": "button_down_01_png"
 		}
 	]
 }

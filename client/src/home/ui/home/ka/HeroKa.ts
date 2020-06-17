@@ -29,7 +29,7 @@ module home
 		}
 	}
 
-	export class HeroKa extends UIBase
+	export class HeroKa extends WItemRenderBase
 	{
 		private costLb:eui.BitmapLabel;
 		private typeBg:eui.Image;
@@ -44,13 +44,24 @@ module home
 
 		protected init()
 		{
-
+			this.touchChildren = false;
 		}
 
-		protected destroy()
+		public destroy()
 		{
 			if(this.info != null)
 				this.info.destroyAll();
+		}
+
+		public dataChanged()
+		{
+			if(this.data == null)
+				return;
+			this.info = this.data;
+			
+			this.costLb.text = String(this.info.cost);
+			this.typeBg.source = Utils.GetQualityBg(this.info.quality);
+			this.kaImg.source = Utils.GetKaIcon(this.info.kaId);
 		}
 
 		public packData(data:HeroKaData)
