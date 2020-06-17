@@ -52,20 +52,18 @@ var home;
                 return;
             this.info = data;
             this.heroKa.data = this.info.heroKaData;
+            this.setState(false);
             // this.addEvent(this.heroKa, egret.TouchEvent.TOUCH_TAP, this.OnHeroTap, this);
             // this.addEvent(this.infoBtn, egret.TouchEvent.TOUCH_TAP, this.OnInfoTap, this);
             // this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
         };
-        HeroKa2.prototype.toggleState = function () {
-            if (this.currentState = "common") {
+        HeroKa2.prototype.setState = function (showActive) {
+            if (showActive == true) {
                 this.currentState = "active";
             }
-            else if (this.currentState == "active") {
+            else {
                 this.currentState = "common";
             }
-        };
-        HeroKa2.prototype.OnHeroTap = function (e) {
-            this.toggleState();
         };
         HeroKa2.prototype.OnInfoTap = function (e) {
         };

@@ -20,6 +20,7 @@ var home;
             this.layer = LayerManager.Ins().Panel;
         };
         KakuPanelData.prototype.destroy = function () {
+            this.selKa = null;
         };
         KakuPanelData.prototype.packData = function () {
         };
@@ -58,22 +59,36 @@ var home;
                 this.heroGroup.addChild(ka);
                 index++;
             }
+            this.maskk.blendMode = egret.BlendMode.ERASE;
+            this.readyBg.mask = this.maskk;
             this.addEvent(this.heroGroup, egret.TouchEvent.TOUCH_TAP, this.OnHeroGroupTap, this);
+            this.addEvent(this.readyBg, egret.TouchEvent.TOUCH_TAP, this.OnReaBgTap, this);
         };
         KakuPanel.prototype.OnHeroGroupTap = function (e) {
             var target = e.target;
             if (target.name == "heroKa") {
+                if (this.info.selKa != null) {
+                    this.info.selKa.setState(false);
+                }
                 var p = target.parent;
-                p.toggleState();
+                p.setState(true);
+                this.heroGroup.setChildIndex(p, 777);
+                this.info.selKa = p;
             }
             else if (target.name == "infoBtn") {
                 var p = target.parent;
-                alert(p.info.heroId + "\u67E5\u770B\u4FE1\u606F");
+                // alert(`${p.info.heroId}查看信息`);
             }
             else if (target.name == "fightBtn") {
                 var p = target.parent;
-                alert(p.info.heroId + "\u8BF7\u6C42\u51FA\u6218");
+                this.readGroup.visible = true;
+                if (this.info.selKa != null) {
+                    this.info.selKa.setState(false);
+                }
             }
+        };
+        KakuPanel.prototype.OnReaBgTap = function (e) {
+            this.readGroup.visible = false;
         };
         return KakuPanel;
     }(ViewBase));

@@ -59,28 +59,23 @@ module home
 			if(data == null)
 				return;
 			this.info = data;
-
 			this.heroKa.data = this.info.heroKaData;
+			this.setState(false);
 			// this.addEvent(this.heroKa, egret.TouchEvent.TOUCH_TAP, this.OnHeroTap, this);
 			// this.addEvent(this.infoBtn, egret.TouchEvent.TOUCH_TAP, this.OnInfoTap, this);
 			// this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
 		}
 
-		public toggleState()
+		public setState(showActive:boolean)
 		{
-			if(this.currentState = "common")
+			if(showActive == true)
 			{
-				this.currentState = "active";
+				this.currentState = "active"
 			}
-			else if(this.currentState == "active")
+			else
 			{
 				this.currentState = "common";
 			}
-		}
-
-		private OnHeroTap(e:egret.TouchEvent)
-		{
-			this.toggleState();
 		}
 
 		private OnInfoTap(e:egret.TouchEvent)

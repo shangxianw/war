@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="btn2Skin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Image source="button_ty_yellow_png"/>
-	<e:Label id="labelDisplay" text="Label" left="0" right="0" top="2" bottom="11" textAlign="center" verticalAlign="middle"/>
+	<e:Image source="button_ty_yellow_png" touchEnabled="false"/>
+	<e:Label id="labelDisplay" text="Label" left="0" right="0" top="2" bottom="11" textAlign="center" verticalAlign="middle" touchEnabled="false"/>
 </e:Skin>

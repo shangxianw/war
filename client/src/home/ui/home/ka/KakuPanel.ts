@@ -2,6 +2,7 @@ module home
 {
 	export class KakuPanelData extends ViewData
 	{
+		public selKa:HeroKa2;
 		protected init()
 		{
 			this.resGroup = "";
@@ -10,7 +11,7 @@ module home
 
 		protected destroy()
 		{
-			
+			this.selKa = null;
 		}
 
 		public packData()
@@ -22,6 +23,9 @@ module home
 	export class KakuPanel extends ViewBase
 	{
 		private heroGroup:eui.Group;
+		private maskk:eui.Image;
+		public readGroup:eui.Group;
+		private readyBg:eui.Image;
 
 		public info:KakuPanelData;
 		public constructor()
@@ -66,7 +70,23 @@ module home
 				index++;
 			}
 
+			this.maskk.blendMode = egret.BlendMode.ERASE;
+			let reverseMask = new egret.Sprite();
+			reverseMask.graphics.beginFill(0, 1);
+			reverseMask.graphics.drawRect(0, 0, this.readyBg.width, this.readyBg.height);
+			reverseMask.graphics.endFill();
+			reverseMask.addChild(this.maskk);
+			
+			let renderTex = new egret.RenderTexture();
+			renderTex.drawToTexture(reverseMask);
+			let mask = new egret.Bitmap(renderTex);
+			this.readGroup.addChild(mask);
+			this.readyBg.mask = mask;
+
+			// this.readyBg.mask = this.maskk;
+
 			this.addEvent(this.heroGroup, egret.TouchEvent.TOUCH_TAP, this.OnHeroGroupTap, this);
+			this.addEvent(this.readyBg, egret.TouchEvent.TOUCH_TAP, this.OnReaBgTap, this);
 		}
 
 		private OnHeroGroupTap(e:egret.TouchEvent)
@@ -74,20 +94,34 @@ module home
 			let target:egret.DisplayObject = e.target;
 			if(target.name == "heroKa")
 			{
+				if(this.info.selKa != null)
+				{
+					this.info.selKa.setState(false);
+				}
 				let p = target.parent as HeroKa2;
-				p.toggleState();
-
+				p.setState(true);
+				this.heroGroup.setChildIndex(p, 777);
+				this.info.selKa = p;
 			}
 			else if(target.name == "infoBtn")
 			{
 				let p = target.parent as HeroKa2;
-				alert(`${p.info.heroId}查看信息`);
+				// alert(`${p.info.heroId}查看信息`);
 			}
 			else if(target.name == "fightBtn")
 			{
 				let p = target.parent as HeroKa2;
-				alert(`${p.info.heroId}请求出战`);
+				this.readGroup.visible = true;
+				if(this.info.selKa != null)
+				{
+					this.info.selKa.setState(false);
+				}
 			}
+		}
+
+		private OnReaBgTap(e:egret.TouchEvent)
+		{
+			this.readGroup.visible = false;
 		}
 	}
 }
