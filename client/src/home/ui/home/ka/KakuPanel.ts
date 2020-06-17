@@ -65,6 +65,29 @@ module home
 				
 				index++;
 			}
+
+			this.addEvent(this.heroGroup, egret.TouchEvent.TOUCH_TAP, this.OnHeroGroupTap, this);
+		}
+
+		private OnHeroGroupTap(e:egret.TouchEvent)
+		{
+			let target:egret.DisplayObject = e.target;
+			if(target.name == "heroKa")
+			{
+				let p = target.parent as HeroKa2;
+				p.toggleState();
+
+			}
+			else if(target.name == "infoBtn")
+			{
+				let p = target.parent as HeroKa2;
+				alert(`${p.info.heroId}查看信息`);
+			}
+			else if(target.name == "fightBtn")
+			{
+				let p = target.parent as HeroKa2;
+				alert(`${p.info.heroId}请求出战`);
+			}
 		}
 	}
 }

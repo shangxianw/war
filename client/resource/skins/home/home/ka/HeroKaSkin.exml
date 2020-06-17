@@ -4,4 +4,5 @@
 	<e:Image id="kaImg" source="heroicon_10030_png" horizontalCenter="0" verticalCenter="0"/>
 	<e:Image source="icon_sh_d_png" left="0" top="0"/>
 	<e:BitmapLabel id="costLb" font="sh_font_fnt" text="0" top="11" left="3"/>
+	<e:Label id="testId" text="Label" stroke="2" horizontalCenter="0" verticalCenter="0"/>
 </e:Skin>

@@ -34,6 +34,7 @@ module home
 		private costLb:eui.BitmapLabel;
 		private typeBg:eui.Image;
 		private kaImg:eui.Image;
+		private testId:eui.Label;
 
 		public info:HeroKaData;
 		public constructor()
@@ -62,6 +63,8 @@ module home
 			this.costLb.text = String(this.info.cost);
 			this.typeBg.source = Utils.GetQualityBg(this.info.quality);
 			this.kaImg.source = Utils.GetKaIcon(this.info.kaId);
+			this.testId.text = `${this.info.kaId}`;
+			this.testId.visible = GameData.DevelopMode == DevelopMode.DEBUG;
 		}
 
 		public packData(data:HeroKaData)

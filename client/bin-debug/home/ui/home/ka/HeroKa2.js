@@ -52,9 +52,27 @@ var home;
                 return;
             this.info = data;
             this.heroKa.data = this.info.heroKaData;
+            // this.addEvent(this.heroKa, egret.TouchEvent.TOUCH_TAP, this.OnHeroTap, this);
+            // this.addEvent(this.infoBtn, egret.TouchEvent.TOUCH_TAP, this.OnInfoTap, this);
+            // this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
+        };
+        HeroKa2.prototype.toggleState = function () {
+            if (this.currentState = "common") {
+                this.currentState = "active";
+            }
+            else if (this.currentState == "active") {
+                this.currentState = "common";
+            }
+        };
+        HeroKa2.prototype.OnHeroTap = function (e) {
+            this.toggleState();
+        };
+        HeroKa2.prototype.OnInfoTap = function (e) {
+        };
+        HeroKa2.prototype.OnFightTap = function (e) {
         };
         return HeroKa2;
-    }(UIBase));
+    }(WItemRenderBase));
     home.HeroKa2 = HeroKa2;
     __reflect(HeroKa2.prototype, "home.HeroKa2");
 })(home || (home = {}));

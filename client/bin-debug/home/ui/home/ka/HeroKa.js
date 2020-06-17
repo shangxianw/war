@@ -55,6 +55,8 @@ var home;
             this.costLb.text = String(this.info.cost);
             this.typeBg.source = Utils.GetQualityBg(this.info.quality);
             this.kaImg.source = Utils.GetKaIcon(this.info.kaId);
+            this.testId.text = "" + this.info.kaId;
+            this.testId.visible = GameData.DevelopMode == DevelopMode.DEBUG;
         };
         HeroKa.prototype.packData = function (data) {
             if (data == null)

@@ -58,6 +58,22 @@ var home;
                 this.heroGroup.addChild(ka);
                 index++;
             }
+            this.addEvent(this.heroGroup, egret.TouchEvent.TOUCH_TAP, this.OnHeroGroupTap, this);
+        };
+        KakuPanel.prototype.OnHeroGroupTap = function (e) {
+            var target = e.target;
+            if (target.name == "heroKa") {
+                var p = target.parent;
+                p.toggleState();
+            }
+            else if (target.name == "infoBtn") {
+                var p = target.parent;
+                alert(p.info.heroId + "\u67E5\u770B\u4FE1\u606F");
+            }
+            else if (target.name == "fightBtn") {
+                var p = target.parent;
+                alert(p.info.heroId + "\u8BF7\u6C42\u51FA\u6218");
+            }
         };
         return KakuPanel;
     }(ViewBase));

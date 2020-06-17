@@ -27,12 +27,14 @@ module home
 		}
 	}
 
-	export class HeroKa2 extends UIBase
+	export class HeroKa2 extends WItemRenderBase
 	{
 		private costLb:eui.BitmapLabel;
 		private typeBg:eui.Image;
 		private kaImg:eui.Image;
 		private heroKa:HeroKa;
+		private fightBtn:WButton;
+		private infoBtn:WButton;
 
 		public info:HeroKa2Data;
 		public constructor()
@@ -59,6 +61,36 @@ module home
 			this.info = data;
 
 			this.heroKa.data = this.info.heroKaData;
+			// this.addEvent(this.heroKa, egret.TouchEvent.TOUCH_TAP, this.OnHeroTap, this);
+			// this.addEvent(this.infoBtn, egret.TouchEvent.TOUCH_TAP, this.OnInfoTap, this);
+			// this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
+		}
+
+		public toggleState()
+		{
+			if(this.currentState = "common")
+			{
+				this.currentState = "active";
+			}
+			else if(this.currentState == "active")
+			{
+				this.currentState = "common";
+			}
+		}
+
+		private OnHeroTap(e:egret.TouchEvent)
+		{
+			this.toggleState();
+		}
+
+		private OnInfoTap(e:egret.TouchEvent)
+		{
+			
+		}
+
+		private OnFightTap(e:egret.TouchEvent)
+		{
+			
 		}
 	}
 }
