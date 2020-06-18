@@ -26,4 +26,4 @@ var war;
     war.RangeCom = RangeCom;
     __reflect(RangeCom.prototype, "war.RangeCom");
 })(war || (war = {}));
-//# sourceMappingURL=RigidCom.js.map
+//# sourceMappingURL=RangeCom.js.map

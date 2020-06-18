@@ -76,7 +76,7 @@
 		"bin-debug/war/component/HealthCom.js",
 		"bin-debug/war/component/InputCom.js",
 		"bin-debug/war/component/PathCom.js",
-		"bin-debug/war/component/RigidCom.js",
+		"bin-debug/war/component/RangeCom.js",
 		"bin-debug/war/component/SpeedCom.js",
 		"bin-debug/war/entity/HeroEntity.js",
 		"bin-debug/war/entity/KingEntity.js",

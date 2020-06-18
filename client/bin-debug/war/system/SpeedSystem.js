@@ -12,7 +12,7 @@ var war;
 (function (war) {
     /**
      * 速度系统
-     * 专门负责研究
+     * 主要是计算速度的方向，供移动系统使用
      */
     var SpeedSystem = (function (_super) {
         __extends(SpeedSystem, _super);
@@ -27,7 +27,16 @@ var war;
         SpeedSystem.prototype.update = function (entity, deltaTime) {
             if (entity == null)
                 return;
-            // 知道当前目标去修改速度的方向
+            var sCom = entity.getCom(war.COMPONENT.SPEED);
+            if (sCom == null)
+                return;
+            var pCom = entity.getCom(war.COMPONENT.PATH);
+            if (pCom != null) {
+                this.calcByPath(entity, deltaTime);
+            }
+        };
+        // 根据路径计算速度方向
+        SpeedSystem.prototype.calcByPath = function (entity, deltaTime) {
             var sCom = entity.getCom(war.COMPONENT.SPEED);
             if (sCom == null)
                 return;
