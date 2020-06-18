@@ -16,7 +16,7 @@ module war
 			this.mc.startPlay("stand4", - 1);
 			this.addChild(this.mc);
 
-			let rCom2:RigidCom = new RigidCom();
+			let rCom2:RangeCom = new RangeCom();
 			rCom2.radius = 30;
 			this.setCom(rCom2);
 			DrawUtils.DrawHeroId(this);

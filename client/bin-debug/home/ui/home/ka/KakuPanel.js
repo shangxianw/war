@@ -60,7 +60,17 @@ var home;
                 index++;
             }
             this.maskk.blendMode = egret.BlendMode.ERASE;
-            this.readyBg.mask = this.maskk;
+            var reverseMask = new egret.Sprite();
+            reverseMask.graphics.beginFill(0, 1);
+            reverseMask.graphics.drawRect(0, 0, this.readyBg.width, this.readyBg.height);
+            reverseMask.graphics.endFill();
+            reverseMask.addChild(this.maskk);
+            var renderTex = new egret.RenderTexture();
+            renderTex.drawToTexture(reverseMask);
+            var mask = new egret.Bitmap(renderTex);
+            this.readGroup.addChild(mask);
+            this.readyBg.mask = mask;
+            // this.readyBg.mask = this.maskk;
             this.addEvent(this.heroGroup, egret.TouchEvent.TOUCH_TAP, this.OnHeroGroupTap, this);
             this.addEvent(this.readyBg, egret.TouchEvent.TOUCH_TAP, this.OnReaBgTap, this);
         };

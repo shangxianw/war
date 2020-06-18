@@ -1,6 +1,6 @@
 module war
 {
-	export class RigidCom extends ComBase
+	export class RangeCom extends ComBase
 	{
 		public radius:number;
 		protected init()

@@ -51,7 +51,7 @@ module war
 			aCom.setActionAndDir(ACTION.RUN, DIRECTION.DOWN);
 			hero.setCom(aCom);
 
-			let rCom:RigidCom = new RigidCom();
+			let rCom:RangeCom = new RangeCom();
 			rCom.radius = 20;
 			hero.setCom(rCom);
 
@@ -76,7 +76,7 @@ module war
 			aCom.setActionAndDir(ACTION.RUN, DIRECTION.DOWN);
 			hero.setCom(aCom);
 
-			let rCom:RigidCom = new RigidCom();
+			let rCom:RangeCom = new RangeCom();
 			rCom.radius = 20;
 			hero.setCom(rCom);
 
@@ -86,7 +86,7 @@ module war
 			DrawUtils.DrawGrigd(hero);
 			DrawUtils.DrawHeroAnchor(hero);
 
-			let rCom2:RigidCom = new RigidCom();
+			let rCom2:RangeCom = new RangeCom();
 			rCom2.radius = 30;
 			hero.setCom(rCom2);
 
@@ -109,7 +109,7 @@ module war
 			aCom.setActionAndDir(ACTION.RUN, DIRECTION.DOWN);
 			hero.setCom(aCom);
 
-			let rCom:RigidCom = new RigidCom();
+			let rCom:RangeCom = new RangeCom();
 			rCom.radius = 20;
 			hero.setCom(rCom);
 

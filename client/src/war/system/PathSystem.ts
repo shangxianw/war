@@ -31,14 +31,8 @@ module war
 			{
 				try
 				{
-					entity.removeCom(COMPONENT.PATH);
-					entity.removeCom(COMPONENT.SPEED);
-					// let endX = Math.floor(Math.random()*35);//[1, 2, 3, 4, 5, 6, 7][Math.floor(Math.random()*7)]
-					// let endY = Math.floor(Math.random()*15);//[1, 2, 3, 4, 5, 6, 7][Math.floor(Math.random()*7)]
-					// let startX = WarUtils.ToGridX(entity.x);
-					// let startY = WarUtils.ToGridY(entity.y);
-					// let path = WarDataMgr.Ins().findPath(startX, startY, endX, endY);
-					// pCom.setPath(path);
+					// entity.removeCom(COMPONENT.PATH);
+					// entity.removeCom(COMPONENT.SPEED);
 				}
 				catch(e)
 				{

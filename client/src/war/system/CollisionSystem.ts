@@ -23,13 +23,13 @@ module war
 				return;
 
 			let entity2:EntityBase;
-			let rCom1:RigidCom;
-			let rCom2:RigidCom;
+			let rCom1:RangeCom;
+			let rCom2:RangeCom;
 			let warData = WarDataMgr.Ins();
 			let entityArray = warData.entityMap.values();
 			let collisionEntity:EntityBase[] = [];
 			
-			rCom1 = entity1.getCom(COMPONENT.GRIGD) as RigidCom;
+			rCom1 = entity1.getCom(COMPONENT.GRIGD) as RangeCom;
 			if(rCom1 == null)
 				return;
 			for(let j=0, len2=entityArray.length; j<len2; j++) // 也是从0开始遍历的！
@@ -41,7 +41,7 @@ module war
 				if(entity1.id == entity2.id)
 					continue;
 				
-				rCom2 = entity2.getCom(COMPONENT.GRIGD) as RigidCom;
+				rCom2 = entity2.getCom(COMPONENT.GRIGD) as RangeCom;
 				if(rCom2 == null)
 					continue;
 				

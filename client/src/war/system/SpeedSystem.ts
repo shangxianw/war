@@ -2,7 +2,7 @@ module war
 {
 	/**
 	 * 速度系统
-	 * 专门负责研究
+	 * 主要是计算速度的方向，供移动系统使用
 	 */
 	export class SpeedSystem extends SystemBase
 	{
@@ -21,7 +21,21 @@ module war
 			if(entity == null)
 				return;
 
-			// 知道当前目标去修改速度的方向
+			let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
+			if(sCom == null)
+				return;
+			
+			let pCom = entity.getCom(COMPONENT.PATH) as PathCom;
+			if(pCom != null)
+			{
+				this.calcByPath(entity, deltaTime)
+			}
+			
+		}
+
+		// 根据路径计算速度方向
+		private calcByPath(entity:EntityBase, deltaTime:number)
+		{
 			let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
 			if(sCom == null)
 				return;

@@ -144,7 +144,7 @@ module war
 		{
 			if(entity.hasCom(COMPONENT.GRIGD) == false)
 				return;
-			let rCom = entity.getCom(COMPONENT.GRIGD) as RigidCom;
+			let rCom = entity.getCom(COMPONENT.GRIGD) as RangeCom;
 			let shape = new egret.Shape();
 			shape.graphics.beginFill(0xffff00);
 			shape.graphics.lineStyle(1, 0x000000);

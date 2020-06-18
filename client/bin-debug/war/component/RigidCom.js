@@ -10,20 +10,20 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var war;
 (function (war) {
-    var RigidCom = (function (_super) {
-        __extends(RigidCom, _super);
-        function RigidCom() {
+    var RangeCom = (function (_super) {
+        __extends(RangeCom, _super);
+        function RangeCom() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        RigidCom.prototype.init = function () {
+        RangeCom.prototype.init = function () {
             this.componentId = war.COMPONENT.GRIGD;
             this.radius = 0;
         };
-        RigidCom.prototype.destroy = function () {
+        RangeCom.prototype.destroy = function () {
         };
-        return RigidCom;
+        return RangeCom;
     }(war.ComBase));
-    war.RigidCom = RigidCom;
-    __reflect(RigidCom.prototype, "war.RigidCom");
+    war.RangeCom = RangeCom;
+    __reflect(RangeCom.prototype, "war.RangeCom");
 })(war || (war = {}));
 //# sourceMappingURL=RigidCom.js.map

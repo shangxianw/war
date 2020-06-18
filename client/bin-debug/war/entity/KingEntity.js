@@ -22,7 +22,7 @@ var war;
             this.mc.initData("hero_10010", "hero_10010");
             this.mc.startPlay("stand4", -1);
             this.addChild(this.mc);
-            var rCom2 = new war.RigidCom();
+            var rCom2 = new war.RangeCom();
             rCom2.radius = 30;
             this.setCom(rCom2);
             war.DrawUtils.DrawHeroId(this);

@@ -1,28 +1,48 @@
 {
 	"groups": [
 		{
-			"keys": "hero_10010_png,hero_10010_json,hero_10010_red_png,hero_10010_red_json",
+			"keys": "hero_19021_png,hero_19021_json,hero_19020_png,hero_19020_json,hero_10010_png,hero_10010_json,hero_10010_red_png,hero_10010_red_json",
 			"name": "war_preload"
 		}
 	],
 	"resources": [
 		{
-			"url": "war/hero/10010/hero_10010.png",
+			"url": "war/heroClip/hero_19020.png",
+			"type": "image",
+			"name": "hero_19020_png"
+		},
+		{
+			"url": "war/heroClip/hero_19021.png",
+			"type": "image",
+			"name": "hero_19021_png"
+		},
+		{
+			"url": "war/heroClip/hero_19020.json",
+			"type": "json",
+			"name": "hero_19020_json"
+		},
+		{
+			"url": "war/heroClip/hero_19021.json",
+			"type": "json",
+			"name": "hero_19021_json"
+		},
+		{
+			"url": "war/heroDragon/10010/hero_10010.png",
 			"type": "image",
 			"name": "hero_10010_png"
 		},
 		{
-			"url": "war/hero/10010/hero_10010_red.png",
+			"url": "war/heroDragon/10010/hero_10010_red.png",
 			"type": "image",
 			"name": "hero_10010_red_png"
 		},
 		{
-			"url": "war/hero/10010/hero_10010.json",
+			"url": "war/heroDragon/10010/hero_10010.json",
 			"type": "json",
 			"name": "hero_10010_json"
 		},
 		{
-			"url": "war/hero/10010/hero_10010_red.json",
+			"url": "war/heroDragon/10010/hero_10010_red.json",
 			"type": "json",
 			"name": "hero_10010_red_json"
 		}
