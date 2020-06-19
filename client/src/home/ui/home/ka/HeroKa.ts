@@ -13,10 +13,7 @@ module home
 
 		protected destroy()
 		{
-			let hero = HomeDataMgr.Ins().myData.kaMap.get(this.kaId);
-			if(hero == null)
-				return;
-			hero.removeAttrListener("level", this.OnUpGrade, this);
+			
 		}
 
 		// 从我的卡牌中获取数据
@@ -27,8 +24,7 @@ module home
 				return;
 			this.kaId = hero.kaId;
 			this.level = hero.level;
-			hero.addAttrListener("level", this.OnUpGrade, this);
-			this.OnUpGrade();
+			this.addAttrCB(hero, "level", this.OnUpGrade, this);
 		}
 
 		private OnUpGrade()

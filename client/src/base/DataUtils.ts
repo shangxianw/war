@@ -11,6 +11,22 @@ class DataUtils
 		return copyArray;
 	}
 
+	public static DestroyCBDataMap(map:Hash<any, CBData[]>, setNull:boolean = true)
+	{
+		for(let value of map.values())
+		{
+			for(let cbData of value)
+			{
+				cbData.destroy();
+				cbData = null;
+			}
+			value.length = 0;
+		}
+		map.destroy();
+		if(setNull)
+			map = null;
+	}
+
 	// 销毁以 DataBase 为父类的哈希对象
 	public static DestroyDataBaseMap(map:Hash<any, DataBase>, setNull:boolean = true)
 	{

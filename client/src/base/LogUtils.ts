@@ -23,4 +23,19 @@ class LogUtils
 			console.error("======================================================================");
 		}
 	}
+
+	public static CheckParamValid(...params:any[]):boolean
+	{
+		let index:number = 0;
+		for(let query of params)
+		{
+			// let type = typeof query;
+			if(query == undefined)
+			{
+				LogUtils.Error(`参数有误`)
+				return  false;
+			}
+		}
+		return true;
+	}
 }

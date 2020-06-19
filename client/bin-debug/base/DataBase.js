@@ -25,7 +25,18 @@ var DataBase = (function () {
             value.length = 0;
         }
         this.hash.destroy();
-        this._hash = null;
+        this._attrHash = null;
+        for (var _c = 0, _d = this.otherAttrHash.values(); _c < _d.length; _c++) {
+            var value = _d[_c];
+            for (var _e = 0, value_2 = value; _e < value_2.length; _e++) {
+                var cbData = value_2[_e];
+                cbData.destroy();
+                cbData = null;
+            }
+            value.length = 0;
+        }
+        this.otherAttrHash.destroy();
+        this._otherAttrHash = null;
         this.destroy();
     };
     DataBase.prototype.addAttrListener = function (propName, cbFn, thisObj, param) {
@@ -122,17 +133,26 @@ var DataBase = (function () {
             if (value == null) {
                 return LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53D1\u73B0\u7A7A\u5BF9\u8C61");
             }
-            for (var _b = 0, value_2 = value; _b < value_2.length; _b++) {
-                var cbData = value_2[_b];
+            for (var _b = 0, value_3 = value; _b < value_3.length; _b++) {
+                var cbData = value_3[_b];
                 cbData.exec();
             }
         }
     };
     Object.defineProperty(DataBase.prototype, "hash", {
         get: function () {
-            if (this._hash == null)
-                this._hash = new Hash();
-            return this._hash;
+            if (this._attrHash == null)
+                this._attrHash = new Hash();
+            return this._attrHash;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DataBase.prototype, "otherAttrHash", {
+        get: function () {
+            if (this._otherAttrHash == null)
+                this._otherAttrHash = new Hash();
+            return this._otherAttrHash;
         },
         enumerable: true,
         configurable: true
@@ -140,4 +160,29 @@ var DataBase = (function () {
     return DataBase;
 }());
 __reflect(DataBase.prototype, "DataBase");
+var CBData = (function () {
+    function CBData() {
+    }
+    CBData.prototype.init = function () {
+    };
+    CBData.prototype.destroy = function () {
+    };
+    CBData.prototype.packData = function (cbFn, thisObj, param) {
+        if (param === void 0) { param = null; }
+        this.cbFn = cbFn;
+        this.thisObj = thisObj;
+        this.param = param;
+        return this;
+    };
+    CBData.prototype.exec = function (query) {
+        if (this.cbFn == null || this.thisObj == null) {
+            if (this.param != null)
+                this.cbFn.call(this.thisObj, this.param, query);
+            else
+                this.cbFn.call(this.thisObj, query);
+        }
+    };
+    return CBData;
+}());
+__reflect(CBData.prototype, "CBData");
 //# sourceMappingURL=DataBase.js.map

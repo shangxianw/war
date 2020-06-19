@@ -6,8 +6,8 @@
 abstract class DataBase
 {
 	public hasCode:number;
-	private _hash:Hash<string ,CBData[]>; // 惰性加载
-	private _otherAttrHash:Hash<DataBase, CBData>
+	private _attrHash:Hash<string ,CBData[]>; // 惰性加载
+	private _otherAttrHash:Hash<DataBase, Hash<string ,CBData[]>>
 	public constructor()
 	{
 		this.initAll();
@@ -34,17 +34,33 @@ abstract class DataBase
 			value.length = 0;
 		}
 		this.hash.destroy();
-		this._hash = null;
+		this._attrHash = null;
+
+		for(let otherAttrHash of this.otherAttrHash.values())
+		{
+			for(let cbDataArray of otherAttrHash.values())
+			{
+				for(let cbData of cbDataArray)
+				{
+					cbData.destroy();
+					cbData = null;
+				}
+				cbDataArray.length = 0;
+			}
+			otherAttrHash.destroy();
+			otherAttrHash = null;
+		}
+		this.otherAttrHash.destroy();
+		this._otherAttrHash = null;
+
 		this.destroy();
 	}
 
-	public addAttrListener(propName:string, cbFn:Function, thisObj:any, param:any = null):boolean
+	// ---------------------------------------------------------------------- 注册属性
+	public addAttrListener(propName:string, cbFn:Function, thisObj:any, runImmediately:boolean=true, param:any = null):boolean
 	{
-		if(propName == null || cbFn == null || thisObj == null)
-		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+		if(LogUtils.CheckParamValid(propName, cbFn, thisObj) == false)
 			return false;
-		}
 
 		if(this.hash.has(propName) == false)
 		{
@@ -63,16 +79,16 @@ abstract class DataBase
 
 		let cbData = (new CBData).packData(cbFn, thisObj, param);
 		arr.push(cbData);
+		if(runImmediately == true)
+			cbData.exec()
 		return true;
 	}
 
+	// ---------------------------------------------------------------------- 移除属性
 	public removeAttrListener(propName:string, cbFn:Function, thisObj:any):boolean
 	{
-		if(propName == null || cbFn == null || thisObj == null)
-		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+		if(LogUtils.CheckParamValid(propName, cbFn, thisObj) == false)
 			return false;
-		}
 
 		if(this.hash.has(propName) == false)
 		{
@@ -104,48 +120,11 @@ abstract class DataBase
 		return false; //没有注册
 	}
 
-	public hasAttrListener(propName:string, cbFn:Function, thisObj:Object):boolean
-	{
-		if(propName == null || cbFn == null || thisObj == null)
-		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
-			return false;
-		}
-
-		if(this.hash.has(propName) == false)
-		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
-			return false;
-		}
-
-		let arr:CBData[] = this.hash.get(propName),
-			cbData:CBData;
-		for(let i=0, len=arr.length; i<len; i++)
-		{
-			cbData = arr[i];
-			if(cbData == null)
-			{
-				LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 发现空对象`);
-				continue;
-			}
-
-			if(cbData.cbFn == cbFn && cbData.thisObj == thisObj)
-			{
-				return true;
-			}
-		}
-
-		LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
-		return false; //没有注册
-	}
-
+	// ---------------------------------------------------------------------- 发射属性
 	public setAttr(propName:string, value:any)
 	{
-		if(propName == null)
-		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+		if(LogUtils.CheckParamValid(propName) == false)
 			return false;
-		}
 
 		Object.defineProperty(this, propName, 
 		{
@@ -155,13 +134,11 @@ abstract class DataBase
 		this.updateAttr(propName);
 	}
 
+	// ---------------------------------------------------------------------- 注册属性2
 	public updateAttr(propName:string)
 	{
-		if(propName == null)
-		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+		if(LogUtils.CheckParamValid(propName) == false)
 			return false;
-		}
 
 		if(this.hash.has(propName) == false)
 		{
@@ -182,10 +159,121 @@ abstract class DataBase
 		}
 	}
 
+	// ---------------------------------------------------------------------- 给某对象注册属性
+	public addAttrCB(obj:DataBase, propName:string, cbFn:Function, thisObj:any, runImmediately:boolean=true, param:any = null):boolean
+	{
+		if(LogUtils.CheckParamValid(obj, propName, cbFn, thisObj) == false)
+			return false;
+		
+		if(this.otherAttrHash.has(obj) == false)
+		{
+			this.otherAttrHash.set(obj, new Hash<string ,CBData[]>());
+		}
+
+		let otherHash = this.otherAttrHash.get(obj);
+		if(otherHash.has(propName) == false)
+		{
+			otherHash.set(propName, []);
+		}
+
+		let arr:CBData[] = otherHash.get(propName);
+		for(let cbData of arr)
+		{
+			if(cbData.cbFn == cbFn && cbData.thisObj == thisObj)
+			{
+				LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 重复注册 ${propName}`);
+				return false;
+			}
+		}
+
+		let cbData = (new CBData).packData(cbFn, thisObj, param);
+		arr.push(cbData);
+		if(runImmediately == true)
+			cbData.exec()
+		return true;
+	}
+
+	// ---------------------------------------------------------------------- 给某对象移除属性
+	public removeAttrCB(obj:DataBase, propName:string, cbFn:Function, thisObj:any):boolean
+	{
+		if(LogUtils.CheckParamValid(obj, propName, cbFn, thisObj) == false)
+			return false;
+		
+		if(this.otherAttrHash.has(obj) == false)
+		{
+			return true;
+		}
+
+		let otherHash = this.otherAttrHash.get(obj);
+		if(otherHash.has(propName) == false)
+		{
+			return true;
+		}
+
+		let arr:CBData[] = otherHash.get(propName);
+		for(let cbData of arr)
+		{
+			if(cbData.cbFn == cbFn && cbData.thisObj == thisObj)
+			{
+				return true;
+			}
+		}
+		LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${this} 没有注册 ${propName}`);
+		return false;
+	}
+
+	// ---------------------------------------------------------------------- 访问器
 	private get hash():Hash<string, CBData[]>
 	{
-		if(this._hash == null)
-			this._hash = new Hash<string, CBData[]>();
-		return this._hash;
+		if(this._attrHash == null)
+			this._attrHash = new Hash<string, CBData[]>();
+		return this._attrHash;
+	}
+
+	private get otherAttrHash():Hash<DataBase, Hash<string ,CBData[]>>
+	{
+		if(this._otherAttrHash == null)
+			this._otherAttrHash = new Hash<DataBase, Hash<string ,CBData[]>>();
+		return this._otherAttrHash;
+	}
+}
+
+class CBData
+{
+	public thisObj:any;
+	public cbFn:Function;
+	public param:any;
+	public constructor()
+	{
+
+	}
+
+	public init()
+	{
+
+	}
+
+	public destroy()
+	{
+
+	}
+
+	public packData(cbFn:Function, thisObj:any, param:any = null)
+	{
+		this.cbFn = cbFn;
+		this.thisObj = thisObj;
+		this.param = param;
+		return this;
+	}
+
+	public exec(query?:any)
+	{
+		if(this.cbFn == null || this.thisObj == null)
+		{
+			if(this.param != null)
+				this.cbFn.call(this.thisObj, this.param, query);
+			else
+				this.cbFn.call(this.thisObj, query);
+		}
 	}
 }

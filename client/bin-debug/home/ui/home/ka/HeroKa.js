@@ -31,6 +31,7 @@ var home;
             this.kaId = hero.kaId;
             this.level = hero.level;
             hero.addAttrListener("level", this.OnUpGrade, this);
+            // this.addAttrListener(hero, "level", )
             this.OnUpGrade();
         };
         HeroKaData.prototype.OnUpGrade = function () {

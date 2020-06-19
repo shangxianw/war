@@ -13,6 +13,21 @@ var DataUtils = (function () {
         }
         return copyArray;
     };
+    DataUtils.DestroyCBDataMap = function (map, setNull) {
+        if (setNull === void 0) { setNull = true; }
+        for (var _i = 0, _a = map.values(); _i < _a.length; _i++) {
+            var value = _a[_i];
+            for (var _b = 0, value_1 = value; _b < value_1.length; _b++) {
+                var cbData = value_1[_b];
+                cbData.destroy();
+                cbData = null;
+            }
+            value.length = 0;
+        }
+        map.destroy();
+        if (setNull)
+            map = null;
+    };
     // 销毁以 DataBase 为父类的哈希对象
     DataUtils.DestroyDataBaseMap = function (map, setNull) {
         if (setNull === void 0) { setNull = true; }

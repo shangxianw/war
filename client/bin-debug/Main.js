@@ -155,4 +155,7 @@ function neww(cls) {
 function deletee(cls) {
     PoolManager.Ins().push(cls);
 }
+function removee(cls) {
+    PoolManager.Ins().push(cls);
+}
 //# sourceMappingURL=Main.js.map

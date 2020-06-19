@@ -20,13 +20,15 @@ var home;
             this.layer = LayerManager.Ins().Panel;
         };
         HeroKa2Data.prototype.destroy = function () {
+            this.heroKaData.destroyAll();
+            removee(this.heroKaData);
         };
         HeroKa2Data.prototype.packData = function (kaId) {
             var hero = home.HomeDataMgr.Ins().myData.kaMap.get(kaId);
             if (hero == null)
                 return null;
             this.heroId = kaId;
-            this.heroKaData = PoolManager.Ins().pop(home.HeroKaData);
+            this.heroKaData = neww(home.HeroKaData);
             this.heroKaData.packData(kaId);
             return this;
         };
@@ -53,9 +55,7 @@ var home;
             this.info = data;
             this.heroKa.data = this.info.heroKaData;
             this.setState(false);
-            // this.addEvent(this.heroKa, egret.TouchEvent.TOUCH_TAP, this.OnHeroTap, this);
-            // this.addEvent(this.infoBtn, egret.TouchEvent.TOUCH_TAP, this.OnInfoTap, this);
-            // this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
+            this.heroKa.data = this.info.heroKaData;
         };
         HeroKa2.prototype.setState = function (showActive) {
             if (showActive == true) {
@@ -64,10 +64,6 @@ var home;
             else {
                 this.currentState = "common";
             }
-        };
-        HeroKa2.prototype.OnInfoTap = function (e) {
-        };
-        HeroKa2.prototype.OnFightTap = function (e) {
         };
         return HeroKa2;
     }(WItemRenderBase));
