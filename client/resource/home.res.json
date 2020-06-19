@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "bg_phb_btdi_duan_png,bg_lz_tc_jt_png,bg_lz_tc02_png",
+			"keys": "bg_phb_btdi_duan_png,bg_lz_tc_jt_png,bg_lz_tc02_png,icon_kz_sjjt_png",
 			"name": "home_ka"
 		}
 	],
@@ -20,6 +20,11 @@
 			"url": "home/ka/bg_lz_tc02.png",
 			"type": "image",
 			"name": "bg_lz_tc02_png"
+		},
+		{
+			"url": "home/ka/icon_kz_sjjt.png",
+			"type": "image",
+			"name": "icon_kz_sjjt_png"
 		}
 	]
 }

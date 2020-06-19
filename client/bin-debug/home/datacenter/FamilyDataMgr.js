@@ -10,16 +10,16 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var home;
 (function (home) {
-    var KaDataMgr = (function (_super) {
-        __extends(KaDataMgr, _super);
-        function KaDataMgr() {
+    var FamilyDataMgr = (function (_super) {
+        __extends(FamilyDataMgr, _super);
+        function FamilyDataMgr() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        KaDataMgr.prototype.init = function () {
+        FamilyDataMgr.prototype.init = function () {
         };
-        KaDataMgr.prototype.destroy = function () {
+        FamilyDataMgr.prototype.destroy = function () {
         };
-        KaDataMgr.prototype.addKa = function (id, level) {
+        FamilyDataMgr.prototype.addFamily = function (id, level) {
             var kaMap = home.HomeDataMgr.Ins().myData.kaMap;
             if (kaMap.has(id) == true) {
                 LogUtils.Error("\u5DF2\u5B58\u5728\u6B64");
@@ -30,7 +30,7 @@ var home;
             kaMap.set(id, ka);
             return true;
         };
-        KaDataMgr.prototype.removeKa = function (id) {
+        FamilyDataMgr.prototype.removeKa = function (id) {
             var kaMap = home.HomeDataMgr.Ins().myData.kaMap;
             if (kaMap.has(id) == false) {
                 LogUtils.Error("\u4E0D\u5B58\u5728\u5361");
@@ -41,9 +41,9 @@ var home;
             PoolManager.Ins().push(ka);
             return true;
         };
-        return KaDataMgr;
+        return FamilyDataMgr;
     }(DataBase));
-    home.KaDataMgr = KaDataMgr;
-    __reflect(KaDataMgr.prototype, "home.KaDataMgr");
+    home.FamilyDataMgr = FamilyDataMgr;
+    __reflect(FamilyDataMgr.prototype, "home.FamilyDataMgr");
 })(home || (home = {}));
-//# sourceMappingURL=KaDataMgr.js.map
+//# sourceMappingURL=FamilyDataMgr.js.map

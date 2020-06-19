@@ -25,7 +25,7 @@ var home;
             this.kaDataArray.length = 0;
         };
         HomePanelData.prototype.packData = function () {
-            var teamArray = home.HomeDataMgr.Ins().kaDataMgr.teamArray;
+            var teamArray = home.HomeDataMgr.Ins().myData.teamArray;
             for (var _i = 0, teamArray_1 = teamArray; _i < teamArray_1.length; _i++) {
                 var kaId = teamArray_1[_i];
                 var kaDataInfo = PoolManager.Ins().pop(home.HeroKaData);
@@ -54,15 +54,15 @@ var home;
         HomePanel.prototype.initView = function () {
             this.initKa();
             var homeData = home.HomeDataMgr.Ins();
-            this.cups.label = String(homeData.cups);
-            this.playerName.text = homeData.playerName;
+            this.cups.label = String(homeData.myData.cups);
+            this.playerName.text = homeData.myData.playerName;
             this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
             this.addEvent(this.kaBtn, egret.TouchEvent.TOUCH_TAP, this.OnKaTap, this);
         };
         HomePanel.prototype.initKa = function () {
             for (var i = 0, len = this.info.kaDataArray.length; i < len; i++) {
-                var ka = PoolManager.Ins().pop(home.HeroKa);
-                ka.packData(this.info.kaDataArray[i]);
+                var ka = neww(home.HeroKa);
+                ka.data = this.info.kaDataArray[i];
                 ka.x = 14 + 226 * (i % 2); // 等间距14
                 ka.y = 0 + 141 * Math.floor(i / 2); // 等间距 高568 5个间隙 item高137，共137*4= 548，余568-548=20，间距为22/5=4
                 this.kaGroup.addChild(ka);

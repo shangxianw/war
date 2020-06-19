@@ -1,6 +1,6 @@
 module home
 {
-	export class KaDataMgr extends DataBase
+	export class FamilyDataMgr extends DataBase
 	{
 		protected init()
 		{
@@ -12,7 +12,7 @@ module home
 		
 		}
 
-		public addKa(id:number, level:number)
+		public addFamily(id:number, level:number)
 		{
 			let kaMap = HomeDataMgr.Ins().myData.kaMap;
 			if(kaMap.has(id) == true)

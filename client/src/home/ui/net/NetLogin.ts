@@ -28,8 +28,7 @@ module net
 			else
 			{
 				home.HomeDataMgr.Ins();
-				home.HomeDataMgr.Ins().packDataByClient();
-				home.HomeDataMgr.Ins().kaDataMgr.packDataClient();
+				home.HomeDataMgr.Ins().packMyData();
 				NetLogin.C2SLogin_CBFn.call(NetLogin.C2SLogin_thisObj);
 			}
 		}

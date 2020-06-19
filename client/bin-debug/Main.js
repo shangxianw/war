@@ -149,4 +149,10 @@ var Main = (function (_super) {
     return Main;
 }(eui.UILayer));
 __reflect(Main.prototype, "Main");
+function neww(cls) {
+    return PoolManager.Ins().pop(cls);
+}
+function deletee(cls) {
+    PoolManager.Ins().push(cls);
+}
 //# sourceMappingURL=Main.js.map

@@ -1,6 +1,6 @@
 module home
 {
-	export class KaDataInfo extends DataBase
+	export class KaData extends DataBase
 	{
 		public kaId:number;
 		public level:number;

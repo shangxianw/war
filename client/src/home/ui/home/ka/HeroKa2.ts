@@ -12,16 +12,17 @@ module home
 
 		protected destroy()
 		{
-			
+			this.heroKaData.destroyAll();
+			removee(this.heroKaData);
 		}
 
 		public packData(kaId:number)
 		{
-			let hero = HomeDataMgr.Ins().kaDataMgr.getKa(kaId);
+			let hero = HomeDataMgr.Ins().myData.kaMap.get(kaId);
 			if(hero == null)
 				return null;
 			this.heroId = kaId;
-			this.heroKaData = PoolManager.Ins().pop(HeroKaData) as HeroKaData;
+			this.heroKaData = neww(HeroKaData);
 			this.heroKaData.packData(kaId);
 			return this;
 		}
@@ -29,9 +30,6 @@ module home
 
 	export class HeroKa2 extends WItemRenderBase
 	{
-		private costLb:eui.BitmapLabel;
-		private typeBg:eui.Image;
-		private kaImg:eui.Image;
 		private heroKa:HeroKa;
 		private fightBtn:WButton;
 		private infoBtn:WButton;
@@ -61,9 +59,7 @@ module home
 			this.info = data;
 			this.heroKa.data = this.info.heroKaData;
 			this.setState(false);
-			// this.addEvent(this.heroKa, egret.TouchEvent.TOUCH_TAP, this.OnHeroTap, this);
-			// this.addEvent(this.infoBtn, egret.TouchEvent.TOUCH_TAP, this.OnInfoTap, this);
-			// this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
+			this.heroKa.data = this.info.heroKaData;
 		}
 
 		public setState(showActive:boolean)
@@ -76,16 +72,6 @@ module home
 			{
 				this.currentState = "common";
 			}
-		}
-
-		private OnInfoTap(e:egret.TouchEvent)
-		{
-			
-		}
-
-		private OnFightTap(e:egret.TouchEvent)
-		{
-			
 		}
 	}
 }

@@ -33,13 +33,13 @@ module home
 		private OnRefreshIcon()
 		{
 			let homeData = HomeDataMgr.Ins();
-			this.setAttr("icon", homeData.icon);
+			this.setAttr("icon", homeData.myData.icon);
 		}
 
 		private OnRefreshFrame()
 		{
 			let homeData = HomeDataMgr.Ins();
-			this.setAttr("frame", homeData.frame);
+			this.setAttr("frame", homeData.myData.frame);
 		}
 	}
 

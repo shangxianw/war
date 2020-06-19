@@ -1,31 +1,43 @@
 
 module home
 {
-	export class HeroKaData extends ViewData
+	export class HeroKaData extends DataBase
 	{
 		public kaId:number;
-		public cost:number;
-		public quality:number;
+		public level:number;
+		public canUp:boolean;
 		protected init()
-		{
-			this.resGroup = "";
-			this.layer = LayerManager.Ins().Panel;
-		}
-
-		protected destroy()
 		{
 			
 		}
 
-		public packData(kaId:number)
+		protected destroy()
 		{
-			let hero = HomeDataMgr.Ins().kaDataMgr.getKa(kaId);
+			let hero = HomeDataMgr.Ins().myData.kaMap.get(this.kaId);
 			if(hero == null)
 				return;
-			let cfg:IHero = hero.cfg;
-			this.kaId = kaId;
-			this.cost = cfg.cost;
-			this.quality = cfg.quality;
+			hero.removeAttrListener("level", this.OnUpGrade, this);
+		}
+
+		// 从我的卡牌中获取数据
+		public packData(kaId:number)
+		{
+			let hero = HomeDataMgr.Ins().myData.kaMap.get(kaId);
+			if(hero == null)
+				return;
+			this.kaId = hero.kaId;
+			this.level = hero.level;
+			hero.addAttrListener("level", this.OnUpGrade, this);
+			this.OnUpGrade();
+		}
+
+		private OnUpGrade()
+		{
+			let hero = HomeDataMgr.Ins().myData.kaMap.get(this.kaId);
+			if(hero == null)
+				return;
+			this.canUp = this.kaId == 10010; // 假设有张升级表~
+			this.updateAttr("level");
 		}
 	}
 
@@ -35,6 +47,8 @@ module home
 		private typeBg:eui.Image;
 		private kaImg:eui.Image;
 		private testId:eui.Label;
+		private level:eui.Label;
+		private upTips:eui.Image;
 
 		public info:HeroKaData;
 		public constructor()
@@ -51,7 +65,9 @@ module home
 		public destroy()
 		{
 			if(this.info != null)
+			{
 				this.info.destroyAll();
+			}
 		}
 
 		public dataChanged()
@@ -60,22 +76,21 @@ module home
 				return;
 			this.info = this.data;
 			
-			this.costLb.text = String(this.info.cost);
-			this.typeBg.source = Utils.GetQualityBg(this.info.quality);
-			this.kaImg.source = Utils.GetKaIcon(this.info.kaId);
-			this.testId.text = `${this.info.kaId}`;
-			this.testId.visible = GameData.DevelopMode == DevelopMode.DEBUG;
+			let heroCfg 		 = ConfigManager.Ins().get(CONFIG.HERO)[this.info.kaId] as IHero;
+			this.costLb.text	 = String(heroCfg.cost);
+			this.typeBg.source   = Utils.GetQualityBg(heroCfg.quality);
+			this.kaImg.source 	 = Utils.GetKaIcon(this.info.kaId);
+			this.level.text      = `${this.info.level}级`;
+			this.testId.text 	 = `${this.info.kaId}`;
+			this.testId.visible  = GameData.DevelopMode == DevelopMode.DEBUG;
+
+			this.info.addAttrListener("level", this.OnShowUpTips, this);
+			this.OnShowUpTips();
 		}
 
-		public packData(data:HeroKaData)
+		private OnShowUpTips()
 		{
-			if(data == null)
-				return;
-			this.info = data;
-			
-			this.costLb.text = String(this.info.cost);
-			this.typeBg.source = Utils.GetQualityBg(this.info.quality);
-			this.kaImg.source = Utils.GetKaIcon(this.info.kaId);
+			this.upTips.visible  = this.info.canUp;
 		}
 	}
 }

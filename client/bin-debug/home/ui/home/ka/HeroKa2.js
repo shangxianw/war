@@ -22,7 +22,7 @@ var home;
         HeroKa2Data.prototype.destroy = function () {
         };
         HeroKa2Data.prototype.packData = function (kaId) {
-            var hero = home.HomeDataMgr.Ins().kaDataMgr.getKa(kaId);
+            var hero = home.HomeDataMgr.Ins().myData.kaMap.get(kaId);
             if (hero == null)
                 return null;
             this.heroId = kaId;

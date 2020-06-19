@@ -55,7 +55,7 @@ var DataBase = (function () {
             return false;
         }
         if (this.hash.has(propName) == false) {
-            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : " + thisObj + " \u6CA1\u6709\u6CE8\u518C " + propName);
+            // LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
             return true;
         }
         var arr = this.hash.get(propName), cbData;

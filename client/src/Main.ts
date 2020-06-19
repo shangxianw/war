@@ -94,3 +94,17 @@ class Main extends eui.UILayer
     }
 }
 
+function neww<T>(cls:T):any
+{
+    return PoolManager.Ins().pop(cls) as T;
+}
+
+function deletee<T>(cls:T)
+{
+    PoolManager.Ins().push(cls);
+}
+
+function removee<T>(cls:T)
+{
+    PoolManager.Ins().push(cls);
+}

@@ -45,10 +45,6 @@ var home;
         LoginPanel.prototype.initView = function () {
             this.accountInput.text = "wsx";
             this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
-            // ResManager.Ins().loadResAsync("herobg_10120_png", ()=>{
-            // 	1;
-            // 	1;
-            // }, this)
         };
         LoginPanel.prototype.OnLoginTap = function (e) {
             var _this = this;

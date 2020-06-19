@@ -7,6 +7,7 @@ abstract class DataBase
 {
 	public hasCode:number;
 	private _hash:Hash<string ,CBData[]>; // 惰性加载
+	private _otherAttrHash:Hash<DataBase, CBData>
 	public constructor()
 	{
 		this.initAll();
@@ -75,7 +76,7 @@ abstract class DataBase
 
 		if(this.hash.has(propName) == false)
 		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
+			// LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
 			return true;
 		}
 		

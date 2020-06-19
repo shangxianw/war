@@ -54,11 +54,6 @@ module home
 		{
 			this.accountInput.text = "wsx";
 			this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
-
-			// ResManager.Ins().loadResAsync("herobg_10120_png", ()=>{
-			// 	1;
-			// 	1;
-			// }, this)
 		}
 
 		private OnLoginTap(e:egret.TouchEvent)

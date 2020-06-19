@@ -16,22 +16,32 @@ var home;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         HeroKaData.prototype.init = function () {
-            this.resGroup = "";
-            this.layer = LayerManager.Ins().Panel;
         };
         HeroKaData.prototype.destroy = function () {
-        };
-        HeroKaData.prototype.packData = function (kaId) {
-            var hero = home.HomeDataMgr.Ins().kaDataMgr.getKa(kaId);
+            var hero = home.HomeDataMgr.Ins().myData.kaMap.get(this.kaId);
             if (hero == null)
                 return;
-            var cfg = hero.cfg;
-            this.kaId = kaId;
-            this.cost = cfg.cost;
-            this.quality = cfg.quality;
+            hero.removeAttrListener("level", this.OnUpGrade, this);
+        };
+        // 从我的卡牌中获取数据
+        HeroKaData.prototype.packData = function (kaId) {
+            var hero = home.HomeDataMgr.Ins().myData.kaMap.get(kaId);
+            if (hero == null)
+                return;
+            this.kaId = hero.kaId;
+            this.level = hero.level;
+            hero.addAttrListener("level", this.OnUpGrade, this);
+            this.OnUpGrade();
+        };
+        HeroKaData.prototype.OnUpGrade = function () {
+            var hero = home.HomeDataMgr.Ins().myData.kaMap.get(this.kaId);
+            if (hero == null)
+                return;
+            this.canUp = this.kaId == 10010; // 假设有张升级表~
+            this.updateAttr("level");
         };
         return HeroKaData;
-    }(ViewData));
+    }(DataBase));
     home.HeroKaData = HeroKaData;
     __reflect(HeroKaData.prototype, "home.HeroKaData");
     var HeroKa = (function (_super) {
@@ -45,26 +55,26 @@ var home;
             this.touchChildren = false;
         };
         HeroKa.prototype.destroy = function () {
-            if (this.info != null)
+            if (this.info != null) {
                 this.info.destroyAll();
+            }
         };
         HeroKa.prototype.dataChanged = function () {
             if (this.data == null)
                 return;
             this.info = this.data;
-            this.costLb.text = String(this.info.cost);
-            this.typeBg.source = Utils.GetQualityBg(this.info.quality);
+            var heroCfg = ConfigManager.Ins().get(CONFIG.HERO)[this.info.kaId];
+            this.costLb.text = String(heroCfg.cost);
+            this.typeBg.source = Utils.GetQualityBg(heroCfg.quality);
             this.kaImg.source = Utils.GetKaIcon(this.info.kaId);
+            this.level.text = this.info.level + "\u7EA7";
             this.testId.text = "" + this.info.kaId;
             this.testId.visible = GameData.DevelopMode == DevelopMode.DEBUG;
+            this.info.addAttrListener("level", this.OnShowUpTips, this);
+            this.OnShowUpTips();
         };
-        HeroKa.prototype.packData = function (data) {
-            if (data == null)
-                return;
-            this.info = data;
-            this.costLb.text = String(this.info.cost);
-            this.typeBg.source = Utils.GetQualityBg(this.info.quality);
-            this.kaImg.source = Utils.GetKaIcon(this.info.kaId);
+        HeroKa.prototype.OnShowUpTips = function () {
+            this.upTips.visible = this.info.canUp;
         };
         return HeroKa;
     }(WItemRenderBase));

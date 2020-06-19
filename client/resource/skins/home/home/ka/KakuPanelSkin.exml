@@ -22,8 +22,8 @@
 			</e:Group>
 		</e:Scroller>
 	</e:Group>
-	<e:Group id="readGroup" left="0" right="0" top="0" bottom="0" touchEnabled="false" visible="false">
+	<e:Group id="readGroup" touchEnabled="false" width="1280" height="720" y="0" x="0">
 		<e:Image id="readyBg" source="bg_black_png" scale9Grid="2,2,16,16" left="0" right="0" top="0" bottom="0" alpha="0.3"/>
-		<e:Image id="maskk" source="bg_com_fgd_png" scale9Grid="12,15,23,18" width="466" height="628" x="785.57" y="70" scaleX="1" scaleY="1"/>
+		<e:Image id="maskk" source="bg_com_fgd_png" scale9Grid="12,15,23,18" width="466" height="628" x="255.27" y="70" scaleX="1" scaleY="1"/>
 	</e:Group>
 </e:Skin>

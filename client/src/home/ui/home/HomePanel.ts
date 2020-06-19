@@ -18,7 +18,7 @@ module home
 
 		public packData()
 		{
-			let teamArray = HomeDataMgr.Ins().kaDataMgr.teamArray;
+			let teamArray = HomeDataMgr.Ins().myData.teamArray;
 			for(let kaId of teamArray)
 			{
 				let kaDataInfo = PoolManager.Ins().pop(HeroKaData) as HeroKaData;
@@ -64,8 +64,8 @@ module home
 			this.initKa()
 
 			let homeData = HomeDataMgr.Ins();
-			this.cups.label = String(homeData.cups);
-			this.playerName.text = homeData.playerName;
+			this.cups.label = String(homeData.myData.cups);
+			this.playerName.text = homeData.myData.playerName;
 			this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
 			this.addEvent(this.kaBtn, egret.TouchEvent.TOUCH_TAP, this.OnKaTap, this);
 		}
@@ -74,8 +74,8 @@ module home
 		{
 			for(let i=0, len=this.info.kaDataArray.length; i<len; i++)
 			{
-				let ka = PoolManager.Ins().pop(HeroKa) as HeroKa;
-				ka.packData(this.info.kaDataArray[i]);
+				let ka = neww(HeroKa) as HeroKa;
+				ka.data = this.info.kaDataArray[i];
 				ka.x = 14 + 226 * (i%2);			// 等间距14
 				ka.y = 0 + 141 * Math.floor(i/2);	// 等间距 高568 5个间隙 item高137，共137*4= 548，余568-548=20，间距为22/5=4
 				this.kaGroup.addChild(ka);

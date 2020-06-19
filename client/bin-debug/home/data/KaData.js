@@ -10,24 +10,24 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var home;
 (function (home) {
-    var KaDataInfo = (function (_super) {
-        __extends(KaDataInfo, _super);
-        function KaDataInfo() {
+    var KaData = (function (_super) {
+        __extends(KaData, _super);
+        function KaData() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        KaDataInfo.prototype.init = function () {
+        KaData.prototype.init = function () {
             this.kaId = 0;
             this.level = 0;
         };
-        KaDataInfo.prototype.destroy = function () {
+        KaData.prototype.destroy = function () {
             this.kaId = 0;
             this.level = 0;
         };
-        KaDataInfo.prototype.packData = function (kaId, level) {
+        KaData.prototype.packData = function (kaId, level) {
             this.kaId = kaId;
             this.level = level;
         };
-        Object.defineProperty(KaDataInfo.prototype, "cfg", {
+        Object.defineProperty(KaData.prototype, "cfg", {
             get: function () {
                 var cfg = ConfigManager.Ins().get(CONFIG.HERO)[this.kaId];
                 return cfg;
@@ -35,9 +35,9 @@ var home;
             enumerable: true,
             configurable: true
         });
-        return KaDataInfo;
+        return KaData;
     }(DataBase));
-    home.KaDataInfo = KaDataInfo;
-    __reflect(KaDataInfo.prototype, "home.KaDataInfo");
+    home.KaData = KaData;
+    __reflect(KaData.prototype, "home.KaData");
 })(home || (home = {}));
-//# sourceMappingURL=KaDataInfo.js.map
+//# sourceMappingURL=KaData.js.map
