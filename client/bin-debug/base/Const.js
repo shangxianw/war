@@ -56,6 +56,7 @@ var CONFIG = (function () {
     function CONFIG() {
     }
     CONFIG.HERO = "hero_json";
+    CONFIG.UPGRADE = "upgrade_json";
     return CONFIG;
 }());
 __reflect(CONFIG.prototype, "CONFIG");

@@ -20,10 +20,8 @@ var ConfigManager = (function (_super) {
         this.cfgMap.destroy();
     };
     ConfigManager.prototype.set = function (name, cfg) {
-        if (name == null || name == "" || cfg == null) {
-            LogUtils.Error("参数错误");
+        if (LogUtils.CheckParamValid(name, cfg) == false)
             return false;
-        }
         if (this.cfgMap.has(name) == true) {
             LogUtils.Error("已存在配置");
             return false;
@@ -32,10 +30,8 @@ var ConfigManager = (function (_super) {
         return true;
     };
     ConfigManager.prototype.remove = function (name) {
-        if (name == null || name == "") {
-            LogUtils.Error("参数错误");
+        if (LogUtils.CheckParamValid(name) == false)
             return false;
-        }
         if (this.cfgMap.has(name) == false) {
             LogUtils.Error("不存在配置");
             return false;
@@ -44,10 +40,8 @@ var ConfigManager = (function (_super) {
         return true;
     };
     ConfigManager.prototype.get = function (name) {
-        if (name == null || name == "") {
-            LogUtils.Error("参数错误");
+        if (LogUtils.CheckParamValid(name) == false)
             return false;
-        }
         if (this.cfgMap.has(name) == false) {
             LogUtils.Error("不存在配置");
             return false;

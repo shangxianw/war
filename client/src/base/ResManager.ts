@@ -37,7 +37,7 @@ class ResData extends DataBase
 
 class ResGroupData extends DataBase
 {
-	public groupName:string;
+	public groupNames:string[];
 	public priority:number;
 	public itemsLoaded:number;
 	public itemsTotal:number;
@@ -52,7 +52,7 @@ class ResGroupData extends DataBase
 	protected init()
 	{
 		this.errLoadCount = 0;
-		this.groupName = "";
+		this.groupNames = [];
 		this.priority = null;
 		this.itemsLoaded = null;
 		this.itemsTotal = null;
@@ -63,15 +63,15 @@ class ResGroupData extends DataBase
 	{
 		this.resArray.length = 0;
 		this.errLoadCount = 0;
-		this.groupName = null;
+		this.groupNames = null;
 		this.priority = null;
 		this.itemsLoaded = null;
 		this.itemsTotal = null;
 	}
 
-	public packData(groupName:string, cbFn:Function=null, thisObj:any=null, progFn:Function=null, errFn:Function=null, priority:number)
+	public packData(groupNames:string[], cbFn:Function=null, thisObj:any=null, progFn:Function=null, errFn:Function=null, priority:number)
 	{
-		this.groupName = groupName;
+		this.groupNames = groupNames;
 		this.priority = priority;
 		this.cbFn = cbFn;
 		this.errFn = errFn;
@@ -171,9 +171,9 @@ class ResManager extends DataBase
 	}
 
 	// 默认放在队列的后面
-	public loadGroup(groupName:string, cbFn:Function=null, thisObj:any=null, progFn:Function=null, errFn:Function=null, priority:number = null)
+	public loadGroup(groupNames:string[], cbFn:Function=null, thisObj:any=null, progFn:Function=null, errFn:Function=null, priority:number = null)
 	{
-		if(groupName == null || groupName == "")
+		if(groupNames == null)
 		{
 			return LogUtils.Error(`${Utils.GetClassNameByObj(this)} : loadGroup 方法参数有误`);
 		}
@@ -182,13 +182,13 @@ class ResManager extends DataBase
 
 		if(priority != null) // 如果有优先级，数字越小优先级越高，最高位0
 		{
-			grouInfo.packData(groupName, cbFn, thisObj, progFn, errFn, priority);
+			grouInfo.packData(groupNames, cbFn, thisObj, progFn, errFn, priority);
 		}
 		else
 		{
-			grouInfo.packData(groupName, cbFn, thisObj, progFn, errFn, this.groupArray.length);
+			grouInfo.packData(groupNames, cbFn, thisObj, progFn, errFn, this.groupArray.length);
 		}
-		LogUtils.Log(`将资源组 ${groupName} 加入到加载列表, 优先级为 ${grouInfo.priority}`);
+		// LogUtils.Log(`将资源组 ${groupNames} 加入到加载列表, 优先级为 ${grouInfo.priority}`);
 		this.groupArray.push(grouInfo);
 		this.groupArray.sort(this.sortGroupArray);
 		1;

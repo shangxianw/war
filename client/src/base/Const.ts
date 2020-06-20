@@ -56,4 +56,5 @@ enum RIGID_TYPE
 class CONFIG
 {
 	public static HERO = "hero_json";
+	public static UPGRADE = "upgrade_json";
 }

@@ -61,14 +61,14 @@ var war;
             var group = entity.parent;
             if (this.pathMap == null)
                 this.pathMap = new Hash();
-            if (this.pathMap.has(entity.id) == false) {
+            if (this.pathMap.has(entity.uniqueCode) == false) {
                 var testShap_1 = new egret.Shape();
                 testShap_1.x = war.WarDataMgr.Ins().startX;
                 testShap_1.y = war.WarDataMgr.Ins().startY;
                 group != null && group.addChild(testShap_1);
-                this.pathMap.set(entity.id, testShap_1);
+                this.pathMap.set(entity.uniqueCode, testShap_1);
             }
-            var testShap = this.pathMap.get(entity.id);
+            var testShap = this.pathMap.get(entity.uniqueCode);
             var space = war.WarDataMgr.Ins().grid.space;
             var pCom = entity.getCom(war.COMPONENT.PATH);
             if (pCom != null) {
@@ -107,7 +107,7 @@ var war;
             if (DrawUtils.isTest == false)
                 return;
             var lb = new eui.Label;
-            lb.text = "" + hero.id;
+            lb.text = "" + hero.uniqueCode;
             lb.stroke = 2;
             lb.strokeColor = 0x000;
             lb.x = hero.width >> 1;
@@ -129,12 +129,12 @@ var war;
             if (strength === void 0) { strength = 1; }
             if (this.colorMap == null)
                 this.colorMap = new Hash();
-            if (this.colorMap.has(entity.id) == false) {
+            if (this.colorMap.has(entity.uniqueCode) == false) {
                 var colorFilter_1 = new egret.ColorMatrixFilter();
-                this.colorMap.set(entity.id, colorFilter_1);
+                this.colorMap.set(entity.uniqueCode, colorFilter_1);
                 entity.filters = [colorFilter_1];
             }
-            var colorFilter = this.colorMap.get(entity.id);
+            var colorFilter = this.colorMap.get(entity.uniqueCode);
             if (show == false) {
                 colorFilter.matrix = null;
                 return;
@@ -170,7 +170,7 @@ var war;
             if (aCom == null)
                 return;
             var rangeShape = new egret.Shape();
-            rangeShape.name = "attackCom_" + entity.id;
+            rangeShape.name = "attackCom_" + entity.uniqueCode;
             rangeShape.graphics.beginFill(0xffff00);
             rangeShape.graphics.lineStyle(1, 0x000);
             rangeShape.graphics.drawCircle(0, 0, aCom.range);

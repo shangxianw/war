@@ -24,16 +24,11 @@ module home
 				return;
 			this.kaId = hero.kaId;
 			this.level = hero.level;
-			this.addAttrCB(hero, "level", this.OnUpGrade, this);
-		}
 
-		private OnUpGrade()
-		{
-			let hero = HomeDataMgr.Ins().myData.kaMap.get(this.kaId);
-			if(hero == null)
-				return;
-			this.canUp = this.kaId == 10010; // 假设有张升级表~
-			this.updateAttr("level");
+			this.addAttrCB(hero, "level", ()=>{
+				this.canUp = this.kaId == 10010; // 假设有张升级表~
+				this.updateAttr("level");
+			}, this);
 		}
 	}
 
@@ -81,7 +76,6 @@ module home
 			this.testId.visible  = GameData.DevelopMode == DevelopMode.DEBUG;
 
 			this.info.addAttrListener("level", this.OnShowUpTips, this);
-			this.OnShowUpTips();
 		}
 
 		private OnShowUpTips()

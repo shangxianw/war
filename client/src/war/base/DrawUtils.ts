@@ -75,16 +75,16 @@ module war
 			if(this.pathMap == null)
 				this.pathMap = new Hash<number, egret.Shape>();
 
-			if(this.pathMap.has(entity.id) == false)
+			if(this.pathMap.has(entity.uniqueCode) == false)
 			{
 				let testShap = new egret.Shape();
 				testShap.x = WarDataMgr.Ins().startX;
 				testShap.y = WarDataMgr.Ins().startY;
 				group != null && group.addChild(testShap);
-				this.pathMap.set(entity.id, testShap);
+				this.pathMap.set(entity.uniqueCode, testShap);
 			}
 
-			let testShap:egret.Shape = this.pathMap.get(entity.id);
+			let testShap:egret.Shape = this.pathMap.get(entity.uniqueCode);
 			let space = WarDataMgr.Ins().grid.space;
 			let pCom = entity.getCom(COMPONENT.PATH) as PathCom;
 			if(pCom != null)
@@ -132,7 +132,7 @@ module war
 			if(DrawUtils.isTest == false)
 				return;
 			let lb = new eui.Label;
-			lb.text = `${hero.id}`;
+			lb.text = `${hero.uniqueCode}`;
 			lb.stroke = 2;
 			lb.strokeColor = 0x000;
 			lb.x = hero.width >>1;
@@ -159,13 +159,13 @@ module war
 			if(this.colorMap == null)
 				this.colorMap = new Hash<number, egret.ColorMatrixFilter>();
 
-			if(this.colorMap.has(entity.id) == false)
+			if(this.colorMap.has(entity.uniqueCode) == false)
 			{
 				let colorFilter = new egret.ColorMatrixFilter();
-				this.colorMap.set(entity.id, colorFilter);
+				this.colorMap.set(entity.uniqueCode, colorFilter);
 				entity.filters = [colorFilter];
 			}
-			let colorFilter:egret.ColorMatrixFilter = this.colorMap.get(entity.id);
+			let colorFilter:egret.ColorMatrixFilter = this.colorMap.get(entity.uniqueCode);
 			if(show == false)
 			{
 				colorFilter.matrix = null;
@@ -208,7 +208,7 @@ module war
 			if(aCom == null)
 				return;
 			let rangeShape = new egret.Shape();
-			rangeShape.name = `attackCom_${entity.id}`;
+			rangeShape.name = `attackCom_${entity.uniqueCode}`;
 			rangeShape.graphics.beginFill(0xffff00);
 			rangeShape.graphics.lineStyle(1, 0x000);
 			rangeShape.graphics.drawCircle(0, 0, aCom.range);

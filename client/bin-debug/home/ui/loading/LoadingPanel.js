@@ -16,7 +16,7 @@ var home;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         LoadingPanelData.prototype.init = function () {
-            this.resGroup = "loading";
+            this.resGroup = ["loading"];
             this.layer = LayerManager.Ins().Panel;
         };
         LoadingPanelData.prototype.destroy = function () {
@@ -24,7 +24,7 @@ var home;
         LoadingPanelData.prototype.packData = function () {
             this.currCount = 0;
             this.resGroupArray = ["common_preload", "war_preload"]; // war_preload 对应的英雄应该在matchpanel的时候加载的~
-            this.cfgGroupArray = ["hero_json"];
+            this.cfgGroupArray = ["hero_json", "upgrade_json"];
         };
         return LoadingPanelData;
     }(ViewData));

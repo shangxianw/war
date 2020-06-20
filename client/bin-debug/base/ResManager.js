@@ -44,7 +44,7 @@ var ResGroupData = (function (_super) {
     }
     ResGroupData.prototype.init = function () {
         this.errLoadCount = 0;
-        this.groupName = "";
+        this.groupNames = [];
         this.priority = null;
         this.itemsLoaded = null;
         this.itemsTotal = null;
@@ -53,17 +53,17 @@ var ResGroupData = (function (_super) {
     ResGroupData.prototype.destroy = function () {
         this.resArray.length = 0;
         this.errLoadCount = 0;
-        this.groupName = null;
+        this.groupNames = null;
         this.priority = null;
         this.itemsLoaded = null;
         this.itemsTotal = null;
     };
-    ResGroupData.prototype.packData = function (groupName, cbFn, thisObj, progFn, errFn, priority) {
+    ResGroupData.prototype.packData = function (groupNames, cbFn, thisObj, progFn, errFn, priority) {
         if (cbFn === void 0) { cbFn = null; }
         if (thisObj === void 0) { thisObj = null; }
         if (progFn === void 0) { progFn = null; }
         if (errFn === void 0) { errFn = null; }
-        this.groupName = groupName;
+        this.groupNames = groupNames;
         this.priority = priority;
         this.cbFn = cbFn;
         this.errFn = errFn;
@@ -142,23 +142,23 @@ var ResManager = (function (_super) {
         return ResManager.instance;
     };
     // 默认放在队列的后面
-    ResManager.prototype.loadGroup = function (groupName, cbFn, thisObj, progFn, errFn, priority) {
+    ResManager.prototype.loadGroup = function (groupNames, cbFn, thisObj, progFn, errFn, priority) {
         if (cbFn === void 0) { cbFn = null; }
         if (thisObj === void 0) { thisObj = null; }
         if (progFn === void 0) { progFn = null; }
         if (errFn === void 0) { errFn = null; }
         if (priority === void 0) { priority = null; }
-        if (groupName == null || groupName == "") {
+        if (groupNames == null) {
             return LogUtils.Error(Utils.GetClassNameByObj(this) + " : loadGroup \u65B9\u6CD5\u53C2\u6570\u6709\u8BEF");
         }
         var grouInfo = PoolManager.Ins().pop(ResGroupData);
         if (priority != null) {
-            grouInfo.packData(groupName, cbFn, thisObj, progFn, errFn, priority);
+            grouInfo.packData(groupNames, cbFn, thisObj, progFn, errFn, priority);
         }
         else {
-            grouInfo.packData(groupName, cbFn, thisObj, progFn, errFn, this.groupArray.length);
+            grouInfo.packData(groupNames, cbFn, thisObj, progFn, errFn, this.groupArray.length);
         }
-        LogUtils.Log("\u5C06\u8D44\u6E90\u7EC4 " + groupName + " \u52A0\u5165\u5230\u52A0\u8F7D\u5217\u8868, \u4F18\u5148\u7EA7\u4E3A " + grouInfo.priority);
+        // LogUtils.Log(`将资源组 ${groupNames} 加入到加载列表, 优先级为 ${grouInfo.priority}`);
         this.groupArray.push(grouInfo);
         this.groupArray.sort(this.sortGroupArray);
         1;

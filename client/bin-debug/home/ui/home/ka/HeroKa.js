@@ -18,28 +18,19 @@ var home;
         HeroKaData.prototype.init = function () {
         };
         HeroKaData.prototype.destroy = function () {
-            var hero = home.HomeDataMgr.Ins().myData.kaMap.get(this.kaId);
-            if (hero == null)
-                return;
-            hero.removeAttrListener("level", this.OnUpGrade, this);
         };
         // 从我的卡牌中获取数据
         HeroKaData.prototype.packData = function (kaId) {
+            var _this = this;
             var hero = home.HomeDataMgr.Ins().myData.kaMap.get(kaId);
             if (hero == null)
                 return;
             this.kaId = hero.kaId;
             this.level = hero.level;
-            hero.addAttrListener("level", this.OnUpGrade, this);
-            // this.addAttrListener(hero, "level", )
-            this.OnUpGrade();
-        };
-        HeroKaData.prototype.OnUpGrade = function () {
-            var hero = home.HomeDataMgr.Ins().myData.kaMap.get(this.kaId);
-            if (hero == null)
-                return;
-            this.canUp = this.kaId == 10010; // 假设有张升级表~
-            this.updateAttr("level");
+            this.addAttrCB(hero, "level", function () {
+                _this.canUp = _this.kaId == 10010; // 假设有张升级表~
+                _this.updateAttr("level");
+            }, this);
         };
         return HeroKaData;
     }(DataBase));
@@ -72,7 +63,6 @@ var home;
             this.testId.text = "" + this.info.kaId;
             this.testId.visible = GameData.DevelopMode == DevelopMode.DEBUG;
             this.info.addAttrListener("level", this.OnShowUpTips, this);
-            this.OnShowUpTips();
         };
         HeroKa.prototype.OnShowUpTips = function () {
             this.upTips.visible = this.info.canUp;

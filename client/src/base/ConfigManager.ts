@@ -13,11 +13,8 @@ class ConfigManager extends DataBase
 
 	public set(name:string, cfg:any)
 	{
-		if(name == null || name == "" || cfg == null)
-		{
-			LogUtils.Error("参数错误");
+		if(LogUtils.CheckParamValid(name, cfg) == false)
 			return false;
-		}
 
 		if(this.cfgMap.has(name) == true)
 		{
@@ -31,11 +28,8 @@ class ConfigManager extends DataBase
 
 	public remove(name:string)
 	{
-		if(name == null || name == "")
-		{
-			LogUtils.Error("参数错误");
+		if(LogUtils.CheckParamValid(name) == false)
 			return false;
-		}
 
 		if(this.cfgMap.has(name) == false)
 		{
@@ -49,11 +43,8 @@ class ConfigManager extends DataBase
 
 	public get(name:string)
 	{
-		if(name == null || name == "")
-		{
-			LogUtils.Error("参数错误");
+		if(LogUtils.CheckParamValid(name) == false)
 			return false;
-		}
 
 		if(this.cfgMap.has(name) == false)
 		{

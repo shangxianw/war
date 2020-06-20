@@ -7,7 +7,7 @@ abstract class DataBase
 {
 	public hasCode:number;
 	private _attrHash:Hash<string ,CBData[]>; // 惰性加载
-	private _otherAttrHash:Hash<DataBase, Hash<string ,CBData[]>>
+	private _otherAttrHash:Hash<DataBase, Hash<string ,CBData[]>> // 惰性加载
 	public constructor()
 	{
 		this.initAll();
@@ -18,39 +18,16 @@ abstract class DataBase
 
 	protected initAll()
 	{
-		this.hasCode = IDManager.Ins().getNewId();
+		this.uniqueCode = IDManager.Ins().getNewId();
 		this.init();
 	}
 
 	public destroyAll()
 	{
-		for(let value of this.hash.values())
-		{
-			for(let cbData of value)
-			{
-				cbData.destroy();
-				cbData = null;
-			}
-			value.length = 0;
-		}
-		this.hash.destroy();
+		this.removeAllAttrListener();
 		this._attrHash = null;
 
-		for(let otherAttrHash of this.otherAttrHash.values())
-		{
-			for(let cbDataArray of otherAttrHash.values())
-			{
-				for(let cbData of cbDataArray)
-				{
-					cbData.destroy();
-					cbData = null;
-				}
-				cbDataArray.length = 0;
-			}
-			otherAttrHash.destroy();
-			otherAttrHash = null;
-		}
-		this.otherAttrHash.destroy();
+		this.removeAllAttCB();
 		this._otherAttrHash = null;
 
 		this.destroy();
@@ -118,6 +95,21 @@ abstract class DataBase
 		
 		LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${this} 没有注册 ${propName}`);
 		return false; //没有注册
+	}
+
+	// ---------------------------------------------------------------------- 移除属性监听
+	public removeAllAttrListener()
+	{
+		for(let value of this.hash.values())
+		{
+			for(let cbData of value)
+			{
+				cbData.destroy();
+				cbData = null;
+			}
+			value.length = 0;
+		}
+		this.hash.destroy();
 	}
 
 	// ---------------------------------------------------------------------- 发射属性
@@ -220,6 +212,26 @@ abstract class DataBase
 		}
 		LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${this} 没有注册 ${propName}`);
 		return false;
+	}
+
+	// ---------------------------------------------------------------------- 移除所有某对象属性
+	public removeAllAttCB()
+	{
+		for(let otherAttrHash of this.otherAttrHash.values())
+		{
+			for(let cbDataArray of otherAttrHash.values())
+			{
+				for(let cbData of cbDataArray)
+				{
+					cbData.destroy();
+					cbData = null;
+				}
+				cbDataArray.length = 0;
+			}
+			otherAttrHash.destroy();
+			otherAttrHash = null;
+		}
+		this.otherAttrHash.destroy();
 	}
 
 	// ---------------------------------------------------------------------- 访问器

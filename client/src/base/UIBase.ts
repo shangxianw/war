@@ -5,8 +5,9 @@
  */
 abstract class UIBase extends eui.Component
 {
-	public id:number;
-	private _hash:Hash<string ,CBData[]>; // 惰性加载
+	public uniqueCode:number;
+	private _attrHash:Hash<string ,CBData[]>; // 惰性加载
+	private _otherAttrHash:Hash<DataBase, Hash<string ,CBData[]>> // 惰性加载
 	private touchList:TouchData[];
 	public constructor(skinName:string = null, data:any=null)
 	{
@@ -21,7 +22,7 @@ abstract class UIBase extends eui.Component
 
 	protected initAll(data:any=null)
 	{
-		this.id = IDManager.Ins().getNewId();
+		this.uniqueCode = IDManager.Ins().getNewId();
 		this.touchList = [];
 		this.init();
 	}
@@ -33,14 +34,11 @@ abstract class UIBase extends eui.Component
 		this.destroy();
 	}
 
-	// ---------------------------------------------------------------------- 注册属性变更相关
-	public addAttrListener(propName:string, cbFn:Function, thisObj:any, param:any = null):boolean
+	// ---------------------------------------------------------------------- 注册属性
+	public addAttrListener(propName:string, cbFn:Function, thisObj:any, runImmediately:boolean=true, param:any = null):boolean
 	{
-		if(propName == null || cbFn == null || thisObj == null)
-		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+		if(LogUtils.CheckParamValid(propName, cbFn, thisObj) == false)
 			return false;
-		}
 
 		if(this.hash.has(propName) == false)
 		{
@@ -59,20 +57,20 @@ abstract class UIBase extends eui.Component
 
 		let cbData = (new CBData).packData(cbFn, thisObj, param);
 		arr.push(cbData);
+		if(runImmediately == true)
+			cbData.exec()
 		return true;
 	}
 
+	// ---------------------------------------------------------------------- 移除属性
 	public removeAttrListener(propName:string, cbFn:Function, thisObj:any):boolean
 	{
-		if(propName == null || cbFn == null || thisObj == null)
-		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+		if(LogUtils.CheckParamValid(propName, cbFn, thisObj) == false)
 			return false;
-		}
 
 		if(this.hash.has(propName) == false)
 		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
+			// LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
 			return true;
 		}
 		
@@ -100,48 +98,26 @@ abstract class UIBase extends eui.Component
 		return false; //没有注册
 	}
 
-	public hasAttrListener(propName:string, cbFn:Function, thisObj:Object):boolean
+	// ---------------------------------------------------------------------- 移除属性监听
+	public removeAllAttrListener()
 	{
-		if(propName == null || cbFn == null || thisObj == null)
+		for(let value of this.hash.values())
 		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
-			return false;
-		}
-
-		if(this.hash.has(propName) == false)
-		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
-			return false;
-		}
-
-		let arr:CBData[] = this.hash.get(propName),
-			cbData:CBData;
-		for(let i=0, len=arr.length; i<len; i++)
-		{
-			cbData = arr[i];
-			if(cbData == null)
+			for(let cbData of value)
 			{
-				LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 发现空对象`);
-				continue;
+				cbData.destroy();
+				cbData = null;
 			}
-
-			if(cbData.cbFn == cbFn && cbData.thisObj == thisObj)
-			{
-				return true;
-			}
+			value.length = 0;
 		}
-
-		LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
-		return false; //没有注册
+		this.hash.destroy();
 	}
 
+	// ---------------------------------------------------------------------- 发射属性
 	public setAttr(propName:string, value:any)
 	{
-		if(propName == null)
-		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+		if(LogUtils.CheckParamValid(propName) == false)
 			return false;
-		}
 
 		Object.defineProperty(this, propName, 
 		{
@@ -151,13 +127,11 @@ abstract class UIBase extends eui.Component
 		this.updateAttr(propName);
 	}
 
+	// ---------------------------------------------------------------------- 注册属性2
 	public updateAttr(propName:string)
 	{
-		if(propName == null)
-		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+		if(LogUtils.CheckParamValid(propName) == false)
 			return false;
-		}
 
 		if(this.hash.has(propName) == false)
 		{
@@ -178,18 +152,102 @@ abstract class UIBase extends eui.Component
 		}
 	}
 
-	public removeAllAttrListener()
+	// ---------------------------------------------------------------------- 给某对象注册属性
+	public addAttrCB(obj:DataBase, propName:string, cbFn:Function, thisObj:any, runImmediately:boolean=true, param:any = null):boolean
 	{
-		for(let value of this.hash.values())
+		if(LogUtils.CheckParamValid(obj, propName, cbFn, thisObj) == false)
+			return false;
+		
+		if(this.otherAttrHash.has(obj) == false)
 		{
-			for(let cbData of value)
-			{
-				cbData.destroy();
-				cbData = null;
-			}
-			value.length = 0;
+			this.otherAttrHash.set(obj, new Hash<string ,CBData[]>());
 		}
-		this.hash.destroy();
+
+		let otherHash = this.otherAttrHash.get(obj);
+		if(otherHash.has(propName) == false)
+		{
+			otherHash.set(propName, []);
+		}
+
+		let arr:CBData[] = otherHash.get(propName);
+		for(let cbData of arr)
+		{
+			if(cbData.cbFn == cbFn && cbData.thisObj == thisObj)
+			{
+				LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 重复注册 ${propName}`);
+				return false;
+			}
+		}
+
+		let cbData = (new CBData).packData(cbFn, thisObj, param);
+		arr.push(cbData);
+		if(runImmediately == true)
+			cbData.exec()
+		return true;
+	}
+
+	// ---------------------------------------------------------------------- 给某对象移除属性
+	public removeAttrCB(obj:DataBase, propName:string, cbFn:Function, thisObj:any):boolean
+	{
+		if(LogUtils.CheckParamValid(obj, propName, cbFn, thisObj) == false)
+			return false;
+		
+		if(this.otherAttrHash.has(obj) == false)
+		{
+			return true;
+		}
+
+		let otherHash = this.otherAttrHash.get(obj);
+		if(otherHash.has(propName) == false)
+		{
+			return true;
+		}
+
+		let arr:CBData[] = otherHash.get(propName);
+		for(let cbData of arr)
+		{
+			if(cbData.cbFn == cbFn && cbData.thisObj == thisObj)
+			{
+				return true;
+			}
+		}
+		LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${this} 没有注册 ${propName}`);
+		return false;
+	}
+
+	// ---------------------------------------------------------------------- 移除所有某对象属性
+	public removeAllAttCB()
+	{
+		for(let otherAttrHash of this.otherAttrHash.values())
+		{
+			for(let cbDataArray of otherAttrHash.values())
+			{
+				for(let cbData of cbDataArray)
+				{
+					cbData.destroy();
+					cbData = null;
+				}
+				cbDataArray.length = 0;
+			}
+			otherAttrHash.destroy();
+			otherAttrHash = null;
+		}
+		this.otherAttrHash.destroy();
+	}
+
+	// ---------------------------------------------------------------------- 访问器
+	private get hash():Hash<string, CBData[]>
+	{
+		if(this._attrHash == null)
+			this._attrHash = new Hash<string, CBData[]>();
+		return this._attrHash;
+	}
+
+	private get otherAttrHash():Hash<DataBase, Hash<string ,CBData[]>>
+	{
+		if(this._otherAttrHash == null)
+			this._otherAttrHash = new Hash<DataBase, Hash<string ,CBData[]>>();
+		return this._otherAttrHash;
 	}
 
 	// ---------------------------------------------------------------------- 注册事件相关
@@ -256,13 +314,6 @@ abstract class UIBase extends eui.Component
 			PoolManager.Ins().push(item);
 		}
 		this.touchList.length = 0;
-	}
-
-	private get hash():Hash<string, CBData[]>
-	{
-		if(this._hash == null)
-			this._hash = new Hash<string, CBData[]>();
-		return this._hash;
 	}
 }
 

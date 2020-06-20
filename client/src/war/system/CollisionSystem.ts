@@ -38,7 +38,7 @@ module war
 				if(entity2 == null)
 					continue;
 				
-				if(entity1.id == entity2.id)
+				if(entity1.uniqueCode == entity2.uniqueCode)
 					continue;
 				
 				rCom2 = entity2.getCom(COMPONENT.GRIGD) as RangeCom;

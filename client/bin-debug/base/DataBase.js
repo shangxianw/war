@@ -11,40 +11,22 @@ var DataBase = (function () {
         this.initAll();
     }
     DataBase.prototype.initAll = function () {
-        this.hasCode = IDManager.Ins().getNewId();
+        this.uniqueCode = IDManager.Ins().getNewId();
         this.init();
     };
     DataBase.prototype.destroyAll = function () {
-        for (var _i = 0, _a = this.hash.values(); _i < _a.length; _i++) {
-            var value = _a[_i];
-            for (var _b = 0, value_1 = value; _b < value_1.length; _b++) {
-                var cbData = value_1[_b];
-                cbData.destroy();
-                cbData = null;
-            }
-            value.length = 0;
-        }
-        this.hash.destroy();
+        this.removeAllAttrListener();
         this._attrHash = null;
-        for (var _c = 0, _d = this.otherAttrHash.values(); _c < _d.length; _c++) {
-            var value = _d[_c];
-            for (var _e = 0, value_2 = value; _e < value_2.length; _e++) {
-                var cbData = value_2[_e];
-                cbData.destroy();
-                cbData = null;
-            }
-            value.length = 0;
-        }
-        this.otherAttrHash.destroy();
+        this.removeAllAttCB();
         this._otherAttrHash = null;
         this.destroy();
     };
-    DataBase.prototype.addAttrListener = function (propName, cbFn, thisObj, param) {
+    // ---------------------------------------------------------------------- 注册属性
+    DataBase.prototype.addAttrListener = function (propName, cbFn, thisObj, runImmediately, param) {
+        if (runImmediately === void 0) { runImmediately = true; }
         if (param === void 0) { param = null; }
-        if (propName == null || cbFn == null || thisObj == null) {
-            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53C2\u6570\u6709\u8BEF");
+        if (LogUtils.CheckParamValid(propName, cbFn, thisObj) == false)
             return false;
-        }
         if (this.hash.has(propName) == false) {
             this.hash.set(propName, []);
         }
@@ -58,13 +40,14 @@ var DataBase = (function () {
         }
         var cbData = (new CBData).packData(cbFn, thisObj, param);
         arr.push(cbData);
+        if (runImmediately == true)
+            cbData.exec();
         return true;
     };
+    // ---------------------------------------------------------------------- 移除属性
     DataBase.prototype.removeAttrListener = function (propName, cbFn, thisObj) {
-        if (propName == null || cbFn == null || thisObj == null) {
-            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53C2\u6570\u6709\u8BEF");
+        if (LogUtils.CheckParamValid(propName, cbFn, thisObj) == false)
             return false;
-        }
         if (this.hash.has(propName) == false) {
             // LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${thisObj} 没有注册 ${propName}`);
             return true;
@@ -86,45 +69,33 @@ var DataBase = (function () {
         LogUtils.Warn(Utils.GetClassNameByObj(this) + " : " + this + " \u6CA1\u6709\u6CE8\u518C " + propName);
         return false; //没有注册
     };
-    DataBase.prototype.hasAttrListener = function (propName, cbFn, thisObj) {
-        if (propName == null || cbFn == null || thisObj == null) {
-            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53C2\u6570\u6709\u8BEF");
-            return false;
-        }
-        if (this.hash.has(propName) == false) {
-            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : " + thisObj + " \u6CA1\u6709\u6CE8\u518C " + propName);
-            return false;
-        }
-        var arr = this.hash.get(propName), cbData;
-        for (var i = 0, len = arr.length; i < len; i++) {
-            cbData = arr[i];
-            if (cbData == null) {
-                LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53D1\u73B0\u7A7A\u5BF9\u8C61");
-                continue;
+    // ---------------------------------------------------------------------- 移除属性监听
+    DataBase.prototype.removeAllAttrListener = function () {
+        for (var _i = 0, _a = this.hash.values(); _i < _a.length; _i++) {
+            var value = _a[_i];
+            for (var _b = 0, value_1 = value; _b < value_1.length; _b++) {
+                var cbData = value_1[_b];
+                cbData.destroy();
+                cbData = null;
             }
-            if (cbData.cbFn == cbFn && cbData.thisObj == thisObj) {
-                return true;
-            }
+            value.length = 0;
         }
-        LogUtils.Warn(Utils.GetClassNameByObj(this) + " : " + thisObj + " \u6CA1\u6709\u6CE8\u518C " + propName);
-        return false; //没有注册
+        this.hash.destroy();
     };
+    // ---------------------------------------------------------------------- 发射属性
     DataBase.prototype.setAttr = function (propName, value) {
-        if (propName == null) {
-            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53C2\u6570\u6709\u8BEF");
+        if (LogUtils.CheckParamValid(propName) == false)
             return false;
-        }
         Object.defineProperty(this, propName, {
             value: value,
             writable: true
         });
         this.updateAttr(propName);
     };
+    // ---------------------------------------------------------------------- 注册属性2
     DataBase.prototype.updateAttr = function (propName) {
-        if (propName == null) {
-            LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53C2\u6570\u6709\u8BEF");
+        if (LogUtils.CheckParamValid(propName) == false)
             return false;
-        }
         if (this.hash.has(propName) == false) {
             LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u6CA1\u6709\u6CE8\u518C " + propName);
         }
@@ -133,13 +104,80 @@ var DataBase = (function () {
             if (value == null) {
                 return LogUtils.Warn(Utils.GetClassNameByObj(this) + " : \u53D1\u73B0\u7A7A\u5BF9\u8C61");
             }
-            for (var _b = 0, value_3 = value; _b < value_3.length; _b++) {
-                var cbData = value_3[_b];
+            for (var _b = 0, value_2 = value; _b < value_2.length; _b++) {
+                var cbData = value_2[_b];
                 cbData.exec();
             }
         }
     };
+    // ---------------------------------------------------------------------- 给某对象注册属性
+    DataBase.prototype.addAttrCB = function (obj, propName, cbFn, thisObj, runImmediately, param) {
+        if (runImmediately === void 0) { runImmediately = true; }
+        if (param === void 0) { param = null; }
+        if (LogUtils.CheckParamValid(obj, propName, cbFn, thisObj) == false)
+            return false;
+        if (this.otherAttrHash.has(obj) == false) {
+            this.otherAttrHash.set(obj, new Hash());
+        }
+        var otherHash = this.otherAttrHash.get(obj);
+        if (otherHash.has(propName) == false) {
+            otherHash.set(propName, []);
+        }
+        var arr = otherHash.get(propName);
+        for (var _i = 0, arr_2 = arr; _i < arr_2.length; _i++) {
+            var cbData_2 = arr_2[_i];
+            if (cbData_2.cbFn == cbFn && cbData_2.thisObj == thisObj) {
+                LogUtils.Warn(Utils.GetClassNameByObj(this) + " : " + thisObj + " \u91CD\u590D\u6CE8\u518C " + propName);
+                return false;
+            }
+        }
+        var cbData = (new CBData).packData(cbFn, thisObj, param);
+        arr.push(cbData);
+        if (runImmediately == true)
+            cbData.exec();
+        return true;
+    };
+    // ---------------------------------------------------------------------- 给某对象移除属性
+    DataBase.prototype.removeAttrCB = function (obj, propName, cbFn, thisObj) {
+        if (LogUtils.CheckParamValid(obj, propName, cbFn, thisObj) == false)
+            return false;
+        if (this.otherAttrHash.has(obj) == false) {
+            return true;
+        }
+        var otherHash = this.otherAttrHash.get(obj);
+        if (otherHash.has(propName) == false) {
+            return true;
+        }
+        var arr = otherHash.get(propName);
+        for (var _i = 0, arr_3 = arr; _i < arr_3.length; _i++) {
+            var cbData = arr_3[_i];
+            if (cbData.cbFn == cbFn && cbData.thisObj == thisObj) {
+                return true;
+            }
+        }
+        LogUtils.Warn(Utils.GetClassNameByObj(this) + " : " + this + " \u6CA1\u6709\u6CE8\u518C " + propName);
+        return false;
+    };
+    // ---------------------------------------------------------------------- 移除所有某对象属性
+    DataBase.prototype.removeAllAttCB = function () {
+        for (var _i = 0, _a = this.otherAttrHash.values(); _i < _a.length; _i++) {
+            var otherAttrHash = _a[_i];
+            for (var _b = 0, _c = otherAttrHash.values(); _b < _c.length; _b++) {
+                var cbDataArray = _c[_b];
+                for (var _d = 0, cbDataArray_1 = cbDataArray; _d < cbDataArray_1.length; _d++) {
+                    var cbData = cbDataArray_1[_d];
+                    cbData.destroy();
+                    cbData = null;
+                }
+                cbDataArray.length = 0;
+            }
+            otherAttrHash.destroy();
+            otherAttrHash = null;
+        }
+        this.otherAttrHash.destroy();
+    };
     Object.defineProperty(DataBase.prototype, "hash", {
+        // ---------------------------------------------------------------------- 访问器
         get: function () {
             if (this._attrHash == null)
                 this._attrHash = new Hash();
