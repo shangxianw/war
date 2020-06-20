@@ -1,4 +1,4 @@
-class ResGroupData extends DataBase
+class GroupCollectData extends DataBase
 {
 	public groupNameArray:string[];
 	public priority:number;

@@ -1,11 +1,11 @@
 class ResManager extends DataBase
 {
 	private resMap:Hash<string, ResData>;
-	private groupArray:ResGroupData[]; // 待加载资源组
-	private useGroupArray:ResGroupData[] // 在使用中的资源组
+	private collectArray:GroupCollectData[]; // 待加载资源组
+	private useCollectArray:GroupCollectData[] // 在使用中的资源组
 
-	private isLoading:boolean;				// 加载完一整个资源组集合才算false
-	private currLoadInfo:ResGroupData;
+	private isLoading:boolean;				// 0未加载 1资源组集加载完毕 2资源组加载完
+	private currCollectData:GroupCollectData;
 
 	public READY_DERTROY_SECOND:number;
 	public ERROR_LOAD_COUNT:number;
@@ -24,8 +24,8 @@ class ResManager extends DataBase
 		this.ERROR_LOAD_COUNT = 5;
 
 		this.resMap = new Hash<string, ResData>();
-		this.groupArray = [];
-		this.useGroupArray = [];
+		this.collectArray = [];
+		this.useCollectArray = [];
 		this.isLoading = false;
 		RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.OnResourceLoadComplete,this);
 		RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS,this.OnResourceLoadProgress,this);
@@ -35,8 +35,8 @@ class ResManager extends DataBase
 
 	protected destroy()
 	{
-		this.groupArray = [];
-		this.useGroupArray = [];
+		this.collectArray = [];
+		this.useCollectArray = [];
 		this.isLoading = false;
 		TimerManager.Ins().removeTimer(this.update, this);
 		RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.OnResourceLoadComplete,this);
@@ -44,16 +44,16 @@ class ResManager extends DataBase
 		RES.removeEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR,this.OnResourceLoadError,this);
 	}
 
-	public loadGroup(groupNameArray:string[], cbFn:Function=null, thisObj:any=null, progFn:Function=null, errFn:Function=null, priority:number = null):number
+	public loadGroup(collectArray:string[], cbFn:Function=null, thisObj:any=null, progFn:Function=null, errFn:Function=null, priority:number = null):boolean
 	{
-		if(LogUtils.CheckParamValid(groupNameArray) == false)
-			return null;
+		if(collectArray == null || collectArray.length <= 0)
+			return false;
 		
-		let resGroupData = neww(ResGroupData) as ResGroupData;
-		resGroupData.packDate(groupNameArray, cbFn, thisObj, progFn, errFn, priority)
-		this.groupArray.push(resGroupData);
-		this.groupArray.sort(this.sortGroupArray);
-		return resGroupData.uniqueCode;
+		let GroupCollectData = neww(GroupCollectData) as GroupCollectData;
+		GroupCollectData.packDate(groupNameArray, cbFn, thisObj, progFn, errFn, priority)
+		this.groupCollectArray.push(GroupCollectData);
+		this.groupCollectArray.sort(this.sortGroupArray);
+		return GroupCollectData.uniqueCode;
 	}
 
 	public destroyGroup(uniqueCode:number)
@@ -63,21 +63,17 @@ class ResManager extends DataBase
 
 	private OnResourceLoadComplete(e:RES.ResourceEvent)
 	{
-		if(this.currLoadInfo.isEnd() == false)
+		if(this.currCollectData.isEnd() == true)
 		{
-			let flag = this.loadNextGroupName();
-			this.isLoading = flag;
-		}
-		else
-		{
-			this.currLoadInfo.execCb(e);
+			this.currCollectData.execCb(e);
+			this.isLoading = false;
 		}
 	}
 
 	private OnResourceLoadProgress(e:RES.ResourceEvent)
 	{
-		this.currLoadInfo.itemsLoaded = e.itemsLoaded;
-		this.currLoadInfo.itemsTotal = e.itemsTotal;
+		this.currCollectData.itemsLoaded = e.itemsLoaded;
+		this.currCollectData.itemsTotal = e.itemsTotal;
 
 		let resData:ResData;
 		if(this.resMap.has(e.resItem.name) == false)
@@ -88,12 +84,20 @@ class ResManager extends DataBase
 		}
 		resData = this.resMap.get(e.resItem.name);
 		resData.addCount();
-		this.currLoadInfo.execProg(e);
+		this.currCollectData.execProg(e);
 	}
 
 	private OnResourceLoadError(e:RES.ResourceEvent)
 	{
-		
+		this.currCollectData.addErrCount();
+		if(this.currCollectData.errLoadCount < this.ERROR_LOAD_COUNT)
+		{
+			this.reloadGroup();
+		}
+		else
+		{
+			this.loadNextGroup();
+		}
 	}
 
 	private update()
@@ -105,32 +109,49 @@ class ResManager extends DataBase
 		}
 		else
 		{
-
+			
 		}
 	}
 
+	/**
+	 * 加载下一个资源组
+	 * 当一个资源组集里的资源组都加载完之后，就加载下一个资源组集里的资源组
+	 */
 	private loadNextGroup():boolean
 	{
-		this.currLoadInfo = this.groupArray.shift();
-		if(this.currLoadInfo == null)
-			return false;
-		let groupName = this.currLoadInfo.currGroup();
-		if(groupName == null)
-			return false;
-		RES.loadGroup(groupName);
-		return true;
+		if(this.currCollectData == null)
+		{
+			this.currCollectData = this.collectArray.shift();
+			if(this.currCollectData == null)
+				return false;
+			let groupName = this.currCollectData.nextGroup();
+			RES.loadGroup(groupName);
+			return true;
+		}
+		else
+		{
+			let groupName = this.currCollectData.nextGroup();
+			if(groupName == null) // 当前组集已经加载完毕
+			{
+				this.currCollectData = this.collectArray.shift();
+				if(this.currCollectData == null)
+					return false;
+				groupName = this.currCollectData.nextGroup();
+				RES.loadGroup(groupName);
+				return true;
+			}
+			RES.loadGroup(groupName);
+			return true;
+		}
 	}
 
-	private loadNextGroupName()
+	private reloadGroup()
 	{
-		let groupName = this.currLoadInfo.nextGroup();
-		if(groupName == null)
-			return false;
+		let groupName = this.currCollectData.currGroup();
 		RES.loadGroup(groupName);
-		return true;
 	}
 
-	private sortGroupArray(a:ResGroupData, b:ResGroupData)
+	private sortGroupArray(a:GroupCollectData, b:GroupCollectData)
 	{
 		return a.priority < b.priority ? -1 : 1;
 	}
