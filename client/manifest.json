@@ -35,7 +35,6 @@
 		"bin-debug/base/MathUtils.js",
 		"bin-debug/base/NetManager.js",
 		"bin-debug/base/PoolManager.js",
-		"bin-debug/base/ResManager.js",
 		"bin-debug/base/SocketManager.js",
 		"bin-debug/base/TimerManager.js",
 		"bin-debug/ThemeAdapter.js",
