@@ -5,7 +5,7 @@
  */
 abstract class DataBase
 {
-	public hasCode:number;
+	public uniqueCode:number;
 	private _attrHash:Hash<string ,CBData[]>; // 惰性加载
 	private _otherAttrHash:Hash<DataBase, Hash<string ,CBData[]>> // 惰性加载
 	public constructor()
