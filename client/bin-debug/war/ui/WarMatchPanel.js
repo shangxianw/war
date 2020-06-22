@@ -17,7 +17,7 @@ var war;
         }
         // 应该load资源
         WarMatchPanelData.prototype.init = function () {
-            this.resGroup = "war_preload";
+            this.resGroup = ["war_preload"];
             this.layer = LayerManager.Ins().Panel;
         };
         WarMatchPanelData.prototype.destroy = function () {

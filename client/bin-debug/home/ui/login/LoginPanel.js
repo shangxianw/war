@@ -16,7 +16,7 @@ var home;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         LoginPanelData.prototype.init = function () {
-            this.resGroup = "";
+            this.resGroup = [];
             this.layer = LayerManager.Ins().Panel;
         };
         LoginPanelData.prototype.destroy = function () {

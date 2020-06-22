@@ -79,8 +79,8 @@ var ViewManager = (function (_super) {
             LogUtils.Warn("\u9762\u677F\u6CA1\u6709\u7236\u7EA7");
             return false;
         }
-        if (view.viewInfo.resGroup != null && view.viewInfo.resGroup != "")
-            ResManager.Ins().destroyGroup(view.viewInfo.resGroup);
+        if (view.viewInfo.resGroup != null && view.viewInfo.resGroup.length <= 0)
+            ResManager.Ins().destroyGroup(view.viewInfo.resGroupId);
         this.uiMap.remove(className);
         view = null;
         return true;

@@ -54,16 +54,14 @@ var home;
         LoadingPanel.prototype.loadRes = function () {
             this.bar.minimum = 0;
             this.bar.value = 0;
-            for (var _i = 0, _a = this.info.resGroupArray; _i < _a.length; _i++) {
-                var groupName = _a[_i];
-                ResManager.Ins().loadGroup(groupName, this.OnLoadGroupOk, this, this.OnLoadGroupProgress, this.OnLoadGroupError);
-            }
+            ResManager.Ins().loadGroup(this.info.resGroupArray, this.OnLoadGroupOk, this, this.OnLoadGroupProgress, this.OnLoadGroupError);
         };
         LoadingPanel.prototype.OnLoadGroupOk = function (e) {
             this.info.currCount++;
             if (this.info.currCount >= this.info.resGroupArray.length) {
                 this.info.currCount = 0;
-                this.loadCfg();
+                // this.loadCfg();
+                this.loadOK();
             }
         };
         LoadingPanel.prototype.OnLoadGroupProgress = function (e) {
@@ -74,10 +72,10 @@ var home;
         };
         // ---------------------------------------------------------------------- 加载配置表
         LoadingPanel.prototype.loadCfg = function () {
-            for (var _i = 0, _a = this.info.cfgGroupArray; _i < _a.length; _i++) {
-                var cfgName = _a[_i];
-                ResManager.Ins().loadResAsync(cfgName, this.OnLoadCfgOK, this);
-            }
+            // for(let cfgName of this.info.cfgGroupArray)
+            // {
+            // 	ResManager.Ins().loadResAsync(cfgName, this.OnLoadCfgOK, this);
+            // }
         };
         LoadingPanel.prototype.OnLoadCfgOK = function (data, key) {
             this.info.currCount++;

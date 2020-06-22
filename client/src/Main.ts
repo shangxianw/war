@@ -87,16 +87,16 @@ class Main extends eui.UILayer
     protected createGameScene(): void {
         GameUtils.main = this;
         LayerManager.Ins();
-        NetManager.Ins();
-        NetManager.Ins().initData();
+        // NetManager.Ins();
+        // NetManager.Ins().initData();
         // war.WarDataMgr.Ins();
-        ViewManager.Ins().open(home.LoginPanel);
+        // ViewManager.Ins().open(home.LoginPanel);
     }
 }
 
-function neww<T>(cls:T):any
+function neww(cls:any):any
 {
-    return PoolManager.Ins().pop(cls) as T;
+    return PoolManager.Ins().pop(cls);
 }
 
 function deletee<T>(cls:T)

@@ -2,6 +2,7 @@ class ViewData extends DataBase
 {
 	protected static ID:number;
 	public resGroup:string[];
+	public resGroupId:number;
 	public layer:eui.UILayer;
 
 	protected init()

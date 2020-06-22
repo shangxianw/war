@@ -16,7 +16,7 @@ var home;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         DemoPanelData.prototype.init = function () {
-            this.resGroup = "";
+            this.resGroup = [];
             this.layer = LayerManager.Ins().Panel;
         };
         DemoPanelData.prototype.destroy = function () {

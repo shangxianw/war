@@ -4,7 +4,7 @@ module home
 	{
 		protected init()
 		{
-			this.resGroup = "";
+			this.resGroup = [];
 			this.layer = LayerManager.Ins().Panel;
 		}
 

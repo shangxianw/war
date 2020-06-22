@@ -5,7 +5,7 @@ module war
 		// 应该load资源
 		protected init()
 		{
-			this.resGroup = "war_preload";
+			this.resGroup = ["war_preload"];
 			this.layer = LayerManager.Ins().Panel;
 
 		}

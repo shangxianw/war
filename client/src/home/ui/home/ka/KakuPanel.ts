@@ -5,7 +5,7 @@ module home
 		public selKa:HeroKa2;
 		protected init()
 		{
-			this.resGroup = "";
+			this.resGroup = [];
 			this.layer = LayerManager.Ins().Panel;
 		}
 

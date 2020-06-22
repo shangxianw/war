@@ -64,10 +64,7 @@ module home
 		{
 			this.bar.minimum = 0;
 			this.bar.value = 0;
-			for(let groupName of this.info.resGroupArray)
-			{
-				ResManager.Ins().loadGroup(groupName, this.OnLoadGroupOk, this, this.OnLoadGroupProgress, this.OnLoadGroupError);
-			}
+			ResManager.Ins().loadGroup(this.info.resGroupArray, this.OnLoadGroupOk, this, this.OnLoadGroupProgress, this.OnLoadGroupError);
 		}
 
 		private OnLoadGroupOk(e:RES.ResourceEvent)
@@ -76,7 +73,8 @@ module home
 			if(this.info.currCount >= this.info.resGroupArray.length) // 结束
 			{
 				this.info.currCount = 0;
-				this.loadCfg();
+				// this.loadCfg();
+				this.loadOK();
 			}
 		}
 
@@ -94,10 +92,10 @@ module home
 		// ---------------------------------------------------------------------- 加载配置表
 		private loadCfg()
 		{
-			for(let cfgName of this.info.cfgGroupArray)
-			{
-				ResManager.Ins().loadResAsync(cfgName, this.OnLoadCfgOK, this);
-			}
+			// for(let cfgName of this.info.cfgGroupArray)
+			// {
+			// 	ResManager.Ins().loadResAsync(cfgName, this.OnLoadCfgOK, this);
+			// }
 		}
 
 		private OnLoadCfgOK(data, key:string)

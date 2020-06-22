@@ -16,7 +16,7 @@ var home;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         HeroKa2Data.prototype.init = function () {
-            this.resGroup = "";
+            this.resGroup = [];
             this.layer = LayerManager.Ins().Panel;
         };
         HeroKa2Data.prototype.destroy = function () {

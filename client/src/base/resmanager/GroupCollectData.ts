@@ -6,6 +6,7 @@ class GroupCollectData extends DataBase
 	public currIndex:number;
 	public itemsLoaded:number;
 	public itemsTotal:number;
+	public resArray:string[];
 
 	public cbFn:Function;
 	public progFn:Function;
@@ -23,6 +24,7 @@ class GroupCollectData extends DataBase
 		this.itemsLoaded = 0;
 		this.itemsTotal = 0;
 		this.errLoadCount = 0;
+		this.resArray = [];
 	}
 
 	protected destroy()
@@ -35,6 +37,7 @@ class GroupCollectData extends DataBase
 		this.itemsLoaded = 0;
 		this.itemsTotal = 0;
 		this.errLoadCount = 0;
+		this.resArray.length = 0;
 	}
 
 	public packDate(groupNames:string[], cbFn:Function=null, thisObj:any=null, progFn:Function=null, errFn:Function=null, priority:number)
@@ -45,6 +48,7 @@ class GroupCollectData extends DataBase
 		this.errFn = errFn;
 		this.thisObj = thisObj;
 		this.progFn = progFn;
+		this.initResName();
 		return this;
 	}
 
@@ -55,7 +59,7 @@ class GroupCollectData extends DataBase
 
 	public isEnd()
 	{
-		return this.currIndex >= this.groupNameArray.length && this.itemsLoaded >= this.itemsTotal;
+		return this.currIndex >= this.groupNameArray.length-1 && this.itemsLoaded >= this.itemsTotal;
 	}
 
 	public nextGroup()
@@ -88,5 +92,19 @@ class GroupCollectData extends DataBase
 		if(this.errFn == null || this.thisObj == null)
 			return;
 		this.errFn.call(this.thisObj, query);
+	}
+
+	private initResName()
+	{
+		for(let groupName of this.groupNameArray)
+		{
+			let groupData = RES.getGroupByName(groupName);
+			if(groupData == null)
+				continue;
+			for(let item of groupData)
+			{
+				this.resArray.push(item.name);
+			}
+		}
 	}
 }
