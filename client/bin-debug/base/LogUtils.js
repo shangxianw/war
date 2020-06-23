@@ -10,15 +10,13 @@ var LogUtils = (function () {
     };
     LogUtils.Warn = function (desc) {
         if (GameData.DevelopMode == DevelopMode.DEBUG)
-            console.log(desc);
+            console.warn(desc);
     };
     LogUtils.Error = function (desc) {
         if (GameData.DevelopMode == DevelopMode.DEBUG) {
             var stack = new Error().stack;
-            console.error("======================================================================");
-            console.log(desc);
-            console.log(stack);
-            console.error("======================================================================");
+            console.error(desc);
+            console.error(stack);
         }
     };
     LogUtils.CheckParamValid = function () {

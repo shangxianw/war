@@ -1,12 +1,18 @@
+/**
+ * 资源管理器
+ * 当使用load相关方法时，会给对应的资源引用+1。
+ * 当使用destroy相关方法时，会给对应的资源引用-1。
+ * 资源引用为0时，并不会立刻销毁，而是等到一定时间才进行判断。
+ * 有个缺点：如果出现资源未销毁的情况，这并不知道是谁没有销毁
+ */
 class ResManager extends DataBase
 {
 	private resMap:Hash<string, ResData>;
-	private collectArray:GroupCollectData[]; // 待加载资源组
-	private useCollectArray:GroupCollectData[] // 在使用中的资源组
-	private destroyArray:number[]; // 准备销毁的资源组集
-
-	private isLoading:boolean;				// 0未加载 1资源组集加载完毕 2资源组加载完
-	private currCollectData:GroupCollectData;
+	private collectArray:CollectData[];   // 待加载资源组集
+	private useCollectArray:CollectData[] // 已加载资源组集
+	private currCollectData:CollectData;  // 正在加载的资源组集
+	private waitDestroyArray:number[];    // 待销毁的资源(处理正在加载的情况)
+	private isLoading:boolean;
 
 	public READY_DERTROY_SECOND:number;
 	public ERROR_LOAD_COUNT:number;
@@ -25,24 +31,24 @@ class ResManager extends DataBase
 		this.READY_DERTROY_SECOND = 5000;
 		this.ERROR_LOAD_COUNT = 5;
 		this.DESTROY_ONCE_COUNT = 20;
+		this.isLoading = false;
 
 		this.resMap = new Hash<string, ResData>();
 		this.collectArray = [];
 		this.useCollectArray = [];
-		this.destroyArray = [];
-		this.isLoading = false;
+		this.waitDestroyArray = []
 		RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.OnResourceLoadComplete,this);
 		RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS,this.OnResourceLoadProgress,this);
 		RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR,this.OnResourceLoadError,this);
-		TimerManager.Ins().addTimer(1000, this.update, this);
+		TimerManager.Ins().addTimer(200, this.update, this);
 	}
 
 	protected destroy()
 	{
+		this.isLoading = false;
 		DataUtils.DestroyDataBaseArray(this.collectArray);
 		DataUtils.DestroyDataBaseArray(this.useCollectArray);
-		this.destroyArray = null;
-		this.isLoading = false;
+		this.waitDestroyArray =[];
 		TimerManager.Ins().removeTimer(this.update, this);
 		RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE,this.OnResourceLoadComplete,this);
 		RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS,this.OnResourceLoadProgress,this);
@@ -52,28 +58,193 @@ class ResManager extends DataBase
 	public loadGroup(collectArray:string[], cbFn:Function=null, thisObj:any=null, progFn:Function=null, errFn:Function=null, priority:number = null):number
 	{
 		if(collectArray == null || collectArray.length <= 0)
+		{
+			LogUtils.Error(`【资源组集参数错误】`);
 			return null;
-		RES.getGroupByName(collectArray[0])
-		let groupCollectData = neww(GroupCollectData) as GroupCollectData;
-		groupCollectData.packDate(collectArray, cbFn, thisObj, progFn, errFn, priority)
-		this.collectArray.push(groupCollectData);
-		this.collectArray.sort(this.sortGroupArray);
-		return groupCollectData.uniqueCode;
+		}
+		for(let groupName of collectArray)
+		{
+			if(groupName == null || groupName == "" || RES.getGroupByName(groupName).length <= 0)
+			{
+				LogUtils.Error(`【资源组集参数错误】${collectArray.toString()} 可能包含不存在资源组，或者资源组子项为空`);
+				return null;
+			}
+		}
+
+		// 保存数据
+		let collectData = neww(CollectData) as CollectData;
+		collectData.packDate(collectArray, cbFn, thisObj, progFn, errFn, priority);
+		this.collectArray.push(collectData);
+
+		// 添加引用
+		for(let groupName of collectArray)
+		{
+			for(let resItem of RES.getGroupByName(groupName))
+			{
+				let resName = resItem.name;
+				let resData:ResData;
+				if(this.resMap.has(resName) == false)
+				{
+					resData = neww(ResData) as ResData;
+					resData.packData(resName);
+					this.resMap.set(resName, resData);
+				}
+				resData = this.resMap.get(resName);
+				resData.addRefCount();
+			}
+		}
+		LogUtils.Log(`【资源组集加入到列表】id:${collectData.uniqueCode} ${collectArray.toString()}`)
+		return collectData.uniqueCode;
 	}
 
 	public destroyGroup(uniqueCode:number)
 	{
-		this.destroyArray.push(uniqueCode);
+		if(uniqueCode == null || uniqueCode <= 0)
+		{
+			LogUtils.Error(`【资源组集参数错误】`);
+			return false;
+		}
+
+		let cData:CollectData;
+		for(let collectData of this.collectArray)
+		{
+			if(collectData.uniqueCode == uniqueCode)
+			{
+				cData = collectData;
+				let index = this.collectArray.indexOf(collectData);
+				this.collectArray.splice(index, 1);
+				break;
+			}
+		}
+		if(cData == null)
+		{
+			for(let collectData of this.useCollectArray)
+			{
+				if(collectData.uniqueCode == uniqueCode)
+				{
+					cData = collectData;
+					let index = this.useCollectArray.indexOf(collectData);
+					this.collectArray.splice(index, 1);
+					break;
+				}
+			}
+		}
+
+		if(cData == null)
+		{
+			if(this.currCollectData.uniqueCode == uniqueCode)
+			{
+				this.waitDestroyArray.push(uniqueCode);
+				LogUtils.Warn(`【资源组集正在在加载中，稍后释放】id:${uniqueCode}`);
+				return true;
+			}
+			else
+			{
+				LogUtils.Warn(`【销毁不存在的资源组集】id:${uniqueCode}`);
+				return true;
+			}
+		}
+		
+		// 减少引用
+		this.reduceRefCount(cData);
+		cData.destroyAll();
+		removee(cData);
+		cData = null;
+		LogUtils.Log(`【销毁资源组集】id:${uniqueCode}`)
 		return true;
 	}
 
+	public loadRes(resName:string)
+	{
+		if(resName == null || resName == "")
+		{
+			LogUtils.Warn("【加载资源错误】参数错误");
+			return null;
+		}
+
+		if(RES.hasRes(resName) == false)
+		{
+			LogUtils.Warn("【加载资源错误】资源管理器不存在该配置");
+			return null;
+		}
+
+		let resItem = RES.getRes(resName);
+		if(resItem == null)
+		{
+			LogUtils.Log(`【资源未先加载到内存】resName:${resName}`);
+			return null;
+		}
+
+		let resData:ResData;
+		if(this.resMap.has(resName) == false)
+		{
+			resData = neww(ResData) as ResData;
+			resData.packData(resName);
+			this.resMap.set(resName, resData);
+		}
+		resData = this.resMap.get(resName);
+		resData.addRefCount();
+
+		LogUtils.Log(`【加载资源】resName:${resName}`);
+		return resItem;
+	}
+
+	public destroyRes(resName:string)
+	{
+		if(resName == null || resName == "")
+		{
+			LogUtils.Warn("【加载资源错误】参数错误");
+			return null;
+		}
+
+		if(RES.hasRes(resName) == false)
+		{
+			LogUtils.Warn("【加载资源错误】资源管理器不存在该配置");
+			return null;
+		}
+
+		let resData:ResData;
+		if(this.resMap.has(resName) == false)
+		{
+			LogUtils.Log(`【销毁资源】resName:${resName}`);
+			return true;
+		}
+		resData = this.resMap.get(resName);
+		resData.reduceRefCount(egret.getTimer());
+		LogUtils.Log(`【销毁资源】resName:${resName}`);
+		return true;
+	}
+
+	// ----------------------------------------------------------------------
 	private OnResourceLoadComplete(e:RES.ResourceEvent)
 	{
+		LogUtils.Log(`【加载资源组完成】id:${this.currCollectData.uniqueCode} groupName:${e.groupName}`);
+		this.isLoading = false;
 		if(this.currCollectData.isEnd() == true)
 		{
-			this.currCollectData.execCb(e);
-			this.isLoading = false;
-			this.useCollectArray.push(this.currCollectData);
+			if(this.waitDestroyArray.length <= 0)
+			{
+				this.currCollectData.execCb(e);
+				this.useCollectArray.push(this.currCollectData);
+				LogUtils.Log(`【加载资源组集完成】id:${this.currCollectData.uniqueCode}`);
+			}
+			else
+			{
+				let i=0;
+				for(let uniqueCode of this.waitDestroyArray)
+				{
+					if(this.currCollectData.uniqueCode == uniqueCode)
+					{
+						this.waitDestroyArray.splice(i, 1);
+						this.reduceRefCount(this.currCollectData);
+						this.currCollectData.destroyAll();
+						removee(this.currCollectData);
+						LogUtils.Log(`【销毁已完成的资源组集】id:${this.currCollectData.uniqueCode}`);
+						break;
+					}
+					i++;
+				}
+			}
 			this.currCollectData = null;
 		}
 	}
@@ -82,28 +253,23 @@ class ResManager extends DataBase
 	{
 		this.currCollectData.itemsLoaded = e.itemsLoaded;
 		this.currCollectData.itemsTotal = e.itemsTotal;
-
-		let resData:ResData;
-		if(this.resMap.has(e.resItem.name) == false)
-		{
-			resData = neww(ResData);
-			resData.packData(e.resItem.name);
-			this.resMap.set(e.resItem.name, resData);
-		}
-		resData = this.resMap.get(e.resItem.name);
-		resData.addCount();
 		this.currCollectData.execProg(e);
+		LogUtils.Log(`【加载资源】id:${this.currCollectData.uniqueCode} groupName:${e.groupName} resName:${e.resItem.name}`)
 	}
 
 	private OnResourceLoadError(e:RES.ResourceEvent)
 	{
 		this.currCollectData.addErrCount();
-		if(this.currCollectData.errLoadCount < this.ERROR_LOAD_COUNT)
+		if(this.currCollectData.errLoadCount <= this.ERROR_LOAD_COUNT)
 		{
-			this.reloadGroup();
+			LogUtils.Warn(`【重新加载资源组】id:${this.currCollectData.uniqueCode} groupName:${e.groupName} count:${this.currCollectData.errLoadCount}`);
+			this.reloadGroup(e.groupName);
 		}
 		else
 		{
+			LogUtils.Error(`【加载资源组错误】id:${this.currCollectData.uniqueCode} groupName:${e.groupName} count:${this.currCollectData.errLoadCount}`);
+			if(this.currCollectData.isEnd() == true)
+				this.currCollectData = null;
 			this.loadNextGroup();
 		}
 	}
@@ -112,119 +278,69 @@ class ResManager extends DataBase
 	{
 		if(this.isLoading == false)
 		{
-			let flag = this.loadNextGroup();
-			this.isLoading = flag;
+			this.isLoading = this.loadNextGroup();
 		}
-		this.reducecCountByDestroyArray();
 
-		let destroyCount = 0; // 防止卡顿
-		let currTime = egret.getTimer();
-		let resDataArray:ResData[] = DataUtils.CopyArray(this.resMap.values());
-		for(let resData of resDataArray)
+		let destroyTime = egret.getTimer();
+		let destroyCount:number = 0;
+		let array = this.resMap.values();
+		for(let resData of array)
 		{
-			if(resData == null)
-				continue;
-			if(resData.canDestroy(currTime) == true)
+			if(resData.refCount <= 0 && destroyTime >= resData.destroyTime && RES.getRes(resData.resName) != null)
 			{
-				this.resMap.remove(resData.resName);
+				LogUtils.Log(`【加载资源】resName:${resData.resName}`);
 				RES.destroyRes(resData.resName);
+				this.resMap.remove(resData.resName);
 				resData.destroyAll();
 				removee(resData);
 				destroyCount++;
-				if(destroyCount >= this.DESTROY_ONCE_COUNT)
-				{
-					break;
-				}
 			}
+			if(destroyCount >= this.DESTROY_ONCE_COUNT) // 防止卡顿
+				break;
 		}
-
 		return true;
 	}
 
-	/**
-	 * 加载下一个资源组
-	 * 当一个资源组集里的资源组都加载完之后，就加载下一个资源组集里的资源组
-	 */
 	private loadNextGroup():boolean
 	{
-		if(this.currCollectData == null)
+		if(this.currCollectData == null) // 加载下一个资源组集的第一个资源组
 		{
-			this.currCollectData = this.collectArray.shift();
-			if(this.currCollectData == null)
+			if(this.collectArray.length <= 0)
 				return false;
+			this.currCollectData = this.collectArray.shift();
 			let groupName = this.currCollectData.currGroup();
 			RES.loadGroup(groupName);
+			LogUtils.Log(`【加载资源组】id:${this.currCollectData.uniqueCode} groupName:${groupName}`);
 			return true;
 		}
-		else
+		else	// 加载当前资源组集的下一个资源组
 		{
 			let groupName = this.currCollectData.nextGroup();
-			if(groupName == null) // 当前组集已经加载完毕
-			{
-				this.currCollectData = this.collectArray.shift();
-				if(this.currCollectData == null)
-					return false;
-				groupName = this.currCollectData.nextGroup();
-				RES.loadGroup(groupName);
-				return true;
-			}
 			RES.loadGroup(groupName);
+			LogUtils.Log(`【加载资源组】id:${this.currCollectData.uniqueCode} groupName:${groupName}`);
 			return true;
 		}
 	}
 
-	private reloadGroup()
+	private reloadGroup(groupName:string)
 	{
-		let groupName = this.currCollectData.currGroup();
 		RES.loadGroup(groupName);
 	}
 
-	private sortGroupArray(a:GroupCollectData, b:GroupCollectData)
+	private reduceRefCount(collectData:CollectData)
 	{
-		return a.priority < b.priority ? -1 : 1;
-	}
-
-	private reduceResCount(collectData:GroupCollectData)
-	{
-		let resData:ResData;
 		let currTime = egret.getTimer();
-		for(let resName of collectData.resArray)
+		for(let groupName of collectData.groupNameArray)
 		{
-			resData = this.resMap.get(resName)
-			if(resData == null)
-				continue;
-			resData.reduceCount(currTime);
-		}
-	}
-
-	private reducecCountByDestroyArray()
-	{
-		let destroyArray = DataUtils.CopyArray(this.destroyArray);
-		for(let id of destroyArray)
-		{
-			if(id == null)
-				continue
-			
-			for(let collectData of this.useCollectArray)
+			for(let resItem of RES.getGroupByName(groupName))
 			{
-				if(collectData == null)
+				let resName = resItem.name;
+				let resData:ResData;
+				if(this.resMap.has(resName) == false)
 					continue;
-				if(collectData.uniqueCode == id)
-				{
-					this.reduceResCount(collectData);
-				}
-			}
-
-			for(let collectData of this.collectArray)
-			{
-				if(collectData == null)
-					continue;
-				if(collectData.uniqueCode == id)
-				{
-					this.reduceResCount(collectData);
-				}
+				resData = this.resMap.get(resName);
+				resData.reduceRefCount(currTime);
 			}
 		}
-		this.destroyArray.length = 0;
 	}
 }

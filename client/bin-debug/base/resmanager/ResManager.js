@@ -22,21 +22,21 @@ var ResManager = (function (_super) {
         this.READY_DERTROY_SECOND = 5000;
         this.ERROR_LOAD_COUNT = 5;
         this.DESTROY_ONCE_COUNT = 20;
+        this.isLoading = false;
         this.resMap = new Hash();
         this.collectArray = [];
         this.useCollectArray = [];
-        this.destroyArray = [];
-        this.isLoading = false;
+        this.waitDestroyArray = [];
         RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.OnResourceLoadComplete, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.OnResourceLoadProgress, this);
         RES.addEventListener(RES.ResourceEvent.GROUP_LOAD_ERROR, this.OnResourceLoadError, this);
-        TimerManager.Ins().addTimer(1000, this.update, this);
+        TimerManager.Ins().addTimer(200, this.update, this);
     };
     ResManager.prototype.destroy = function () {
+        this.isLoading = false;
         DataUtils.DestroyDataBaseArray(this.collectArray);
         DataUtils.DestroyDataBaseArray(this.useCollectArray);
-        this.destroyArray = null;
-        this.isLoading = false;
+        this.waitDestroyArray = [];
         TimerManager.Ins().removeTimer(this.update, this);
         RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.OnResourceLoadComplete, this);
         RES.removeEventListener(RES.ResourceEvent.GROUP_PROGRESS, this.OnResourceLoadProgress, this);
@@ -48,144 +48,232 @@ var ResManager = (function (_super) {
         if (progFn === void 0) { progFn = null; }
         if (errFn === void 0) { errFn = null; }
         if (priority === void 0) { priority = null; }
-        if (collectArray == null || collectArray.length <= 0)
+        if (collectArray == null || collectArray.length <= 0) {
+            LogUtils.Error("\u3010\u8D44\u6E90\u7EC4\u96C6\u53C2\u6570\u9519\u8BEF\u3011");
             return null;
-        RES.getGroupByName(collectArray[0]);
-        var groupCollectData = neww(GroupCollectData);
-        groupCollectData.packDate(collectArray, cbFn, thisObj, progFn, errFn, priority);
-        this.collectArray.push(groupCollectData);
-        this.collectArray.sort(this.sortGroupArray);
-        return groupCollectData.uniqueCode;
+        }
+        for (var _i = 0, collectArray_1 = collectArray; _i < collectArray_1.length; _i++) {
+            var groupName = collectArray_1[_i];
+            if (groupName == null || groupName == "" || RES.getGroupByName(groupName).length <= 0) {
+                LogUtils.Error("\u3010\u8D44\u6E90\u7EC4\u96C6\u53C2\u6570\u9519\u8BEF\u3011" + collectArray.toString() + " \u53EF\u80FD\u5305\u542B\u4E0D\u5B58\u5728\u8D44\u6E90\u7EC4\uFF0C\u6216\u8005\u8D44\u6E90\u7EC4\u5B50\u9879\u4E3A\u7A7A");
+                return null;
+            }
+        }
+        // 保存数据
+        var collectData = neww(CollectData);
+        collectData.packDate(collectArray, cbFn, thisObj, progFn, errFn, priority);
+        this.collectArray.push(collectData);
+        // 添加引用
+        for (var _a = 0, collectArray_2 = collectArray; _a < collectArray_2.length; _a++) {
+            var groupName = collectArray_2[_a];
+            for (var _b = 0, _c = RES.getGroupByName(groupName); _b < _c.length; _b++) {
+                var resItem = _c[_b];
+                var resName = resItem.name;
+                var resData = void 0;
+                if (this.resMap.has(resName) == false) {
+                    resData = neww(ResData);
+                    resData.packData(resName);
+                    this.resMap.set(resName, resData);
+                }
+                resData = this.resMap.get(resName);
+                resData.addRefCount();
+            }
+        }
+        LogUtils.Log("\u3010\u8D44\u6E90\u7EC4\u96C6\u52A0\u5165\u5230\u5217\u8868\u3011id:" + collectData.uniqueCode + " " + collectArray.toString());
+        return collectData.uniqueCode;
     };
     ResManager.prototype.destroyGroup = function (uniqueCode) {
-        this.destroyArray.push(uniqueCode);
+        if (uniqueCode == null || uniqueCode <= 0) {
+            LogUtils.Error("\u3010\u8D44\u6E90\u7EC4\u96C6\u53C2\u6570\u9519\u8BEF\u3011");
+            return false;
+        }
+        var cData;
+        for (var _i = 0, _a = this.collectArray; _i < _a.length; _i++) {
+            var collectData = _a[_i];
+            if (collectData.uniqueCode == uniqueCode) {
+                cData = collectData;
+                var index = this.collectArray.indexOf(collectData);
+                this.collectArray.splice(index, 1);
+                break;
+            }
+        }
+        if (cData == null) {
+            for (var _b = 0, _c = this.useCollectArray; _b < _c.length; _b++) {
+                var collectData = _c[_b];
+                if (collectData.uniqueCode == uniqueCode) {
+                    cData = collectData;
+                    var index = this.useCollectArray.indexOf(collectData);
+                    this.collectArray.splice(index, 1);
+                    break;
+                }
+            }
+        }
+        if (cData == null) {
+            if (this.currCollectData.uniqueCode == uniqueCode) {
+                this.waitDestroyArray.push(uniqueCode);
+                LogUtils.Warn("\u3010\u8D44\u6E90\u7EC4\u96C6\u6B63\u5728\u5728\u52A0\u8F7D\u4E2D\uFF0C\u7A0D\u540E\u91CA\u653E\u3011id:" + uniqueCode);
+                return true;
+            }
+            else {
+                LogUtils.Warn("\u3010\u9500\u6BC1\u4E0D\u5B58\u5728\u7684\u8D44\u6E90\u7EC4\u96C6\u3011id:" + uniqueCode);
+                return true;
+            }
+        }
+        // 减少引用
+        this.reduceRefCount(cData);
+        cData.destroyAll();
+        removee(cData);
+        cData = null;
+        LogUtils.Log("\u3010\u9500\u6BC1\u8D44\u6E90\u7EC4\u96C6\u3011id:" + uniqueCode);
         return true;
     };
+    ResManager.prototype.loadRes = function (resName) {
+        if (resName == null || resName == "") {
+            LogUtils.Warn("【加载资源错误】参数错误");
+            return null;
+        }
+        if (RES.hasRes(resName) == false) {
+            LogUtils.Warn("【加载资源错误】资源管理器不存在该配置");
+            return null;
+        }
+        var resItem = RES.getRes(resName);
+        if (resItem == null) {
+            LogUtils.Log("\u3010\u8D44\u6E90\u672A\u5148\u52A0\u8F7D\u5230\u5185\u5B58\u3011resName:" + resName);
+            return null;
+        }
+        var resData;
+        if (this.resMap.has(resName) == false) {
+            resData = neww(ResData);
+            resData.packData(resName);
+            this.resMap.set(resName, resData);
+        }
+        resData = this.resMap.get(resName);
+        resData.addRefCount();
+        LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u3011resName:" + resName);
+        return resItem;
+    };
+    ResManager.prototype.destroyRes = function (resName) {
+        if (resName == null || resName == "") {
+            LogUtils.Warn("【加载资源错误】参数错误");
+            return null;
+        }
+        if (RES.hasRes(resName) == false) {
+            LogUtils.Warn("【加载资源错误】资源管理器不存在该配置");
+            return null;
+        }
+        var resData;
+        if (this.resMap.has(resName) == false) {
+            LogUtils.Log("\u3010\u9500\u6BC1\u8D44\u6E90\u3011resName:" + resName);
+            return true;
+        }
+        resData = this.resMap.get(resName);
+        resData.reduceRefCount(egret.getTimer());
+        LogUtils.Log("\u3010\u9500\u6BC1\u8D44\u6E90\u3011resName:" + resName);
+        return true;
+    };
+    // ----------------------------------------------------------------------
     ResManager.prototype.OnResourceLoadComplete = function (e) {
+        LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u5B8C\u6210\u3011id:" + this.currCollectData.uniqueCode + " groupName:" + e.groupName);
+        this.isLoading = false;
         if (this.currCollectData.isEnd() == true) {
-            this.currCollectData.execCb(e);
-            this.isLoading = false;
-            this.useCollectArray.push(this.currCollectData);
+            if (this.waitDestroyArray.length <= 0) {
+                this.currCollectData.execCb(e);
+                this.useCollectArray.push(this.currCollectData);
+                LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u96C6\u5B8C\u6210\u3011id:" + this.currCollectData.uniqueCode);
+            }
+            else {
+                var i = 0;
+                for (var _i = 0, _a = this.waitDestroyArray; _i < _a.length; _i++) {
+                    var uniqueCode = _a[_i];
+                    if (this.currCollectData.uniqueCode == uniqueCode) {
+                        this.waitDestroyArray.splice(i, 1);
+                        this.reduceRefCount(this.currCollectData);
+                        this.currCollectData.destroyAll();
+                        removee(this.currCollectData);
+                        LogUtils.Log("\u3010\u9500\u6BC1\u5DF2\u5B8C\u6210\u7684\u8D44\u6E90\u7EC4\u96C6\u3011id:" + this.currCollectData.uniqueCode);
+                        break;
+                    }
+                    i++;
+                }
+            }
             this.currCollectData = null;
         }
     };
     ResManager.prototype.OnResourceLoadProgress = function (e) {
         this.currCollectData.itemsLoaded = e.itemsLoaded;
         this.currCollectData.itemsTotal = e.itemsTotal;
-        var resData;
-        if (this.resMap.has(e.resItem.name) == false) {
-            resData = neww(ResData);
-            resData.packData(e.resItem.name);
-            this.resMap.set(e.resItem.name, resData);
-        }
-        resData = this.resMap.get(e.resItem.name);
-        resData.addCount();
         this.currCollectData.execProg(e);
+        LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u3011id:" + this.currCollectData.uniqueCode + " groupName:" + e.groupName + " resName:" + e.resItem.name);
     };
     ResManager.prototype.OnResourceLoadError = function (e) {
         this.currCollectData.addErrCount();
-        if (this.currCollectData.errLoadCount < this.ERROR_LOAD_COUNT) {
-            this.reloadGroup();
+        if (this.currCollectData.errLoadCount <= this.ERROR_LOAD_COUNT) {
+            LogUtils.Warn("\u3010\u91CD\u65B0\u52A0\u8F7D\u8D44\u6E90\u7EC4\u3011id:" + this.currCollectData.uniqueCode + " groupName:" + e.groupName + " count:" + this.currCollectData.errLoadCount);
+            this.reloadGroup(e.groupName);
         }
         else {
+            LogUtils.Error("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u9519\u8BEF\u3011id:" + this.currCollectData.uniqueCode + " groupName:" + e.groupName + " count:" + this.currCollectData.errLoadCount);
+            if (this.currCollectData.isEnd() == true)
+                this.currCollectData = null;
             this.loadNextGroup();
         }
     };
     ResManager.prototype.update = function () {
         if (this.isLoading == false) {
-            var flag = this.loadNextGroup();
-            this.isLoading = flag;
+            this.isLoading = this.loadNextGroup();
         }
-        this.reducecCountByDestroyArray();
-        var destroyCount = 0; // 防止卡顿
-        var currTime = egret.getTimer();
-        var resDataArray = DataUtils.CopyArray(this.resMap.values());
-        for (var _i = 0, resDataArray_1 = resDataArray; _i < resDataArray_1.length; _i++) {
-            var resData = resDataArray_1[_i];
-            if (resData == null)
-                continue;
-            if (resData.canDestroy(currTime) == true) {
-                this.resMap.remove(resData.resName);
+        var destroyTime = egret.getTimer();
+        var destroyCount = 0;
+        var array = this.resMap.values();
+        for (var _i = 0, array_1 = array; _i < array_1.length; _i++) {
+            var resData = array_1[_i];
+            if (resData.refCount <= 0 && destroyTime >= resData.destroyTime && RES.getRes(resData.resName) != null) {
+                LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u3011resName:" + resData.resName);
                 RES.destroyRes(resData.resName);
+                this.resMap.remove(resData.resName);
                 resData.destroyAll();
                 removee(resData);
                 destroyCount++;
-                if (destroyCount >= this.DESTROY_ONCE_COUNT) {
-                    break;
-                }
             }
+            if (destroyCount >= this.DESTROY_ONCE_COUNT)
+                break;
         }
         return true;
     };
-    /**
-     * 加载下一个资源组
-     * 当一个资源组集里的资源组都加载完之后，就加载下一个资源组集里的资源组
-     */
     ResManager.prototype.loadNextGroup = function () {
         if (this.currCollectData == null) {
-            this.currCollectData = this.collectArray.shift();
-            if (this.currCollectData == null)
+            if (this.collectArray.length <= 0)
                 return false;
+            this.currCollectData = this.collectArray.shift();
             var groupName = this.currCollectData.currGroup();
             RES.loadGroup(groupName);
+            LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u3011id:" + this.currCollectData.uniqueCode + " groupName:" + groupName);
             return true;
         }
         else {
             var groupName = this.currCollectData.nextGroup();
-            if (groupName == null) {
-                this.currCollectData = this.collectArray.shift();
-                if (this.currCollectData == null)
-                    return false;
-                groupName = this.currCollectData.nextGroup();
-                RES.loadGroup(groupName);
-                return true;
-            }
             RES.loadGroup(groupName);
+            LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u3011id:" + this.currCollectData.uniqueCode + " groupName:" + groupName);
             return true;
         }
     };
-    ResManager.prototype.reloadGroup = function () {
-        var groupName = this.currCollectData.currGroup();
+    ResManager.prototype.reloadGroup = function (groupName) {
         RES.loadGroup(groupName);
     };
-    ResManager.prototype.sortGroupArray = function (a, b) {
-        return a.priority < b.priority ? -1 : 1;
-    };
-    ResManager.prototype.reduceResCount = function (collectData) {
-        var resData;
+    ResManager.prototype.reduceRefCount = function (collectData) {
         var currTime = egret.getTimer();
-        for (var _i = 0, _a = collectData.resArray; _i < _a.length; _i++) {
-            var resName = _a[_i];
-            resData = this.resMap.get(resName);
-            if (resData == null)
-                continue;
-            resData.reduceCount(currTime);
-        }
-    };
-    ResManager.prototype.reducecCountByDestroyArray = function () {
-        var destroyArray = DataUtils.CopyArray(this.destroyArray);
-        for (var _i = 0, destroyArray_1 = destroyArray; _i < destroyArray_1.length; _i++) {
-            var id = destroyArray_1[_i];
-            if (id == null)
-                continue;
-            for (var _a = 0, _b = this.useCollectArray; _a < _b.length; _a++) {
-                var collectData = _b[_a];
-                if (collectData == null)
+        for (var _i = 0, _a = collectData.groupNameArray; _i < _a.length; _i++) {
+            var groupName = _a[_i];
+            for (var _b = 0, _c = RES.getGroupByName(groupName); _b < _c.length; _b++) {
+                var resItem = _c[_b];
+                var resName = resItem.name;
+                var resData = void 0;
+                if (this.resMap.has(resName) == false)
                     continue;
-                if (collectData.uniqueCode == id) {
-                    this.reduceResCount(collectData);
-                }
-            }
-            for (var _c = 0, _d = this.collectArray; _c < _d.length; _c++) {
-                var collectData = _d[_c];
-                if (collectData == null)
-                    continue;
-                if (collectData.uniqueCode == id) {
-                    this.reduceResCount(collectData);
-                }
+                resData = this.resMap.get(resName);
+                resData.reduceRefCount(currTime);
             }
         }
-        this.destroyArray.length = 0;
     };
     return ResManager;
 }(DataBase));

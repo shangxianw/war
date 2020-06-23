@@ -8,21 +8,20 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var GroupCollectData = (function (_super) {
-    __extends(GroupCollectData, _super);
-    function GroupCollectData() {
+var CollectData = (function (_super) {
+    __extends(CollectData, _super);
+    function CollectData() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    GroupCollectData.prototype.init = function () {
+    CollectData.prototype.init = function () {
         this.groupNameArray = [];
         this.priority = null;
         this.currIndex = 0;
         this.itemsLoaded = 0;
         this.itemsTotal = 0;
         this.errLoadCount = 0;
-        this.resArray = [];
     };
-    GroupCollectData.prototype.destroy = function () {
+    CollectData.prototype.destroy = function () {
         this.groupNameArray.length = 0;
         this.groupNameArray = null;
         this.priority = null;
@@ -30,9 +29,8 @@ var GroupCollectData = (function (_super) {
         this.itemsLoaded = 0;
         this.itemsTotal = 0;
         this.errLoadCount = 0;
-        this.resArray.length = 0;
     };
-    GroupCollectData.prototype.packDate = function (groupNames, cbFn, thisObj, progFn, errFn, priority) {
+    CollectData.prototype.packDate = function (groupNames, cbFn, thisObj, progFn, errFn, priority) {
         if (cbFn === void 0) { cbFn = null; }
         if (thisObj === void 0) { thisObj = null; }
         if (progFn === void 0) { progFn = null; }
@@ -43,50 +41,37 @@ var GroupCollectData = (function (_super) {
         this.errFn = errFn;
         this.thisObj = thisObj;
         this.progFn = progFn;
-        this.initResName();
         return this;
     };
-    GroupCollectData.prototype.addErrCount = function () {
+    CollectData.prototype.addErrCount = function () {
         this.errLoadCount++;
     };
-    GroupCollectData.prototype.isEnd = function () {
+    CollectData.prototype.isEnd = function () {
         return this.currIndex >= this.groupNameArray.length - 1 && this.itemsLoaded >= this.itemsTotal;
     };
-    GroupCollectData.prototype.nextGroup = function () {
+    CollectData.prototype.nextGroup = function () {
         this.currIndex++;
         return this.currGroup();
     };
-    GroupCollectData.prototype.currGroup = function () {
+    CollectData.prototype.currGroup = function () {
         return this.groupNameArray[this.currIndex];
     };
-    GroupCollectData.prototype.execCb = function (query) {
+    CollectData.prototype.execCb = function (query) {
         if (this.cbFn == null || this.thisObj == null)
             return;
         this.cbFn.call(this.thisObj, query);
     };
-    GroupCollectData.prototype.execProg = function (query) {
+    CollectData.prototype.execProg = function (query) {
         if (this.progFn == null || this.thisObj == null)
             return;
         this.progFn.call(this.thisObj, query);
     };
-    GroupCollectData.prototype.execErr = function (query) {
+    CollectData.prototype.execErr = function (query) {
         if (this.errFn == null || this.thisObj == null)
             return;
         this.errFn.call(this.thisObj, query);
     };
-    GroupCollectData.prototype.initResName = function () {
-        for (var _i = 0, _a = this.groupNameArray; _i < _a.length; _i++) {
-            var groupName = _a[_i];
-            var groupData = RES.getGroupByName(groupName);
-            if (groupData == null)
-                continue;
-            for (var _b = 0, groupData_1 = groupData; _b < groupData_1.length; _b++) {
-                var item = groupData_1[_b];
-                this.resArray.push(item.name);
-            }
-        }
-    };
-    return GroupCollectData;
+    return CollectData;
 }(DataBase));
-__reflect(GroupCollectData.prototype, "GroupCollectData");
+__reflect(CollectData.prototype, "CollectData");
 //# sourceMappingURL=GroupCollectData.js.map

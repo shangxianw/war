@@ -16,7 +16,8 @@ var home;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         LoadingPanelData.prototype.init = function () {
-            this.resGroup = ["loading"];
+            // this.resGroup = ["loading"];
+            this.resGroup = [];
             this.layer = LayerManager.Ins().Panel;
         };
         LoadingPanelData.prototype.destroy = function () {

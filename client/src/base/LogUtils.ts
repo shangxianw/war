@@ -9,7 +9,7 @@ class LogUtils
 	public static Warn(desc:string)
 	{
 		if(GameData.DevelopMode == DevelopMode.DEBUG)
-			console.log(desc);
+			console.warn(desc);
 	}
 
 	public static Error(desc:string)
@@ -17,10 +17,8 @@ class LogUtils
 		if(GameData.DevelopMode == DevelopMode.DEBUG)
 		{
 			let stack = new Error().stack;
-			console.error("======================================================================");
-			console.log(desc);
-			console.log(stack);
-			console.error("======================================================================");
+			console.error(desc);
+			console.error(stack);
 		}
 	}
 

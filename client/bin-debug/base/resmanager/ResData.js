@@ -15,29 +15,25 @@ var ResData = (function (_super) {
     }
     ResData.prototype.init = function () {
         this.resName = "";
-        this.referenceCount = 0;
+        this.refCount = 0;
     };
     ResData.prototype.destroy = function () {
         this.resName = "";
-        this.referenceCount = 0;
+        this.refCount = 0;
     };
     ResData.prototype.packData = function (resName) {
         this.resName = resName;
+        this.refCount = 0;
         return this;
     };
-    ResData.prototype.reduceCount = function (currTime) {
-        this.referenceCount = Math.max(this.referenceCount - 1, 0);
-        if (this.referenceCount <= 0)
+    ResData.prototype.reduceRefCount = function (currTime) {
+        this.refCount = Math.max(this.refCount - 1, 0);
+        if (this.refCount <= 0)
             this.destroyTime = currTime + ResManager.Ins().READY_DERTROY_SECOND;
     };
-    ResData.prototype.addCount = function () {
-        this.referenceCount++;
+    ResData.prototype.addRefCount = function () {
+        this.refCount++;
         this.destroyTime = null;
-    };
-    ResData.prototype.canDestroy = function (currTime) {
-        if (this.destroyTime == null || this.referenceCount > 0)
-            return false;
-        return this.destroyTime >= currTime;
     };
     return ResData;
 }(DataBase));

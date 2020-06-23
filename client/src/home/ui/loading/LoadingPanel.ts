@@ -7,7 +7,8 @@ module home
 		public currCount:number;
 		protected init()
 		{
-			this.resGroup = ["loading"];
+			// this.resGroup = ["loading"];
+			this.resGroup = [];
 			this.layer = LayerManager.Ins().Panel;
 		}
 
