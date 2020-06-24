@@ -3,6 +3,10 @@
 		{
 			"keys": "bg_phb_btdi_duan_png,bg_lz_tc_jt_png,bg_lz_tc02_png,icon_kz_sjjt_png",
 			"name": "home_ka"
+		},
+		{
+			"keys": "button_top_set_png,button_top_player_png,button_top_mail_png,button_down_shop_png,button_down_phb_png,button_down_05_png,button_down_04_png,button_down_03_png,button_down_02_png,button_down_01_png,bg_qm_v_png,bg_qm_n_png,bg_main_jpg,bg_exp_png,icon_hotpoint_png",
+			"name": "home_home"
 		}
 	],
 	"resources": [
@@ -25,6 +29,91 @@
 			"url": "home/ka/icon_kz_sjjt.png",
 			"type": "image",
 			"name": "icon_kz_sjjt_png"
+		},
+		{
+			"url": "home/home/bg_exp.png",
+			"type": "image",
+			"name": "bg_exp_png"
+		},
+		{
+			"url": "home/home/bg_main.jpg",
+			"type": "image",
+			"name": "bg_main_jpg"
+		},
+		{
+			"url": "home/home/bg_qm_n.png",
+			"type": "image",
+			"name": "bg_qm_n_png"
+		},
+		{
+			"url": "home/home/bg_qm_v.png",
+			"type": "image",
+			"name": "bg_qm_v_png"
+		},
+		{
+			"url": "home/home/button_down_01.png",
+			"type": "image",
+			"name": "button_down_01_png"
+		},
+		{
+			"url": "home/home/button_down_02.png",
+			"type": "image",
+			"name": "button_down_02_png"
+		},
+		{
+			"url": "home/home/button_down_03.png",
+			"type": "image",
+			"name": "button_down_03_png"
+		},
+		{
+			"url": "home/home/button_down_04.png",
+			"type": "image",
+			"name": "button_down_04_png"
+		},
+		{
+			"url": "home/home/button_down_05.png",
+			"type": "image",
+			"name": "button_down_05_png"
+		},
+		{
+			"url": "home/home/button_down_phb.png",
+			"type": "image",
+			"name": "button_down_phb_png"
+		},
+		{
+			"url": "home/home/button_down_shop.png",
+			"type": "image",
+			"name": "button_down_shop_png"
+		},
+		{
+			"url": "home/home/button_top_mail.png",
+			"type": "image",
+			"name": "button_top_mail_png"
+		},
+		{
+			"url": "home/home/button_top_player.png",
+			"type": "image",
+			"name": "button_top_player_png"
+		},
+		{
+			"url": "home/home/button_top_set.png",
+			"type": "image",
+			"name": "button_top_set_png"
+		},
+		{
+			"url": "home/home/icon_hotpoint.png",
+			"type": "image",
+			"name": "icon_hotpoint_png"
+		},
+		{
+			"url": "home/home/button_top_add.png",
+			"type": "image",
+			"name": "button_top_add_png"
+		},
+		{
+			"url": "home/home/button_top_add02.png",
+			"type": "image",
+			"name": "button_top_add02_png"
 		}
 	]
 }

@@ -2,56 +2,24 @@
 <e:Skin class="HomePanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:home="home.*" xmlns:w="http://ns.egret.com/wing">
 	<e:Rect fillColor="0x8c7a54" left="0" right="0" top="0" bottom="0" visible="false"/>
 	<e:Label text="HOME" horizontalCenter="0" verticalCenter="0"/>
-	<e:Group width="466" height="628" x="785.57" y="70">
-		<e:Image source="bg_com_fgd_png" scale9Grid="12,15,23,18" left="0" right="0" top="0" bottom="0"/>
-		<e:Image x="-7.37" y="4.66" source="bg_kplb_bt_png" scaleX="1" scaleY="1" scale9Grid="38,6,5,39" anchorOffsetX="0" width="480"/>
-		<e:Label text="花费:" x="38.3" y="15.66"/>
-		<e:Group x="112.33" y="14.34" height="30">
-			<e:BitmapLabel scaleX="1" scaleY="1" font="sh_font_fnt" text="0#0" letterSpacing="-6"/>
-			<e:Image source="icon_sh_d_png" x="-119" y="-19" scaleX="0.7" scaleY="0.7"/>
-			<e:layout>
-				<e:HorizontalLayout verticalAlign="middle"/>
-			</e:layout>
-		</e:Group>
-		<e:Group id="kaGroup" left="0" right="0" top="60" bottom="0">
-			<!--<home:HeroKa skinName="HeroKaSkin" x="121" y="98" scaleX="1" scaleY="1" anchorOffsetX="106" anchorOffsetY="68"/>
-			<home:HeroKa skinName="HeroKaSkin" x="240" y="30" scaleX="1" scaleY="1"/>-->
-		</e:Group>
-
-
-
-
-
-
-
-
+	<e:Group id="bottomGroup" scaleX="1" scaleY="1" bottom="0" left="0" right="0" height="80" touchEnabled="false" visible="false">
+		<home:HomeBtn skinName="HomeBtnSkin"/>
+		<home:HomeBtn skinName="HomeBtnSkin" x="10" y="10"/>
+		<home:HomeBtn skinName="HomeBtnSkin" x="20" y="20"/>
+		<home:HomeBtn skinName="HomeBtnSkin" x="30" y="30"/>
+		<home:HomeBtn skinName="HomeBtnSkin" x="40" y="40"/>
+		<home:HomeBtn skinName="HomeBtnSkin" x="50" y="50"/>
+		<e:layout>
+			<e:HorizontalLayout gap="6"/>
+		</e:layout>
+		
 	</e:Group>
-	<ns1:WGroup id="fightBtn" horizontalCenter="-501.5" verticalCenter="233" touchChildren="false">
-		<e:Image source="button_dz_ppz_png"/>
-		<e:Label text="Fight" horizontalCenter="0" verticalCenter="-30"/>
-	</ns1:WGroup>
-	<e:Group>
-		<e:Image source="bg_phb_heroicon_back_png" x="30" height="80" scale9Grid="11,10,36,67" anchorOffsetX="0" width="206.5" y="10.67"/>
-
-		<ns1:WButton id="cups" label="000" x="104" y="17.52" skinName="TextIconSkin" icon="bg_phb_jb_png"/>
-		<e:Label id="playerName" text="wsx" x="107" y="53.33"/>
-		<home:HeadIcon skinName="HeadIconSkin" x="0" y="0"/>
+	<e:Group id="topGroup" x="906.03" y="21.48">
+		<home:HomeBtn skinName="HomeBtnSkin"/>
+		<home:HomeBtn skinName="HomeBtnSkin" x="10" y="10"/>
+		<home:HomeBtn skinName="HomeBtnSkin" x="20" y="20"/>
+		<e:layout>
+			<e:HorizontalLayout/>
+		</e:layout>
 	</e:Group>
-	<ns1:WButton label="" horizontalCenter="571.5" verticalCenter="-260.5">
-		<ns1:skinName>
-			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" source="button_rename_png"/>
-			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-		</ns1:skinName>
-	</ns1:WButton>
-	<ns1:WButton id="kaBtn" label="" horizontalCenter="-255" verticalCenter="270">
-		<ns1:skinName>
-			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" source="button_down_01_png"/>
-			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-		</ns1:skinName>
-	</ns1:WButton>
-
 </e:Skin>

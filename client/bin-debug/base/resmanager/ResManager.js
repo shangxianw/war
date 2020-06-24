@@ -8,6 +8,13 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
+/**
+ * 资源管理器
+ * 当使用load相关方法时，会给对应的资源引用+1。
+ * 当使用destroy相关方法时，会给对应的资源引用-1。
+ * 资源引用为0时，并不会立刻销毁，而是等到一定时间才进行判断。
+ * 有个缺点：如果出现资源未销毁的情况，这并不知道是谁没有销毁
+ */
 var ResManager = (function (_super) {
     __extends(ResManager, _super);
     function ResManager() {
@@ -48,8 +55,13 @@ var ResManager = (function (_super) {
         if (progFn === void 0) { progFn = null; }
         if (errFn === void 0) { errFn = null; }
         if (priority === void 0) { priority = null; }
-        if (collectArray == null || collectArray.length <= 0) {
+        if (collectArray == null) {
             LogUtils.Error("\u3010\u8D44\u6E90\u7EC4\u96C6\u53C2\u6570\u9519\u8BEF\u3011");
+            return null;
+        }
+        if (collectArray.length <= 0) {
+            if (cbFn != null && thisObj != null)
+                cbFn.call(thisObj);
             return null;
         }
         for (var _i = 0, collectArray_1 = collectArray; _i < collectArray_1.length; _i++) {
@@ -63,6 +75,7 @@ var ResManager = (function (_super) {
         var collectData = neww(CollectData);
         collectData.packDate(collectArray, cbFn, thisObj, progFn, errFn, priority);
         this.collectArray.push(collectData);
+        this.collectArray.sort(this.sortByPriority);
         // 添加引用
         for (var _a = 0, collectArray_2 = collectArray; _a < collectArray_2.length; _a++) {
             var groupName = collectArray_2[_a];
@@ -81,6 +94,9 @@ var ResManager = (function (_super) {
         }
         LogUtils.Log("\u3010\u8D44\u6E90\u7EC4\u96C6\u52A0\u5165\u5230\u5217\u8868\u3011id:" + collectData.uniqueCode + " " + collectArray.toString());
         return collectData.uniqueCode;
+    };
+    ResManager.prototype.sortByPriority = function (a, b) {
+        return a.priority < b.priority ? -1 : 1;
     };
     ResManager.prototype.destroyGroup = function (uniqueCode) {
         if (uniqueCode == null || uniqueCode <= 0) {

@@ -24,6 +24,18 @@
 			"preLaunchTask":"build",
 			"userDataDir":"${tmpdir}",
 			"port":5511
+		},
+		{
+			"name": "Launch Wing Player2",
+			"type": "chrome",
+			"request": "launch",
+			"file": "bin-release/web/200624110234/index.html",
+			"runtimeExecutable": "${execPath}",
+			"useBuildInServer": true,
+			"sourceMaps": true,
+			"webRoot": "${workspaceRoot}",
+			"preLaunchTask":"build",
+			"port":5511
 		}
 	]
 }

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="HeadInfoSkin" xmlns:e="http://ns.egret.com/eui" xmlns:home="home.*">
+	<e:Image source="bg_phb_heroicon_back_png" scale9Grid="11,10,28,67" width="333" height="99"/>
+	<e:Image x="265" y="10" source="bg_phb_jb_png"/>
+	<home:HeadIcon skinName="HeadIconSkin"/>
+	<e:Label text="名字六个字" x="98.99" y="13.66" fontFamily="main_font"/>
+</e:Skin>

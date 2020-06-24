@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="CostInfoSkin" width="1280" height="120" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:home="home.*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:WGroup id="expGroup" x="472" y="20">
+		<e:Image source="bg_exp_png"/>
+		<e:Image source="item_1_png"/>
+		<e:BitmapLabel font="exp_lv_font_fnt" text="00"/>
+	</ns1:WGroup>
+	<ns1:WGroup id="goldGroup" x="582" y="20">
+		<e:Image source="bg_exp_png"/>
+		<e:Image source="item_2_png"/>
+		<e:Image x="10" y="10" source="button_top_add02_png"/>
+		<e:BitmapLabel text="00" font="coin_font_fnt"/>
+	</ns1:WGroup>
+	<ns1:WGroup id="dimandGroup" x="682" y="30">
+		<e:Image source="bg_exp_png"/>
+		<e:Image source="item_3_png"/>
+		<e:BitmapLabel text="00" font="diamond_font_fnt"/>
+		<e:Image x="-879" scaleX="1" scaleY="1" source="button_top_add_png"/>
+	</ns1:WGroup>
+</e:Skin>

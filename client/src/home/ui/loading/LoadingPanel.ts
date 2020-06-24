@@ -7,8 +7,7 @@ module home
 		public currCount:number;
 		protected init()
 		{
-			// this.resGroup = ["loading"];
-			this.resGroup = [];
+			this.resGroup = ["loading"];
 			this.layer = LayerManager.Ins().Panel;
 		}
 
@@ -70,13 +69,7 @@ module home
 
 		private OnLoadGroupOk(e:RES.ResourceEvent)
 		{
-			this.info.currCount++;
-			if(this.info.currCount >= this.info.resGroupArray.length) // 结束
-			{
-				this.info.currCount = 0;
-				// this.loadCfg();
-				this.loadOK();
-			}
+			this.loadCfg();
 		}
 
 		private OnLoadGroupProgress(e:RES.ResourceEvent)
@@ -93,21 +86,15 @@ module home
 		// ---------------------------------------------------------------------- 加载配置表
 		private loadCfg()
 		{
-			// for(let cfgName of this.info.cfgGroupArray)
-			// {
-			// 	ResManager.Ins().loadResAsync(cfgName, this.OnLoadCfgOK, this);
-			// }
-		}
-
-		private OnLoadCfgOK(data, key:string)
-		{
-			this.info.currCount++;
-			ConfigManager.Ins().set(key, data);
-			if(this.info.currCount >= this.info.cfgGroupArray.length) // 结束
-			{
-				this.info.currCount = 0;
+			ResManager.Ins().loadGroup(["config_preload"], ()=>{
+				let array = RES.getGroupByName("config_preload");
+				for(let item of array)
+				{
+					ConfigManager.Ins().set(item.name, RES.getRes(item.name));
+				}
 				this.loadOK();
-			}
+			}, this)
+			
 		}
 
 		// ---------------------------------------------------------------------- 加载完成

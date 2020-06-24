@@ -43,7 +43,7 @@ class ViewManager extends DataBase
 		try
 		{
 			let v:any = cls;
-			let viewObj = new v();
+			let viewObj = new v;
 			this.uiMap.set(className, viewObj);
 		}
 		catch(e)
@@ -93,7 +93,7 @@ class ViewManager extends DataBase
 			LogUtils.Warn(`面板没有父级`);
 			return false;
 		}
-		if(view.viewInfo.resGroup != null && view.viewInfo.resGroup.length <= 0)
+		if(view.viewInfo.resGroup != null && view.viewInfo.resGroup.length <= 0 && view.viewInfo.resGroupId != null)
 			ResManager.Ins().destroyGroup(view.viewInfo.resGroupId);
 		this.uiMap.remove(className);
 		view = null;
@@ -136,6 +136,7 @@ class ViewManager extends DataBase
 			this.open(home.LoadingTips); // 需要保证 home.LoadingTips 面板内的resGroup不能有值，让它走else的部分，否则会陷入死循环。
 			ResManager.Ins().loadGroup(resGroup, (e:RES.ResourceEvent)=>{
 				this.close(home.LoadingTips);
+				view.checkSkinSourceRef();
 				view.initData(data);
 				parent.addChild(view);
 				view.initView();

@@ -1,0 +1,125 @@
+{
+ "file": "sh_font.png",
+ "frames": {
+  "#": {
+   "h": 8,
+   "offX": 0,
+   "offY": 18,
+   "sourceH": 27,
+   "sourceW": 8,
+   "w": 8,
+   "x": 118,
+   "y": 29
+  },
+  "0": {
+   "h": 27,
+   "offX": 4,
+   "offY": 0,
+   "sourceH": 27,
+   "sourceW": 33,
+   "w": 25,
+   "x": 64,
+   "y": 1
+  },
+  "1": {
+   "h": 26,
+   "offX": 12,
+   "offY": 0,
+   "sourceH": 27,
+   "sourceW": 33,
+   "w": 9,
+   "x": 118,
+   "y": 1
+  },
+  "2": {
+   "h": 26,
+   "offX": 5,
+   "offY": 0,
+   "sourceH": 27,
+   "sourceW": 33,
+   "w": 23,
+   "x": 1,
+   "y": 58
+  },
+  "3": {
+   "h": 26,
+   "offX": 5,
+   "offY": 0,
+   "sourceH": 27,
+   "sourceW": 33,
+   "w": 22,
+   "x": 26,
+   "y": 58
+  },
+  "4": {
+   "h": 26,
+   "offX": 3,
+   "offY": 0,
+   "sourceH": 27,
+   "sourceW": 33,
+   "w": 26,
+   "x": 36,
+   "y": 1
+  },
+  "5": {
+   "h": 26,
+   "offX": 5,
+   "offY": 0,
+   "sourceH": 27,
+   "sourceW": 33,
+   "w": 24,
+   "x": 1,
+   "y": 30
+  },
+  "6": {
+   "h": 27,
+   "offX": 5,
+   "offY": 0,
+   "sourceH": 27,
+   "sourceW": 33,
+   "w": 24,
+   "x": 36,
+   "y": 29
+  },
+  "7": {
+   "h": 26,
+   "offX": 4,
+   "offY": 0,
+   "sourceH": 27,
+   "sourceW": 33,
+   "w": 24,
+   "x": 88,
+   "y": 30
+  },
+  "8": {
+   "h": 27,
+   "offX": 5,
+   "offY": 0,
+   "sourceH": 27,
+   "sourceW": 33,
+   "w": 25,
+   "x": 91,
+   "y": 1
+  },
+  "9": {
+   "h": 26,
+   "offX": 5,
+   "offY": 0,
+   "sourceH": 27,
+   "sourceW": 33,
+   "w": 24,
+   "x": 62,
+   "y": 30
+  },
+  "a": {
+   "h": 27,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 27,
+   "sourceW": 33,
+   "w": 33,
+   "x": 1,
+   "y": 1
+  }
+ }
+}

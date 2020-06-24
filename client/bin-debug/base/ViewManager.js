@@ -41,7 +41,7 @@ var ViewManager = (function (_super) {
         }
         try {
             var v = cls;
-            var viewObj = new v();
+            var viewObj = new v;
             this.uiMap.set(className, viewObj);
         }
         catch (e) {
@@ -79,7 +79,7 @@ var ViewManager = (function (_super) {
             LogUtils.Warn("\u9762\u677F\u6CA1\u6709\u7236\u7EA7");
             return false;
         }
-        if (view.viewInfo.resGroup != null && view.viewInfo.resGroup.length <= 0)
+        if (view.viewInfo.resGroup != null && view.viewInfo.resGroup.length <= 0 && view.viewInfo.resGroupId != null)
             ResManager.Ins().destroyGroup(view.viewInfo.resGroupId);
         this.uiMap.remove(className);
         view = null;
@@ -113,6 +113,7 @@ var ViewManager = (function (_super) {
             this.open(home.LoadingTips); // 需要保证 home.LoadingTips 面板内的resGroup不能有值，让它走else的部分，否则会陷入死循环。
             ResManager.Ins().loadGroup(resGroup, function (e) {
                 _this.close(home.LoadingTips);
+                view.checkSkinSourceRef();
                 view.initData(data);
                 parent.addChild(view);
                 view.initView();

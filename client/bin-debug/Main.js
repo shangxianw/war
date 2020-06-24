@@ -141,10 +141,10 @@ var Main = (function (_super) {
     Main.prototype.createGameScene = function () {
         GameUtils.main = this;
         LayerManager.Ins();
-        // NetManager.Ins();
-        // NetManager.Ins().initData();
-        // war.WarDataMgr.Ins();
-        // ViewManager.Ins().open(home.LoginPanel);
+        NetManager.Ins();
+        NetManager.Ins().initData();
+        war.WarDataMgr.Ins();
+        ViewManager.Ins().open(home.LoginPanel);
     };
     return Main;
 }(eui.UILayer));

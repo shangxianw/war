@@ -1,0 +1,4 @@
+class CostInfo {
+	public constructor() {
+	}
+}

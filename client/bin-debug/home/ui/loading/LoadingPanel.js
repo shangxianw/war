@@ -16,8 +16,7 @@ var home;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         LoadingPanelData.prototype.init = function () {
-            // this.resGroup = ["loading"];
-            this.resGroup = [];
+            this.resGroup = ["loading"];
             this.layer = LayerManager.Ins().Panel;
         };
         LoadingPanelData.prototype.destroy = function () {
@@ -58,12 +57,7 @@ var home;
             ResManager.Ins().loadGroup(this.info.resGroupArray, this.OnLoadGroupOk, this, this.OnLoadGroupProgress, this.OnLoadGroupError);
         };
         LoadingPanel.prototype.OnLoadGroupOk = function (e) {
-            this.info.currCount++;
-            if (this.info.currCount >= this.info.resGroupArray.length) {
-                this.info.currCount = 0;
-                // this.loadCfg();
-                this.loadOK();
-            }
+            this.loadCfg();
         };
         LoadingPanel.prototype.OnLoadGroupProgress = function (e) {
             this.bar.maximum = e.itemsTotal;
@@ -73,18 +67,15 @@ var home;
         };
         // ---------------------------------------------------------------------- 加载配置表
         LoadingPanel.prototype.loadCfg = function () {
-            // for(let cfgName of this.info.cfgGroupArray)
-            // {
-            // 	ResManager.Ins().loadResAsync(cfgName, this.OnLoadCfgOK, this);
-            // }
-        };
-        LoadingPanel.prototype.OnLoadCfgOK = function (data, key) {
-            this.info.currCount++;
-            ConfigManager.Ins().set(key, data);
-            if (this.info.currCount >= this.info.cfgGroupArray.length) {
-                this.info.currCount = 0;
-                this.loadOK();
-            }
+            var _this = this;
+            ResManager.Ins().loadGroup(["config_preload"], function () {
+                var array = RES.getGroupByName("config_preload");
+                for (var _i = 0, array_1 = array; _i < array_1.length; _i++) {
+                    var item = array_1[_i];
+                    ConfigManager.Ins().set(item.name, RES.getRes(item.name));
+                }
+                _this.loadOK();
+            }, this);
         };
         // ---------------------------------------------------------------------- 加载完成
         LoadingPanel.prototype.loadOK = function () {

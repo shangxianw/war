@@ -9,13 +9,5 @@
 		</ns1:WGroup>
 		<e:TextInput id="accountInput" width="128" y="111" skinName="skins.TextInputSkin" horizontalCenter="0" prompt="输入账号"/>
 	</e:Group>
-	<ns1:WButton label="Button" horizontalCenter="-322" verticalCenter="14.5">
-		<ns1:skinName>
-			<e:Skin states="up,down,disabled">
-			<e:Image width="100%" height="100%" source="bg_card_di_0_png"/>
-			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
-			</e:Skin>
-		</ns1:skinName>
-	</ns1:WButton>
-	<e:Label id="testLb" text="Label" x="533" y="97"/>
+	<e:Label id="testLb" text="Label" x="533" y="97" fontFamily="main_font"/>
 </e:Skin>

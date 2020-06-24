@@ -57,11 +57,19 @@ class ResManager extends DataBase
 
 	public loadGroup(collectArray:string[], cbFn:Function=null, thisObj:any=null, progFn:Function=null, errFn:Function=null, priority:number = null):number
 	{
-		if(collectArray == null || collectArray.length <= 0)
+		if(collectArray == null)
 		{
 			LogUtils.Error(`【资源组集参数错误】`);
 			return null;
 		}
+
+		if(collectArray.length <= 0)
+		{
+			if(cbFn != null && thisObj != null)
+				cbFn.call(thisObj);
+			return null;
+		}
+
 		for(let groupName of collectArray)
 		{
 			if(groupName == null || groupName == "" || RES.getGroupByName(groupName).length <= 0)
@@ -75,6 +83,7 @@ class ResManager extends DataBase
 		let collectData = neww(CollectData) as CollectData;
 		collectData.packDate(collectArray, cbFn, thisObj, progFn, errFn, priority);
 		this.collectArray.push(collectData);
+		this.collectArray.sort(this.sortByPriority);
 
 		// 添加引用
 		for(let groupName of collectArray)
@@ -95,6 +104,11 @@ class ResManager extends DataBase
 		}
 		LogUtils.Log(`【资源组集加入到列表】id:${collectData.uniqueCode} ${collectArray.toString()}`)
 		return collectData.uniqueCode;
+	}
+
+	private sortByPriority(a:CollectData, b:CollectData)
+	{
+		return a.priority < b.priority ? -1 : 1;
 	}
 
 	public destroyGroup(uniqueCode:number)

@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "sh_font_png,sh_font_fnt,bg_login_nr_png,bg_login_d_png,bg_com_jpg",
+			"keys": "sh_font_png,sh_font_fnt,bg_login_nr_png,bg_login_d_png,bg_com_jpg,icon_sh_dbg_sh_d2_png,icon_sh_dbg_sh_d11_png,icon_sh_dbg_sh_d1_png,icon_sh_dbg_sh_d0_png,icon_sh_d_png,button_ty_yellow_png,button_ty_yellow_h_png,button_ty_red_png,button_ty_green_png,button_ty_blue_png,button_rename_png,button_dz_tz_png,button_dz_ppz_png,button_down_01_png,bg_phb_jb_png,bg_phb_heroicon_back_png,bg_kplb_bt_png,bg_jz_lt_jk_wxts_png,bg_com_fgd_png,bg_card_di_4_png,bg_card_di_3_png,bg_card_di_2_png,bg_card_di_1_png,bg_black_png,button_down_png,button_up_png",
 			"name": "common_preload"
 		},
 		{
@@ -509,6 +509,271 @@
 			"url": "common/ui/common/bg_black.png",
 			"type": "image",
 			"name": "bg_black_png"
+		},
+		{
+			"url": "assets/Button/button_down.png",
+			"type": "image",
+			"name": "button_down_png"
+		},
+		{
+			"url": "assets/Button/button_up.png",
+			"type": "image",
+			"name": "button_up_png"
+		},
+		{
+			"url": "assets/Panel/border.png",
+			"type": "image",
+			"name": "border_png"
+		},
+		{
+			"url": "assets/Panel/header.png",
+			"type": "image",
+			"name": "header_png"
+		},
+		{
+			"url": "assets/ItemRenderer/selected.png",
+			"type": "image",
+			"name": "selected_png"
+		},
+		{
+			"url": "assets/ProgressBar/thumb_pb.png",
+			"type": "image",
+			"name": "thumb_pb_png"
+		},
+		{
+			"url": "assets/ProgressBar/track_pb.png",
+			"type": "image",
+			"name": "track_pb_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_select_disabled.png",
+			"type": "image",
+			"name": "radiobutton_select_disabled_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_select_down.png",
+			"type": "image",
+			"name": "radiobutton_select_down_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_select_up.png",
+			"type": "image",
+			"name": "radiobutton_select_up_png"
+		},
+		{
+			"url": "assets/RadioButton/radiobutton_unselect.png",
+			"type": "image",
+			"name": "radiobutton_unselect_png"
+		},
+		{
+			"url": "assets/Slider/thumb.png",
+			"type": "image",
+			"name": "thumb_png"
+		},
+		{
+			"url": "assets/Slider/track.png",
+			"type": "image",
+			"name": "track_png"
+		},
+		{
+			"url": "assets/Slider/tracklight.png",
+			"type": "image",
+			"name": "tracklight_png"
+		},
+		{
+			"url": "assets/ScrollBar/roundthumb.png",
+			"type": "image",
+			"name": "roundthumb_png"
+		},
+		{
+			"url": "assets/ScrollBar/track_sb.png",
+			"type": "image",
+			"name": "track_sb_png"
+		},
+		{
+			"url": "assets/ToggleSwitch/handle.png",
+			"type": "image",
+			"name": "handle_png"
+		},
+		{
+			"url": "assets/ToggleSwitch/off.png",
+			"type": "image",
+			"name": "off_png"
+		},
+		{
+			"url": "assets/ToggleSwitch/on.png",
+			"type": "image",
+			"name": "on_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_select_disabled.png",
+			"type": "image",
+			"name": "checkbox_select_disabled_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_select_down.png",
+			"type": "image",
+			"name": "checkbox_select_down_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_select_up.png",
+			"type": "image",
+			"name": "checkbox_select_up_png"
+		},
+		{
+			"url": "assets/CheckBox/checkbox_unselect.png",
+			"type": "image",
+			"name": "checkbox_unselect_png"
+		},
+		{
+			"url": "common/ui/itemicon/icon_11.png",
+			"type": "image",
+			"name": "icon_11_png"
+		},
+		{
+			"url": "common/ui/itemicon/icon_1_1.png",
+			"type": "image",
+			"name": "icon_1_1_png"
+		},
+		{
+			"url": "common/ui/itemicon/icon_1_2.png",
+			"type": "image",
+			"name": "icon_1_2_png"
+		},
+		{
+			"url": "common/ui/itemicon/icon_1_3.png",
+			"type": "image",
+			"name": "icon_1_3_png"
+		},
+		{
+			"url": "common/ui/itemicon/icon_1_4.png",
+			"type": "image",
+			"name": "icon_1_4_png"
+		},
+		{
+			"url": "common/ui/itemicon/icon_2.png",
+			"type": "image",
+			"name": "icon_2_png"
+		},
+		{
+			"url": "common/ui/itemicon/icon_3.png",
+			"type": "image",
+			"name": "icon_3_png"
+		},
+		{
+			"url": "common/ui/itemicon/icon_4.png",
+			"type": "image",
+			"name": "icon_4_png"
+		},
+		{
+			"url": "common/ui/itemicon/icon_6.png",
+			"type": "image",
+			"name": "icon_6_png"
+		},
+		{
+			"url": "common/ui/itemicon/item2_11.png",
+			"type": "image",
+			"name": "item2_11_png"
+		},
+		{
+			"url": "common/ui/itemicon/item2_2.png",
+			"type": "image",
+			"name": "item2_2_png"
+		},
+		{
+			"url": "common/ui/itemicon/item2_3.png",
+			"type": "image",
+			"name": "item2_3_png"
+		},
+		{
+			"url": "common/ui/itemicon/item_11.png",
+			"type": "image",
+			"name": "item_11_png"
+		},
+		{
+			"url": "common/ui/itemicon/item_1_1.png",
+			"type": "image",
+			"name": "item_1_1_png"
+		},
+		{
+			"url": "common/ui/itemicon/item_1_2.png",
+			"type": "image",
+			"name": "item_1_2_png"
+		},
+		{
+			"url": "common/ui/itemicon/item_1_3.png",
+			"type": "image",
+			"name": "item_1_3_png"
+		},
+		{
+			"url": "common/ui/itemicon/item_1_4.png",
+			"type": "image",
+			"name": "item_1_4_png"
+		},
+		{
+			"url": "common/ui/itemicon/item_2.png",
+			"type": "image",
+			"name": "item_2_png"
+		},
+		{
+			"url": "common/ui/itemicon/item_3.png",
+			"type": "image",
+			"name": "item_3_png"
+		},
+		{
+			"url": "common/ui/itemicon/item_4.png",
+			"type": "image",
+			"name": "item_4_png"
+		},
+		{
+			"url": "common/ui/itemicon/item_6.png",
+			"type": "image",
+			"name": "item_6_png"
+		},
+		{
+			"url": "common/ui/itemicon/item_1.png",
+			"type": "image",
+			"name": "item_1_png"
+		},
+		{
+			"url": "common/bitmapfont/exp_lv_font.png",
+			"type": "image",
+			"name": "exp_lv_font_png"
+		},
+		{
+			"url": "common/bitmapfont/exp_lv_font.fnt",
+			"type": "font",
+			"name": "exp_lv_font_fnt"
+		},
+		{
+			"url": "common/bitmapfont/exp_num_font.fnt",
+			"type": "font",
+			"name": "exp_num_font_fnt"
+		},
+		{
+			"url": "common/bitmapfont/exp_num_font.png",
+			"type": "image",
+			"name": "exp_num_font_png"
+		},
+		{
+			"url": "common/bitmapfont/diamond_font.png",
+			"type": "image",
+			"name": "diamond_font_png"
+		},
+		{
+			"url": "common/bitmapfont/coin_font.fnt",
+			"type": "font",
+			"name": "coin_font_fnt"
+		},
+		{
+			"url": "common/bitmapfont/coin_font.png",
+			"type": "image",
+			"name": "coin_font_png"
+		},
+		{
+			"url": "common/bitmapfont/diamond_font.fnt",
+			"type": "font",
+			"name": "diamond_font_fnt"
 		}
 	]
 }

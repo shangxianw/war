@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="HomeBtnSkin" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing" width="110" height="82">
+	<ns1:WGroup left="0" right="0" top="0" bottom="0">
+		<e:Image id="iconImg" source="button_down_shop_png" horizontalCenter="0" verticalCenter="0" x="2" y="1" scaleX="1" scaleY="1"/>
+		<e:Image id="redImg" source="icon_hotpoint_png" right="0" top="0" x="75" y="0" scaleX="1" scaleY="1"/>
+	</ns1:WGroup>
+</e:Skin>
