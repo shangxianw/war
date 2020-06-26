@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="Ka1Skin" xmlns:e="http://ns.egret.com/eui" width="212" height="137">
-	<e:Image source="bg_card_di_0_png"/>
-	<e:Image source="heroicon_10030_png" horizontalCenter="0" verticalCenter="0"/>
+<e:Skin class="Ka1Skin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" width="212" height="137">
+	<e:Image id="qualityImg" source="bg_card_di_1_png"/>
+	<e:Image id="kaIcon" source="heroicon_10030_png" horizontalCenter="0" verticalCenter="0"/>
 	<e:Image source="icon_sh_d_png" left="0" top="0"/>
-	<e:BitmapLabel font="sh_font_fnt" text="0" top="11" left="3"/>
+	<e:BitmapLabel id="cost" font="sh_font_fnt" text="0" top="11" left="3"/>
 </e:Skin>

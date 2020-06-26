@@ -2,17 +2,13 @@ module war
 {
 	export class WarDataMgr extends DataBase
 	{
-		public entityMap:Hash<number, EntityBase>;
-		public inputArray:InputCom[];
-		
 		public mapId:number;
-		public mapCfg:boolean[][];
-		public astar:astar.AStar;
-		public grid:astar.Grid;
+		
+		public entityMap:Hash<number, EntityBase>;
+		private astar:astar.AStar;
 		public pathMap:Hash<string, astar.Node[]>;
-		public numCols:number;
-		public numRows:number;
-		public space:number;
+		
+		public grid:astar.Grid;
 		public startX:number;
 		public startY:number;
 
@@ -21,24 +17,20 @@ module war
 		protected init()
 		{
 			this.mapId = 1001;
-			this.mapCfg = MapCfg[String(this.mapId)];
-			this.numCols = 36;this.mapCfg[0].length // 18;
-			this.numRows = 16;this.mapCfg.length;   // 30;
-			this.space = 30;
 			this.startX = 100;
-			this.startY = 120;
+			this.startY = 85;
 			// 战场宽540高900
+			this.astar = new astar.AStar();
+			this.grid = new astar.Grid();
+			this.grid.init(24, 54, 20);
 			this.world = new World();
+			this.pathMap = new Hash<string, astar.Node[]>();
 			this.entityMap = new Hash<number, EntityBase>();
-			this.inputArray = [];
-			
-			this.initGrid();
 		}
 
 		protected destroy()
 		{
 			DataUtils.DestroyUIBaseMap(this.entityMap);
-			DataUtils.DestroyDataBaseArray(this.inputArray);
 			
 			this.astar.destroy();
 			this.grid.destroy();
@@ -56,11 +48,11 @@ module war
 			egret.stopTick(this.update, this);
 		}
 
-		public update(deltaTime:number = null):boolean
+		public update(currTime:number = null):boolean
 		{
 			try
 			{
-				this.world.update(deltaTime);
+				this.world.update(currTime);
 			}
 			catch(e)
 			{
@@ -70,11 +62,11 @@ module war
 		}
 
 		// ---------------------------------------------------------------------- 实体
-		public addEntity(entity:any)
+		public addEntity(entity:EntityBase)
 		{
-			if(this.entityMap.has(entity.id) == true)
+			if(this.entityMap.has(entity.uniqueCode) == true)
 				return false;
-			this.entityMap.set(entity.id, entity);
+			this.entityMap.set(entity.uniqueCode, entity);
 		}
 
 		public removeEntity(id:number):EntityBase
@@ -91,15 +83,6 @@ module war
 			let entity:EntityBase = this.entityMap.remove(id);
 			entity != null && entity.destroyAll();
 			PoolManager.Ins().push(entity);
-		}
-
-		// ---------------------------------------------------------------------- 寻路
-		private initGrid()
-		{
-			this.astar = new astar.AStar();
-			this.grid = new astar.Grid();
-			this.grid.init(this.numRows, this.numCols, this.space, this.mapCfg);
-			this.pathMap = new Hash<string, astar.Node[]>();
 		}
 
 		public findPath(startX:number, startY:number, endX:number, endY:number):astar.Node[]

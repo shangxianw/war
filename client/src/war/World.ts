@@ -2,49 +2,41 @@ module war
 {
 	export class World extends DataBase
 	{
+		public lastTime:number;
 		public sysArray:SystemBase[];
-		public inputSystem:InputSystem;
-		public moveSystem:MoveSystem;
-		public actionSystem:ActionSystem;
-		public collisionSystem:CollisionSystem;
-		public pathSystem:PathSystem;
 		public speedSystem:SpeedSystem;
+		public moveSystem:MoveSystem;
+		public pathSystem:PathSystem;
+
+		public inputSystem:InputSystem;
 
 		protected init()
 		{
-			this.sysArray = [];
 			this.inputSystem = new InputSystem();
-			this.sysArray.push(this.inputSystem);
 
-			this.moveSystem = new MoveSystem();
-			this.sysArray.push(this.moveSystem); 
-
-			this.pathSystem = new PathSystem();
-			this.sysArray.push(this.pathSystem);
+			this.sysArray = [];
 
 			this.speedSystem = new SpeedSystem();
 			this.sysArray.push(this.speedSystem);
 
-			this.actionSystem = new ActionSystem();
-			this.sysArray.push(this.actionSystem);
+			this.moveSystem = new MoveSystem();
+			this.sysArray.push(this.moveSystem);
 
-			this.collisionSystem = new CollisionSystem();
-			this.sysArray.push(this.collisionSystem);
+			this.pathSystem = new PathSystem();
+			this.sysArray.push(this.pathSystem);
 		}
 
 		protected destroy()
 		{
-			DataUtils.DestroyDataBaseClass(this.inputSystem, true);
-			DataUtils.DestroyDataBaseClass(this.moveSystem, true);
-			DataUtils.DestroyDataBaseClass(this.actionSystem, true);
-			DataUtils.DestroyDataBaseClass(this.collisionSystem, true);
-			
+			DataUtils.DestroyDataBaseClass(this.speedSystem, true);
 			this.sysArray.length = 0;
 		}
 
-		public update(deltaTime:number)
+		public update(currTime:number)
 		{
-			this.inputSystem.update(deltaTime);
+			let deltaTime = (currTime - this.lastTime)/1000;
+			this.lastTime = currTime;
+			
 			let warData = WarDataMgr.Ins();
 			let entityArray = DataUtils.CopyArray(warData.entityMap.values());
 			let entity:EntityBase;
@@ -57,8 +49,6 @@ module war
 				this.speedSystem.update(entity, deltaTime);
 				this.moveSystem.update(entity, deltaTime);
 				this.pathSystem.update(entity, deltaTime);
-				this.actionSystem.update(entity, deltaTime);
-				this.collisionSystem.update(entity, deltaTime);
 			}
 		}
 

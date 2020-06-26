@@ -20,6 +20,7 @@ module home
 
 	export class HomePanel extends ViewBase
 	{
+		private fightBtn:eui.Button;
 		public info:HomePanelData;
 		public constructor()
 		{
@@ -44,6 +45,10 @@ module home
 
 		public initView()
 		{
+			this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, ()=>{
+				ViewManager.Ins().close(this);
+				ViewManager.Ins().open(war.WarMatchPanel);
+			}, this)
 		}
 	}
 }

@@ -11,7 +11,7 @@ module astar
 
 		}
 
-		public init(numRows:number, numCols:number, space:number, mapCfg:boolean[][])
+		public init(numRows:number, numCols:number, space:number)
 		{
 			this.numRows = numRows;
 			this.numCols = numCols;
@@ -27,7 +27,7 @@ module astar
 					x = j;
 					y = i;
 					let node = new Node();
-					node.init(x, y, mapCfg[y][x]);
+					node.init(x, y, true);
 					rowArray.push(node);
 				}
 				this.nodeArray.push(rowArray);

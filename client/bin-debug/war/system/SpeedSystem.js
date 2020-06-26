@@ -30,33 +30,25 @@ var war;
             var sCom = entity.getCom(war.COMPONENT.SPEED);
             if (sCom == null)
                 return;
-            var pCom = entity.getCom(war.COMPONENT.PATH);
-            if (pCom != null) {
-                this.calcByPath(entity, deltaTime);
-            }
+            this.calcByPath(entity);
         };
-        // 根据路径计算速度方向
-        SpeedSystem.prototype.calcByPath = function (entity, deltaTime) {
+        SpeedSystem.prototype.calcByPath = function (entity) {
             var sCom = entity.getCom(war.COMPONENT.SPEED);
             if (sCom == null)
                 return;
             var pCom = entity.getCom(war.COMPONENT.PATH);
             if (pCom != null) {
-                var currNode = pCom.getCurr();
-                var localXY = war.WarUtils.ToRealPos(currNode.x, currNode.y);
-                var angle = MathUtils.CalcAngle(entity.x, entity.y, localXY[0], localXY[1]);
-                sCom.angle = angle;
-                var speedXY = MathUtils.CalcLegSide(sCom.speed, sCom.angle);
-                var speedX = speedXY[0];
-                var speedY = speedXY[1];
-                // 判断需不需要进行下一个目标
-                if ((speedX < 0 && entity.x < localXY[0]) ||
-                    (speedX > 0 && entity.x > localXY[0]) ||
-                    (speedY < 0 && entity.y < localXY[1]) ||
-                    (speedY > 0 && entity.y > localXY[1])) {
-                    entity.x = localXY[0];
-                    entity.y = localXY[1];
-                    pCom.toNext();
+                var currStartNode = pCom.getCurrStartNode();
+                if (currStartNode != null) {
+                    var currEndNode = pCom.getCurrEndNode();
+                    if (currEndNode == null)
+                        return;
+                    var startX = war.WarUtils.ToLocalX(currStartNode.x);
+                    var startY = war.WarUtils.ToLocalY(currStartNode.y);
+                    var endX = war.WarUtils.ToLocalX(currEndNode.x);
+                    var endY = war.WarUtils.ToLocalY(currEndNode.y);
+                    var angle = MathUtils.CalcAngle(startX, startY, endX, endY);
+                    sCom.angle = angle;
                 }
             }
         };

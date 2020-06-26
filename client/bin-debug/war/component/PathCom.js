@@ -18,7 +18,7 @@ var war;
         PathCom.prototype.init = function () {
             this.componentId = war.COMPONENT.PATH;
             this.path = [];
-            this.currStep = -1;
+            this.currStep = 0;
         };
         PathCom.prototype.destroy = function () {
             this.destroyPath();
@@ -26,34 +26,28 @@ var war;
         };
         PathCom.prototype.setPath = function (path) {
             this.destroyPath();
-            this.path = path;
-            this.currStep = 0;
-            // DrawUtils.DrawPath(hero, this.drawGroup);
+            for (var _i = 0, path_1 = path; _i < path_1.length; _i++) {
+                var node = path_1[_i];
+                this.path.push(node);
+            }
         };
-        PathCom.prototype.getPath = function () {
-            return this.path;
-        };
-        PathCom.prototype.getLeftPath = function () {
-            return this.path.slice(Math.max(this.currStep - 1, 0));
-        };
-        PathCom.prototype.getEndNode = function () {
-            return this.path[this.path.length - 1];
-        };
-        PathCom.prototype.getCurr = function () {
-            return this.path[this.currStep];
-        };
-        PathCom.prototype.getLast = function () {
-            return this.path[this.currStep - 1];
-        };
-        PathCom.prototype.getNext = function () {
+        //获取阶段目标点
+        PathCom.prototype.getCurrEndNode = function () {
             return this.path[this.currStep + 1];
         };
-        PathCom.prototype.getEnd = function () {
-            return this.path[this.path.length - 1];
+        // 获取阶段起始点
+        PathCom.prototype.getCurrStartNode = function () {
+            return this.path[this.currStep];
         };
-        PathCom.prototype.toNext = function () {
+        // 获取剩余路径
+        PathCom.prototype.getLeftPath = function (hasStartNode) {
+            if (hasStartNode === void 0) { hasStartNode = true; }
+            if (hasStartNode == false)
+                return this.path.slice(this.currStep + 1);
+            return this.path.slice(this.currStep);
+        };
+        PathCom.prototype.toNextNode = function () {
             this.currStep++;
-            return this.getCurr();
         };
         PathCom.prototype.destroyPath = function () {
             for (var _i = 0, _a = this.path; _i < _a.length; _i++) {
@@ -63,6 +57,7 @@ var war;
                 node.destroy();
                 PoolManager.Ins().push(node);
             }
+            this.path.length = 0;
         };
         return PathCom;
     }(war.ComBase));

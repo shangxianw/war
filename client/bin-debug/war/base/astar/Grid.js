@@ -6,7 +6,7 @@ var astar;
     var Grid = (function () {
         function Grid() {
         }
-        Grid.prototype.init = function (numRows, numCols, space, mapCfg) {
+        Grid.prototype.init = function (numRows, numCols, space) {
             this.numRows = numRows;
             this.numCols = numCols;
             this.space = space;
@@ -18,7 +18,7 @@ var astar;
                     x = j;
                     y = i;
                     var node = new astar.Node();
-                    node.init(x, y, mapCfg[y][x]);
+                    node.init(x, y, true);
                     rowArray.push(node);
                 }
                 this.nodeArray.push(rowArray);

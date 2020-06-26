@@ -44,12 +44,12 @@ class ConfigManager extends DataBase
 	public get(name:string)
 	{
 		if(LogUtils.CheckParamValid(name) == false)
-			return false;
+			return null;
 
 		if(this.cfgMap.has(name) == false)
 		{
 			LogUtils.Error("不存在配置");
-			return false;
+			return null;
 		}
 
 		return this.cfgMap.get(name);

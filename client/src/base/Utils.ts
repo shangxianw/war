@@ -98,4 +98,9 @@ class Utils
         else
             return `bg_phb_heroicon_up${icon}`;
     }
+
+    public static GetMap(id:number)
+    {
+        return `map_${id}_jpg`
+    }
 }

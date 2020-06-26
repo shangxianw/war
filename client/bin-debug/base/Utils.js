@@ -78,6 +78,9 @@ var Utils = (function () {
         else
             return "bg_phb_heroicon_up" + icon;
     };
+    Utils.GetMap = function (id) {
+        return "map_" + id + "_jpg";
+    };
     return Utils;
 }());
 __reflect(Utils.prototype, "Utils");

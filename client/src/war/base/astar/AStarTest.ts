@@ -43,7 +43,7 @@ module astar
 			walkMap.graphics.beginFill(0xffff00);
 			
 			this.grid = new Grid();
-			this.grid.init(this.numRows, this.numCols, this.space, war.WarDataMgr.Ins().mapCfg);
+			this.grid.init(this.numRows, this.numCols, this.space);
 
 			for(let i=0, len=this.numRows; i<len; i++)
 			{

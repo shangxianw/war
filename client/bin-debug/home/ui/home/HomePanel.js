@@ -42,6 +42,11 @@ var home;
             this.info.packData();
         };
         HomePanel.prototype.initView = function () {
+            var _this = this;
+            this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, function () {
+                ViewManager.Ins().close(_this);
+                ViewManager.Ins().open(war.WarMatchPanel);
+            }, this);
         };
         return HomePanel;
     }(ViewBase));

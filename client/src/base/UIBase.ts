@@ -275,7 +275,7 @@ abstract class UIBase extends eui.Component
 		return true;
 	}
 
-	private removeEvent(target:egret.DisplayObject, type:string, cbFn:Function, thisObj:any)
+	public removeEvent(target:egret.DisplayObject, type:string, cbFn:Function, thisObj:any)
 	{
 		if(target == null || cbFn == null || thisObj == null || type == null || type == "")
 		{

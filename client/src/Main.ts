@@ -91,7 +91,7 @@ class Main extends eui.UILayer
         NetManager.Ins().initData();
         war.WarDataMgr.Ins();
         ViewManager.Ins().open(home.LoginPanel);
-
+        // ViewManager.Ins().open(war.WarMatchPanel);
     }
 }
 

@@ -95,6 +95,11 @@
 			"url": "war/heroClip/hero_99040.json",
 			"type": "json",
 			"name": "hero_99040_json"
+		},
+		{
+			"url": "war/map/1001/map_1001.jpg",
+			"type": "image",
+			"name": "map_1001_jpg"
 		}
 	]
 }

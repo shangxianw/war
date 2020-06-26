@@ -1,28 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="WarPanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:war="war.*" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect left="0" right="0" top="0" bottom="0"/>
+	<e:Image source="战斗法力修改01_jpg" visible="false"/>
+	<e:Image id="mapImg" horizontalCenter="0" verticalCenter="-20" source=""/>
 
-	<e:Group id="testGrid" width="1080" height="480" anchorOffsetX="0" y="120" x="100">
-		<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0xffffff"/>
+	<e:Group id="testGrid" anchorOffsetX="0" left="0" right="0" top="0" bottom="0" touchEnabled="false" touchChildren="false">
+
+
 	</e:Group>
-	<e:Group id="drawGroup" left="0" top="0" bottom="0" touchEnabled="false" width="720"/>
-	<e:Group id="entityGroup" left="0" right="0" top="0" bottom="0" touchEnabled="true" anchorOffsetX="0"/>
-	<e:Group height="360" anchorOffsetY="0" left="0" right="0" bottom="0" visible="false">
-		<e:Image source="bg_jz_lt_jk_wxts_png" scale9Grid="18,18,18,11" left="0" right="0" top="0" bottom="0" alpha="0.3"/>
-		<e:Group height="370" anchorOffsetY="0" left="0" right="0" bottom="0">
-		<e:Image source="bg_jz_lt_jk_wxts_png" scale9Grid="18,18,18,11" left="0" right="0" top="0" bottom="0"/>
-
-
-
-
-		<war:Ka1 x="29.08" y="202.26" skinName="Ka1Skin" scaleX="0.6" scaleY="0.6"/>
-		<war:CostBar y="303.8" skinName="CostBarSkin" horizontalCenter="0"/>
-			<e:Group x="610.72" y="123.75">
-				<war:Ka1 skinName="Ka1Skin" anchorOffsetX="106" anchorOffsetY="68" scaleX="1" scaleY="1"/>
-				<war:Ka1 skinName="Ka1Skin" scaleX="1" scaleY="1" anchorOffsetX="106" anchorOffsetY="68"/>
-				<war:Ka1 skinName="Ka1Skin" scaleX="1" scaleY="1" anchorOffsetX="106" anchorOffsetY="68"/>
-				<war:Ka1 skinName="Ka1Skin" scaleX="1" scaleY="1" anchorOffsetX="106" anchorOffsetY="68"/>
-			</e:Group>
+	<e:Group id="drawGroup" left="0" top="0" bottom="0" touchEnabled="false" right="0" touchChildren="false"/>
+	<e:Group id="entityGroup" left="0" right="0" top="0" bottom="0" touchEnabled="true" anchorOffsetX="0">
+	</e:Group>
+	<e:Group anchorOffsetY="0" left="0" right="0" bottom="0" top="0">
+		<war:CostBar id="costBar" y="670.23" skinName="CostBarSkin" horizontalCenter="-23"/>
+		<e:Group id="kaGroup" left="0" right="0" top="0" bottom="0">
+			<!--<war:Ka1 x="196.92" y="656.19" skinName="Ka1Skin" scaleX="0.6" scaleY="0.6" anchorOffsetX="106" anchorOffsetY="68"/>
+			<war:Ka1 x="396" y="632.56" skinName="Ka1Skin" scaleX="0.74" scaleY="0.74" anchorOffsetX="106" anchorOffsetY="68"/>
+			<war:Ka1 x="556.66" y="632.56" skinName="Ka1Skin" scaleX="0.74" scaleY="0.74" anchorOffsetX="106" anchorOffsetY="68"/>
+			<war:Ka1 x="718.02" y="632.56" skinName="Ka1Skin" scaleX="0.74" scaleY="0.74" anchorOffsetX="106" anchorOffsetY="68"/>
+			<war:Ka1 x="879.34" y="632.56" skinName="Ka1Skin" scaleX="0.74" scaleY="0.74" anchorOffsetX="106" anchorOffsetY="68"/>-->
 		</e:Group>
+
+
 	</e:Group>
 </e:Skin>

@@ -5,6 +5,8 @@ var GameData = (function () {
     function GameData() {
     }
     GameData.DevelopMode = DevelopMode.DEBUG;
+    GameData.Fps = 1 / 60;
+    GameData.FrameCount = 60;
     return GameData;
 }());
 __reflect(GameData.prototype, "GameData");

@@ -20,89 +20,22 @@ var war;
         };
         InputSystem.prototype.destroy = function () {
         };
-        InputSystem.prototype.update = function (deltaTime) {
-            var warData = war.WarDataMgr.Ins();
-            while (warData.inputArray.length > 0) {
-                var iCom = warData.inputArray.shift();
-                if (iCom == null)
-                    continue;
-                if (iCom.inputType == war.INPUT.CREATE_HERO)
-                    this.createHero(iCom);
-                else if (iCom.inputType == war.INPUT.CREATE_QUEEN)
-                    this.createQueen(iCom);
-                else if (iCom.inputType == war.INPUT.CREATE_KING)
-                    this.createKing(iCom);
-            }
-        };
         // ---------------------------------------------------------------------- 创建英雄实体
-        InputSystem.prototype.createHero = function (inputCom) {
+        InputSystem.prototype.createHero = function (x, y, parent) {
             var hero = PoolManager.Ins().pop(war.HeroEntity);
-            hero.x = war.WarUtils.ToLocalX(inputCom.x1);
-            hero.y = war.WarUtils.ToLocalY(inputCom.y1);
+            hero.x = war.WarUtils.ToLocalX(x);
+            hero.y = war.WarUtils.ToLocalY(y);
             var sCom = PoolManager.Ins().pop(war.SpeedCom);
-            sCom.speed = 0.5;
+            sCom.speed = 60;
             sCom.angle = 0;
             hero.setCom(sCom);
-            var pathCom = PoolManager.Ins().pop(war.PathCom);
-            var path = war.WarDataMgr.Ins().findPath(inputCom.x1, inputCom.y1, inputCom.x2, inputCom.y2);
-            pathCom.setPath(path);
-            hero.setCom(pathCom);
-            var aCom = new war.ActionCom();
-            aCom.setActionAndDir(war.ACTION.RUN, war.DIRECTION.DOWN);
-            hero.setCom(aCom);
-            var rCom = new war.RangeCom();
-            rCom.radius = 20;
-            hero.setCom(rCom);
-            var cCom = new war.CampCom();
-            cCom.camp = Math.random() > 0.5 ? war.CAMP.WE : war.CAMP.ENEMY;
-            hero.setCom(cCom);
-            war.DrawUtils.DrawGrigd(hero);
-            war.DrawUtils.DrawHeroAnchor(hero);
-            inputCom.parent.addChild(hero);
-            war.WarDataMgr.Ins().addEntity(hero);
-        };
-        // ---------------------------------------------------------------------- 创建公主塔实体
-        InputSystem.prototype.createQueen = function (inputCom) {
-            var hero = PoolManager.Ins().pop(war.QueenEntity);
-            hero.x = war.WarUtils.ToLocalX(inputCom.x1);
-            hero.y = war.WarUtils.ToLocalY(inputCom.y1);
-            var aCom = new war.ActionCom();
-            aCom.setActionAndDir(war.ACTION.RUN, war.DIRECTION.DOWN);
-            hero.setCom(aCom);
-            var rCom = new war.RangeCom();
-            rCom.radius = 20;
-            hero.setCom(rCom);
-            var cCom = new war.CampCom();
-            cCom.camp = Math.random() > 0.5 ? war.CAMP.WE : war.CAMP.ENEMY;
-            hero.setCom(cCom);
-            war.DrawUtils.DrawGrigd(hero);
-            war.DrawUtils.DrawHeroAnchor(hero);
-            var rCom2 = new war.RangeCom();
-            rCom2.radius = 30;
-            hero.setCom(rCom2);
-            var hpCom = new war.HealthCom();
-            hpCom.setHp(100);
-            hero.setCom(hpCom);
-            inputCom.parent.addChild(hero);
-            war.WarDataMgr.Ins().addEntity(hero);
-        };
-        // ---------------------------------------------------------------------- 创建国王塔实体
-        InputSystem.prototype.createKing = function (inputCom) {
-            var hero = PoolManager.Ins().pop(war.QueenEntity);
-            hero.x = war.WarUtils.ToLocalX(inputCom.x1);
-            hero.y = war.WarUtils.ToLocalY(inputCom.y1);
-            var aCom = new war.ActionCom();
-            aCom.setActionAndDir(war.ACTION.RUN, war.DIRECTION.DOWN);
-            hero.setCom(aCom);
-            var rCom = new war.RangeCom();
-            rCom.radius = 20;
-            hero.setCom(rCom);
-            var cCom = new war.CampCom();
-            cCom.camp = Math.random() > 0.5 ? war.CAMP.WE : war.CAMP.ENEMY;
-            hero.setCom(cCom);
-            war.DrawUtils.DrawGrigd(hero);
-            war.DrawUtils.DrawHeroAnchor(hero);
-            inputCom.parent.addChild(hero);
+            var pCom = PoolManager.Ins().pop(war.PathCom);
+            var endX = Math.floor(Math.random() * war.WarDataMgr.Ins().grid.numCols);
+            var endY = Math.floor(Math.random() * war.WarDataMgr.Ins().grid.numRows);
+            var newPath = war.WarDataMgr.Ins().findPath(x, y, endX, endY);
+            pCom.setPath(newPath);
+            hero.setCom(pCom);
+            parent.addChild(hero);
             war.WarDataMgr.Ins().addEntity(hero);
         };
         return InputSystem;

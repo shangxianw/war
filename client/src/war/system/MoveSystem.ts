@@ -25,13 +25,14 @@ module war
 			let sCom = entity.getCom(COMPONENT.SPEED) as SpeedCom;
 			if(sCom == null)
 				return;
-			
 			let speedArray = MathUtils.CalcLegSide(sCom.speed, sCom.angle);
-			let speedX = speedArray[0];
-			let speedY = speedArray[1];
+			let speedX = speedArray[0] * deltaTime; // 直接乘，因为这个通常不足一秒，所以肯定不
+			let speedY = speedArray[1] * deltaTime;
+			// let speedX = speedArray[0];
+			// let speedY = speedArray[1];
 
-			entity.x = Number((entity.x + speedX).toFixed(2));
-			entity.y = Number((entity.y + speedY).toFixed(2));
+			entity.x = Number((entity.x + speedX));
+			entity.y = Number((entity.y + speedY));
 		}
 	}
 }

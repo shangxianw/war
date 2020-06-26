@@ -10,13 +10,62 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var war;
 (function (war) {
+    var CostBarData = (function (_super) {
+        __extends(CostBarData, _super);
+        function CostBarData() {
+            return _super.call(this) || this;
+        }
+        CostBarData.prototype.init = function () {
+            this.lastTime = 0;
+        };
+        CostBarData.prototype.destroy = function () {
+        };
+        CostBarData.prototype.packData = function (speed) {
+            this.speed = speed;
+            return this;
+        };
+        CostBarData.prototype.initData = function (width) {
+            this.totalWidth = width;
+            this.widthCeil = width / 100;
+        };
+        CostBarData.prototype.getDeltaTime = function () {
+            var currTime = egret.getTimer();
+            var deltaTime = currTime - this.lastTime;
+            this.lastTime = currTime;
+            return deltaTime;
+        };
+        return CostBarData;
+    }(DataBase));
+    war.CostBarData = CostBarData;
+    __reflect(CostBarData.prototype, "war.CostBarData");
     var CostBar = (function (_super) {
         __extends(CostBar, _super);
         function CostBar() {
-            return _super.call(this) || this;
+            return _super.call(this, "CostBarSkin") || this;
         }
+        CostBar.prototype.init = function () {
+        };
+        CostBar.prototype.destroy = function () {
+        };
+        CostBar.prototype.initData = function (info) {
+            if (info == null)
+                return;
+            this.info = info;
+            this.info.initData(this.bar1.width);
+            this.initBar();
+            this.addEvent(this, egret.Event.ENTER_FRAME, this.OnUpdate, this);
+        };
+        CostBar.prototype.initBar = function () {
+            this.bar1.width = 0;
+            this.bar2.width = 0;
+        };
+        CostBar.prototype.OnUpdate = function () {
+            var deltaTime = this.info.getDeltaTime();
+            this.bar1.width = Math.min(this.bar1.width + this.info.speed * this.info.widthCeil * deltaTime / 1000, this.info.totalWidth);
+            this.bar2.width = Math.min(this.bar1.width + this.info.speed * this.info.widthCeil * deltaTime / 1000, this.info.totalWidth);
+        };
         return CostBar;
-    }(eui.Component));
+    }(UIBase));
     war.CostBar = CostBar;
     __reflect(CostBar.prototype, "war.CostBar");
 })(war || (war = {}));

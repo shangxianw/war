@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="CostBarSkin" xmlns:e="http://ns.egret.com/eui" height="43">
+<e:Skin class="CostBarSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" height="43">
 	<e:Image source="icon_sh_dbg_sh_d0_png" verticalCenter="4.5" x="10"/>
-	<e:Image x="38.14" source="icon_sh_dbg_sh_d11_png" verticalCenter="4"/>
-	<e:Image x="38.14" verticalCenter="4" source="icon_sh_dbg_sh_d1_png"/>
+	<e:Image id="bar1" x="38.14" source="icon_sh_dbg_sh_d11_png" verticalCenter="4" width="652"/>
+	<e:Image id="bar2" x="38.14" verticalCenter="4" source="icon_sh_dbg_sh_d1_png"/>
 	<e:Group verticalCenter="4.5" x="31.92">
 		<e:Image source="icon_sh_dbg_sh_d2_png"/>
 		<e:Image source="icon_sh_dbg_sh_d2_png" x="10" y="10"/>

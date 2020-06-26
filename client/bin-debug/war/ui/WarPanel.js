@@ -13,7 +13,17 @@ var war;
     var WarPanelData = (function (_super) {
         __extends(WarPanelData, _super);
         function WarPanelData() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.kaX = [396, 556, 718, 880];
+            _this.kaY = 632;
+            _this.anchorOffsetX = 106;
+            _this.anchorOffsetY = 68;
+            _this.scale = 0.74;
+            _this.initX = 198;
+            _this.initY = 656;
+            _this.initScale = 0.6;
+            _this.shiftY = -20;
+            return _this;
         }
         WarPanelData.prototype.init = function () {
             this.resGroup = [];
@@ -26,6 +36,8 @@ var war;
         WarPanelData.prototype.packData = function () {
             war.WarDataMgr.Ins();
             war.WarDataMgr.Ins().startWar();
+            this.myKaArray = [10010, 10020, 10030, 10040, 10050, 10060, 10070, 10080];
+            this.enemyKaArray = [10010, 10020, 10030, 10040, 10050, 10060, 10070, 10080];
         };
         return WarPanelData;
     }(ViewData));
@@ -47,40 +59,76 @@ var war;
         };
         WarPanel.prototype.initView = function () {
             war.DrawUtils.DrawGrid(this.testGrid);
-            this.initEntity();
-            this.addEvent(this.entityGroup, egret.TouchEvent.TOUCH_TAP, this.OnEntityGroupTap, this);
+            this.initKa();
+            this.mapImg.source = Utils.GetMap(1001);
+            var barData = new war.CostBarData();
+            barData.packData(2);
+            this.costBar.initData(barData);
         };
-        WarPanel.prototype.OnEntityGroupTap = function (e) {
-            var x = war.WarUtils.ToGridX(e.localX);
-            var y = war.WarUtils.ToGridY(e.localY);
-            if (war.WarUtils.CheckXYRangeValide(x, y) == false) {
-                LogUtils.Error("丢卡的位置有误");
-                return false;
+        WarPanel.prototype.initKa = function () {
+            var _this = this;
+            var kaArray = this.info.myKaArray.slice(0, 5);
+            for (var i = 0, len = 5; i < len; i++) {
+                var kaId = kaArray[i];
+                var ka = PoolManager.Ins().pop(war.Ka1);
+                var kaData = PoolManager.Ins().pop(war.Ka1Data);
+                kaData.packData(kaId);
+                ka.initData(kaData);
+                ka.x = this.info.initX;
+                ka.y = this.info.initY;
+                ka.scaleX = ka.scaleY = this.info.initScale;
+                ka.anchorOffsetX = this.info.anchorOffsetX;
+                ka.anchorOffsetY = this.info.anchorOffsetY;
+                this.kaGroup.addChild(ka);
+                this.addEvent(ka, egret.TouchEvent.TOUCH_BEGIN, this.OnKaTouchBegin, this);
             }
-            var iptCom = PoolManager.Ins().pop(war.InputCom);
-            iptCom.packHero(war.INPUT.CREATE_HERO, x, y, 26, 3, this.entityGroup, war.CAMP.WE);
-            war.WarDataMgr.Ins().inputArray.push(iptCom);
+            setTimeout(function () {
+                _this.showInitKaTween();
+            }, 1000);
         };
-        // ---------------------------------------------------------------------- 初始化实体
-        WarPanel.prototype.initEntity = function () {
-            var iptCom = PoolManager.Ins().pop(war.InputCom);
-            iptCom.packQueen(war.INPUT.CREATE_QUEEN, 7, 3, this.entityGroup, war.CAMP.WE);
-            war.WarDataMgr.Ins().inputArray.push(iptCom);
-            var iptCom2 = PoolManager.Ins().pop(war.InputCom);
-            iptCom2.packQueen(war.INPUT.CREATE_QUEEN, 7, 12, this.entityGroup, war.CAMP.WE);
-            war.WarDataMgr.Ins().inputArray.push(iptCom2);
-            var iptCom3 = PoolManager.Ins().pop(war.InputCom);
-            iptCom3.packQueen(war.INPUT.CREATE_QUEEN, 26, 3, this.entityGroup, war.CAMP.ENEMY);
-            war.WarDataMgr.Ins().inputArray.push(iptCom3);
-            var iptCom4 = PoolManager.Ins().pop(war.InputCom);
-            iptCom4.packQueen(war.INPUT.CREATE_QUEEN, 26, 12, this.entityGroup, war.CAMP.ENEMY);
-            war.WarDataMgr.Ins().inputArray.push(iptCom4);
-            var iptCom5 = PoolManager.Ins().pop(war.InputCom);
-            iptCom5.packKing(war.INPUT.CREATE_KING, 3, 7, this.entityGroup, war.CAMP.WE);
-            war.WarDataMgr.Ins().inputArray.push(iptCom5);
-            var iptCom6 = PoolManager.Ins().pop(war.InputCom);
-            iptCom6.packKing(war.INPUT.CREATE_KING, 32, 7, this.entityGroup, war.CAMP.ENEMY);
-            war.WarDataMgr.Ins().inputArray.push(iptCom6);
+        WarPanel.prototype.showInitKaTween = function () {
+            for (var i = 1, len = 5; i < len; i++) {
+                var ka = this.kaGroup.getChildAt(i);
+                egret.Tween.removeTweens(ka);
+                egret.Tween.get(ka)
+                    .to({
+                    x: this.info.kaX[i - 1],
+                    y: this.info.kaY,
+                    scaleX: this.info.scale,
+                    scaleY: this.info.scale
+                }, 250 * i);
+            }
+        };
+        WarPanel.prototype.OnKaTouchBegin = function (e) {
+            var ka = e.target;
+            var kaIndex = this.kaGroup.getChildIndex(ka);
+            if (kaIndex <= 0)
+                return;
+            ka.y += this.info.shiftY;
+            this.info.currKa = ka;
+            this.addEvent(ka, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnKaTouchOutside, this);
+            this.addEvent(ka, egret.TouchEvent.TOUCH_END, this.OnKaTouchEnd, this);
+            this.addEvent(ka, egret.TouchEvent.TOUCH_MOVE, this.OnKaTouchMove, this);
+        };
+        WarPanel.prototype.OnKaTouchOutside = function (e) {
+            this.info.currKa.y -= this.info.shiftY;
+            this.removeEvent(this.info.currKa, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnKaTouchOutside, this);
+            this.removeEvent(this.info.currKa, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnKaTouchEnd, this);
+            this.removeEvent(this.info.currKa, egret.TouchEvent.TOUCH_MOVE, this.OnKaTouchMove, this);
+        };
+        WarPanel.prototype.OnKaTouchEnd = function (e) {
+            var kaIndex = this.kaGroup.getChildIndex(this.info.currKa);
+            if (kaIndex >= 0) {
+                this.info.currKa.x = this.info.kaX[kaIndex - 1];
+                this.info.currKa.y = this.info.kaY;
+            }
+            this.removeEvent(this.info.currKa, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnKaTouchOutside, this);
+            this.removeEvent(this.info.currKa, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnKaTouchEnd, this);
+            this.removeEvent(this.info.currKa, egret.TouchEvent.TOUCH_MOVE, this.OnKaTouchMove, this);
+        };
+        WarPanel.prototype.OnKaTouchMove = function (e) {
+            this.info.currKa.x = e.stageX;
+            this.info.currKa.y = e.stageY;
         };
         return WarPanel;
     }(ViewBase));

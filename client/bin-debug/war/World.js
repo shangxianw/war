@@ -16,29 +16,22 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         World.prototype.init = function () {
-            this.sysArray = [];
             this.inputSystem = new war.InputSystem();
-            this.sysArray.push(this.inputSystem);
+            this.sysArray = [];
+            this.speedSystem = new war.SpeedSystem();
+            this.sysArray.push(this.speedSystem);
             this.moveSystem = new war.MoveSystem();
             this.sysArray.push(this.moveSystem);
             this.pathSystem = new war.PathSystem();
             this.sysArray.push(this.pathSystem);
-            this.speedSystem = new war.SpeedSystem();
-            this.sysArray.push(this.speedSystem);
-            this.actionSystem = new war.ActionSystem();
-            this.sysArray.push(this.actionSystem);
-            this.collisionSystem = new war.CollisionSystem();
-            this.sysArray.push(this.collisionSystem);
         };
         World.prototype.destroy = function () {
-            DataUtils.DestroyDataBaseClass(this.inputSystem, true);
-            DataUtils.DestroyDataBaseClass(this.moveSystem, true);
-            DataUtils.DestroyDataBaseClass(this.actionSystem, true);
-            DataUtils.DestroyDataBaseClass(this.collisionSystem, true);
+            DataUtils.DestroyDataBaseClass(this.speedSystem, true);
             this.sysArray.length = 0;
         };
-        World.prototype.update = function (deltaTime) {
-            this.inputSystem.update(deltaTime);
+        World.prototype.update = function (currTime) {
+            var deltaTime = (currTime - this.lastTime) / 1000;
+            this.lastTime = currTime;
             var warData = war.WarDataMgr.Ins();
             var entityArray = DataUtils.CopyArray(warData.entityMap.values());
             var entity;
@@ -49,8 +42,6 @@ var war;
                 this.speedSystem.update(entity, deltaTime);
                 this.moveSystem.update(entity, deltaTime);
                 this.pathSystem.update(entity, deltaTime);
-                this.actionSystem.update(entity, deltaTime);
-                this.collisionSystem.update(entity, deltaTime);
             }
         };
         World.prototype.updateSystem = function (deltaTime) {

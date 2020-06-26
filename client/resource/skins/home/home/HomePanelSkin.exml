@@ -22,4 +22,5 @@
 			<e:HorizontalLayout/>
 		</e:layout>
 	</e:Group>
+	<e:Button id="fightBtn" label="fight" x="116.82" y="587.88" skinName="btn1Skin"/>
 </e:Skin>

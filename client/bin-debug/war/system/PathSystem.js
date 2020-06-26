@@ -13,6 +13,7 @@ var war;
     /**
      * 路径系统
      * 判断需不需要进行下一个阶段
+     * 而不会要求计算是否获取新的路径
      */
     var PathSystem = (function (_super) {
         __extends(PathSystem, _super);
@@ -31,37 +32,23 @@ var war;
             var pCom = entity.getCom(war.COMPONENT.PATH);
             if (pCom == null)
                 return;
-            war.DrawUtils.DrawPath(entity);
-            var currNode = pCom.getCurr();
-            if (currNode == null) {
-                try {
-                    // entity.removeCom(COMPONENT.PATH);
-                    // entity.removeCom(COMPONENT.SPEED);
+            var currStartNode = pCom.getCurrStartNode();
+            if (currStartNode != null) {
+                var currEndNode = pCom.getCurrEndNode();
+                if (currEndNode == null)
+                    return;
+                var startX = war.WarUtils.ToLocalX(currStartNode.x);
+                var startY = war.WarUtils.ToLocalY(currStartNode.y);
+                var endX = war.WarUtils.ToLocalX(currEndNode.x);
+                var endY = war.WarUtils.ToLocalY(currEndNode.y);
+                var d1 = MathUtils.CalcDistance(startX, startY, endX, endY);
+                var d2 = MathUtils.CalcDistance(startX, startY, entity.x, entity.y);
+                if (d2 >= d1) {
+                    pCom.toNextNode();
                 }
-                catch (e) {
-                    1;
-                    1;
-                }
-                return;
-            }
-            var lastNode = pCom.getLast();
-            var localXY2 = war.WarUtils.ToRealPos(currNode.x, currNode.y);
-            if (lastNode != null) {
-                var localX1 = war.WarUtils.ToLocalX(lastNode.x);
-                var localY1 = war.WarUtils.ToLocalY(lastNode.y);
-                var d1 = MathUtils.CalcDistance(localX1, localY1, localXY2[0], localXY2[1]);
-                var d2 = MathUtils.CalcDistance(localX1, localY1, entity.x, entity.y);
-                if (d2 >= d1)
-                    pCom.toNext();
-                else {
-                    var sCom = entity.getCom(war.COMPONENT.SPEED);
-                    if (sCom != null) {
-                        sCom.angle = MathUtils.CalcAngle(entity.x, entity.y, localXY2[0], localXY2[1]);
-                    }
-                }
+                war.DrawUtils.DrawPath(entity);
             }
             else {
-                pCom.toNext();
             }
         };
         return PathSystem;

@@ -145,6 +145,7 @@ var Main = (function (_super) {
         NetManager.Ins().initData();
         war.WarDataMgr.Ins();
         ViewManager.Ins().open(home.LoginPanel);
+        // ViewManager.Ins().open(war.WarMatchPanel);
     };
     return Main;
 }(eui.UILayer));

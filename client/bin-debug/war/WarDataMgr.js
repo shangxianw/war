@@ -17,23 +17,18 @@ var war;
         }
         WarDataMgr.prototype.init = function () {
             this.mapId = 1001;
-            this.mapCfg = MapCfg[String(this.mapId)];
-            this.numCols = 36;
-            this.mapCfg[0].length; // 18;
-            this.numRows = 16;
-            this.mapCfg.length; // 30;
-            this.space = 30;
             this.startX = 100;
-            this.startY = 120;
+            this.startY = 85;
             // 战场宽540高900
+            this.astar = new astar.AStar();
+            this.grid = new astar.Grid();
+            this.grid.init(24, 54, 20);
             this.world = new war.World();
+            this.pathMap = new Hash();
             this.entityMap = new Hash();
-            this.inputArray = [];
-            this.initGrid();
         };
         WarDataMgr.prototype.destroy = function () {
             DataUtils.DestroyUIBaseMap(this.entityMap);
-            DataUtils.DestroyDataBaseArray(this.inputArray);
             this.astar.destroy();
             this.grid.destroy();
             this.astar = null;
@@ -45,10 +40,10 @@ var war;
         WarDataMgr.prototype.endWar = function () {
             egret.stopTick(this.update, this);
         };
-        WarDataMgr.prototype.update = function (deltaTime) {
-            if (deltaTime === void 0) { deltaTime = null; }
+        WarDataMgr.prototype.update = function (currTime) {
+            if (currTime === void 0) { currTime = null; }
             try {
-                this.world.update(deltaTime);
+                this.world.update(currTime);
             }
             catch (e) {
             }
@@ -56,9 +51,9 @@ var war;
         };
         // ---------------------------------------------------------------------- 实体
         WarDataMgr.prototype.addEntity = function (entity) {
-            if (this.entityMap.has(entity.id) == true)
+            if (this.entityMap.has(entity.uniqueCode) == true)
                 return false;
-            this.entityMap.set(entity.id, entity);
+            this.entityMap.set(entity.uniqueCode, entity);
         };
         WarDataMgr.prototype.removeEntity = function (id) {
             if (this.entityMap.has(id) == false)
@@ -71,13 +66,6 @@ var war;
             var entity = this.entityMap.remove(id);
             entity != null && entity.destroyAll();
             PoolManager.Ins().push(entity);
-        };
-        // ---------------------------------------------------------------------- 寻路
-        WarDataMgr.prototype.initGrid = function () {
-            this.astar = new astar.AStar();
-            this.grid = new astar.Grid();
-            this.grid.init(this.numRows, this.numCols, this.space, this.mapCfg);
-            this.pathMap = new Hash();
         };
         WarDataMgr.prototype.findPath = function (startX, startY, endX, endY) {
             // 如果存在缓存，则在缓存中查找

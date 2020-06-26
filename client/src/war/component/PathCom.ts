@@ -8,7 +8,7 @@ module war
 		{
 			this.componentId = COMPONENT.PATH;
 			this.path = [];
-			this.currStep = -1;
+			this.currStep = 0;
 		}
 
 		protected destroy()
@@ -20,50 +20,35 @@ module war
 		public setPath(path:astar.Node[])
 		{
 			this.destroyPath();
-			this.path = path;
-			this.currStep = 0;
-			// DrawUtils.DrawPath(hero, this.drawGroup);
+			for(let node of path)
+			{
+				this.path.push(node)
+			}
 		}
 
-		public getPath()
-		{
-			return this.path;
-		}
-
-		public getLeftPath()
-		{
-			return this.path.slice(Math.max(this.currStep-1, 0));
-		}
-
-		public getEndNode()
-		{
-			return this.path[this.path.length - 1];
-		}
-
-		public getCurr()
-		{
-			return this.path[this.currStep];
-		}
-
-		public getLast()
-		{
-			return this.path[this.currStep-1];
-		}
-
-		public getNext()
+		//获取阶段目标点
+		public getCurrEndNode():astar.Node
 		{
 			return this.path[this.currStep+1];
 		}
 
-		public getEnd()
+		// 获取阶段起始点
+		public getCurrStartNode():astar.Node
 		{
-			return this.path[this.path.length-1];
+			return this.path[this.currStep];
 		}
 
-		public toNext()
+		// 获取剩余路径
+		public getLeftPath(hasStartNode:boolean = true)
 		{
-			this.currStep++;
-			return this.getCurr();
+			if(hasStartNode == false)
+				return this.path.slice(this.currStep+1)	
+			return this.path.slice(this.currStep)
+		}
+		
+		public toNextNode()
+		{
+			this.currStep++;	
 		}
 
 		private destroyPath()
@@ -75,6 +60,7 @@ module war
 				node.destroy();
 				PoolManager.Ins().push(node);
 			}
+			this.path.length = 0;
 		}
 	}
 }
