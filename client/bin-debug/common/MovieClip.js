@@ -24,6 +24,8 @@ var war;
             var mcFactory = new egret.MovieClipDataFactory(data, txtr);
             this.movieClipData = mcFactory.generateMovieClipData(clipName);
         };
+        MovieClip.prototype.destroy = function () {
+        };
         MovieClip.prototype.startPlay = function (action, count) {
             if (this.currAction != action) {
                 this.currAction = action;

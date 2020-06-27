@@ -21,7 +21,7 @@ var war;
         InputSystem.prototype.destroy = function () {
         };
         // ---------------------------------------------------------------------- 创建英雄实体
-        InputSystem.prototype.createHero = function (x, y, parent) {
+        InputSystem.prototype.createHero = function (x, y) {
             var hero = PoolManager.Ins().pop(war.HeroEntity);
             hero.x = war.WarUtils.ToLocalX(x);
             hero.y = war.WarUtils.ToLocalY(y);
@@ -35,8 +35,7 @@ var war;
             var newPath = war.WarDataMgr.Ins().findPath(x, y, endX, endY);
             pCom.setPath(newPath);
             hero.setCom(pCom);
-            parent.addChild(hero);
-            war.WarDataMgr.Ins().addEntity(hero);
+            return hero;
         };
         return InputSystem;
     }(war.SystemBase));

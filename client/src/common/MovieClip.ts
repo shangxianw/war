@@ -19,6 +19,11 @@ module war
 			this.movieClipData = mcFactory.generateMovieClipData(clipName);
 		}
 
+		public destroy()
+		{
+			
+		}
+
 		public startPlay(action:string, count:number)
 		{
 			if(this.currAction != action)

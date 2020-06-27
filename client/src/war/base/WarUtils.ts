@@ -65,5 +65,31 @@ module war
 
 			return true;
 		}
+
+		// ---------------------------------------------------------------------- 返回正常的XY
+		public static GetRealXY(localX:number, localY:number)
+		{
+			let starLocalX = WarDataMgr.Ins().startX;
+			let starLocalY = WarDataMgr.Ins().startY;
+			let numCols = 24-1;
+			let numRows = WarDataMgr.Ins().grid.numRows-1;
+			let space = WarDataMgr.Ins().grid.space;
+
+			if(localX < starLocalX)
+				localX = starLocalX;
+			else if(localX > starLocalX + numCols*space)
+				localX = starLocalX + numCols*space;
+			
+			if(localY < starLocalY)
+				localY = starLocalY;
+			else if(localY > starLocalY + numRows*space)
+				localY = starLocalY + numRows*space;
+
+			let x = WarUtils.ToGridX(localX);
+			let y = WarUtils.ToGridY(localY);
+			let realX = WarUtils.ToLocalX(x);
+			let realY = WarUtils.ToLocalY(y);
+			return [realX, realY];
+		}
 	}
 }

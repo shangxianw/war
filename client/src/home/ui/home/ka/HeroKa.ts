@@ -27,7 +27,7 @@ module home
 
 			this.addAttrCB(hero, "level", ()=>{
 				this.canUp = this.kaId == 10010; // 假设有张升级表~
-				this.updateAttr("level");
+				this.flushAttr("level");
 			}, this);
 		}
 	}

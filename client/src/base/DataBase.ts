@@ -123,11 +123,11 @@ abstract class DataBase
 			value : value,
 			writable: true
 		})
-		this.updateAttr(propName);
+		this.flushAttr(propName);
 	}
 
 	// ---------------------------------------------------------------------- 注册属性2
-	public updateAttr(propName:string)
+	public flushAttr(propName:string)
 	{
 		if(LogUtils.CheckParamValid(propName) == false)
 			return false;
@@ -280,7 +280,7 @@ class CBData
 
 	public exec(query?:any)
 	{
-		if(this.cbFn == null || this.thisObj == null)
+		if(this.cbFn != null || this.thisObj != null)
 		{
 			if(this.param != null)
 				this.cbFn.call(this.thisObj, this.param, query);

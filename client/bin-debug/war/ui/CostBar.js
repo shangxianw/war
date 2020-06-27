@@ -53,7 +53,6 @@ var war;
             this.info = info;
             this.info.initData(this.bar1.width);
             this.initBar();
-            this.addEvent(this, egret.Event.ENTER_FRAME, this.OnUpdate, this);
         };
         CostBar.prototype.initBar = function () {
             this.bar1.width = 0;

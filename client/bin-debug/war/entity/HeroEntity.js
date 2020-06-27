@@ -18,10 +18,6 @@ var war;
         HeroEntity.prototype.init = function () {
             this.anchorOffsetX = this.width >> 1;
             this.anchorOffsetY = this.height;
-            this.mc = new war.MovieClip();
-            this.mc.initData("hero_10010", "hero_10010");
-            this.mc.startPlay("run0", -1);
-            this.addChild(this.mc);
             war.DrawUtils.DrawEntityId(this);
         };
         HeroEntity.prototype.destroy = function () {

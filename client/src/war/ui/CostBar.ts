@@ -44,7 +44,7 @@ module war
 
 	export class CostBar extends UIBase
 	{
-		private bar1:eui.Image;
+		public bar1:eui.Image;
 		private bar2:eui.Image;
 
 		public info:CostBarData;
@@ -70,7 +70,6 @@ module war
 			this.info = info;
 			this.info.initData(this.bar1.width);
 			this.initBar();
-			this.addEvent(this, egret.Event.ENTER_FRAME, this.OnUpdate, this)
 		}
 
 		private initBar()
@@ -79,7 +78,7 @@ module war
 			this.bar2.width = 0;
 		}
 
-		private OnUpdate()
+		public OnUpdate()
 		{
 			let deltaTime = this.info.getDeltaTime();
 			this.bar1.width = Math.min(this.bar1.width + this.info.speed*this.info.widthCeil*deltaTime/1000, this.info.totalWidth);

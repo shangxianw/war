@@ -4,6 +4,7 @@ module war
 	{
 		public static isTest:boolean = true;
 		private static _pathMap:Hash<number, egret.Shape>;
+		private static activeCeil:egret.Shape;
 		public static Destroy()
 		{
 			
@@ -57,6 +58,30 @@ module war
 			}
 			shape.graphics.endFill();
 			group.addChild(shape);
+		}
+
+		// ---------------------------------------------------------------------- 绘制当前拖动到的格子
+		public static DrawActiveCeil(localX:number, localY:number, group:eui.Group)
+		{
+			if(DrawUtils.isTest == false)
+				return;
+			
+			if(this.activeCeil == null)
+			{
+				this.activeCeil = new egret.Shape();
+				group.addChild(this.activeCeil);
+			}
+			
+			let space = WarDataMgr.Ins().grid.space;
+			let xy = WarUtils.GetRealXY(localX, localY)
+			let realX = xy[0];
+			let realY = xy[1];
+
+
+			this.activeCeil.graphics.clear();
+			this.activeCeil.graphics.beginFill(1, 0x00ff00);
+			this.activeCeil.graphics.drawRect(realX-space/2, realY-space/2, space, space);
+			this.activeCeil.graphics.endFill();
 		}
 
 		// 绘制实体id

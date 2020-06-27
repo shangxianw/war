@@ -29,7 +29,7 @@ var home;
             this.level = hero.level;
             this.addAttrCB(hero, "level", function () {
                 _this.canUp = _this.kaId == 10010; // 假设有张升级表~
-                _this.updateAttr("level");
+                _this.flushAttr("level");
             }, this);
         };
         return HeroKaData;

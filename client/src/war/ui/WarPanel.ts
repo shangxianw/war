@@ -4,6 +4,10 @@ module war
 	{
 		public myKaArray:number[];
 		public enemyKaArray:number[];
+		public myCurrStep:number;
+		public lastTime:number = 0;
+		public currEnergy:number = 0;
+		public speed:number = 2;
 
 		public kaX:number[] = [396, 556, 718, 880];
 		public kaY = 632;
@@ -13,9 +17,10 @@ module war
 		public initX:number = 198;
 		public initY:number = 656;
 		public initScale = 0.6;
-		public shiftY:number = -20;
+		public shiftY:number = -10;
 
 		public currKa:Ka1;
+		public createKa:EntityBase;
 
 		protected init()
 		{
@@ -33,19 +38,39 @@ module war
 		{
 			WarDataMgr.Ins();
 			WarDataMgr.Ins().startWar();
+			this.myCurrStep = 0;
+			this.myKaArray = [10010, 10040, 10050, 10070, 10080, 10090, 10100, 10110];
+			this.enemyKaArray = [10010, 10040, 10050, 10070, 10080, 10090, 10100, 10110];
+		}
 
-			this.myKaArray = [10010, 10020, 10030, 10040, 10050, 10060, 10070, 10080];
-			this.enemyKaArray = [10010, 10020, 10030, 10040, 10050, 10060, 10070, 10080];
+		public getMyNextKa()
+		{
+			this.myCurrStep++;
+			if(this.myCurrStep >= this.myKaArray.length)
+				this.myCurrStep = 0;
+			return this.myKaArray[this.myCurrStep];
+		}
+
+		public comsumeKa(kaId:number)
+		{
+			let cfg:IHero = ConfigManager.Ins().get(CONFIG.HERO)[kaId];
+			if(cfg == null)
+				return;
+			this.currEnergy -= cfg.cost;
 		}
 	}
 
 	export class WarPanel extends ViewBase
 	{
 		private testGrid:eui.Group;
+		private drawGroup:eui.Group;
 		private entityGroup:eui.Group;
 		private kaGroup:eui.Group;
 		private mapImg:eui.Image;
 		private costBar:CostBar;
+		private optionGroup:eui.Group;
+		private preKa:Ka1;
+
 		public info:WarPanelData;
 		public constructor()
 		{
@@ -75,19 +100,45 @@ module war
 			this.mapImg.source = Utils.GetMap(1001);
 			
 			let barData = new CostBarData();
-			barData.packData(2);
+			barData.packData(this.info.speed);
 			this.costBar.initData(barData);
+			this.addEvent(this, egret.Event.ENTER_FRAME, this.ShowEnergy, this)
 		}
 
+		// ---------------------------------------------------------------------- 能量充盈
+		private ShowEnergy()
+		{
+			let currTime = egret.getTimer();
+			let deltaTime = (currTime - this.info.lastTime)/1000;
+			this.info.lastTime = currTime;
+
+			this.costBar.OnUpdate();
+
+			this.info.currEnergy +=  (this.info.speed * deltaTime)/10;
+			this.info.currEnergy = Math.min(10, this.info.currEnergy);
+			this.preKa.info.refreshCost(this.info.currEnergy)
+			for(let i=0, len=this.kaGroup.numChildren; i<len; i++)
+			{
+				let ka = this.kaGroup.getChildAt(i) as Ka1;
+				ka.info.refreshCost(this.info.currEnergy)
+			}
+		}
+
+		// ---------------------------------------------------------------------- 初始化卡牌
 		private initKa()
 		{
-			let kaArray = this.info.myKaArray.slice(0, 5);
-			for(let i=0, len=5; i<len; i++)
+			let kaId = this.info.getMyNextKa();
+			let kaData = PoolManager.Ins().pop(Ka1Data) as Ka1Data;
+			kaData.packData(kaId, this.preKa.x, this.preKa.y, 0);
+			this.preKa.initData(kaData);
+
+			let kaArray = this.info.myKaArray.slice(0, 4);
+			for(let i=0, len=4; i<len; i++)
 			{
-				let kaId = kaArray[i];
+				let kaId = this.info.getMyNextKa();
 				let ka = PoolManager.Ins().pop(Ka1) as Ka1;
 				let kaData = PoolManager.Ins().pop(Ka1Data) as Ka1Data;
-				kaData.packData(kaId);
+				kaData.packData(kaId, this.info.kaX[i], this.info.kaY, 0);
 				ka.initData(kaData);
 				ka.x = this.info.initX;
 				ka.y = this.info.initY;
@@ -100,18 +151,19 @@ module war
 
 			setTimeout(()=>{
 				this.showInitKaTween();
-			}, 1000);
+			}, 500);
 		}
 
+		// ---------------------------------------------------------------------- 初始化卡牌动画		
 		private showInitKaTween()
 		{
-			for(let i=1, len=5; i<len; i++)
+			for(let i=0, len=4; i<len; i++)
 			{
 				let ka = this.kaGroup.getChildAt(i) as Ka1;
 				egret.Tween.removeTweens(ka);
 				egret.Tween.get(ka)
 				.to({
-					x: this.info.kaX[i-1],
+					x: this.info.kaX[i],
 					y: this.info.kaY,
 					scaleX: this.info.scale,
 					scaleY: this.info.scale
@@ -119,12 +171,14 @@ module war
 			}
 		}
 
+		// ---------------------------------------------------------------------- 拖卡
 		private OnKaTouchBegin(e:egret.TouchEvent)
 		{
 			let ka:Ka1 = e.target;
 			let kaIndex:number = this.kaGroup.getChildIndex(ka);
-			if(kaIndex <= 0)
+			if(kaIndex < 0)
 				return;
+			this.kaGroup.setChildIndex(ka, 777);
 			ka.y += this.info.shiftY;
 			this.info.currKa = ka;
 			this.addEvent(ka, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnKaTouchOutside, this);
@@ -135,6 +189,7 @@ module war
 		private OnKaTouchOutside(e:egret.TouchEvent)
 		{
 			this.info.currKa.y -= this.info.shiftY;
+			this.info.currKa.alpha = 1;
 			this.removeEvent(this.info.currKa, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnKaTouchOutside, this);
 			this.removeEvent(this.info.currKa, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnKaTouchEnd, this);
 			this.removeEvent(this.info.currKa, egret.TouchEvent.TOUCH_MOVE, this.OnKaTouchMove, this);
@@ -145,8 +200,10 @@ module war
 			let kaIndex:number = this.kaGroup.getChildIndex(this.info.currKa);
 			if(kaIndex >= 0)
 			{
-				this.info.currKa.x = this.info.kaX[kaIndex-1];
-				this.info.currKa.y = this.info.kaY;
+				// this.info.currKa.x = this.info.currKa.info.initX;
+				// this.info.currKa.y = this.info.currKa.info.initY;
+				this.info.currKa.alpha = 1;
+				this.addToEntityGroup();
 			}
 			this.removeEvent(this.info.currKa, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnKaTouchOutside, this);
 			this.removeEvent(this.info.currKa, egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnKaTouchEnd, this);
@@ -157,6 +214,58 @@ module war
 		{
 			this.info.currKa.x = e.stageX;
 			this.info.currKa.y = e.stageY;
+			this.info.currKa.alpha = 0;
+			DrawUtils.DrawActiveCeil(e.stageX, e.stageY, this.drawGroup);
+
+			if(this.info.createKa == null)
+			{
+				this.info.createKa = this.createKa(this.info.currKa.info.kaId, e.stageX, e.stageY);
+				this.optionGroup.addChild(this.info.createKa);
+			}
+			
+			let xy = WarUtils.GetRealXY(e.stageX, e.stageY);
+
+			this.info.createKa.x = xy[0];
+			this.info.createKa.y = xy[1];
+		}
+
+		// ---------------------------------------------------------------------- 创建英雄
+		private createKa(kaId:number, x:number, y:number)
+		{
+			let hero:HeroEntity = PoolManager.Ins().pop(HeroEntity);
+			hero.x = WarUtils.ToLocalX(x);
+			hero.y = WarUtils.ToLocalY(y);
+			hero.mc.initData("hero_10010", "hero_10010");
+			hero.mc.startPlay("stand4", -1);
+			return hero;
+		}
+
+		private addToEntityGroup()
+		{
+			if(this.info.createKa == null)
+				return;
+			this.optionGroup.removeChild(this.info.createKa);
+			let hero = this.info.createKa;
+			this.entityGroup.addChild(hero);
+
+			let preKaData = this.preKa.info;
+			this.info.currKa.info.refreshKa(preKaData.kaId);
+			this.preKa.info.refreshKa(this.info.getMyNextKa());
+
+			this.info.currKa.x = this.info.initX;
+			this.info.currKa.y = this.info.initY;
+			this.info.currKa.scaleX = this.info.currKa.scaleY = this.info.initScale;
+			egret.Tween.removeTweens(this.info.currKa);
+			egret.Tween.get(this.info.currKa)
+			.to({
+				x: this.info.currKa.info.kaX,
+				y: this.info.currKa.info.kaY,
+				scaleX: this.info.scale,
+				scaleY: this.info.scale
+			}, 250)
+
+			this.info.comsumeKa(this.info.currKa.info.kaId);
+			this.info.createKa = null;
 		}
 	}
 }

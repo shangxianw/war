@@ -90,10 +90,10 @@ var DataBase = (function () {
             value: value,
             writable: true
         });
-        this.updateAttr(propName);
+        this.flushAttr(propName);
     };
     // ---------------------------------------------------------------------- 注册属性2
-    DataBase.prototype.updateAttr = function (propName) {
+    DataBase.prototype.flushAttr = function (propName) {
         if (LogUtils.CheckParamValid(propName) == false)
             return false;
         if (this.hash.has(propName) == false) {
@@ -213,7 +213,7 @@ var CBData = (function () {
         return this;
     };
     CBData.prototype.exec = function (query) {
-        if (this.cbFn == null || this.thisObj == null) {
+        if (this.cbFn != null || this.thisObj != null) {
             if (this.param != null)
                 this.cbFn.call(this.thisObj, this.param, query);
             else

@@ -48,6 +48,23 @@ var war;
             shape.graphics.endFill();
             group.addChild(shape);
         };
+        // ---------------------------------------------------------------------- 绘制当前拖动到的格子
+        DrawUtils.DrawActiveCeil = function (localX, localY, group) {
+            if (DrawUtils.isTest == false)
+                return;
+            if (this.activeCeil == null) {
+                this.activeCeil = new egret.Shape();
+                group.addChild(this.activeCeil);
+            }
+            var space = war.WarDataMgr.Ins().grid.space;
+            var xy = war.WarUtils.GetRealXY(localX, localY);
+            var realX = xy[0];
+            var realY = xy[1];
+            this.activeCeil.graphics.clear();
+            this.activeCeil.graphics.beginFill(1, 0x00ff00);
+            this.activeCeil.graphics.drawRect(realX - space / 2, realY - space / 2, space, space);
+            this.activeCeil.graphics.endFill();
+        };
         // 绘制实体id
         DrawUtils.DrawEntityId = function (entity) {
             if (DrawUtils.isTest == false)

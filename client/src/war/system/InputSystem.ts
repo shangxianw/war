@@ -13,7 +13,7 @@ module war
 		}
 
 		// ---------------------------------------------------------------------- 创建英雄实体
-		public createHero(x:number, y:number, parent:egret.DisplayObjectContainer)
+		public createHero(x:number, y:number)
 		{
 			let hero:HeroEntity = PoolManager.Ins().pop(HeroEntity);
 			hero.x = WarUtils.ToLocalX(x);
@@ -30,9 +30,7 @@ module war
 			let newPath = WarDataMgr.Ins().findPath(x, y, endX, endY);
 			pCom.setPath(newPath);
 			hero.setCom(pCom);
-
-			parent.addChild(hero);
-			WarDataMgr.Ins().addEntity(hero);
+			return hero;
 		}
 	}
 }

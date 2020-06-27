@@ -19,10 +19,13 @@ var war;
             this.comMap = new Hash();
             this.touchEnabled = false;
             this.touchChildren = false;
+            this.mc = new war.MovieClip();
+            this.addChild(this.mc);
             _super.prototype.initAll.call(this);
         };
         EntityBase.prototype.destroyAll = function () {
             DataUtils.DestroyDataBaseMap(this.comMap);
+            this.mc.destroy();
             _super.prototype.destroyAll.call(this);
         };
         EntityBase.prototype.getCom = function (id) {

@@ -2,6 +2,8 @@
 <e:Skin class="Ka1Skin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" width="212" height="137">
 	<e:Image id="qualityImg" source="bg_card_di_1_png"/>
 	<e:Image id="kaIcon" source="heroicon_10030_png" horizontalCenter="0" verticalCenter="0"/>
-	<e:Image source="icon_sh_d_png" left="0" top="0"/>
-	<e:BitmapLabel id="cost" font="sh_font_fnt" text="0" top="11" left="3"/>
+	<e:Image source="icon_sh_d_png" left="3" top="4"/>
+	<e:BitmapLabel id="cost" font="sh_font_fnt" text="0" top="15" left="6"/>
+	<e:Group id="arcGroup" horizontalCenter="0" verticalCenter="0"/>
+	<e:Image id="lockImg" source="bg_black_png" left="2" right="4" top="2" bottom="7" alpha="0.5"/>
 </e:Skin>

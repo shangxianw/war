@@ -181,6 +181,7 @@ abstract class UIBase extends eui.Component
 
 		let cbData = (new CBData).packData(cbFn, thisObj, param);
 		arr.push(cbData);
+		obj.addAttrListener(propName, cbFn, this, runImmediately, param);
 		if(runImmediately == true)
 			cbData.exec()
 		return true;

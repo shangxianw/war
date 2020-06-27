@@ -9,12 +9,15 @@ module war
 			this.comMap = new Hash<number, ComBase>();
 			this.touchEnabled = false;
 			this.touchChildren = false;
+			this.mc = new MovieClip();
+			this.addChild(this.mc);
 			super.initAll();
 		}
 
 		public destroyAll()
 		{
 			DataUtils.DestroyDataBaseMap(this.comMap);
+			this.mc.destroy();
 			super.destroyAll();
 		}
 

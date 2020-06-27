@@ -48,6 +48,27 @@ var war;
                 return false;
             return true;
         };
+        // ---------------------------------------------------------------------- 返回正常的XY
+        WarUtils.GetRealXY = function (localX, localY) {
+            var starLocalX = war.WarDataMgr.Ins().startX;
+            var starLocalY = war.WarDataMgr.Ins().startY;
+            var numCols = 24 - 1;
+            var numRows = war.WarDataMgr.Ins().grid.numRows - 1;
+            var space = war.WarDataMgr.Ins().grid.space;
+            if (localX < starLocalX)
+                localX = starLocalX;
+            else if (localX > starLocalX + numCols * space)
+                localX = starLocalX + numCols * space;
+            if (localY < starLocalY)
+                localY = starLocalY;
+            else if (localY > starLocalY + numRows * space)
+                localY = starLocalY + numRows * space;
+            var x = WarUtils.ToGridX(localX);
+            var y = WarUtils.ToGridY(localY);
+            var realX = WarUtils.ToLocalX(x);
+            var realY = WarUtils.ToLocalY(y);
+            return [realX, realY];
+        };
         return WarUtils;
     }());
     war.WarUtils = WarUtils;
