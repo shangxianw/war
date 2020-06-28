@@ -104,12 +104,7 @@ class ResManager extends DataBase
 		}
 		LogUtils.Log(`【资源组集加入到列表】id:${collectData.uniqueCode} ${collectArray.toString()}`)
 		return collectData.uniqueCode;
-	}
-
-	private sortByPriority(a:CollectData, b:CollectData)
-	{
-		return a.priority < b.priority ? -1 : 1;
-	}
+	}	
 
 	public destroyGroup(uniqueCode:number)
 	{
@@ -356,5 +351,10 @@ class ResManager extends DataBase
 				resData.reduceRefCount(currTime);
 			}
 		}
+	}
+
+	private sortByPriority(a:CollectData, b:CollectData)
+	{
+		return a.priority < b.priority ? -1 : 1;
 	}
 }

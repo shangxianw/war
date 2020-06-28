@@ -95,9 +95,6 @@ var ResManager = (function (_super) {
         LogUtils.Log("\u3010\u8D44\u6E90\u7EC4\u96C6\u52A0\u5165\u5230\u5217\u8868\u3011id:" + collectData.uniqueCode + " " + collectArray.toString());
         return collectData.uniqueCode;
     };
-    ResManager.prototype.sortByPriority = function (a, b) {
-        return a.priority < b.priority ? -1 : 1;
-    };
     ResManager.prototype.destroyGroup = function (uniqueCode) {
         if (uniqueCode == null || uniqueCode <= 0) {
             LogUtils.Error("\u3010\u8D44\u6E90\u7EC4\u96C6\u53C2\u6570\u9519\u8BEF\u3011");
@@ -290,6 +287,9 @@ var ResManager = (function (_super) {
                 resData.reduceRefCount(currTime);
             }
         }
+    };
+    ResManager.prototype.sortByPriority = function (a, b) {
+        return a.priority < b.priority ? -1 : 1;
     };
     return ResManager;
 }(DataBase));
