@@ -118,10 +118,10 @@ var Main = (function (_super) {
             // custom lifecycle plugin
         });
         egret.lifecycle.onPause = function () {
-            // egret.ticker.pause();
+            egret.ticker.pause();
         };
         egret.lifecycle.onResume = function () {
-            // egret.ticker.resume();
+            egret.ticker.resume();
         };
         //inject the custom material parser
         //注入自定义的素材解析器
@@ -168,16 +168,6 @@ var Main = (function (_super) {
         // };
         // let demo = new SocketTest();
         // this.addChild(demo);
-        // let ws = new egret.web.HTML5WebSocket();
-        // ws.addCallBacks(()=>{
-        //     console.log(1);
-        //     let sendMsg: egret.ByteArray = new egret.ByteArray();
-        //     sendMsg.writeShort(11);
-        //     ws.send(sendMsg);
-        // }, ()=>{}, ()=>{},()=>{
-        //     console.log(2);
-        // }, this);
-        // ws.connect("127.0.0.1", 8001);
     };
     return Main;
 }(eui.UILayer));

@@ -60,11 +60,11 @@ class Main extends eui.UILayer
         })
 
         egret.lifecycle.onPause = () => {
-            // egret.ticker.pause();
+            egret.ticker.pause();
         }
 
         egret.lifecycle.onResume = () => {
-            // egret.ticker.resume();
+            egret.ticker.resume();
         }
 
         //inject the custom material parser
@@ -119,17 +119,6 @@ class Main extends eui.UILayer
 
         // let demo = new SocketTest();
         // this.addChild(demo);
-
-        // let ws = new egret.web.HTML5WebSocket();
-        // ws.addCallBacks(()=>{
-        //     console.log(1);
-        //     let sendMsg: egret.ByteArray = new egret.ByteArray();
-        //     sendMsg.writeShort(11);
-        //     ws.send(sendMsg);
-        // }, ()=>{}, ()=>{},()=>{
-        //     console.log(2);
-        // }, this);
-        // ws.connect("127.0.0.1", 8001);
     }
 }
 

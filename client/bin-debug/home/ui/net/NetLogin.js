@@ -7,7 +7,7 @@ var net;
         function NetLogin() {
         }
         NetLogin.prototype.init = function () {
-            NetManager.Ins().setNet(0, NetLogin.S2CLogin, this);
+            NetManager.Ins().setNet(101, NetLogin.S2CLogin, this);
         };
         NetLogin.prototype.destroy = function () {
             // NetManager 会清理
@@ -28,7 +28,9 @@ var net;
                 NetLogin.C2SLogin_CBFn.call(NetLogin.C2SLogin_thisObj);
             }
         };
-        NetLogin.S2CLogin = function () {
+        NetLogin.S2CLogin = function (data) {
+            var info = Protocol.LoginGame_Respond.decode(data.bytes);
+            1;
         };
         return NetLogin;
     }());

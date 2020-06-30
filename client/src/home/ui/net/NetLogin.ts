@@ -4,7 +4,7 @@ module net
 	{
 		public init()
 		{
-			NetManager.Ins().setNet(0, NetLogin.S2CLogin, this);
+			NetManager.Ins().setNet(101, NetLogin.S2CLogin, this);
 		}
 
 		public destroy()
@@ -36,9 +36,11 @@ module net
 			}
 		}
 
-		public static S2CLogin()
+		public static S2CLogin(data:egret.ByteArray)
 		{
-			
+			let info = Protocol.LoginGame_Respond.decode(data.bytes)
+			1;
+
 		}
 	}
 }

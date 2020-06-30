@@ -82,20 +82,19 @@ class SocketManager extends DataBase
 	public sendMessage(netId:number, msg: Uint8Array)
 	{
 		let sendMsg: egret.ByteArray = new egret.ByteArray();
-		sendMsg.writeInt(msg.length+2);//协议长度
 		sendMsg.writeShort(netId);
-
 		let cmdDataBA = new egret.ByteArray(msg);
 		sendMsg.writeBytes(cmdDataBA);
 		sendMsg.position = 0;
-		this.sock.writeBytes(sendMsg, 0, sendMsg.length);
-		// this.sock.send(sendMsg);
+		// this.sock.writeBytes(sendMsg, 0, sendMsg.length);
+		this.sock["socket"].send(sendMsg);
 	}
 
 	private recMessage()
 	{
 		let arr: egret.ByteArray = new egret.ByteArray();
 		this.sock.readBytes(arr);
+		
 		let netId = arr.readShort();
 		let msgByteArray: egret.ByteArray = new egret.ByteArray();
 		arr.readBytes(msgByteArray);
@@ -119,6 +118,25 @@ class SocketManager extends DataBase
 			if(currCount >= this.HANDLE_ONCE_COUNT) // 防止卡顿
 				break;
 		}
+		return true;
+	}
+
+	public test()
+	{
+		let ws = new egret.web.HTML5WebSocket();
+        ws.addCallBacks(()=>{
+            console.log(1);
+            let sendMsg: egret.ByteArray = new egret.ByteArray();
+            sendMsg.writeShort(11);
+            ws.send(sendMsg);
+        }, ()=>{}, ()=>{},()=>{
+            console.log(2);
+        }, this);
+        ws.connect("127.0.0.1", 8001);
+
+        setInterval(()=>{
+            ws.send("111");
+        }, 1000);
 	}
 
 	private static instance:SocketManager;

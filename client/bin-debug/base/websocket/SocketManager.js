@@ -73,23 +73,22 @@ var SocketManager = (function (_super) {
     };
     SocketManager.prototype.sendMessage = function (netId, msg) {
         var sendMsg = new egret.ByteArray();
-        sendMsg.writeInt(msg.length + 2); //协议长度
         sendMsg.writeShort(netId);
         var cmdDataBA = new egret.ByteArray(msg);
         sendMsg.writeBytes(cmdDataBA);
         sendMsg.position = 0;
-        this.sock.writeBytes(sendMsg, 0, sendMsg.length);
-        // this.sock.send(sendMsg);
+        // this.sock.writeBytes(sendMsg, 0, sendMsg.length);
+        this.sock["socket"].send(sendMsg);
     };
     SocketManager.prototype.recMessage = function () {
-        // let arr: egret.ByteArray = new egret.ByteArray();
-        // this.sock.(arr);
-        // let netId = arr.readShort();
-        // let msgByteArray: egret.ByteArray = new egret.ByteArray();
-        // arr.readBytes(msgByteArray);
-        // let msgData:MsgData = PoolManager.Ins().pop(MsgData) as MsgData;
-        // msgData.packData(netId, msgByteArray);
-        // this.cachMsgArray.push(msgData);
+        var arr = new egret.ByteArray();
+        this.sock.readBytes(arr);
+        var netId = arr.readShort();
+        var msgByteArray = new egret.ByteArray();
+        arr.readBytes(msgByteArray);
+        var msgData = PoolManager.Ins().pop(MsgData);
+        msgData.packData(netId, msgByteArray);
+        this.cachMsgArray.push(msgData);
     };
     SocketManager.prototype.update = function () {
         var item;
@@ -103,13 +102,22 @@ var SocketManager = (function (_super) {
             if (currCount >= this.HANDLE_ONCE_COUNT)
                 break;
         }
+        return true;
     };
-    SocketManager.prototype.test = function (netId, msg) {
-        // let sendMsg: egret.ByteArray = new egret.ByteArray();
-        // sendMsg.writeInt(msg.length+2);
-        // sendMsg.writeShort(netId);
-        // sendMsg.writeUTF(msg);
-        // this.sock.writeBytes(sendMsg, 0, sendMsg.length);
+    SocketManager.prototype.test = function () {
+        var ws = new egret.web.HTML5WebSocket();
+        ws.addCallBacks(function () {
+            console.log(1);
+            var sendMsg = new egret.ByteArray();
+            sendMsg.writeShort(11);
+            ws.send(sendMsg);
+        }, function () { }, function () { }, function () {
+            console.log(2);
+        }, this);
+        ws.connect("127.0.0.1", 8001);
+        setInterval(function () {
+            ws.send("111");
+        }, 1000);
     };
     SocketManager.Ins = function () {
         if (SocketManager.instance == null)
@@ -119,144 +127,4 @@ var SocketManager = (function (_super) {
     return SocketManager;
 }(DataBase));
 __reflect(SocketManager.prototype, "SocketManager");
-/**
- * class MsgData
-{
-    public netId:number;
-    public data:egret.ByteArray;
-    public packData(netId:number, data:egret.ByteArray)
-    {
-        this.netId = netId;
-        this.data = data;
-    }
-
-    public detsroy()
-    {
-
-    }
-}
-
-class SocketManager extends DataBase
-{
-    public cachMsgArray:MsgData[];
-    private sock: egret.WebSocket;
-
-    private HANDLE_ONCE_COUNT = 20;
-    protected init()
-    {
-        this.cachMsgArray = [];
-        this.sock = new egret.WebSocket();
-        this.sock.type = egret.WebSocket.TYPE_BINARY;
-        this.sock.addEventListener(egret.ProgressEvent.SOCKET_DATA, this.OnReceiveMessage, this);
-        this.sock.addEventListener(egret.Event.CONNECT, this.OnSocketConnect, this);
-        this.sock.addEventListener(egret.Event.CLOSE, this.OnSocketClose, this);
-        this.sock.addEventListener(egret.IOErrorEvent.IO_ERROR, this.OnSocketError, this);
-        this.sock.connect(GameData.WebSocketHost, GameData.WebSocketPort);
-        // this.sock.connectByUrl("ws://" + GameData.WebSocketHost + ":" + GameData.WebSocketPort);
-        TimerManager.Ins().addTimer(100, this.update, this);
-    }
-
-    protected destroy()
-    {
-        TimerManager.Ins().removeTimer(this.update, this);
-        for(let data of this.cachMsgArray)
-        {
-            data.detsroy();
-            PoolManager.Ins().push(data);
-        }
-        this.cachMsgArray.length = 0;
-
-        if(this.sock != null)
-        {
-            this.sock.removeEventListener(egret.ProgressEvent.SOCKET_DATA, this.OnReceiveMessage, this);
-            this.sock.removeEventListener(egret.Event.CONNECT, this.OnSocketConnect, this);
-            this.sock.removeEventListener(egret.Event.CLOSE, this.OnSocketClose, this);
-            this.sock.removeEventListener(egret.IOErrorEvent.IO_ERROR, this.OnSocketError, this);
-            this.sock.close();
-            this.sock = null;
-        }
-    }
-
-    private OnSocketError()
-    {
-        LogUtils.Error(`websocket 连接错误`);
-    }
-
-    private OnSocketClose()
-    {
-        LogUtils.Log(`websocket 连接关闭`);
-    }
-
-    private OnSocketConnect()
-    {
-        LogUtils.Log(`websocket 连接成功`);
-    }
-
-    private OnReceiveMessage(e:egret.ProgressEvent)
-    {
-        LogUtils.Log(`websocket 接受消息`);
-        this.recMessage();
-    }
-
-    public sendMessage(netId:number, msg: Uint8Array)
-    {
-        let sendMsg: egret.ByteArray = new egret.ByteArray();
-        sendMsg.writeInt(msg.length+2);//协议长度
-        sendMsg.writeShort(netId);
-
-        let cmdDataBA = new egret.ByteArray(msg);
-        sendMsg.writeBytes(cmdDataBA);
-        sendMsg.position = 0;
-        this.sock.writeBytes(sendMsg, 0, sendMsg.length);
-        // this.sock["socket"].send(sendMsg);
-        // this.sock.writeUTF("111");
-    }
-
-    private recMessage()
-    {
-        let arr: egret.ByteArray = new egret.ByteArray();
-        this.sock.readBytes(arr);
-        let netId = arr.readShort();
-        let msgByteArray: egret.ByteArray = new egret.ByteArray();
-        arr.readBytes(msgByteArray);
-
-        let msgData:MsgData = PoolManager.Ins().pop(MsgData) as MsgData;
-        msgData.packData(netId, msgByteArray);
-        this.cachMsgArray.push(msgData);
-    }
-
-    private update()
-    {
-        let item:MsgData;
-        let currCount = 0;
-        while(this.cachMsgArray.length > 0)
-        {
-            item = this.cachMsgArray.shift();
-            if(item == null)
-                continue;
-            NetManager.Ins().S2CMessage(item.netId, item.data);
-            currCount++;
-            if(currCount >= this.HANDLE_ONCE_COUNT) // 防止卡顿
-                break;
-        }
-    }
-
-    public test(netId:number, msg:string)
-    {
-        let sendMsg: egret.ByteArray = new egret.ByteArray();
-        sendMsg.writeInt(msg.length+2);
-        sendMsg.writeShort(netId);
-        sendMsg.writeUTF(msg);
-        this.sock.writeBytes(sendMsg, 0, sendMsg.length);
-    }
-
-    private static instance:SocketManager;
-    public static Ins()
-    {
-        if(SocketManager.instance == null)
-            SocketManager.instance = new SocketManager();
-        return SocketManager.instance;
-    }
-}
- */ 
 //# sourceMappingURL=SocketManager.js.map
