@@ -29,13 +29,14 @@ var SocketManager = (function (_super) {
     }
     SocketManager.prototype.init = function () {
         this.cachMsgArray = [];
-        this.sock = new egret.web.HTML5WebSocket();
-        // this.sock.type = egret.WebSocket.TYPE_BINARY;
-        this.sock.addCallBacks(this.OnSocketConnect, this.OnSocketClose, this.OnReceiveMessage, this.OnSocketError, this);
-        // this.sock.addEventListener(egret.ProgressEvent.SOCKET_DATA, this.OnReceiveMessage, this);
-        // this.sock.addEventListener(egret.Event.CONNECT, this.OnSocketConnect, this);
-        // this.sock.addEventListener(egret.Event.CLOSE, this.OnSocketClose, this);
-        // this.sock.addEventListener(egret.IOErrorEvent.IO_ERROR, this.OnSocketError, this);
+        this.sock = new egret.WebSocket();
+        // this.sock = new egret.web.HTML5WebSocket();
+        this.sock.type = egret.WebSocket.TYPE_BINARY;
+        // this.sock.addCallBacks(this.OnSocketConnect, this.OnSocketClose, this.OnReceiveMessage, this.OnSocketError, this);
+        this.sock.addEventListener(egret.ProgressEvent.SOCKET_DATA, this.OnReceiveMessage, this);
+        this.sock.addEventListener(egret.Event.CONNECT, this.OnSocketConnect, this);
+        this.sock.addEventListener(egret.Event.CLOSE, this.OnSocketClose, this);
+        this.sock.addEventListener(egret.IOErrorEvent.IO_ERROR, this.OnSocketError, this);
         this.sock.connect(GameData.WebSocketHost, GameData.WebSocketPort);
         // this.sock.connectByUrl("ws://" + GameData.WebSocketHost + ":" + GameData.WebSocketPort);
         TimerManager.Ins().addTimer(100, this.update, this);
@@ -49,10 +50,10 @@ var SocketManager = (function (_super) {
         }
         this.cachMsgArray.length = 0;
         if (this.sock != null) {
-            // this.sock.removeEventListener(egret.ProgressEvent.SOCKET_DATA, this.OnReceiveMessage, this);
-            // this.sock.removeEventListener(egret.Event.CONNECT, this.OnSocketConnect, this);
-            // this.sock.removeEventListener(egret.Event.CLOSE, this.OnSocketClose, this);
-            // this.sock.removeEventListener(egret.IOErrorEvent.IO_ERROR, this.OnSocketError, this);
+            this.sock.removeEventListener(egret.ProgressEvent.SOCKET_DATA, this.OnReceiveMessage, this);
+            this.sock.removeEventListener(egret.Event.CONNECT, this.OnSocketConnect, this);
+            this.sock.removeEventListener(egret.Event.CLOSE, this.OnSocketClose, this);
+            this.sock.removeEventListener(egret.IOErrorEvent.IO_ERROR, this.OnSocketError, this);
             this.sock.close();
             this.sock = null;
         }
@@ -77,8 +78,8 @@ var SocketManager = (function (_super) {
         var cmdDataBA = new egret.ByteArray(msg);
         sendMsg.writeBytes(cmdDataBA);
         sendMsg.position = 0;
-        // this.sock.writeBytes(sendMsg, 0, sendMsg.length);
-        this.sock.send(sendMsg);
+        this.sock.writeBytes(sendMsg, 0, sendMsg.length);
+        // this.sock.send(sendMsg);
     };
     SocketManager.prototype.recMessage = function () {
         // let arr: egret.ByteArray = new egret.ByteArray();
