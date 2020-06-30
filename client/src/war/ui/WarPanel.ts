@@ -237,6 +237,7 @@ module war
 			hero.y = WarUtils.ToLocalY(y);
 			hero.mc.initData("hero_10010", "hero_10010");
 			hero.mc.startPlay("stand4", -1);
+
 			return hero;
 		}
 
@@ -244,9 +245,22 @@ module war
 		{
 			if(this.info.createKa == null)
 				return;
+			let speedc:SpeedCom = PoolManager.Ins().pop(SpeedCom) as SpeedCom;
+			speedc.angle = 0;
+			speedc.speed = 10;
+			this.info.createKa.setCom(speedc);
+
+			let pathc:PathCom = PoolManager.Ins().pop(PathCom) as PathCom;
+			let x = WarUtils.ToGridX(this.info.createKa.x);
+			let y = WarUtils.ToGridY(this.info.createKa.y);
+			let path = WarDataMgr.Ins().findPath(x, y, 40, 15);
+			pathc.setPath(path);
+			this.info.createKa.setCom(pathc);
+
 			this.optionGroup.removeChild(this.info.createKa);
 			let hero = this.info.createKa;
 			this.entityGroup.addChild(hero);
+			WarDataMgr.Ins().addEntity(hero);
 
 			let preKaData = this.preKa.info;
 			this.info.currKa.info.refreshKa(preKaData.kaId);

@@ -20,7 +20,7 @@ module net
 			NetLogin.C2SLogin_CBFn = cbFn;
 			NetLogin.C2SLogin_thisObj = thisObj;
 
-			let isTest = false;
+			let isTest = true;
 			if(!isTest)
 			{
 				let sendData = new Protocol.LoginGame_Request();

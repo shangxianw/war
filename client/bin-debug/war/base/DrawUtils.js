@@ -19,11 +19,20 @@ var war;
             var starY = war.WarDataMgr.Ins().startY;
             var shape = new egret.Shape();
             shape.graphics.lineStyle(1, 0x0000ff);
+            if (this.cannotWalk == null) {
+                this.cannotWalk = new egret.Shape();
+                group.addChild(this.cannotWalk);
+            }
+            this.cannotWalk.graphics.clear();
+            this.cannotWalk.graphics.beginFill(0x00ff00, 0.5);
             for (var i = 0, len = rows; i < len; i++) {
                 for (var j = 0, len2 = cols; j < len2; j++) {
                     var x = starX + space * i;
                     var y = starY + space * j;
                     shape.graphics.drawRect(x, y, space, space);
+                    var grid = war.WarDataMgr.Ins().grid.getNode(i, j);
+                    if (grid.walkable == false)
+                        this.cannotWalk.graphics.drawRect(x, y, space, space);
                 }
             }
             shape.graphics.endFill();

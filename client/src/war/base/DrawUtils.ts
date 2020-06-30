@@ -5,6 +5,7 @@ module war
 		public static isTest:boolean = true;
 		private static _pathMap:Hash<number, egret.Shape>;
 		private static activeCeil:egret.Shape;
+		private static cannotWalk:egret.Shape;
 		public static Destroy()
 		{
 			
@@ -23,6 +24,14 @@ module war
 
 			let shape = new egret.Shape();
 			shape.graphics.lineStyle(1, 0x0000ff);
+
+			if(this.cannotWalk == null)
+			{
+				this.cannotWalk = new egret.Shape();
+				group.addChild(this.cannotWalk);
+			}
+			this.cannotWalk.graphics.clear();
+			this.cannotWalk.graphics.beginFill(0x00ff00, 0.5);
 			
 			for(let i=0, len = rows; i<len; i++)
 			{
@@ -32,6 +41,9 @@ module war
 					let y = starY + space*j;
 					shape.graphics.drawRect(x, y, space, space);
 
+					let grid = WarDataMgr.Ins().grid.getNode(i, j);
+					if(grid.walkable == false)
+						this.cannotWalk.graphics.drawRect(x, y, space, space);
 				}
 			}
 			shape.graphics.endFill();

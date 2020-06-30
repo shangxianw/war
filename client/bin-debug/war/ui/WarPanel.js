@@ -193,9 +193,20 @@ var war;
         WarPanel.prototype.addToEntityGroup = function () {
             if (this.info.createKa == null)
                 return;
+            var speedc = PoolManager.Ins().pop(war.SpeedCom);
+            speedc.angle = 0;
+            speedc.speed = 10;
+            this.info.createKa.setCom(speedc);
+            var pathc = PoolManager.Ins().pop(war.PathCom);
+            var x = war.WarUtils.ToGridX(this.info.createKa.x);
+            var y = war.WarUtils.ToGridY(this.info.createKa.y);
+            var path = war.WarDataMgr.Ins().findPath(x, y, 40, 15);
+            pathc.setPath(path);
+            this.info.createKa.setCom(pathc);
             this.optionGroup.removeChild(this.info.createKa);
             var hero = this.info.createKa;
             this.entityGroup.addChild(hero);
+            war.WarDataMgr.Ins().addEntity(hero);
             var preKaData = this.preKa.info;
             this.info.currKa.info.refreshKa(preKaData.kaId);
             this.preKa.info.refreshKa(this.info.getMyNextKa());

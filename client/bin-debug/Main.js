@@ -118,10 +118,10 @@ var Main = (function (_super) {
             // custom lifecycle plugin
         });
         egret.lifecycle.onPause = function () {
-            egret.ticker.pause();
+            // egret.ticker.pause();
         };
         egret.lifecycle.onResume = function () {
-            egret.ticker.resume();
+            // egret.ticker.resume();
         };
         //inject the custom material parser
         //注入自定义的素材解析器
@@ -144,30 +144,9 @@ var Main = (function (_super) {
         NetManager.Ins();
         NetManager.Ins().initData();
         war.WarDataMgr.Ins();
-        SocketManager.Ins();
+        // SocketManager.Ins()
         ViewManager.Ins().open(home.LoginPanel);
         // ViewManager.Ins().open(war.WarMatchPanel);
-        // 打开一个 web socket
-        // var ws = new WebSocket("ws://127.0.0.1:8001");
-        // ws.onopen = function()
-        // {
-        //     let sendMsg: egret.ByteArray = new egret.ByteArray();
-        //     sendMsg.writeShort(11);
-        //     ws.send(sendMsg);
-        //     alert("数据发送中...");
-        // };
-        // ws.onmessage = function (evt) 
-        // { 
-        //     var received_msg = evt.data;
-        //     alert("数据已接收...");
-        // };
-        // ws.onclose = function()
-        // { 
-        //     // 关闭 websocket
-        //     alert("连接已关闭..."); 
-        // };
-        // let demo = new SocketTest();
-        // this.addChild(demo);
     };
     return Main;
 }(eui.UILayer));

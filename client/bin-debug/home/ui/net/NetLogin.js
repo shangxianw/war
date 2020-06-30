@@ -15,7 +15,7 @@ var net;
         NetLogin.C2SLogin = function (account, cbFn, thisObj) {
             NetLogin.C2SLogin_CBFn = cbFn;
             NetLogin.C2SLogin_thisObj = thisObj;
-            var isTest = false;
+            var isTest = true;
             if (!isTest) {
                 var sendData = new Protocol.LoginGame_Request();
                 sendData.account = account;
