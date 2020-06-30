@@ -83,6 +83,7 @@ module war
 
 		public initData(info:Ka1Data)
 		{
+			
 			if(info == null)
 				return;
 			this.info = info;

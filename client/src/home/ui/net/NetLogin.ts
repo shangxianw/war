@@ -20,10 +20,13 @@ module net
 			NetLogin.C2SLogin_CBFn = cbFn;
 			NetLogin.C2SLogin_thisObj = thisObj;
 
-			let isTest = true;
+			let isTest = false;
 			if(!isTest)
 			{
-
+				let sendData = new Protocol.LoginGame_Request();
+				sendData.account = account;
+				let sendByte = Protocol.LoginGame_Request.encode(sendData).finish();
+				NetManager.Ins().C2SMessage(Protocol.MessageID.LOGIN_GAME_REQ, sendByte);
 			}
 			else
 			{

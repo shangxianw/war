@@ -1,0 +1,458 @@
+syntax = "proto3";
+ 
+package Protocol;
+
+
+enum PropertyEnum {
+    NONE = 0;
+    EXP = 1;        // 经验
+    MONEY = 2;      // 金币
+    DIAMOND = 3;    // 钻石
+    CUPS = 4;       // 奖杯
+    LEVEL = 5;      // 等级
+    TASKSCOPE = 6;  // 任务积分
+    CLASSLEVEL = 7; // 等阶级
+    FAMILYSCOPE = 8; //家族积分
+    GRADE = 9;       // 成就等级
+    STAR = 10;        // 星级
+    KEY = 11;         // 钥匙
+    FRESH_TASK_TIME = 12;     // 任务刷新次数
+    TASKSCOPE_MAX = 13;       // 任务积分最大值
+    TASKSCOPE_BOX = 14;       // 任务积分箱子ID
+    WAR_GOD_CUPS = 15;        // 战神令期间累计获得的奖杯
+    WAR_GOD_CODE = 16;        // 战神令代码，0表示没有购买
+    FIRST_RECHARGE = 17;      // 首充 1 不可领取 2 可以领 3 已经领
+    ROLE_PIC = 18;            // 人物头像
+    CHANGE_NAME = 19;         // 是否第一次改名 0 未改名 其他表示已经用了
+}
+
+enum JobberEnum {
+    NOMEAN = 0;
+    LEADER = 1;     // 会长
+    VICE = 2;       // 副会长
+    MEMBER = 3;     // 成员
+}
+
+
+enum ErrorEnum {
+    INVALID = 0;
+    NO_MONEY = 1;   // 金币不足
+    NO_ITEM = 2;    // 物品不足
+    NO_SKILL = 3;   // 配置表找不到该技能
+    NO_HERO_SKILL = 4;  // 英雄没有该技能
+    NO_HERO = 5;    // 找不到英雄
+    NO_BANGGONG = 6; // 帮贡不足
+    NO_DAY_COUNT = 7; // 超出每日购买数量
+    NO_LIMIT_COUNT = 8; // 超出购买总数
+    NO_LIMIT_DATE = 9; // 必须在指定的日期购买
+
+    FRIEND_MINE_FULL = 100; //您的好友人数已达上限！
+    FRIEND_TARGET_FULLL = 101; //对方的好友已满，添加失败！
+    FRIEND_OFFLINE = 102; //该玩家已下线，邀请失败！
+
+    HAS_FAMILY = 203; // 已经有公会，无法再加入公会
+
+}
+
+
+enum MessageID {
+
+    // 1 -1000 client和logic之间的消息通讯
+    INVAILED = 0;
+    LOGIN_GAME_REQ = 2;
+    LOGIN_GAME_RES = 3;
+
+
+    HEARBEAT_RES = 101;
+    HEARBEAT_REQ = 102;
+    
+    BEGIN_MATCH_REQ = 104;
+    BEGIN_MATCH_RES = 105;
+    FIGHT_ROOM_INFO_RES = 106;
+
+    CANCLE_MATCH_REQ = 107;
+    CANCLE_MATCH_RES = 108;
+
+    GM_COMMAND_REQ = 109;
+    GM_COMMAND_RES = 110;
+
+    SET_LINEUP_REQ = 111;
+    SET_LINEUP_RES = 112;
+
+    SET_FIGHT_LINEUP_REQ = 113;
+    SET_FIGHT_LINEUP_RES = 114;
+
+    GET_RANK_RANGE_REQ = 115;
+    GET_RANK_RANGE_RES = 116;
+
+    QUIT_WAR_REQ = 117;
+    QUIT_WAR_RES = 118;
+
+    TASK_CHANGE_RES = 119;
+    FINISH_TASK_REQ = 120;
+    REFRESH_TASK_REQ = 121;
+
+    GET_LOGIC_TIME_REQ = 122;
+    GET_LOGIC_TIME_RES = 123;
+
+    PROPERTY_CHANGE_RES = 124;
+
+    TASK_SCOPE_BOX_OPEN_REQ = 125;
+    REWARD_RES = 126;
+
+    ITEM_CHANGE_RES = 127;
+    HERO_LEVEL_UP_REQ = 128;
+    HERO_LEVEL_UP_RES = 129;
+
+    ERROR_NOTICE_RES = 130;
+
+    SKILL_LEVEL_UP_REQ = 131;
+    SKILL_LEVEL_UP_RES = 132;
+
+    ADD_HERO_RES = 133;
+
+    FRIEND_CHAT_REQ = 134;
+    FRIEND_CHAT_RES = 135;
+
+    INVITE_FRIEND_REQ = 136;
+    INVITE_FRIEND_RES = 137;
+
+    
+    ACCEPT_FRIEND_REQ = 139;
+    ADD_FRIEND_RES = 140;
+
+
+    ASK_FRIEND_LIST_REQ = 141;
+    ASK_FRIEND_LIST_RES = 142;
+
+
+    ALL_FRIENDS_REQ = 143;
+    ALL_FRIENDS_RES = 144;
+    ALL_INVITES_REQ = 145;
+    ALL_INVITES_RES = 146;
+    ALL_CHAT_REQ = 147;
+    ALL_CHAT_RES = 148;
+    FRIEND_STATE_RES = 149;
+
+    DELETE_INVITE_RES = 150;
+    NOTICE_LAST_READ_TIME_REQ = 151;
+    DELETE_FRINED_REQ = 152;
+    DELETE_FRIEND_RES = 153;
+
+
+
+    ASK_FAMILY_REQ = 170;
+    ASK_FAMILY_RES = 171;
+    JOIN_FAMILY_REQ = 172;
+    JOIN_FAMILY_RES = 173;
+    JOIN_FAMILY_SUCEED_RES = 190;
+    JOIN_FAMILY_APPLYS_REQ = 191;
+    JOIN_FAMILY_APPLYS_RES = 192;
+
+    CREATE_FAMILY_REQ = 174;
+    CREATE_FAMILY_RES = 175;
+    LEAVE_FAMILY_REQ = 176;
+    LEAVE_FAMILY_RES = 177;
+
+
+    ASK_FAMILY_APPLY_REQ = 178;
+    ASK_FAMILY_APPLY_RES = 179;
+
+    ACCEPT_FAMILY_APPLY_REQ = 180;
+    ACCEPT_FAMILY_APPLY_RES = 196;
+
+    FAMILY_INFO_REQ = 181;
+    FAMILY_INFO_RES = 182;
+
+
+    FAMILY_CHATS_REQ = 185;
+    FAMILY_CHATS_RES = 186;
+
+    SEND_FAMILY_CHAT_REQ = 187;
+    SEND_FAMILY_CHAT_RES = 188;
+
+    SEARCH_FAMILY_REQ = 189;
+
+    NOTICE_MEMBER_CHANGE_RES = 200;
+
+    SET_FAMILY_JOB_REQ = 201;
+    SET_FAMILY_JOB_RES = 202;
+
+    TICK_FAMILY_MEMBER_REQ = 500;
+    TICK_FAMILY_MEMBER_RES = 501;
+
+    SET_FAMILY_INFO_REQ = 502;
+    SET_FAMILY_INFO_RES = 503;
+
+    BUY_TREASURE_REQ = 203;
+    BUY_TREASURE_RES = 204;
+
+    BUY_TREASURE_INFO_REQ = 205;
+    BUY_TREASURE_INFO_RES = 206;
+
+    BATTLE_REWARD_RES = 207;
+
+    SIMPLE_RECORD_REQ = 208;
+    SIMPLE_RECORD_RES = 209;
+    FIGHT_RECORD_REQ = 210;
+    FIGHT_RECORD_RES = 211;
+
+    ALL_MAILS_REQ = 230;
+    ALL_MAILS_RES = 231;
+    NOTICE_MAIL_RES = 232;
+    READ_MAIL_REQ = 233;
+    READ_MAIL_RES = 234;
+    GET_MAIL_REQ = 235;
+    GET_MAIL_RES = 236;
+    DEL_MAIL_REQ = 237;
+    DEL_MAIL_RES = 238;
+
+    FIGHT_MONSTER_REQ = 239;
+    FIGHT_MONSTER_RES = 240;
+    FIGHT_MONSTER_RESULT_REQ = 241;
+    FIGHT_MONSTER_RESULT_RES = 242;
+
+    QUERY_ROLE_LINEUP_REQ = 243;
+    QUERY_ROLE_LINEUP_RES = 244;
+
+    ALL_BOX_REQ = 245;
+    ALL_BOX_RES = 246;
+
+    SINGLE_BOX_RES = 247;
+
+    OPEN_BOX_REQ = 248;
+    OPEN_BOX_RES = 249;
+
+    GET_BOX_REQ = 250;
+    GET_BOX_RES = 251;
+
+    DELETE_BOX_RES = 252;
+    BOX_REWARD_RES = 253;
+    COST_KEY_REQ = 254;
+    COST_KEY_RES = 255;
+
+    BUY_KEY_REQ = 256;
+    BUY_KEY_RES = 257;
+
+    BUY_TASK_TIME_REQ = 258;
+    BUY_TASK_TIME_RES = 259;
+
+    CHANGE_NAME_REQ = 260;
+    CHANGE_NAME_RES = 261;
+
+    WAR_GOD_INFO_REQ = 262;
+    WAR_GOD_INFO_RES = 263;
+
+    WAR_GOD_REWARD_REQ = 264;
+    WAR_GOD_REWARD_RES = 265;
+
+    GET_LOGIN_REWARD_REQ = 266;
+    GET_LOGIN_REWARD_RES = 267;
+
+    PASS_DAY_RES = 268;
+
+    ASK_LOGIN_REWARD_GETTED_REQ = 269;
+    ASK_LOGIN_REWARD_GETTED_RES = 270;
+
+    GIFT_INFO_RES = 271;
+    GIFT_BUY_REQ = 272;
+    GIFT_BUY_RES = 273;
+
+    REWARDS_RES = 274;
+
+    GUIDE_REQ = 275;
+    GUIDE_RES = 276;
+
+    FINISH_RECHARGE_RES = 277;
+
+    GET_FIRST_RECHARGE_REWARD_REQ = 278;
+
+
+    TIANTI_REWARD_INFO_RES = 280;
+    GET_TIANTI_REWARD_REQ = 290;
+    GET_TIANTI_REWARD_RES = 291;
+
+    NOTICE_WAR_EVENT_REQ = 292;
+
+    GET_FAMILY_RANK_REQ = 293;
+    GET_FAMILY_RANK_RES = 294;
+
+    KICK_OUT_RES = 295;
+
+    CHANGE_ROLEPIC_REQ = 296;
+    CHANGE_ROLEPIC_RES = 297;
+
+    GET_CODE_REWARD_REQ = 298;
+    GET_CODE_REWARD_RES = 299;
+
+    GET_SERVER_NOTICE_REQ = 300;
+    GET_SERVER_NOTICE_RES = 301;
+
+
+
+
+
+
+
+    // 1001-2000 logic和fight之间的消息通讯
+    // ==================================================================
+    LOGIN_FIGHT = 1001;
+    LOGIN_FIGHT_RET = 1002;
+    CREATE_MATCH_ROOM = 1003;
+    FIGHT_2_LOGIC_PACK = 1004;
+    F2L_BATTLE_TIME_END = 1005;
+    F2L_BATTLE_END = 1006;
+    F2L_FIGHT_RECORD = 1007;
+
+
+
+
+    // 2001 - 3000 logic和match之间的消息通讯
+    // ==================================================================
+    LOGIC_LOGIN_MATCH = 2001;
+    LOGIC_LOGIN_MATCH_RET = 2002;
+    GO_MATCH = 2003;
+    GO_MATCH_RET = 2004;
+    L2M_CANCLE_MATCH = 2006;
+    M2L_CANCLE_MATCH = 2007;
+
+    M2L_SELECT_ONLINE_ROLE = 2008;
+    L2M_SELECT_ONLINE_ROLE = 2009;
+
+    L2M_GET_RANDOM_FRIEND = 2010;
+    M2L_GET_RANDOM_FRIEND_RET = 2011;
+
+    L2M_INVITE_FRIEND = 2012;
+    M2L_INVITE_FRIEND = 2013;
+
+    L2M_FRIEND_CHAT = 2014;
+    M2L_FRIEND_CHAT = 2015;
+
+    L2M_ADD_FRIEND = 2016;
+    M2L_ADD_FRIEND = 2017;
+
+    L2M_DELETE_FRIEND = 2018;
+    M2L_DELETE_FRIEND = 2019;
+
+    L2M_CREATE_FAMILY = 2020;
+    M2L_CREATE_FAMILY_RET = 2021;
+
+    L2M_JOIN_FAMILY = 2022;
+
+    L2M_ASK_FAMILY = 2023;
+    M2L_ASK_FAMILY = 2024;
+
+    L2M_ASK_FAMILY_APPLY = 2025;
+    M2L_ASK_FAMILY_APPLY = 2026;
+
+    L2M_SELF_FAMILY_INFO = 2027;
+    M2L_SELF_FAMILY_INFO = 2028;
+
+    L2M_FAMILY_CHATS = 2029;
+    M2L_FAMILY_CHATS = 2030;
+
+    L2M_SEND_FAMILY_CHAT = 2031;
+    M2L_SEND_FAMILY_CHAT = 2032;
+
+    M2L_JOIN_FAMILY_SUCEED = 2033;
+
+    L2M_SEARCH_FAMILY = 2034;
+    L2M_LEAVE_FAMILY = 2035;
+    M2L_LEAVE_FAMILY = 2501;
+
+    L2M_ACCEPT_FAMILY_APPLY = 2036;
+
+    M2L_FAMILY_MEMBER_CHANGE = 2037;
+
+    L2M_SET_FAMILY_JOB = 2038;
+    M2L_SET_FAMILY_JOB = 2039;
+
+    L2M_TICK_FAMILY_MEMBER = 2040;
+    M2L_TICK_FAMILY_MEMBER = 2041;
+
+    L2M_SET_FAMILY_INFO = 2042;
+    M2L_SET_FAMILY_INFO = 2043;
+
+    L2M_FAMILY_RANK = 2044;
+    M2L_FAMILY_RANK = 2045;
+
+    L2M_MEMBER_DATA_CHANGE = 2046;
+
+    L2M_GET_FAMILY_RANK = 2047;
+    M2L_GET_FAMILY_RANK = 2048;
+
+    
+
+
+
+    // 3001 -4000 fight和match之间的消息通讯
+    // ==================================================================
+    FIGHT_LOGIN_MATCH = 3001;
+    FIGHT_LOGIN_MATCH_RET = 3002;
+    
+
+
+
+    // 4001 - 5000 client和fight之间的消息通讯
+    // ==================================================================
+    ENTER_ROOM_REQ = 4001;
+    ENTER_ROOM_RES = 4002;
+    WAR_READY_REQ = 4003;
+    WAR_READY_RES = 4004;
+    START_WAR_RES = 4005;
+    ACTION_REQ = 4006;
+    ACTION_RES = 4007;
+    SERVER_TIME_REQ = 4008;
+    SERVER_TIME_RES = 4009;
+    SYN_ROOM_STATE_RES = 4010;
+    BATTLE_END_REQ = 4011;
+    BATTLE_RET_RES = 4012;
+
+    ACTIONFRAME_REQ = 4013;
+    ACTIONFRAME_RES = 4014;
+
+    FIGHT_RECONNECT_REQ = 4015;
+    FIGHT_RECONNECT_ROOM_RES = 4016;
+    FIGHT_RECONNECT_ACTION_RES = 4017;
+
+    FRAME_RECORD_REQ = 4018;
+    FRAME_RECORD_RES = 4019;
+
+    // 5001 - 6000 logic和center之间的消息通讯
+    // ==================================================================
+    LOGIC_LOGIN_CENTER = 5001;
+    LOGIC_LOGIN_CENTER_RET = 5002;
+    COMMITE_INFO = 5003;
+    NOTICE_CUPS = 5004;
+    GET_RANK_INFO = 5005;
+    GET_RANK_INFO_BACK = 5006;
+
+    L2C_QUERY_LINEUP = 5007;
+    C2L_QUERY_LINEUP = 5008;
+
+    L2C_NAME_EXIST = 5009;
+    C2L_NAME_EXIST = 5010;
+    L2C_INSERT_NAME = 5011;
+
+    L2C_CHECK_FAMILY_NAME = 5012;
+    C2L_CHECK_FAMILY_NAME = 5013;
+    L2C_INSERT_FAMILY_NAME = 5014;
+
+
+    // 6001 - 7000 match和center之间的消息通讯
+    // ==================================================================
+    MATCH_LOGIN_CENTER = 6001;
+    MATCH_LOGIN_CENTER_RET = 6002;
+    SELECT_LINEUP_DATA = 6003;
+    SELECT_LINEUP_DATA_RET = 6004;
+
+
+    // 7001 - 8000 fight和check之间的消息通讯
+    // ==================================================================
+    CHECK_LOGIN_FIGHT_REQUEST = 7001;
+    CHECK_LOGIN_FIGHT_RESPOND = 7002;
+    FIGHT_ROOM_INFO_RESPOND = 7003;
+    CHCEK_CAL_RESULT_REQUEST = 7004;
+
+
+}

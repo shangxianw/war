@@ -1,0 +1,224 @@
+
+syntax = "proto3";
+
+package Protocol;
+
+
+
+message MatchInfo {
+    int64 roleId = 1;
+    string name = 2;
+    int32 level = 3;
+    int32 serverId = 4;
+    int32 pos = 5;  // 11 攻击1号位 12攻击2号位 21防守1号位 22防守2号位
+    repeated Hero heros = 6;
+    int32 type = 7; // 1 1v1 2 2v2 3 vs monster
+    bool isRobot = 8;
+    repeated int32 lineUp = 9;
+    string familyName = 10;
+    string iconName = 11;
+    int32 edgeId = 12;
+    int32 cups = 13;
+    int32 classLevel = 14;
+    int32 rolePic = 15;
+}
+
+
+message Hero {
+	int32 index = 2;
+	int32 level = 3;
+	int32 goldLevel = 4;
+    int32 count = 6;
+}
+
+message FightRoomInfo_Respond {
+    repeated MatchInfo infos = 1;
+    string fightIp = 2;
+    string secrete = 3;
+    string roomId = 4;
+    int32 type = 5;//战斗类型 1:1V1 2:2V2
+    int32 mapID = 6;//地图ID(比如1001)
+    int32 classLevel = 7;//竞技场阶数
+}
+
+message SimpleHero {
+    int32 index = 1;
+    int32 level = 2;
+}
+
+message RankInfo {
+	string roleName = 1;
+	int64 roleId  = 2;
+	int32 serverId = 3;
+	int32 cups = 4;
+	string familyName = 5;
+	int32 rolePic = 6;
+	int32 rank = 7;
+    int32 level = 8;
+    int32 classLevel = 9;
+    repeated SimpleHero heros = 10;
+    string familyId = 11;
+
+}
+
+message Task {
+    int32 taskId = 1;
+    int32 finishCount = 2;
+    bool isFinish = 3;
+    int64 finishTime = 4;
+    int32 grid = 5;
+    repeated Reward rewards = 6;
+}
+
+message Reward {
+    int32 type = 1; // 1 属性类奖励 2 物品类奖励
+    int32 index = 2;
+    int32 count = 3;
+}
+
+message Friend {
+    int64 roleId = 1;
+    string name = 2;
+    int32 level = 3;
+    int32 cups = 4;
+    int32 serverId = 5;
+    string iconName = 6;
+    int32 edgeId = 7;
+    bool state = 8; // true 在线 false 离线
+    int32 rolePic = 9;
+    string familyName = 10;
+}
+
+message Invite {
+    Friend from = 1;
+    int64 time = 2;
+}
+
+message Chat {
+    string content = 1;
+    int64 senderId = 2;   // 谁发送的消息，自己还是朋友
+    int64 time = 3;
+    int64 friendId = 4; // 和哪个朋友对话
+    int32 type = 5;
+}
+
+
+message FamilyInfo {
+    string familyId = 1; 
+    string familyName = 2;
+    int32 familyPic = 3;
+    string introduce = 4;
+    int32 count = 5;
+    int32 autoCup = 6;
+    int32 power = 8;
+    int32 rolePic = 9;
+}
+
+message FamilyMember {
+    int64 roleId = 1;
+    string name = 2;
+    int32 level = 3;
+    int32 serverId = 4;
+    int32 cups = 5;
+    bool state = 6;
+    int32 rolePic = 7;
+    int32 jobber = 8;
+    int32 classLv = 9;
+}
+
+message FamilyChat {
+    string content = 1;
+    int32 type = 2;
+    int64 sendTime = 3;
+    FamilyMember sender = 4;
+}
+
+message BuyInfo {
+    int32 hasBuyCount = 1;
+    int32 treasureId = 2;
+}
+
+
+//上传操作
+message Action_Request
+{
+    string roomId = 1;
+    bytes actionArray = 2;
+}
+
+//服务器下发帧操作
+message Action_Response
+{
+    int32 frame = 1;//帧
+    repeated bytes actionArray = 2;//动作列表
+}
+
+
+message SimpleRecord {
+    int32 index = 1;
+    string srcName = 2;
+    int32 srcRolePic = 3;
+    string srcFamilyName = 4;
+    string decName = 5;
+    int32 decRolePic = 6;
+    string decFamilyName = 7;
+    int32 winSide = 8; // 1 src 胜 2 dec 胜 3 平
+
+    repeated SimpleHero srcHeros = 9;
+    repeated SimpleHero decHeros = 10;
+
+    int64 srcRoleId = 11;
+    int64 decRoleId = 12;
+    int64 time = 13;
+    repeated int64 winIds = 14;
+}
+
+
+message FightRecord {
+    FightRoomInfo_Respond info = 1;
+    int64 time = 2;//开始时间
+    int32 seed = 3;//随机种子
+    int32 maxframe = 4;
+    repeated Action_Response actions = 5;
+    int64 roleId = 6;
+    repeated int64 winId = 7;
+}
+
+
+
+message Mail {
+    string header = 1;
+    string content = 2;
+    repeated Reward rewards = 3;
+    int64 time = 4;
+    string id = 5;
+    bool hasGet = 6;
+    bool hasRead = 7;
+    int32 type = 8;
+}
+
+
+message Box {
+    string id = 1;
+    int64 time = 2;     // 开启的时间
+    int32 index = 3;
+    int32 state = 4;    // 1 未开启 2 开启中 3 已开启,可领奖励
+}
+
+message CupsInfo {
+    int64 roleId = 1;
+    int32 cups = 2;
+}
+
+message WarGodGettedInfo {
+    int32 index = 1;
+    repeated bool gets = 2; // true 付费宝箱 false 免费宝箱
+}
+
+message Gift{
+    int32 type = 1;//礼包类型 1:竞技场升阶
+    int32 id = 2;//礼包ID
+    int64 finishTime = 3;//结束时间
+    repeated BuyInfo infos = 4;
+}
+

@@ -7,6 +7,8 @@ var GameData = (function () {
     GameData.DevelopMode = DevelopMode.DEBUG;
     GameData.Fps = 1 / 60;
     GameData.FrameCount = 60;
+    GameData.WebSocketHost = "127.0.0.1";
+    GameData.WebSocketPort = 8001;
     return GameData;
 }());
 __reflect(GameData.prototype, "GameData");

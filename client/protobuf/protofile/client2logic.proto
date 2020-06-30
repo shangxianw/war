@@ -1,0 +1,804 @@
+
+syntax = "proto3";
+
+package Protocol;
+
+import "common.proto";
+
+message LoginGame_Request {
+    string account = 1;
+
+    string os = 2;
+    string packgeId = 3;
+    string channelId = 4;
+    string ua = 5;
+    string deviceId = 6;
+    string mainChannelId = 7;
+}
+
+message Property {
+    int32 key = 1;
+    int32 value = 2;
+}
+
+message ItemInfo {
+    int32 index = 1;
+    int32 count = 2;
+}
+
+message LoginGame_Respond {
+    string account = 1;
+    int64 roleId = 2;
+    string name = 3;
+    
+    int32 ret = 6; // 1 成功 2 没有该账户
+
+    repeated int32 lineUp1 = 7;
+    repeated int32 lineUp2 = 8;
+    repeated int32 lineUp3 = 9;
+    repeated int32 lineUp4 = 30;
+    repeated int32 lineUp5 = 31;
+    repeated int32 lineUp6 = 32;
+
+    repeated Hero heros = 10;
+
+    int32 state = 11;//0：正常 1：匹配中 2：战斗中
+    string roomId = 12;
+    repeated Task tasks = 13;
+    repeated Property pros = 14;
+
+    int32 capacity = 15;
+    repeated ItemInfo items = 16;
+    int32 curLineUp = 17;
+
+    string familyId = 18;
+    int32 familyJob = 19; // 1 族长 2 族人 3 其他
+    int32 passDay = 20;
+    bool newRoleReward = 21;
+    int32 serverId = 22;
+    bool isNew = 23;
+    repeated string guides = 24;//已经引导过类型列表
+    string createTime = 25;
+    string ip = 26;
+}
+
+message BeginMatch_Request {
+    int32 type = 1;//战斗类型 1:1V1 2:2V2
+    int32 lineUp = 2; // 选择的阵容 1-3
+}
+
+message BeginMatch_Respond {
+    int32 ret = 1;
+}
+
+message HearBeat_Request {
+    
+}
+
+message HearBeat_Respond {
+    int32 state = 1;//0：正常 1：匹配中 2：战斗中
+}
+
+message CancleMatch_Request {
+    
+}
+
+message CancleMatch_Respond {
+    int32 ret = 1;
+}
+
+message GMCommand_Request {
+    string command = 1;
+}
+
+message GMCommand_Respond {
+    bool ret = 1;
+}
+
+message SetFightLineUp_Request
+{
+    int32 lineUpNum = 1;//设置当前出站卡组
+}
+
+message SetFightLineUp_Respond
+{
+    int32 lineUpNum = 1;
+}
+
+message SetLineUp_Request {
+    int32 lineUpNum = 1;
+    repeated int32 heroIds = 2;
+}
+
+message SetLineUp_Respond {
+    int32 ret = 1; // 1 成功 
+    int32 lineUpNum = 2;
+    repeated int32 heroIds = 3;
+}
+
+
+
+message GetRankRange_Request {
+    int32 begin = 1;
+    int32 end = 2;
+    int32 type = 3; // 1 本地 2 全球
+}
+
+
+message GetRankRange_Respond {
+    int32 type = 1; // 1 本地 2 全球
+    repeated RankInfo infos = 2;
+    int32 begin = 3;
+    int32 end = 4;
+}
+
+
+message TaskChange_Respond {
+    repeated Task tasks = 1;
+}
+
+message FinishTask_Request {
+    int32 taskIndex = 1;
+}
+
+message RefreshTask_Request {
+    int32 taskIndex = 1;
+}
+
+message GetLogicTime_Request {
+    
+}
+
+message GetLogicTime_Respond {
+    int64 time = 1;
+}
+
+
+message PropertyChange_Respond {
+    repeated Property pros = 1;
+}
+
+message TaskScopeBoxOpen_Request {
+    
+}
+
+message Reward_Respond {
+    repeated Reward rewards = 1;
+}
+
+message ItemChange_Respond {
+    repeated ItemInfo items = 1;
+}
+
+message HeroLevelUp_Request {
+    int32 index = 1;
+}
+
+message HeroLevelUp_Respond {
+    int32 index = 1;
+    int32 level = 2;
+    int32 ret = 3;
+    int32 count = 4;
+}
+
+
+message ErrorNotice_Respond {
+    int32 errorCode = 1;
+}
+
+message SkillLevelUp_Request {
+    string heroId = 1;
+    int32 index = 2;
+}
+
+message SkillLevelUp_Respond {
+    string heroId = 1;
+    int32 index = 2;
+    int32 level = 3;
+    int32 ret = 4;
+}
+
+message AddHero_Respond {
+    Hero hero = 1;
+}
+
+
+// 好友聊天
+message FriendChat_Request {
+    string content = 1;
+    int64 roleId = 2;
+    int32 type = 3;
+}
+
+// 好友聊天转发
+message FriendChat_Respond {
+    Chat msg = 1;
+}
+
+
+// 邀请好友
+message InviteFriend_Request {
+    int64 roleId = 1;
+    int32 serverId = 2;
+}
+
+
+// 邀请推送给前端(在线)
+message InviteFriend_Respond {
+    Invite from = 1;
+}
+
+
+// 同意添加好友
+message AcceptFriend_Request {
+    int64 roleId = 1;
+    bool isAccept = 2; // true 同意 false 拒绝
+}
+
+// 同意后，推送的好友信息
+message AddFriend_Respond {
+    Friend newFd = 1;
+}
+
+
+// 请求推荐好友列表
+message AskFrinedList_Request {
+    
+}
+
+// 返回推荐好友列表
+message AskFriendList_Respond {
+    repeated Friend friends = 1;
+}
+
+// 请求所有好友
+message AllFriends_Request {
+    
+}
+
+// 所有的好友
+message AllFriends_Respond {
+    repeated Friend friends = 1;
+}
+
+// 请求所有邀请
+message AllInvite_Request {
+    
+}
+
+// 所有的请求
+message AllInvites_Respond {
+    repeated Invite invites = 1;
+}
+
+// 请求单个好友的聊天记录
+message AllChat_Request {
+    int64 roleId = 1;
+}
+
+// 好友的聊天记录
+message AllChat_Respond {
+    repeated Chat chats = 1;
+    int64 roleId = 2;
+    int64 lastReadTime = 3;
+
+}
+
+
+message FriendState_Respond {
+    int64 roleId = 1;
+    bool state = 2; // true 在线 false离线
+}
+
+message DeleteInvite_Respond {
+    int64 roleId = 1;
+}
+
+message NoticeLastReadTime_Request {
+    int64 FrinedId = 1;
+}
+
+
+message DeleteFriend_Request {
+    int64 roleId = 1;
+}
+
+message DeleteFriend_Respond {
+    int64 roleId = 1;
+}
+
+
+
+message AskFamily_Request {
+
+}
+
+message AskFamily_Respond {
+    repeated FamilyInfo familys = 1;
+}
+
+
+message CreateFamily_Request {
+    int64 roleId = 1;
+    string name = 2;
+    int32 pic = 3;
+    string introduce = 4;
+    int32 autoCup = 5;
+    int32 backGroup = 6;
+}
+
+message CreateFamily_Respond {
+    int32 ret = 1;
+    FamilyInfo info = 2;
+    FamilyMember self = 3;
+}
+
+message JoinFamily_Request {
+    string familyId = 1;
+}
+
+message JoinFamily_Respond {
+    int32 ret = 1; // 1 成功 2 失败 
+}
+
+message JoInFamilySuceed_Respond {
+    FamilyInfo info = 1;
+    repeated FamilyMember members = 2;
+}
+
+message JoinApplys_Request {
+    
+}
+
+message JoinApplys_Respond {
+    repeated string familyIds = 1;
+}
+
+
+message LeaveFamily_Request {
+    string familyId = 1;
+}
+
+message leaveFamily_Respond {
+    int32 ret = 1;
+}
+
+message AskFamilyApply_Request {
+    
+}
+
+message AskFamilyApply_Respond {
+    repeated FamilyMember applys = 1;
+}
+
+
+message AcceptFamilyApply_Request {
+    int64 roleId = 1;
+    bool accept = 2;
+}
+
+message AcceptFamilyApply_Respond {
+    int32 ret = 1; // 1 成功 2 失败
+}
+
+
+
+
+message FamilyInfo_Request {
+    string familyId = 1;
+}
+
+message FamilyInfo_Respond {
+    FamilyInfo info = 1;
+    repeated FamilyMember members = 2;
+}
+
+message FamilyChats_Request {
+    
+}
+
+message FamilyChats_Respond {
+    repeated FamilyChat chats = 1;
+}
+
+message SendFamilyChat_Request {
+    string content = 1;
+    int32 type = 2;
+}
+
+message SendFamilyChat_Respond {
+    FamilyChat chat = 1;
+}
+
+message SearchFamily_Request {
+    string name = 1;
+}
+
+
+message NoticeMemberChange_Respond {
+    repeated FamilyMember member = 1;
+}
+
+
+message SetFamilyJob_Request {
+    int64 roleId = 1;
+    int32 job = 2;
+}
+
+message SetFamilyJob_Respond {
+    int32 ret = 1;
+    int64 roleId = 2;
+    int32 job = 3;
+}
+
+message TickFamilyMember_Request {
+    int64 roleId = 1;
+}
+
+message TickFamilyMember_Respond {
+    int32 ret = 1;
+    int64 memberId = 2;
+}
+
+message BuyTreasure_Request {
+    int32 treasureId = 1;
+}
+
+message BuyTreasure_Respond {
+    int32 ret = 1; // 1 成功 2 失败
+    int32 treasureId = 2;
+}
+
+message BuyTreasureInfo_Request {
+    
+}
+
+message BuyTreasureInfo_Respond {
+    repeated BuyInfo infos = 1;
+}
+
+
+message BattleReward_Respond {
+    int32 cups = 1;
+    int32 winType = 2;
+    repeated Reward rewards = 3;
+}
+
+
+message SimpleRecord_Request {
+    
+}
+
+message SimpleRecord_Respond {
+    repeated SimpleRecord records = 1;
+}
+
+message FightRecord_Request {
+    int32 index = 1;
+}
+
+message FightRecord_Respond {
+    FightRecord record = 1;
+}
+
+message AllMails_Request {
+    
+}
+
+message AllMails_Respond {
+    repeated Mail mails = 1;
+}
+
+message NoticeMail_Respond {
+    
+}
+
+message ReadMail_Request {
+    string id = 1;
+}
+
+message ReadMail_Respond {
+    Mail mail = 1;
+    int32 ret = 2; // 1 成功 2 失败
+}
+
+message GetMail_Request {
+    repeated string id = 1;
+}
+
+message Getmail_Respond {
+    repeated Mail mail = 1;
+    int32 ret = 2; // 1 成功 2 失败
+}
+
+message DelMail_Request {
+    repeated string id = 1;
+}
+
+message DelMail_Respond {
+    repeated string id = 1;
+    int32 ret = 2;
+}
+
+
+message FightMonster_Request {
+    
+}
+
+message FightMonster_Respond {
+    FightRoomInfo_Respond info = 1;
+    int32 ret = 2;
+}
+
+message FightMonsterResult_Request {
+    int32 result = 1;       // 1 胜利 2 失败
+    int32 star = 2;         // 几星
+    int32 monsterId = 3;    
+}
+
+message FightMonsterResult_Respond {
+    
+}
+
+
+message SetFamilyInfo_Request {
+    string name = 1;
+    int32 pic = 2;
+    string introduce = 3;
+    int32 autoCup = 4;
+    int32 backGroup = 5;
+}
+
+message SetFamilyInfo_Respond {
+    string name = 1;
+    int32 pic = 2;
+    string introduce = 3;
+    int32 autoCup = 4;
+    int32 ret = 5;
+    int32 backGroup = 6;
+}
+
+
+message QueryRoleLineUp_Request {
+    repeated int64 roleIds = 1;
+}
+
+message QueryRoleLineUp_Respond {
+    int64 roleId = 1;
+    repeated RankInfo infos = 2;
+}
+
+
+message AllBox_Request {
+    
+}
+
+message AllBox_Respond {
+    repeated Box boxs = 1;
+}
+
+message SingleBox_Respond {
+    Box box = 1;
+}
+
+message OpenBox_Request {
+    string id = 1;
+}
+
+message OpenBox_Respond {
+    string id = 1;
+    bool ret = 2;
+}
+
+message GetBox_Request {
+    string id = 1;
+}
+
+message GetBox_Respond {
+    string id = 1;
+    bool ret = 2;
+}
+
+message DeleteBox_Respond {
+    string id = 1;
+}
+
+message BoxReward_Respond {
+    repeated Reward rewards = 1;
+    int32 boxId = 2;
+}
+
+
+message CostKey_Request {
+    string id = 1;
+}
+
+message CostKey_Respond {
+    int32 ret = 1;  // 1 成功 2 钥匙不足 3 其他
+}
+
+message BuyKey_Request {
+    int32 diamond = 1;
+}
+
+message BuyKey_Respond {
+    int32 ret = 1; // 1 成功 2 钻石不足
+}
+
+
+message BuyTaskTime_Request {
+    int32 taskId = 1;
+}
+
+
+message BuyTaskTime_Respond {
+    int32 ret = 1; // 1 成功 2 钻石不足
+}
+
+
+message ChangeName_Request {
+    string name = 1;
+}
+
+message ChangeName_Respond {
+    int32 ret = 1; // 1 成功 2 钻石不够 3 重名 4 名字非法
+    string name = 2;
+}
+
+message WarGodInfo_Request {
+    
+}
+
+message WarGodInfo_Respond {
+    string begin = 1;
+    string end = 2;
+    bool state = 3; // true 开启中 false 未开启
+    repeated WarGodGettedInfo infos = 4;
+    string warGodCode = 5;
+    string selfWarGodCode = 6;
+}
+
+message WarGodReward_Request {
+    int32 index = 1;
+    bool type = 2; // false 免费奖励 true 花钱奖励
+}
+
+message WarGodReward_Respond {
+    int32 index = 1;
+    int32 ret = 2; // 1 成功 2 奖杯不足 3 活动未开启
+    bool type = 3; // false 免费奖励 true 花钱奖励
+}
+
+message GetLoginReward_Request {
+    int32 index = 1;
+}
+
+message GetLoginReward_Respond {
+    int32 index = 1;
+    int32 ret = 2; // 1 成功 2 时间未到 3 已经领过
+}
+
+message PassDaya_Respond {
+    
+}
+
+message AskLoginRewardGetted_Request {
+    
+}
+
+message AskLoginRewardGetted_Respond {
+    repeated int32 ids = 1;
+}
+
+message GiftInfo_Respond {
+    repeated Gift infos = 1;
+}
+
+message BuyGift_Request {
+    int32 type = 1;//礼包类型 1:竞技场升阶
+    int32 giftId = 2;//礼包ID
+    int32 treasureId = 3;
+}
+
+message BuyGift_Respond {
+    int32 ret = 1; // 1 成功 2 失败
+    int32 type = 2;//礼包类型 1:竞技场升阶
+    int32 giftId = 3;//礼包ID
+    int32 treasureId = 4;
+}
+
+message Rewards_Respond {
+    repeated Reward rewards = 1;
+}
+
+
+message Guide_Request {
+    string name = 1;//已经引导过类型
+}
+
+message Guide_Respond {
+    repeated string list = 1;//已经引导过类型列表
+}
+
+
+message FinishRecharge_Respond {
+    string uniqueCode = 1;
+}
+
+message GetFirstRechargeReward_Request {
+    
+}
+
+
+message TiantiRewardInfo_Request {
+    
+}
+
+message TiantiGetted {
+    int32 classlv = 1;
+    int32 index = 2;
+}
+
+message TiantiRewardInfo_Respond {
+    repeated TiantiGetted infos = 1;
+}
+
+
+message GetTiantiReward_Request {
+    int32 classlv = 1;
+    int32 index = 2;
+}
+
+message GetTiantiReward_Respond {
+    int32 ret = 1;  // 1 成功 其他失败
+    int32 classlv = 2;
+    int32 index = 3;
+}
+
+message WarEvent {
+    int32 cardId = 1;
+    int32 count = 2;
+}
+message NoticeWarEvent_Request {
+    repeated WarEvent info = 1;
+}
+
+message GetFamilyRank_Request{
+    
+}
+
+message GetFamilyRank_Respond {
+    repeated FamilyInfo infos = 1;
+}
+
+
+message KickOut_Respond {
+    int32 type = 1;//1：被顶号 2：服务器维护
+}
+
+message ChangeRolePic_Request {
+    int32 rolePic = 1;
+}
+
+message ChangeRolePic_Respond {
+    int32 ret = 1;
+    int32 rolePic = 2;
+}
+
+
+message GetCodeReward_Request {
+    string code = 1;
+}
+
+message GetCodeReward_Respond {
+    int32 ret = 1; // 1 成功 2 无效 3 已经领取 4 其他错误
+}
+
+
+message GetServerNotice_Request {
+    
+}
+
+message GetServerNotice_Respond {
+    repeated string notices = 1;
+}

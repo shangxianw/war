@@ -1,34 +1,42 @@
 {
-  "engineVersion": "5.2.33",
-  "compilerVersion": "5.2.33",
-  "template": {},
-  "target": {
-    "current": "web"
-  },
-  "modules": [
-    {
-			"name": "egret"
+		"engineVersion": "5.2.33",
+		"compilerVersion": "5.2.33",
+		"template": {},
+		"target": {
+				"current": "web"
 		},
-		{
-			"name": "eui"
-		},
-		{
-			"name": "assetsmanager"
-		},
-		{
-			"name": "dragonBones"
-		},
-		{
-			"name": "tween"
-		},
-		{
-			"name": "game"
-		},
-		{
-			"name": "socket"
-		},
-		{
-			"name": "promise"
-		}
-  ]
+		"modules": [
+				{
+						"name": "egret"
+				},
+				{
+						"name": "eui"
+				},
+				{
+						"name": "assetsmanager"
+				},
+				{
+						"name": "dragonBones"
+				},
+				{
+						"name": "tween"
+				},
+				{
+						"name": "game"
+				},
+				{
+						"name": "socket"
+				},
+				{
+						"name": "promise"
+				},
+				{
+						"name": "protobuf-library",
+						"path": "protobuf/library"
+				},
+				{
+						"name": "protobuf-bundles",
+						"path": "protobuf/bundles"
+				}
+		]
 }
