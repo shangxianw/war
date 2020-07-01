@@ -65,8 +65,9 @@ module home
 				return;
 			}
 			net.NetLogin.C2SLogin(this.accountInput.text, ()=>{
-				ViewManager.Ins().close(this);
-				ViewManager.Ins().open(home.LoadingPanel);
+				// ViewManager.Ins().close(this);
+				// ViewManager.Ins().open(home.LoadingPanel);
+				1;
 			}, this)
 		}
 	}

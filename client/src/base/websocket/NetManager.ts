@@ -1,23 +1,23 @@
+/**
+ * 网络管理器
+ */
 class NetManager extends DataBase
 {
-	private netMap:Hash<number, CBData[]>;
+	private netMap:Hash<number, CBData>;
 	protected init()
 	{
-		this.netMap = new Hash<number, CBData[]>();
+		this.netMap = new Hash<number, CBData>();
+		this.initNet();
 	}
 
 	protected destroy()
 	{
-		this.destroySubNet();
+		this.destroyNet();
 		this.removeAllNet();
 		this.netMap = null;
 	}
 
-	public initData()
-	{
-		this.initSubNet();
-	}
-
+	// ---------------------------------------------------------------------- 注册监听
 	public setNet(netId:number, cbFn:Function, thisObj:Object):boolean
 	{
 		if(netId == null || cbFn == null || thisObj == null)
@@ -25,83 +25,41 @@ class NetManager extends DataBase
 			LogUtils.Error(`参数错误`);
 			return false;
 		}
-
-		if(this.netMap.has(netId) == false)
+		
+		if(this.netMap.has(netId) == true)
 		{
-			this.netMap.set(netId, []);
+			LogUtils.Error(`重复注册`);
+			return false;
 		}
-
-		let netDataArray = this.netMap.get(netId);
-		for(let netData of netDataArray)
-		{
-			if(netData.cbFn == cbFn && netData.thisObj == thisObj)
-			{
-				LogUtils.Error("重复注册");
-				return false;
-			}
-		}
-
+		
 		let netData = PoolManager.Ins().pop(CBData) as CBData;
 		netData.packData(cbFn, thisObj);
-		netDataArray.push(netData);
+		this.netMap.set(netId, netData);
 		return true;
 	}
 
-	public removeNet(netId, cbFn:Function, thisObj:Object):boolean
+	// ---------------------------------------------------------------------- 发送数据
+	// 如果后面参数不为空，则为注册回调
+	public C2SMessage(netId:number, msg: Uint8Array, cbFn:Function=null, thisobj:Object=null, cbNetId:number=null):boolean
 	{
-		if(netId == null)
+		if(netId == null || msg == null)
 		{
 			LogUtils.Error(`参数错误`);
 			return false;
 		}
 
-		if(this.netMap.has(netId) == false)
+		if(cbFn != null && thisobj != null)
 		{
-			LogUtils.Error(`没有注册`);
-			return false;
+			let cbId = cbNetId != null ? cbNetId : netId;
+			if(this.netMap.has(cbId) == false)
+				this.setNet(cbId, cbFn, this);
 		}
-
-		let netDataArray = this.netMap.get(netId);
-		for(let netData of netDataArray)
-		{
-			if(netData.cbFn == cbFn && netData.thisObj == thisObj)
-			{
-				let index = netDataArray.indexOf(netData);
-				if(index >= 0)
-					netDataArray.splice(index, 1);
-				netData.destroy();
-				PoolManager.Ins().push(netData);
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public removeAllNet()
-	{
-		for(let netDataArray of this.netMap.values())
-		{
-			for(let netData of netDataArray)
-			{
-				if(netData == null)
-					continue;
-				netData.destroy();
-				PoolManager.Ins().push(netData);
-			}
-			netDataArray.length = 0;
-		}
-		this.netMap.destroy();
-	}
-
-	public C2SMessage(netId:number, msg: Uint8Array)
-	{
 		SocketManager.Ins().sendMessage(netId, msg);
 	}
 
-	public S2CMessage(netId:number, cmdDataBA:egret.ByteArray)
+	public S2CMessage(netId:number, msg:egret.ByteArray)
 	{
-		if(netId == null || cmdDataBA == null)
+		if(netId == null || msg == null)
 		{
 			LogUtils.Error(`参数错误`);
 			return false;
@@ -113,15 +71,24 @@ class NetManager extends DataBase
 			return false;
 		}
 
-		let netDataArray = this.netMap.get(netId);
-		for(let netData of netDataArray)
-		{
-			netData.exec(cmdDataBA);
-		}
+		let netData = this.netMap.get(netId);
+		netData.exec(msg);
 		return true;
 	}
 
-	private initSubNet()
+	private removeAllNet()
+	{
+		for(let netData of this.netMap.values())
+		{
+			netData.destroy();
+			netData = null;
+		}
+		this.netMap.destroy();
+		return true;
+	}	
+
+	// ---------------------------------------------------------------------- 会执行所有在net模块下的类
+	private initNet()
 	{
 		for(let key in net)
 		{
@@ -144,7 +111,7 @@ class NetManager extends DataBase
 		}
 	}
 
-	private destroySubNet()
+	private destroyNet()
 	{
 		for(let key in net)
 		{

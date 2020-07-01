@@ -4,35 +4,29 @@ module net
 	{
 		public init()
 		{
-			NetManager.Ins().setNet(101, NetLogin.S2CLogin, this);
+			// NetManager.Ins().setNet(101, NetLogin.S2CLogin, this);
 		}
 
 		public destroy()
 		{
-			// NetManager 会清理
+			
 		}
 
-		private static C2SLogin_Account:string;
-		private static C2SLogin_CBFn:Function;
-		private static C2SLogin_thisObj:Object;
 		public static C2SLogin(account:string, cbFn:Function, thisObj:Object)
 		{
-			NetLogin.C2SLogin_CBFn = cbFn;
-			NetLogin.C2SLogin_thisObj = thisObj;
-
-			let isTest = true;
+			let isTest = false;
 			if(!isTest)
 			{
 				let sendData = new Protocol.LoginGame_Request();
 				sendData.account = account;
 				let sendByte = Protocol.LoginGame_Request.encode(sendData).finish();
-				NetManager.Ins().C2SMessage(Protocol.MessageID.LOGIN_GAME_REQ, sendByte);
+				NetManager.Ins().C2SMessage(Protocol.MessageID.LOGIN_GAME_REQ, sendByte, cbFn, thisObj);
 			}
 			else
 			{
 				home.HomeDataMgr.Ins();
 				home.HomeDataMgr.Ins().packMyData();
-				NetLogin.C2SLogin_CBFn.call(NetLogin.C2SLogin_thisObj);
+				cbFn.call(thisObj);
 			}
 		}
 

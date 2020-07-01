@@ -144,7 +144,7 @@ var Main = (function (_super) {
         NetManager.Ins();
         NetManager.Ins().initData();
         war.WarDataMgr.Ins();
-        // SocketManager.Ins()
+        SocketManager.Ins();
         ViewManager.Ins().open(home.LoginPanel);
         // ViewManager.Ins().open(war.WarMatchPanel);
     };

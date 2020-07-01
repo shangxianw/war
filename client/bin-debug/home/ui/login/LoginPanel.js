@@ -47,15 +47,15 @@ var home;
             this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
         };
         LoginPanel.prototype.OnLoginTap = function (e) {
-            var _this = this;
             var flag = Utils.CheckNameValide(this.accountInput.text);
             if (flag[0] == false) {
                 alert(flag[1]);
                 return;
             }
             net.NetLogin.C2SLogin(this.accountInput.text, function () {
-                ViewManager.Ins().close(_this);
-                ViewManager.Ins().open(home.LoadingPanel);
+                // ViewManager.Ins().close(this);
+                // ViewManager.Ins().open(home.LoadingPanel);
+                1;
             }, this);
         };
         return LoginPanel;

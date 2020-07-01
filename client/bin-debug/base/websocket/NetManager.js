@@ -32,18 +32,26 @@ var NetManager = (function (_super) {
         if (this.netMap.has(netId) == false) {
             this.netMap.set(netId, []);
         }
+        if (this.checkRepeat(netId, cbFn, thisObj) == true)
+            return false;
         var netDataArray = this.netMap.get(netId);
-        for (var _i = 0, netDataArray_1 = netDataArray; _i < netDataArray_1.length; _i++) {
-            var netData_1 = netDataArray_1[_i];
-            if (netData_1.cbFn == cbFn && netData_1.thisObj == thisObj) {
-                LogUtils.Error("重复注册");
-                return false;
-            }
-        }
         var netData = PoolManager.Ins().pop(CBData);
         netData.packData(cbFn, thisObj);
         netDataArray.push(netData);
         return true;
+    };
+    NetManager.prototype.checkRepeat = function (netId, cbFn, thisObj) {
+        var netDataArray = this.netMap.get(netId);
+        if (netDataArray == null)
+            return false;
+        for (var _i = 0, netDataArray_1 = netDataArray; _i < netDataArray_1.length; _i++) {
+            var netData = netDataArray_1[_i];
+            if (netData.cbFn == cbFn && netData.thisObj == thisObj) {
+                LogUtils.Error("重复注册");
+                return true;
+            }
+        }
+        return false;
     };
     NetManager.prototype.removeNet = function (netId, cbFn, thisObj) {
         if (netId == null) {
@@ -82,7 +90,15 @@ var NetManager = (function (_super) {
         }
         this.netMap.destroy();
     };
-    NetManager.prototype.C2SMessage = function (netId, msg) {
+    NetManager.prototype.C2SMessage = function (netId, msg, cbFn, thisobj, cbNetId) {
+        if (cbFn === void 0) { cbFn = null; }
+        if (thisobj === void 0) { thisobj = null; }
+        if (cbNetId === void 0) { cbNetId = null; }
+        if (cbFn != null && thisobj != null) {
+            var cbId = cbNetId != null ? cbNetId : netId;
+            if (this.checkRepeat(cbId, cbFn, thisobj) == false)
+                this.setNet(cbId, cbFn, this);
+        }
         SocketManager.Ins().sendMessage(netId, msg);
     };
     NetManager.prototype.S2CMessage = function (netId, cmdDataBA) {

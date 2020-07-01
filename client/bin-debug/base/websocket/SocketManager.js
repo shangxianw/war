@@ -8,18 +8,6 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var MsgData = (function () {
-    function MsgData() {
-    }
-    MsgData.prototype.packData = function (netId, data) {
-        this.netId = netId;
-        this.data = data;
-    };
-    MsgData.prototype.detsroy = function () {
-    };
-    return MsgData;
-}());
-__reflect(MsgData.prototype, "MsgData");
 var SocketManager = (function (_super) {
     __extends(SocketManager, _super);
     function SocketManager() {
@@ -30,15 +18,12 @@ var SocketManager = (function (_super) {
     SocketManager.prototype.init = function () {
         this.cachMsgArray = [];
         this.sock = new egret.WebSocket();
-        // this.sock = new egret.web.HTML5WebSocket();
         this.sock.type = egret.WebSocket.TYPE_BINARY;
-        // this.sock.addCallBacks(this.OnSocketConnect, this.OnSocketClose, this.OnReceiveMessage, this.OnSocketError, this);
         this.sock.addEventListener(egret.ProgressEvent.SOCKET_DATA, this.OnReceiveMessage, this);
         this.sock.addEventListener(egret.Event.CONNECT, this.OnSocketConnect, this);
         this.sock.addEventListener(egret.Event.CLOSE, this.OnSocketClose, this);
         this.sock.addEventListener(egret.IOErrorEvent.IO_ERROR, this.OnSocketError, this);
         this.sock.connect(GameData.WebSocketHost, GameData.WebSocketPort);
-        // this.sock.connectByUrl("ws://" + GameData.WebSocketHost + ":" + GameData.WebSocketPort);
         TimerManager.Ins().addTimer(100, this.update, this);
     };
     SocketManager.prototype.destroy = function () {
@@ -77,18 +62,17 @@ var SocketManager = (function (_super) {
         var cmdDataBA = new egret.ByteArray(msg);
         sendMsg.writeBytes(cmdDataBA);
         sendMsg.position = 0;
-        // this.sock.writeBytes(sendMsg, 0, sendMsg.length);
         this.sock["socket"].send(sendMsg);
     };
     SocketManager.prototype.recMessage = function () {
         var arr = new egret.ByteArray();
         this.sock.readBytes(arr);
-        var netId = arr.readShort();
+        var netId = 2; //arr.readShort();
         var msgByteArray = new egret.ByteArray();
         arr.readBytes(msgByteArray);
-        var msgData = PoolManager.Ins().pop(MsgData);
-        msgData.packData(netId, msgByteArray);
-        this.cachMsgArray.push(msgData);
+        var sockData = PoolManager.Ins().pop(SockData);
+        sockData.packData(netId, msgByteArray);
+        this.cachMsgArray.push(sockData);
     };
     SocketManager.prototype.update = function () {
         var item;

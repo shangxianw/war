@@ -39,7 +39,7 @@ class Hash<K, V>
 		let index = this.keyArray.indexOf(key);
 		if(index < 0)
 			return null;
-		this.keyArray.splice(index, 1);
+		this.keyArray.splice(index, 1); // 所以不要用对象作key，否则就很难destroy掉
 		return this.valueArray.splice(index, 1)[0];
 	}
 

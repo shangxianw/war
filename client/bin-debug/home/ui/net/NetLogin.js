@@ -7,25 +7,22 @@ var net;
         function NetLogin() {
         }
         NetLogin.prototype.init = function () {
-            NetManager.Ins().setNet(101, NetLogin.S2CLogin, this);
+            // NetManager.Ins().setNet(101, NetLogin.S2CLogin, this);
         };
         NetLogin.prototype.destroy = function () {
-            // NetManager 会清理
         };
         NetLogin.C2SLogin = function (account, cbFn, thisObj) {
-            NetLogin.C2SLogin_CBFn = cbFn;
-            NetLogin.C2SLogin_thisObj = thisObj;
-            var isTest = true;
+            var isTest = false;
             if (!isTest) {
                 var sendData = new Protocol.LoginGame_Request();
                 sendData.account = account;
                 var sendByte = Protocol.LoginGame_Request.encode(sendData).finish();
-                NetManager.Ins().C2SMessage(Protocol.MessageID.LOGIN_GAME_REQ, sendByte);
+                NetManager.Ins().C2SMessage(Protocol.MessageID.LOGIN_GAME_REQ, sendByte, cbFn, thisObj);
             }
             else {
                 home.HomeDataMgr.Ins();
                 home.HomeDataMgr.Ins().packMyData();
-                NetLogin.C2SLogin_CBFn.call(NetLogin.C2SLogin_thisObj);
+                cbFn.call(thisObj);
             }
         };
         NetLogin.S2CLogin = function (data) {
