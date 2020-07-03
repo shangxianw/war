@@ -235,8 +235,7 @@ module war
 			let hero:HeroEntity = PoolManager.Ins().pop(HeroEntity);
 			hero.x = WarUtils.ToLocalX(x);
 			hero.y = WarUtils.ToLocalY(y);
-			hero.mc.initData("hero_10010", "hero_10010");
-			hero.mc.startPlay("stand4", -1);
+			hero.mc.initData("hero_10010", "hero_10010","stand4", -1);
 
 			return hero;
 		}

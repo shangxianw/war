@@ -43,6 +43,19 @@ var SocketManager = (function (_super) {
             this.sock = null;
         }
     };
+    // ---------------------------------------------------------------------- 发送消息
+    SocketManager.prototype.sendMessage = function (netId, msg) {
+        if (netId == null || msg == null) {
+            LogUtils.Error("\u53C2\u6570\u9519\u8BEF");
+            return false;
+        }
+        var sendMsg = new egret.ByteArray();
+        sendMsg.writeShort(netId);
+        var cmdDataBA = new egret.ByteArray(msg);
+        sendMsg.writeBytes(cmdDataBA);
+        sendMsg.position = 0;
+        this.sock["socket"].send(sendMsg);
+    };
     SocketManager.prototype.OnSocketError = function () {
         LogUtils.Error("websocket \u8FDE\u63A5\u9519\u8BEF");
     };
@@ -55,14 +68,6 @@ var SocketManager = (function (_super) {
     SocketManager.prototype.OnReceiveMessage = function (e) {
         LogUtils.Log("websocket \u63A5\u53D7\u6D88\u606F");
         this.recMessage();
-    };
-    SocketManager.prototype.sendMessage = function (netId, msg) {
-        var sendMsg = new egret.ByteArray();
-        sendMsg.writeShort(netId);
-        var cmdDataBA = new egret.ByteArray(msg);
-        sendMsg.writeBytes(cmdDataBA);
-        sendMsg.position = 0;
-        this.sock["socket"].send(sendMsg);
     };
     SocketManager.prototype.recMessage = function () {
         var arr = new egret.ByteArray();
@@ -87,21 +92,6 @@ var SocketManager = (function (_super) {
                 break;
         }
         return true;
-    };
-    SocketManager.prototype.test = function () {
-        var ws = new egret.web.HTML5WebSocket();
-        ws.addCallBacks(function () {
-            console.log(1);
-            var sendMsg = new egret.ByteArray();
-            sendMsg.writeShort(11);
-            ws.send(sendMsg);
-        }, function () { }, function () { }, function () {
-            console.log(2);
-        }, this);
-        ws.connect("127.0.0.1", 8001);
-        setInterval(function () {
-            ws.send("111");
-        }, 1000);
     };
     SocketManager.Ins = function () {
         if (SocketManager.instance == null)

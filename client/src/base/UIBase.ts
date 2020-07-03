@@ -24,6 +24,9 @@ abstract class UIBase extends eui.Component
 	{
 		this.uniqueCode = IDManager.Ins().getNewId();
 		this.touchList = [];
+		let cls = egret.getDefinitionByName(Utils.GetClassNameByObj(this) + "Data");
+		if(cls != null)
+			this["info"] = new cls();
 		this.init();
 	}
 

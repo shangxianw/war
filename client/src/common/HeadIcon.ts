@@ -14,19 +14,16 @@ module home
 		{
 			this.icon = 0;
 			this.frame = 0;
-			let homeData = HomeDataMgr.Ins();
-			homeData.removeAttrListener("icon", this.OnRefreshIcon, this);
-			homeData.removeAttrListener("frame", this.OnRefreshFrame, this);
+
 		}
 
 		public packData(icon:number, frame:number)
 		{
 			this.icon = icon;
 			this.frame = frame;
-
 			let homeData = HomeDataMgr.Ins();
-			homeData.addAttrListener("icon", this.OnRefreshIcon, this);
-			homeData.addAttrListener("frame", this.OnRefreshFrame, this);
+			this.addAttrCB(homeData, "icon", this.OnRefreshIcon, this);
+			this.addAttrCB(homeData, "frame", this.OnRefreshIcon, this);
 			return this;
 		}
 
@@ -63,24 +60,15 @@ module home
 		{
 			if(this.info != null)
 			{
-				this.info.removeAttrListener("icon", this.OnRefreshIcon, this);
-				this.info.removeAttrListener("frame", this.OnRefreshFrame, this);
 				this.info.destroyAll();
 			}
 		}
 
-		public dataChanged()
+		public update()
 		{
-			// if(this.data == null)
-			// 	return;
-			// this.info = this.data;
-
-			// this.info.addAttrListener("icon", this.OnRefreshIcon, this);
-			// this.info.addAttrListener("frame", this.OnRefreshFrame, this);
+			this.info.addAttrListener("icon", this.OnRefreshIcon, this);
+			this.info.addAttrListener("frame", this.OnRefreshFrame, this);
 		}
-		// public packData(data:HeadIconData)
-		// {
-		// }
 
 		private OnRefreshIcon()
 		{

@@ -14,7 +14,7 @@ module net
 
 		public static C2SLogin(account:string, cbFn:Function, thisObj:Object)
 		{
-			let isTest = false;
+			let isTest = true;
 			if(!isTest)
 			{
 				let sendData = new Protocol.LoginGame_Request();

@@ -22,25 +22,22 @@ var home;
         HeadIconData.prototype.destroy = function () {
             this.icon = 0;
             this.frame = 0;
-            var homeData = home.HomeDataMgr.Ins();
-            homeData.removeAttrListener("icon", this.OnRefreshIcon, this);
-            homeData.removeAttrListener("frame", this.OnRefreshFrame, this);
         };
         HeadIconData.prototype.packData = function (icon, frame) {
             this.icon = icon;
             this.frame = frame;
             var homeData = home.HomeDataMgr.Ins();
-            homeData.addAttrListener("icon", this.OnRefreshIcon, this);
-            homeData.addAttrListener("frame", this.OnRefreshFrame, this);
+            this.addAttrCB(homeData, "icon", this.OnRefreshIcon, this);
+            this.addAttrCB(homeData, "frame", this.OnRefreshIcon, this);
             return this;
         };
         HeadIconData.prototype.OnRefreshIcon = function () {
             var homeData = home.HomeDataMgr.Ins();
-            this.setAttr("icon", homeData.myData.icon);
+            this.setAttr("icon", 2);
         };
         HeadIconData.prototype.OnRefreshFrame = function () {
             var homeData = home.HomeDataMgr.Ins();
-            this.setAttr("frame", homeData.myData.frame);
+            this.setAttr("frame", 1);
         };
         return HeadIconData;
     }(DataBase));
@@ -55,21 +52,13 @@ var home;
         };
         HeadIcon.prototype.destroy = function () {
             if (this.info != null) {
-                this.info.removeAttrListener("icon", this.OnRefreshIcon, this);
-                this.info.removeAttrListener("frame", this.OnRefreshFrame, this);
                 this.info.destroyAll();
             }
         };
-        HeadIcon.prototype.dataChanged = function () {
-            // if(this.data == null)
-            // 	return;
-            // this.info = this.data;
-            // this.info.addAttrListener("icon", this.OnRefreshIcon, this);
-            // this.info.addAttrListener("frame", this.OnRefreshFrame, this);
+        HeadIcon.prototype.update = function () {
+            this.info.addAttrListener("icon", this.OnRefreshIcon, this);
+            this.info.addAttrListener("frame", this.OnRefreshFrame, this);
         };
-        // public packData(data:HeadIconData)
-        // {
-        // }
         HeadIcon.prototype.OnRefreshIcon = function () {
             this.headIcon.source = Utils.GetHeadIcon(this.info.icon);
         };

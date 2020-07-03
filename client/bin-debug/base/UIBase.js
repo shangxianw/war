@@ -30,6 +30,9 @@ var UIBase = (function (_super) {
         if (data === void 0) { data = null; }
         this.uniqueCode = IDManager.Ins().getNewId();
         this.touchList = [];
+        var cls = egret.getDefinitionByName(Utils.GetClassNameByObj(this) + "Data");
+        if (cls != null)
+            this["info"] = new cls();
         this.init();
     };
     UIBase.prototype.destroyAll = function () {

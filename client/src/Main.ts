@@ -88,11 +88,16 @@ class Main extends eui.UILayer
         GameUtils.main = this;
         LayerManager.Ins();
         NetManager.Ins();
-        NetManager.Ins().initData();
-        war.WarDataMgr.Ins();
-        SocketManager.Ins()
-        ViewManager.Ins().open(home.LoginPanel);
+        NetManager.Ins();
+        // war.WarDataMgr.Ins();
+        // SocketManager.Ins()
+        // ViewManager.Ins().open(home.LoginPanel);
         // ViewManager.Ins().open(war.WarMatchPanel);
+
+        let a = new home.HeadIcon();
+        a.info.packData(2, 1);
+        a.update();
+        this.addChild(a);
     }
 }
 

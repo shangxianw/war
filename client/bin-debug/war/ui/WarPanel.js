@@ -186,8 +186,7 @@ var war;
             var hero = PoolManager.Ins().pop(war.HeroEntity);
             hero.x = war.WarUtils.ToLocalX(x);
             hero.y = war.WarUtils.ToLocalY(y);
-            hero.mc.initData("hero_10010", "hero_10010");
-            hero.mc.startPlay("stand4", -1);
+            hero.mc.initData("hero_10010", "hero_10010", "stand4", -1);
             return hero;
         };
         WarPanel.prototype.addToEntityGroup = function () {

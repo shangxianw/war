@@ -12,7 +12,7 @@ var net;
         NetLogin.prototype.destroy = function () {
         };
         NetLogin.C2SLogin = function (account, cbFn, thisObj) {
-            var isTest = false;
+            var isTest = true;
             if (!isTest) {
                 var sendData = new Protocol.LoginGame_Request();
                 sendData.account = account;

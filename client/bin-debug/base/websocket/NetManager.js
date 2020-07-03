@@ -8,6 +8,9 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
+/**
+ * 网络管理器
+ */
 var NetManager = (function (_super) {
     __extends(NetManager, _super);
     function NetManager() {
@@ -15,94 +18,47 @@ var NetManager = (function (_super) {
     }
     NetManager.prototype.init = function () {
         this.netMap = new Hash();
+        this.initNet();
     };
     NetManager.prototype.destroy = function () {
-        this.destroySubNet();
+        this.destroyNet();
         this.removeAllNet();
         this.netMap = null;
     };
-    NetManager.prototype.initData = function () {
-        this.initSubNet();
-    };
+    // ---------------------------------------------------------------------- 注册监听
     NetManager.prototype.setNet = function (netId, cbFn, thisObj) {
         if (netId == null || cbFn == null || thisObj == null) {
             LogUtils.Error("\u53C2\u6570\u9519\u8BEF");
             return false;
         }
-        if (this.netMap.has(netId) == false) {
-            this.netMap.set(netId, []);
-        }
-        if (this.checkRepeat(netId, cbFn, thisObj) == true)
+        if (this.netMap.has(netId) == true) {
+            LogUtils.Error("\u91CD\u590D\u6CE8\u518C");
             return false;
-        var netDataArray = this.netMap.get(netId);
+        }
         var netData = PoolManager.Ins().pop(CBData);
         netData.packData(cbFn, thisObj);
-        netDataArray.push(netData);
+        this.netMap.set(netId, netData);
         return true;
     };
-    NetManager.prototype.checkRepeat = function (netId, cbFn, thisObj) {
-        var netDataArray = this.netMap.get(netId);
-        if (netDataArray == null)
-            return false;
-        for (var _i = 0, netDataArray_1 = netDataArray; _i < netDataArray_1.length; _i++) {
-            var netData = netDataArray_1[_i];
-            if (netData.cbFn == cbFn && netData.thisObj == thisObj) {
-                LogUtils.Error("重复注册");
-                return true;
-            }
-        }
-        return false;
-    };
-    NetManager.prototype.removeNet = function (netId, cbFn, thisObj) {
-        if (netId == null) {
-            LogUtils.Error("\u53C2\u6570\u9519\u8BEF");
-            return false;
-        }
-        if (this.netMap.has(netId) == false) {
-            LogUtils.Error("\u6CA1\u6709\u6CE8\u518C");
-            return false;
-        }
-        var netDataArray = this.netMap.get(netId);
-        for (var _i = 0, netDataArray_2 = netDataArray; _i < netDataArray_2.length; _i++) {
-            var netData = netDataArray_2[_i];
-            if (netData.cbFn == cbFn && netData.thisObj == thisObj) {
-                var index = netDataArray.indexOf(netData);
-                if (index >= 0)
-                    netDataArray.splice(index, 1);
-                netData.destroy();
-                PoolManager.Ins().push(netData);
-                return true;
-            }
-        }
-        return false;
-    };
-    NetManager.prototype.removeAllNet = function () {
-        for (var _i = 0, _a = this.netMap.values(); _i < _a.length; _i++) {
-            var netDataArray = _a[_i];
-            for (var _b = 0, netDataArray_3 = netDataArray; _b < netDataArray_3.length; _b++) {
-                var netData = netDataArray_3[_b];
-                if (netData == null)
-                    continue;
-                netData.destroy();
-                PoolManager.Ins().push(netData);
-            }
-            netDataArray.length = 0;
-        }
-        this.netMap.destroy();
-    };
+    // ---------------------------------------------------------------------- 发送数据
+    // 如果后面参数不为空，则为注册回调
     NetManager.prototype.C2SMessage = function (netId, msg, cbFn, thisobj, cbNetId) {
         if (cbFn === void 0) { cbFn = null; }
         if (thisobj === void 0) { thisobj = null; }
         if (cbNetId === void 0) { cbNetId = null; }
+        if (netId == null || msg == null) {
+            LogUtils.Error("\u53C2\u6570\u9519\u8BEF");
+            return false;
+        }
         if (cbFn != null && thisobj != null) {
             var cbId = cbNetId != null ? cbNetId : netId;
-            if (this.checkRepeat(cbId, cbFn, thisobj) == false)
+            if (this.netMap.has(cbId) == false)
                 this.setNet(cbId, cbFn, this);
         }
         SocketManager.Ins().sendMessage(netId, msg);
     };
-    NetManager.prototype.S2CMessage = function (netId, cmdDataBA) {
-        if (netId == null || cmdDataBA == null) {
+    NetManager.prototype.S2CMessage = function (netId, msg) {
+        if (netId == null || msg == null) {
             LogUtils.Error("\u53C2\u6570\u9519\u8BEF");
             return false;
         }
@@ -110,14 +66,21 @@ var NetManager = (function (_super) {
             LogUtils.Error("\u6CA1\u6709\u6CE8\u518C");
             return false;
         }
-        var netDataArray = this.netMap.get(netId);
-        for (var _i = 0, netDataArray_4 = netDataArray; _i < netDataArray_4.length; _i++) {
-            var netData = netDataArray_4[_i];
-            netData.exec(cmdDataBA);
-        }
+        var netData = this.netMap.get(netId);
+        netData.exec(msg);
         return true;
     };
-    NetManager.prototype.initSubNet = function () {
+    NetManager.prototype.removeAllNet = function () {
+        for (var _i = 0, _a = this.netMap.values(); _i < _a.length; _i++) {
+            var netData = _a[_i];
+            netData.destroy();
+            netData = null;
+        }
+        this.netMap.destroy();
+        return true;
+    };
+    // ---------------------------------------------------------------------- 会执行所有在net模块下的类
+    NetManager.prototype.initNet = function () {
         for (var key in net) {
             if (net.hasOwnProperty(key) == false)
                 continue;
@@ -133,7 +96,7 @@ var NetManager = (function (_super) {
             }
         }
     };
-    NetManager.prototype.destroySubNet = function () {
+    NetManager.prototype.destroyNet = function () {
         for (var key in net) {
             if (net.hasOwnProperty(key) == false)
                 continue;

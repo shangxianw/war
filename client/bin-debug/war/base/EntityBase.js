@@ -19,7 +19,7 @@ var war;
             this.comMap = new Hash();
             this.touchEnabled = false;
             this.touchChildren = false;
-            this.mc = new war.MovieClip();
+            this.mc = new MovieClip();
             this.addChild(this.mc);
             _super.prototype.initAll.call(this);
         };
