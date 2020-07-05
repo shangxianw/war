@@ -33,11 +33,11 @@ var home;
         };
         HeadIconData.prototype.OnRefreshIcon = function () {
             var homeData = home.HomeDataMgr.Ins();
-            this.setAttr("icon", 2);
+            this.setAttr("icon", homeData.myData.icon);
         };
         HeadIconData.prototype.OnRefreshFrame = function () {
             var homeData = home.HomeDataMgr.Ins();
-            this.setAttr("frame", 1);
+            this.setAttr("frame", homeData.myData.frame);
         };
         return HeadIconData;
     }(DataBase));

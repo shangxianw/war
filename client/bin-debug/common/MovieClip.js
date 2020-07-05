@@ -41,7 +41,10 @@ var MovieClip = (function (_super) {
         this.mcFactory.clearCache();
     };
     MovieClip.prototype.play = function (action, count) {
+        if (this.mc.currentLabel == action)
+            return;
         this.mc.gotoAndPlay(action, count);
+        this.height = this.mc.height;
     };
     return MovieClip;
 }(UIBase));

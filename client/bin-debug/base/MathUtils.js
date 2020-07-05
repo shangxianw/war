@@ -40,6 +40,7 @@ var MathUtils = (function () {
         var distance = Math.sqrt(width * width + height * height);
         return distance < radius1 + radius2;
     };
+    // ---------------------------------------------------------------------- 两点距离
     MathUtils.CalcDistance = function (x1, y1, x2, y2, needKaiFang) {
         if (needKaiFang === void 0) { needKaiFang = false; }
         var a = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);

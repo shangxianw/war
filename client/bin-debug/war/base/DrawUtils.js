@@ -57,6 +57,34 @@ var war;
             shape.graphics.endFill();
             group.addChild(shape);
         };
+        // ---------------------------------------------------------------------- 绘制实体所属阵营
+        DrawUtils.DrawEntityCamp = function (entity) {
+            if (DrawUtils.isTest == false)
+                return;
+            if (entity.camp == null)
+                return;
+            var shape = new egret.Shape();
+            if (entity.camp == war.CAMP.WE)
+                shape.graphics.beginFill(0x00ff00, 1);
+            else if (entity.camp == war.CAMP.ENEMY)
+                shape.graphics.beginFill(0xff0000, 1);
+            shape.graphics.drawCircle(0, 0, 5);
+            shape.graphics.endFill();
+            entity.addChild(shape);
+        };
+        // ---------------------------------------------------------------------- 绘制实体射程
+        DrawUtils.DrawEntityRange = function (entity) {
+            if (DrawUtils.isTest == false)
+                return;
+            if (entity.range == null)
+                return;
+            var shape = new egret.Shape();
+            shape.graphics.beginFill(0xffff00, 0.3);
+            shape.graphics.lineStyle(1, 0x000000);
+            shape.graphics.drawCircle(0, 0, entity.range);
+            shape.graphics.endFill();
+            entity.addChildAt(shape, 0);
+        };
         // ---------------------------------------------------------------------- 绘制当前拖动到的格子
         DrawUtils.DrawActiveCeil = function (localX, localY, group) {
             if (DrawUtils.isTest == false)

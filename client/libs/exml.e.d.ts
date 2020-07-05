@@ -84,6 +84,10 @@ declare class LoginPanelSkin extends eui.Skin{
 }
 declare class CostBarSkin extends eui.Skin{
 }
+declare class EntityInfoViewSkin extends eui.Skin{
+}
+declare class HealthBarSkin extends eui.Skin{
+}
 declare class HeroEntitySkin extends eui.Skin{
 }
 declare class Ka1Skin extends eui.Skin{

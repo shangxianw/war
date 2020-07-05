@@ -12,8 +12,12 @@ var war;
 (function (war) {
     var EntityBase = (function (_super) {
         __extends(EntityBase, _super);
-        function EntityBase() {
-            return _super !== null && _super.apply(this, arguments) || this;
+        function EntityBase(skinName) {
+            if (skinName === void 0) { skinName = null; }
+            var _this = _super.call(this, skinName) || this;
+            if (skinName != null)
+                _this.skinName = skinName;
+            return _this;
         }
         EntityBase.prototype.initAll = function () {
             this.comMap = new Hash();
@@ -21,9 +25,24 @@ var war;
             this.touchChildren = false;
             this.mc = new MovieClip();
             this.addChild(this.mc);
+            this.entityType = war.ENTITY.NONE;
+            this.attackTargets = [];
+            this.camp = war.CAMP.NONE;
+            this.action = war.ACTION.STAND;
+            this.dir = war.DIRECTION.DOWN;
+            this.path = [];
+            this.speed = 0;
+            this.angle = 90;
+            this.range = 0;
+            this.health = 0;
+            this.attack = 2;
+            this.attackLoopOK = false;
+            this.mc.mc.addEventListener(egret.Event.LOOP_COMPLETE, this.OnLoopComplete, this);
             _super.prototype.initAll.call(this);
         };
         EntityBase.prototype.destroyAll = function () {
+            this.attackTargets.length = 0;
+            this.mc.mc.removeEventListener(egret.Event.LOOP_COMPLETE, this.OnLoopComplete, this);
             DataUtils.DestroyDataBaseMap(this.comMap);
             this.mc.destroy();
             _super.prototype.destroyAll.call(this);
@@ -45,6 +64,9 @@ var war;
         };
         EntityBase.prototype.hasCom = function (id) {
             return this.comMap.has(id);
+        };
+        EntityBase.prototype.OnLoopComplete = function (e) {
+            this.attackLoopOK = true;
         };
         return EntityBase;
     }(UIBase));

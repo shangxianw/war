@@ -16,7 +16,7 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         World.prototype.init = function () {
-            this.inputSystem = new war.InputSystem();
+            this.lastTime = 0;
             this.sysArray = [];
             this.speedSystem = new war.SpeedSystem();
             this.sysArray.push(this.speedSystem);
@@ -24,6 +24,12 @@ var war;
             this.sysArray.push(this.moveSystem);
             this.pathSystem = new war.PathSystem();
             this.sysArray.push(this.pathSystem);
+            this.rangeSystem = new war.RangeSystem();
+            this.sysArray.push(this.rangeSystem);
+            this.renderSystem = new war.RenderSystem();
+            this.sysArray.push(this.renderSystem);
+            this.attackSystem = new war.AttackSystem();
+            this.sysArray.push(this.attackSystem);
         };
         World.prototype.destroy = function () {
             DataUtils.DestroyDataBaseClass(this.speedSystem, true);
@@ -42,6 +48,9 @@ var war;
                 this.speedSystem.update(entity, deltaTime);
                 this.moveSystem.update(entity, deltaTime);
                 this.pathSystem.update(entity, deltaTime);
+                this.rangeSystem.update(entity, deltaTime);
+                this.renderSystem.update(entity, deltaTime);
+                this.attackSystem.update(entity, deltaTime);
             }
         };
         World.prototype.updateSystem = function (deltaTime) {

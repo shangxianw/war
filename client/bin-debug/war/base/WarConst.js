@@ -13,6 +13,7 @@ var war;
         COMPONENT[COMPONENT["CAMP"] = 6] = "CAMP";
         COMPONENT[COMPONENT["INPUT"] = 7] = "INPUT";
         COMPONENT[COMPONENT["HP"] = 8] = "HP";
+        COMPONENT[COMPONENT["RANGE"] = 9] = "RANGE";
     })(COMPONENT = war.COMPONENT || (war.COMPONENT = {}));
     var SYSTEM;
     (function (SYSTEM) {
@@ -20,9 +21,13 @@ var war;
         SYSTEM[SYSTEM["ACTION"] = 2] = "ACTION";
         SYSTEM[SYSTEM["COLLISION"] = 3] = "COLLISION";
         SYSTEM[SYSTEM["PATH"] = 4] = "PATH";
+        SYSTEM[SYSTEM["ATTACK"] = 5] = "ATTACK";
+        SYSTEM[SYSTEM["RENDER"] = 6] = "RENDER";
+        SYSTEM[SYSTEM["RANGE"] = 7] = "RANGE";
     })(SYSTEM = war.SYSTEM || (war.SYSTEM = {}));
     var CAMP;
     (function (CAMP) {
+        CAMP[CAMP["NONE"] = 0] = "NONE";
         CAMP[CAMP["WE"] = 1] = "WE";
         CAMP[CAMP["ENEMY"] = 2] = "ENEMY";
     })(CAMP = war.CAMP || (war.CAMP = {}));
@@ -46,8 +51,10 @@ var war;
     })(DIRECTION = war.DIRECTION || (war.DIRECTION = {}));
     var ENTITY;
     (function (ENTITY) {
-        ENTITY[ENTITY["QUEEN"] = 1] = "QUEEN";
-        ENTITY[ENTITY["HERO"] = 2] = "HERO";
+        ENTITY[ENTITY["NONE"] = 0] = "NONE";
+        ENTITY[ENTITY["KING"] = 1] = "KING";
+        ENTITY[ENTITY["QUEEN"] = 2] = "QUEEN";
+        ENTITY[ENTITY["HERO"] = 3] = "HERO";
     })(ENTITY = war.ENTITY || (war.ENTITY = {}));
     var ANGLE = (function () {
         function ANGLE() {

@@ -81,6 +81,14 @@ var Utils = (function () {
     Utils.GetMap = function (id) {
         return "map_" + id + "_jpg";
     };
+    Utils.GetActionName = function (action) {
+        if (action == war.ACTION.STAND)
+            return "stand";
+        else if (action == war.ACTION.ATTACK)
+            return "attack";
+        if (action == war.ACTION.RUN)
+            return "run";
+    };
     return Utils;
 }());
 __reflect(Utils.prototype, "Utils");

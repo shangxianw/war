@@ -28,16 +28,17 @@ var war;
         MoveSystem.prototype.update = function (entity, deltaTime) {
             if (entity == null)
                 return;
-            var sCom = entity.getCom(war.COMPONENT.SPEED);
-            if (sCom == null)
-                return;
-            var speedArray = MathUtils.CalcLegSide(sCom.speed, sCom.angle);
+            var speedArray = MathUtils.CalcLegSide(entity.speed, entity.angle);
             var speedX = speedArray[0] * deltaTime; // 直接乘，因为这个通常不足一秒，所以肯定不
             var speedY = speedArray[1] * deltaTime;
-            // let speedX = speedArray[0];
-            // let speedY = speedArray[1];
             entity.x = Number((entity.x + speedX));
             entity.y = Number((entity.y + speedY));
+            var entityInfo = war.WarDataMgr.Ins().infoMap.get(entity.uniqueCode);
+            if (entityInfo == null)
+                return;
+            entityInfo.x = entity.x;
+            entityInfo.y = entity.y;
+            entityInfo.updatePos();
         };
         return MoveSystem;
     }(war.SystemBase));

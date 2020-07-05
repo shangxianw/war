@@ -143,14 +143,14 @@ var Main = (function (_super) {
         LayerManager.Ins();
         NetManager.Ins();
         NetManager.Ins();
-        // war.WarDataMgr.Ins();
+        war.WarDataMgr.Ins();
         // SocketManager.Ins()
-        // ViewManager.Ins().open(home.LoginPanel);
+        ViewManager.Ins().open(home.LoginPanel);
         // ViewManager.Ins().open(war.WarMatchPanel);
-        var a = new home.HeadIcon();
-        a.info.packData(2, 1);
-        a.update();
-        this.addChild(a);
+        // let a = new home.HeadIcon();
+        // a.info.packData(2, 1);
+        // a.update();
+        // this.addChild(a);
     };
     return Main;
 }(eui.UILayer));

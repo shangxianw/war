@@ -46,6 +46,8 @@
 		"resource/skins/home/loading/LoadingTipsSkin.exml",
 		"resource/skins/home/LoginPanelSkin.exml",
 		"resource/skins/war/CostBarSkin.exml",
+		"resource/skins/war/HealthBarSkin.exml",
+		"resource/skins/war/EntityInfoViewSkin.exml",
 		"resource/skins/war/HeroEntitySkin.exml",
 		"resource/skins/war/Ka1Skin.exml",
 		"resource/skins/war/WarMatchPanelSkin.exml",

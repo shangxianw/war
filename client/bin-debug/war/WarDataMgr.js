@@ -26,9 +26,11 @@ var war;
             this.world = new war.World();
             this.pathMap = new Hash();
             this.entityMap = new Hash();
+            this.infoMap = new Hash();
         };
         WarDataMgr.prototype.destroy = function () {
             DataUtils.DestroyUIBaseMap(this.entityMap);
+            DataUtils.DestroyUIBaseMap(this.infoMap);
             this.astar.destroy();
             this.grid.destroy();
             this.astar = null;

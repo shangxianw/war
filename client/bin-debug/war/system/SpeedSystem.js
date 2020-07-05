@@ -27,15 +27,24 @@ var war;
         SpeedSystem.prototype.update = function (entity, deltaTime) {
             if (entity == null)
                 return;
-            var sCom = entity.getCom(war.COMPONENT.SPEED);
-            if (sCom == null)
+            if (entity.action == war.ACTION.RUN)
+                this.calcByPath(entity);
+            else if (entity.action == war.ACTION.ATTACK)
+                this.calcByAttack(entity);
+        };
+        SpeedSystem.prototype.calcByAttack = function (entity) {
+            var attackTarEntity = entity.attackTargets[0];
+            if (attackTarEntity == null)
                 return;
-            this.calcByPath(entity);
+            var startX = war.WarUtils.ToLocalX(entity.x);
+            var startY = war.WarUtils.ToLocalY(entity.y);
+            var endX = war.WarUtils.ToLocalX(attackTarEntity.x);
+            var endY = war.WarUtils.ToLocalY(attackTarEntity.y);
+            var angle = MathUtils.CalcAngle(startX, startY, endX, endY);
+            entity.angle = angle;
+            this.setDir(entity, entity.angle);
         };
         SpeedSystem.prototype.calcByPath = function (entity) {
-            var sCom = entity.getCom(war.COMPONENT.SPEED);
-            if (sCom == null)
-                return;
             var pCom = entity.getCom(war.COMPONENT.PATH);
             if (pCom != null) {
                 var currStartNode = pCom.getCurrStartNode();
@@ -48,8 +57,35 @@ var war;
                     var endX = war.WarUtils.ToLocalX(currEndNode.x);
                     var endY = war.WarUtils.ToLocalY(currEndNode.y);
                     var angle = MathUtils.CalcAngle(startX, startY, endX, endY);
-                    sCom.angle = angle;
+                    entity.angle = angle;
+                    this.setDir(entity, entity.angle);
                 }
+            }
+        };
+        SpeedSystem.prototype.setDir = function (entity, angle) {
+            if (angle > 337.5 || angle <= 22.5) {
+                entity.dir = war.DIRECTION.RIGHT;
+            }
+            else if (angle > 22.5 && angle <= 67.5) {
+                entity.dir = war.DIRECTION.RIGHT_DOWN;
+            }
+            else if (angle > 67.5 && angle <= 112.5) {
+                entity.dir = war.DIRECTION.DOWN;
+            }
+            else if (angle > 112.5 && angle <= 157.5) {
+                entity.dir = war.DIRECTION.LEFT_DOWN;
+            }
+            else if (angle > 157.5 && angle <= 202.5) {
+                entity.dir = war.DIRECTION.LEFT;
+            }
+            else if (angle > 202.5 && angle <= 247.5) {
+                entity.dir = war.DIRECTION.LEFT_UP;
+            }
+            else if (angle > 247.5 && angle <= 292.5) {
+                entity.dir = war.DIRECTION.UP;
+            }
+            else if (angle > 292.5 && angle <= 337.5) {
+                entity.dir = war.DIRECTION.RIGHT_UP;
             }
         };
         return SpeedSystem;
