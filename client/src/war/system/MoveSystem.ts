@@ -9,7 +9,7 @@ module war
 	{
 		protected init()
 		{
-			this.systemId = SYSTEM.MOVE;
+			this.systemId = System.Move;
 		}
 
 		protected destroy()
@@ -22,7 +22,7 @@ module war
 			if(entity == null)
 				return;
 
-			let speedArray = MathUtils.CalcLegSide(entity.speed, entity.angle);
+			let speedArray = MathUtils.CalcLegSide(entity.speedCom.speed, entity.speedCom.angle);
 			let speedX = speedArray[0] * deltaTime; // 直接乘，因为这个通常不足一秒，所以肯定不
 			let speedY = speedArray[1] * deltaTime;
 

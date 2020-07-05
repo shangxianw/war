@@ -82,11 +82,11 @@ var Utils = (function () {
         return "map_" + id + "_jpg";
     };
     Utils.GetActionName = function (action) {
-        if (action == war.ACTION.STAND)
+        if (action == war.Action.Stand)
             return "stand";
-        else if (action == war.ACTION.ATTACK)
+        else if (action == war.Action.Attack)
             return "attack";
-        if (action == war.ACTION.RUN)
+        if (action == war.Action.Run)
             return "run";
     };
     return Utils;

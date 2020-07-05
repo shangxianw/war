@@ -69,6 +69,78 @@ var war;
             var realY = WarUtils.ToLocalY(y);
             return [realX, realY];
         };
+        // ---------------------------------------------------------------------- 创建实体
+        WarUtils.CreateEntity = function (entityType, kaId, isLeftPos) {
+            if (entityType == war.Entity.Hero)
+                return this.CreateHero(kaId);
+            else if (entityType == war.Entity.King)
+                return this.CreateKing(kaId, isLeftPos);
+            else if (entityType == war.Entity.Queen)
+                return this.CreateQueen(kaId, isLeftPos);
+        };
+        WarUtils.CreateHero = function (kaId) {
+            var hero = WarPool.Ins().pop(war.HeroEntity);
+            hero.mc.initData("hero_" + kaId, "hero_" + kaId);
+            hero.speedCom.setData(40, 0);
+            hero.actionCom.setAction(war.Action.None);
+            hero.dirCom.setDir(war.Direction.Right);
+            hero.campCom.setCamp(war.Camp.We);
+            hero.attackCom.setAttack(10, 100);
+            hero.healthCom.setHealth(1000);
+            war.WarDataMgr.Ins().addEntity(hero);
+            // 血量条
+            var entityInfo = new war.EntityInfoView();
+            entityInfo.entityId = hero.uniqueCode;
+            entityInfo.initHealth(hero.healthCom.hp, hero.healthCom.hp);
+            war.WarDataMgr.Ins().infoMap.set(hero.uniqueCode, entityInfo);
+            return hero;
+        };
+        WarUtils.CreateKing = function (kingId, isLeftPos) {
+            var king = PoolManager.Ins().pop(war.KingEntity);
+            king.mc.initData("hero_" + kingId, "hero_" + kingId);
+            king.actionCom.setAction(war.Action.None);
+            if (isLeftPos == true) {
+                king.dirCom.setDir(war.Direction.Right);
+                king.campCom.setCamp(war.Camp.We);
+            }
+            else {
+                king.dirCom.setDir(war.Direction.Left);
+                king.campCom.setCamp(war.Camp.Enemy);
+            }
+            king.attackCom.setAttack(10, 240);
+            war.DrawUtils.DrawEntityRange(king);
+            king.healthCom.setHealth(100);
+            war.WarDataMgr.Ins().addEntity(king);
+            // 血量条
+            var entityInfo = new war.EntityInfoView();
+            entityInfo.entityId = king.uniqueCode;
+            entityInfo.initHealth(king.healthCom.hp, king.healthCom.hp);
+            war.WarDataMgr.Ins().infoMap.set(king.uniqueCode, entityInfo);
+            return king;
+        };
+        WarUtils.CreateQueen = function (queenId, isLeftPos) {
+            var queen = PoolManager.Ins().pop(war.QueenEntity);
+            queen.mc.initData("hero_" + queenId, "hero_" + queenId);
+            queen.actionCom.setAction(war.Action.None);
+            if (isLeftPos == true) {
+                queen.dirCom.setDir(war.Direction.Right);
+                queen.campCom.setCamp(war.Camp.We);
+            }
+            else {
+                queen.dirCom.setDir(war.Direction.Left);
+                queen.campCom.setCamp(war.Camp.Enemy);
+            }
+            queen.attackCom.setAttack(10, 40);
+            war.DrawUtils.DrawEntityRange(queen);
+            queen.healthCom.setHealth(100);
+            war.WarDataMgr.Ins().addEntity(queen);
+            // 血量条
+            var entityInfo = new war.EntityInfoView();
+            entityInfo.entityId = queen.uniqueCode;
+            entityInfo.initHealth(queen.healthCom.hp, queen.healthCom.hp);
+            war.WarDataMgr.Ins().infoMap.set(queen.uniqueCode, entityInfo);
+            return queen;
+        };
         return WarUtils;
     }());
     war.WarUtils = WarUtils;

@@ -7,7 +7,7 @@ module war
 	{
 		protected init()
 		{
-			this.systemId = SYSTEM.ATTACK;
+			this.systemId = System.Attack;
 		}
 
 		protected destroy()
@@ -20,21 +20,60 @@ module war
 			if(entity == null)
 				return;
 			
-			// 攻击
-			if(entity.action == ACTION.ATTACK && entity.attackLoopOK == true)
+			if(entity.attackCom.range == null)
+				return;
+			
+			// 普攻且只会攻击一个人的情况
+			this.calcCommonAttack(entity);
+		}
+
+		// 目标是不会移动的实体
+		private calcCommonAttack(entity:EntityBase)
+		{
+			if(entity.attackCom.atkTarArray.length <= 0)
 			{
-				let tarEntity = entity.attackTargets[0]; // 只打一个人
-				if(tarEntity == null)
-					return;
-				
+				let entityArray:EntityBase[] = DataUtils.CopyArray(WarDataMgr.Ins().entityMap.values());
+				let distance:number = 0;
+				for(let tarEntity of entityArray)
+				{
+					if(tarEntity == null)
+						continue;
+					
+					if(entity.uniqueCode == tarEntity.uniqueCode)
+						continue;
+					
+					// 同阵营
+					let camp = entity.campCom.camp;
+					let tarCamp = tarEntity.campCom.camp;
+					if(camp == null || tarCamp == null || camp == tarCamp)
+						continue;
+
+					// 射程范围外
+					let range = entity.attackCom.range;
+					distance = MathUtils.CalcDistance(entity.x, entity.y, tarEntity.x, tarEntity.y, true);
+					if(distance > range)
+						continue;
+					
+					// 此处只对第一个人进行攻击
+					entity.actionCom.setAction(Action.Attack);
+					entity.speedCom.setSpeed(0);
+					entity.attackCom.setTarArray([tarEntity]);
+					break;
+				}
+			}
+
+			// 攻击
+			let tarEntity:EntityBase = entity.attackCom.atkTarArray[0]; // 只打一个人
+			if(entity.actionCom.action == Action.Attack && entity.attackLoopOK == true && tarEntity != null)
+			{
 				let entityInfo:EntityInfoView = WarDataMgr.Ins().infoMap.get(tarEntity.uniqueCode) as EntityInfoView;
 				if(entityInfo == null)
 					return;
 				
-				tarEntity.health -= entity.attack
-				entityInfo.updateHealth(tarEntity.health);
+				tarEntity.healthCom.hp -= entity.attackCom.attack;
+				entityInfo.updateHealth(tarEntity.healthCom.hp); // 这个用属性发射啊！
 
-				if(tarEntity.health <= 0) // 死亡
+				if(tarEntity.healthCom.hp <= 0) // 死亡
 				{
 					let infoView = WarDataMgr.Ins().infoMap.get(tarEntity.uniqueCode) as EntityInfoView;
 					if(infoView != null && infoView.parent != null && infoView.parent.getChildIndex(infoView) >= 0)
@@ -44,11 +83,11 @@ module war
 						WarDataMgr.Ins().removeEntity(tarEntity.uniqueCode);
 						tarEntity.parent.removeChild(tarEntity);
 					}
-					entity.action = ACTION.RUN;
-					entity.speed = 20;
+					entity.actionCom.setAction(Action.None);
+					entity.attackCom.setTarArray([]);
 				}
+				entity.attackLoopOK = false;
 			}
-			entity.attackLoopOK = false;
 		}
 	}
 }

@@ -16,13 +16,6 @@ var STR_CONST = (function () {
     return STR_CONST;
 }());
 __reflect(STR_CONST.prototype, "STR_CONST");
-var SYSTEM;
-(function (SYSTEM) {
-    SYSTEM[SYSTEM["COLLISION"] = 1] = "COLLISION";
-    SYSTEM[SYSTEM["FALL"] = 2] = "FALL";
-    SYSTEM[SYSTEM["MOVE"] = 3] = "MOVE";
-    SYSTEM[SYSTEM["CAMERA"] = 4] = "CAMERA";
-})(SYSTEM || (SYSTEM = {}));
 // enum COMPONENT
 // {
 // 	POS = 1,

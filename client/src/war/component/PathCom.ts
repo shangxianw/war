@@ -6,7 +6,7 @@ module war
 		private path:astar.Node[];
 		protected init()
 		{
-			this.componentId = COMPONENT.PATH;
+			this.comId = Component.Path;
 			this.path = [];
 			this.currStep = 0;
 		}

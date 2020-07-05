@@ -21,14 +21,14 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         MoveSystem.prototype.init = function () {
-            this.systemId = war.SYSTEM.MOVE;
+            this.systemId = war.System.Move;
         };
         MoveSystem.prototype.destroy = function () {
         };
         MoveSystem.prototype.update = function (entity, deltaTime) {
             if (entity == null)
                 return;
-            var speedArray = MathUtils.CalcLegSide(entity.speed, entity.angle);
+            var speedArray = MathUtils.CalcLegSide(entity.speedCom.speed, entity.speedCom.angle);
             var speedX = speedArray[0] * deltaTime; // 直接乘，因为这个通常不足一秒，所以肯定不
             var speedY = speedArray[1] * deltaTime;
             entity.x = Number((entity.x + speedX));

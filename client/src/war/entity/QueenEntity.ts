@@ -9,7 +9,7 @@ module war
 
 		protected init()
 		{
-			this.entityType = ENTITY.QUEEN;
+			this.entityType = Entity.Queen;
 			this.anchorOffsetX = this.width >> 1;
 			this.anchorOffsetY = this.height;
 			DrawUtils.DrawEntityId(this);

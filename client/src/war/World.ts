@@ -7,14 +7,17 @@ module war
 		public speedSystem:SpeedSystem;
 		public moveSystem:MoveSystem;
 		public pathSystem:PathSystem;
-		public rangeSystem:RangeSystem;
 		public renderSystem:RenderSystem;
 		public attackSystem:AttackSystem;
+		public nextActionSystem:NextActionSystem;
 
 		protected init()
 		{
 			this.lastTime = 0;
 			this.sysArray = [];
+
+			this.nextActionSystem = new NextActionSystem();
+			this.sysArray.push(this.nextActionSystem);
 
 			this.speedSystem = new SpeedSystem();
 			this.sysArray.push(this.speedSystem);
@@ -25,14 +28,12 @@ module war
 			this.pathSystem = new PathSystem();
 			this.sysArray.push(this.pathSystem);
 
-			this.rangeSystem = new RangeSystem();
-			this.sysArray.push(this.rangeSystem);
-
 			this.renderSystem = new RenderSystem();
 			this.sysArray.push(this.renderSystem);
 
 			this.attackSystem = new AttackSystem();
 			this.sysArray.push(this.attackSystem);
+
 		}
 
 		protected destroy()
@@ -55,21 +56,12 @@ module war
 				if(entity == null)
 					continue;
 				
+				this.nextActionSystem.update(entity, deltaTime);
 				this.speedSystem.update(entity, deltaTime);
 				this.moveSystem.update(entity, deltaTime);
 				this.pathSystem.update(entity, deltaTime);
-				this.rangeSystem.update(entity, deltaTime);
 				this.renderSystem.update(entity, deltaTime);
 				this.attackSystem.update(entity, deltaTime);
-			}
-		}
-
-		public updateSystem(deltaTime:number)
-		{
-			let warData = WarDataMgr.Ins();
-			for(let system of this.sysArray)
-			{
-				system.update(deltaTime);
 			}
 		}
 	}

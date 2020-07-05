@@ -19,60 +19,60 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         RenderSystem.prototype.init = function () {
-            this.systemId = war.SYSTEM.RENDER;
+            this.systemId = war.System.Render;
         };
         RenderSystem.prototype.destroy = function () {
         };
         RenderSystem.prototype.update = function (entity, deltaTime) {
             if (entity == null)
                 return;
-            if (entity.entityType == war.ENTITY.QUEEN) {
+            if (entity.entityType == war.Entity.Queen) {
                 // 暂时不处理，是个bug，会导致不能移动
                 // this.showRenderByQueen(entity, entity.action);
             }
             else {
-                if (entity.action == war.ACTION.STAND) {
+                if (entity.actionCom.action == war.Action.Stand) {
                     this.showRender(entity, "stand");
                 }
-                else if (entity.action == war.ACTION.RUN) {
+                else if (entity.actionCom.action == war.Action.Run) {
                     this.showRender(entity, "run");
                 }
-                else if (entity.action == war.ACTION.ATTACK) {
+                else if (entity.actionCom.action == war.Action.Attack) {
                     this.showRender(entity, "attack");
                 }
             }
         };
         RenderSystem.prototype.showRender = function (entity, action) {
-            var dir = entity.dir;
-            if (dir == war.DIRECTION.RIGHT) {
+            var dir = entity.dirCom.direction;
+            if (dir == war.Direction.Right) {
                 entity.mc.scaleX = 1;
                 entity.mc.play(action + "2", -1);
             }
-            else if (dir == war.DIRECTION.RIGHT_DOWN) {
+            else if (dir == war.Direction.RightDown) {
                 entity.mc.scaleX = 1;
                 entity.mc.play(action + "3", -1);
             }
-            else if (dir == war.DIRECTION.DOWN) {
+            else if (dir == war.Direction.Down) {
                 entity.mc.scaleX = 1;
                 entity.mc.play(action + "4", -1);
             }
-            else if (dir == war.DIRECTION.LEFT_DOWN) {
+            else if (dir == war.Direction.LeftDown) {
                 entity.mc.scaleX = -1;
                 entity.mc.play(action + "3", -1);
             }
-            else if (dir == war.DIRECTION.LEFT) {
+            else if (dir == war.Direction.Left) {
                 entity.mc.scaleX = -1;
                 entity.mc.play(action + "2", -1);
             }
-            else if (dir == war.DIRECTION.LEFT_UP) {
+            else if (dir == war.Direction.LeftUp) {
                 entity.mc.scaleX = -1;
                 entity.mc.play(action + "1", -1);
             }
-            else if (dir == war.DIRECTION.UP) {
+            else if (dir == war.Direction.Up) {
                 entity.mc.scaleX = -1;
                 entity.mc.play(action + "0", -1);
             }
-            else if (dir == war.DIRECTION.RIGHT_UP) {
+            else if (dir == war.Direction.RightUp) {
                 entity.mc.scaleX = 1;
                 entity.mc.play(action + "1", -1);
             }

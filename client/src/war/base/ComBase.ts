@@ -2,7 +2,7 @@ module war
 {
 	export abstract class ComBase extends DataBase
 	{
-		public componentId:number;
+		public comId:number;
 		protected initAll()
 		{
 			super.initAll();

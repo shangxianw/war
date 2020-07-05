@@ -61,27 +61,27 @@ var war;
         DrawUtils.DrawEntityCamp = function (entity) {
             if (DrawUtils.isTest == false)
                 return;
-            if (entity.camp == null)
+            if (entity.campCom.camp == null)
                 return;
             var shape = new egret.Shape();
-            if (entity.camp == war.CAMP.WE)
+            if (entity.campCom.camp == war.Camp.We)
                 shape.graphics.beginFill(0x00ff00, 1);
-            else if (entity.camp == war.CAMP.ENEMY)
+            else if (entity.campCom.camp == war.Camp.Enemy)
                 shape.graphics.beginFill(0xff0000, 1);
             shape.graphics.drawCircle(0, 0, 5);
             shape.graphics.endFill();
             entity.addChild(shape);
         };
-        // ---------------------------------------------------------------------- 绘制实体射程
+        // ---------------------------------------------------------------------- 绘制实体普攻射程
         DrawUtils.DrawEntityRange = function (entity) {
             if (DrawUtils.isTest == false)
                 return;
-            if (entity.range == null)
+            if (entity.attackCom.range == null)
                 return;
             var shape = new egret.Shape();
             shape.graphics.beginFill(0xffff00, 0.3);
             shape.graphics.lineStyle(1, 0x000000);
-            shape.graphics.drawCircle(0, 0, entity.range);
+            shape.graphics.drawCircle(0, 0, entity.attackCom.range);
             shape.graphics.endFill();
             entity.addChildAt(shape, 0);
         };
@@ -117,7 +117,7 @@ var war;
         DrawUtils.DrawPath = function (entity) {
             if (this.isTest == false)
                 return;
-            var pCom = entity.getCom(war.COMPONENT.PATH);
+            var pCom = entity.getCom(war.Component.Path);
             if (pCom == null)
                 return;
             var pathShape;

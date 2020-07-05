@@ -12,13 +12,6 @@ class STR_CONST
 	public static ARRAY = "array";
 }
 
-enum SYSTEM
-{
-	COLLISION = 1,
-	FALL = 2,
-	MOVE = 3,
-	CAMERA = 4,
-}
 
 // enum COMPONENT
 // {

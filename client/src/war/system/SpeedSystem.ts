@@ -8,7 +8,7 @@ module war
 	{
 		protected init()
 		{
-			this.systemId = SYSTEM.PATH;
+			this.systemId = System.Speed;
 		}
 
 		protected destroy()
@@ -21,15 +21,15 @@ module war
 			if(entity == null)
 				return;
 
-			if(entity.action == ACTION.RUN)
+			if(entity.actionCom.action == Action.Run)
 				this.calcByPath(entity);
-			else if(entity.action == ACTION.ATTACK)
+			else if(entity.actionCom.action == Action.Attack)
 				this.calcByAttack(entity);
 		}
 
 		private calcByAttack(entity:EntityBase)
 		{
-			let attackTarEntity = entity.attackTargets[0];
+			let attackTarEntity = entity.attackCom.atkTarArray[0];
 			if(attackTarEntity == null)
 				return;
 			let startX = WarUtils.ToLocalX(entity.x);
@@ -37,14 +37,14 @@ module war
 			let endX = WarUtils.ToLocalX(attackTarEntity.x);
 			let endY = WarUtils.ToLocalY(attackTarEntity.y);
 			let angle = MathUtils.CalcAngle(startX, startY, endX, endY);
-			entity.angle = angle;
-			this.setDir(entity, entity.angle);
+			entity.speedCom.angle = angle;
+			this.setDir(entity, entity.speedCom.angle);
 		}
 
 		private calcByPath(entity:EntityBase)
 		{
 
-			let pCom = entity.getCom(COMPONENT.PATH) as PathCom;
+			let pCom = entity.getCom(Component.Path) as PathCom;
 			if(pCom != null)
 			{
 				let currStartNode = pCom.getCurrStartNode();
@@ -58,8 +58,8 @@ module war
 					let endX = WarUtils.ToLocalX(currEndNode.x);
 					let endY = WarUtils.ToLocalY(currEndNode.y);
 					let angle = MathUtils.CalcAngle(startX, startY, endX, endY);
-					entity.angle = angle;
-					this.setDir(entity, entity.angle);
+					entity.speedCom.angle = angle;
+					this.setDir(entity, entity.speedCom.angle);
 				}
 			}
 		}
@@ -68,35 +68,35 @@ module war
 		{
 			if(angle > 337.5 || angle <= 22.5) // 右
 			{
-				entity.dir = DIRECTION.RIGHT;
+				entity.dirCom.direction = Direction.Right;
 			}
 			else if(angle > 22.5 && angle <= 67.5) // 右下
 			{
-				entity.dir = DIRECTION.RIGHT_DOWN;
+				entity.dirCom.direction = Direction.RightDown;
 			}
 			else if(angle > 67.5 && angle <= 112.5)
 			{
-				entity.dir = DIRECTION.DOWN;
+				entity.dirCom.direction = Direction.Down;
 			}
 			else if(angle > 112.5 && angle <= 157.5)
 			{
-				entity.dir = DIRECTION.LEFT_DOWN;
+				entity.dirCom.direction = Direction.LeftDown;
 			}
 			else if(angle > 157.5 && angle <= 202.5)
 			{
-				entity.dir = DIRECTION.LEFT;
+				entity.dirCom.direction = Direction.Left;
 			}
 			else if(angle > 202.5 && angle <= 247.5)
 			{
-				entity.dir = DIRECTION.LEFT_UP;
+				entity.dirCom.direction = Direction.LeftUp;
 			}
 			else if(angle > 247.5 && angle <= 292.5)
 			{
-				entity.dir = DIRECTION.UP;
+				entity.dirCom.direction = Direction.Up;
 			}
 			else if(angle > 292.5 && angle <= 337.5)
 			{
-				entity.dir = DIRECTION.RIGHT_UP;
+				entity.dirCom.direction = Direction.RightUp;
 			}
 		}
 	}

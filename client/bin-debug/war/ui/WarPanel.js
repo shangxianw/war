@@ -181,40 +181,7 @@ var war;
             this.info.createKa.x = xy[0];
             this.info.createKa.y = xy[1];
         };
-        // ---------------------------------------------------------------------- 创建英雄
-        WarPanel.prototype.createKa = function (kaId, x, y) {
-            var hero = PoolManager.Ins().pop(war.HeroEntity);
-            hero.x = war.WarUtils.ToLocalX(x);
-            hero.y = war.WarUtils.ToLocalY(y);
-            hero.mc.initData("hero_10010", "hero_10010", "stand4", -1);
-            return hero;
-        };
-        WarPanel.prototype.addToEntityGroup = function () {
-            if (this.info.createKa == null)
-                return;
-            this.info.createKa.angle = 0;
-            this.info.createKa.speed = 20;
-            this.info.createKa.action = war.ACTION.STAND;
-            this.info.createKa.dir = war.DIRECTION.DOWN;
-            this.info.createKa.camp = war.CAMP.WE;
-            this.info.createKa.range = 100;
-            this.info.createKa.health = 1000;
-            this.info.createKa.attack = 10;
-            war.DrawUtils.DrawEntityRange(this.info.createKa);
-            var pathc = PoolManager.Ins().pop(war.PathCom);
-            var x = war.WarUtils.ToGridX(this.info.createKa.x);
-            var y = war.WarUtils.ToGridY(this.info.createKa.y);
-            var path = war.WarDataMgr.Ins().findPath(x, y, 45, 12);
-            pathc.setPath(path);
-            this.info.createKa.setCom(pathc);
-            this.info.createKa.action = war.ACTION.RUN;
-            this.optionGroup.removeChild(this.info.createKa);
-            var hero = this.info.createKa;
-            this.entityGroup.addChild(hero);
-            war.WarDataMgr.Ins().addEntity(hero);
-            var preKaData = this.preKa.info;
-            this.info.currKa.info.refreshKa(preKaData.kaId);
-            this.preKa.info.refreshKa(this.info.getMyNextKa());
+        WarPanel.prototype.resetKa = function () {
             this.info.currKa.x = this.info.initX;
             this.info.currKa.y = this.info.initY;
             this.info.currKa.scaleX = this.info.currKa.scaleY = this.info.initScale;
@@ -228,157 +195,110 @@ var war;
             }, 250);
             this.info.comsumeKa(this.info.currKa.info.kaId);
             this.info.createKa = null;
+        };
+        // ---------------------------------------------------------------------- 创建英雄
+        WarPanel.prototype.createKa = function (kaId, x, y) {
+            var hero = PoolManager.Ins().pop(war.HeroEntity);
+            hero.x = war.WarUtils.ToLocalX(x);
+            hero.y = war.WarUtils.ToLocalY(y);
+            hero.mc.initData("hero_10010", "hero_10010", "stand4", -1);
+            return hero;
+        };
+        WarPanel.prototype.addToEntityGroup = function () {
+            if (this.info.createKa == null)
+                return;
+            var hero = war.WarUtils.CreateEntity(war.Entity.Hero, 10010, true);
+            hero.x = this.info.createKa.x;
+            hero.y = this.info.createKa.y;
+            war.DrawUtils.DrawEntityRange(hero);
+            var pathc = WarPool.Ins().pop(war.PathCom);
+            var x = war.WarUtils.ToGridX(this.info.createKa.x);
+            var y = war.WarUtils.ToGridY(this.info.createKa.y);
+            var path = war.WarDataMgr.Ins().findPath(x, y, 40, 18);
+            pathc.setPath(path);
+            hero.setCom(pathc);
+            var tmpHero = this.optionGroup.removeChild(this.info.createKa);
+            tmpHero.destroyAll();
+            WarPool.Ins().push(tmpHero);
+            this.entityGroup.addChild(hero);
+            var preKaData = this.preKa.info;
+            this.info.currKa.info.refreshKa(preKaData.kaId);
+            this.preKa.info.refreshKa(this.info.getMyNextKa());
             // 血量条
-            var entityInfo = new war.EntityInfoView();
-            entityInfo.entityId = hero.uniqueCode;
-            entityInfo.x = hero.x;
-            entityInfo.y = hero.y;
-            entityInfo.initHealth(hero.health, hero.health);
-            this.entityInfoGroup.addChild(entityInfo);
-            war.WarDataMgr.Ins().infoMap.set(hero.uniqueCode, entityInfo);
+            var entityInfo = war.WarDataMgr.Ins().infoMap.get(hero.uniqueCode);
+            if (entityInfo != null) {
+                entityInfo.x = hero.x;
+                entityInfo.y = hero.y;
+                this.entityInfoGroup.addChild(entityInfo);
+            }
+            this.resetKa();
         };
         WarPanel.prototype.initTower = function () {
-            var king = PoolManager.Ins().pop(war.KingEntity);
+            var king = war.WarUtils.CreateEntity(war.Entity.King, 99040, true);
             king.x = war.WarUtils.ToLocalX(6);
             king.y = war.WarUtils.ToLocalY(12);
-            king.mc.initData("hero_99040", "hero_99040", "stand0");
-            king.action = war.ACTION.STAND;
-            king.dir = war.DIRECTION.RIGHT;
-            king.camp = war.CAMP.WE;
-            king.angle = 0;
-            war.DrawUtils.DrawEntityCamp(king);
-            king.range = 40;
             war.DrawUtils.DrawEntityRange(king);
-            king.health = 100;
             this.entityGroup.addChild(king);
-            war.WarDataMgr.Ins().addEntity(king);
             // 血量条
-            var entityInfo = new war.EntityInfoView();
-            entityInfo.entityId = king.uniqueCode;
-            entityInfo.x = king.x;
-            entityInfo.y = king.y;
-            entityInfo.initHealth(king.health, king.health);
-            this.entityInfoGroup.addChild(entityInfo);
-            war.WarDataMgr.Ins().infoMap.set(king.uniqueCode, entityInfo);
-            // ---------------------------------------------------------------------------
-            var king2 = PoolManager.Ins().pop(war.KingEntity);
-            king2.x = war.WarUtils.ToLocalX(46);
-            king2.y = war.WarUtils.ToLocalY(12);
-            king2.mc.initData("hero_99040", "hero_99040", "stand2");
-            king2.mc.scaleX = -1;
-            king2.action = war.ACTION.STAND;
-            king2.dir = war.DIRECTION.LEFT;
-            king2.angle = 180;
-            king2.camp = war.CAMP.ENEMY;
-            war.DrawUtils.DrawEntityCamp(king2);
-            king2.range = 240;
-            king2.health = 100;
-            war.DrawUtils.DrawEntityRange(king2);
-            this.entityGroup.addChild(king2);
-            war.WarDataMgr.Ins().addEntity(king2);
+            var entityInfo = war.WarDataMgr.Ins().infoMap.get(king.uniqueCode);
+            if (entityInfo != null) {
+                this.entityInfoGroup.addChild(entityInfo);
+            }
+            king = war.WarUtils.CreateEntity(war.Entity.King, 99040, false);
+            king.x = war.WarUtils.ToLocalX(47);
+            king.y = war.WarUtils.ToLocalY(12);
+            war.DrawUtils.DrawEntityRange(king);
+            this.entityGroup.addChild(king);
             // 血量条
-            entityInfo = new war.EntityInfoView();
-            entityInfo.entityId = king2.uniqueCode;
-            entityInfo.x = king2.x;
-            entityInfo.y = king2.y;
-            entityInfo.initHealth(king.health, king.health);
-            this.entityInfoGroup.addChild(entityInfo);
-            war.WarDataMgr.Ins().infoMap.set(king2.uniqueCode, entityInfo);
+            entityInfo = war.WarDataMgr.Ins().infoMap.get(king.uniqueCode);
+            if (entityInfo != null) {
+                this.entityInfoGroup.addChild(entityInfo);
+            }
         };
         WarPanel.prototype.initQueen = function () {
-            var queen = PoolManager.Ins().pop(war.QueenEntity);
+            var queen = war.WarUtils.CreateEntity(war.Entity.Queen, 19020, true);
             queen.x = war.WarUtils.ToLocalX(12);
             queen.y = war.WarUtils.ToLocalY(4);
-            queen.action = war.ACTION.STAND;
-            queen.dir = war.DIRECTION.RIGHT;
-            queen.mc.initData("hero_19020", "hero_19020", "stand");
-            queen.mc.scaleX = -1;
-            queen.angle = 0;
-            queen.camp = war.CAMP.WE;
-            war.DrawUtils.DrawEntityCamp(queen);
-            queen.range = 40;
-            queen.health = 100;
             war.DrawUtils.DrawEntityRange(queen);
             this.entityGroup.addChild(queen);
-            war.WarDataMgr.Ins().addEntity(queen);
             // 血量条
-            var entityInfo = new war.EntityInfoView();
-            entityInfo.entityId = queen.uniqueCode;
-            entityInfo.x = queen.x;
-            entityInfo.y = queen.y;
-            entityInfo.initHealth(queen.health, queen.health);
-            this.entityInfoGroup.addChild(entityInfo);
-            war.WarDataMgr.Ins().infoMap.set(queen.uniqueCode, entityInfo);
+            var entityInfo = war.WarDataMgr.Ins().infoMap.get(queen.uniqueCode);
+            if (entityInfo != null) {
+                this.entityInfoGroup.addChild(entityInfo);
+            }
             // ---------------------------------------------------------------------------
-            queen = PoolManager.Ins().pop(war.QueenEntity);
+            queen = war.WarUtils.CreateEntity(war.Entity.Queen, 19020, true);
             queen.x = war.WarUtils.ToLocalX(12);
             queen.y = war.WarUtils.ToLocalY(18);
-            queen.action = war.ACTION.STAND;
-            queen.dir = war.DIRECTION.RIGHT;
-            queen.mc.initData("hero_19020", "hero_19020", "stand");
-            queen.mc.scaleX = -1;
-            queen.angle = 0;
-            queen.camp = war.CAMP.WE;
-            war.DrawUtils.DrawEntityCamp(queen);
-            queen.range = 40;
-            queen.health = 100;
             war.DrawUtils.DrawEntityRange(queen);
             this.entityGroup.addChild(queen);
-            war.WarDataMgr.Ins().addEntity(queen);
             // 血量条
-            entityInfo = new war.EntityInfoView();
-            entityInfo.entityId = queen.uniqueCode;
-            entityInfo.x = queen.x;
-            entityInfo.y = queen.y;
-            entityInfo.initHealth(queen.health, queen.health);
-            this.entityInfoGroup.addChild(entityInfo);
-            war.WarDataMgr.Ins().infoMap.set(queen.uniqueCode, entityInfo);
+            entityInfo = war.WarDataMgr.Ins().infoMap.get(queen.uniqueCode);
+            if (entityInfo != null) {
+                this.entityInfoGroup.addChild(entityInfo);
+            }
             // --------------------------------------------------------------------------- ENEMY
-            queen = PoolManager.Ins().pop(war.QueenEntity);
+            queen = war.WarUtils.CreateEntity(war.Entity.Queen, 19021, false);
             queen.x = war.WarUtils.ToLocalX(41);
             queen.y = war.WarUtils.ToLocalY(4);
-            queen.action = war.ACTION.STAND;
-            queen.dir = war.DIRECTION.LEFT;
-            queen.mc.initData("hero_19021", "hero_19021", "stand");
-            queen.angle = 180;
-            queen.camp = war.CAMP.ENEMY;
-            war.DrawUtils.DrawEntityCamp(queen);
-            queen.range = 40;
-            queen.health = 100;
             war.DrawUtils.DrawEntityRange(queen);
             this.entityGroup.addChild(queen);
-            war.WarDataMgr.Ins().addEntity(queen);
             // 血量条
-            entityInfo = new war.EntityInfoView();
-            entityInfo.entityId = queen.uniqueCode;
-            entityInfo.x = queen.x;
-            entityInfo.y = queen.y;
-            entityInfo.initHealth(queen.health, queen.health);
-            this.entityInfoGroup.addChild(entityInfo);
-            war.WarDataMgr.Ins().infoMap.set(queen.uniqueCode, entityInfo);
+            entityInfo = war.WarDataMgr.Ins().infoMap.get(queen.uniqueCode);
+            if (entityInfo != null) {
+                this.entityInfoGroup.addChild(entityInfo);
+            }
             // ---------------------------------------------------------------------------
-            queen = PoolManager.Ins().pop(war.QueenEntity);
+            queen = war.WarUtils.CreateEntity(war.Entity.Queen, 19021, false);
             queen.x = war.WarUtils.ToLocalX(41);
             queen.y = war.WarUtils.ToLocalY(18);
-            queen.action = war.ACTION.STAND;
-            queen.dir = war.DIRECTION.LEFT;
-            queen.mc.initData("hero_19021", "hero_19021", "stand");
-            queen.angle = 180;
-            queen.camp = war.CAMP.ENEMY;
-            war.DrawUtils.DrawEntityCamp(queen);
-            queen.range = 40;
-            queen.health = 100;
             war.DrawUtils.DrawEntityRange(queen);
             this.entityGroup.addChild(queen);
-            war.WarDataMgr.Ins().addEntity(queen);
             // 血量条
-            entityInfo = new war.EntityInfoView();
-            entityInfo.entityId = queen.uniqueCode;
-            entityInfo.x = queen.x;
-            entityInfo.y = queen.y;
-            entityInfo.initHealth(queen.health, queen.health);
-            this.entityInfoGroup.addChild(entityInfo);
-            war.WarDataMgr.Ins().infoMap.set(queen.uniqueCode, entityInfo);
+            entityInfo = war.WarDataMgr.Ins().infoMap.get(queen.uniqueCode);
+            if (entityInfo != null) {
+                this.entityInfoGroup.addChild(entityInfo);
+            }
         };
         return WarPanel;
     }(ViewBase));

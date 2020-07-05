@@ -91,5 +91,96 @@ module war
 			let realY = WarUtils.ToLocalY(y);
 			return [realX, realY];
 		}
+
+		// ---------------------------------------------------------------------- 创建实体
+		public static CreateEntity(entityType:number, kaId:number, isLeftPos:boolean)
+		{
+			if(entityType == Entity.Hero)
+				return this.CreateHero(kaId);
+			else if(entityType == Entity.King)
+				return this.CreateKing(kaId, isLeftPos);
+			else if(entityType == Entity.Queen)
+				return this.CreateQueen(kaId, isLeftPos);
+		}
+
+		private static CreateHero(kaId:number)
+		{
+			let hero = WarPool.Ins().pop(HeroEntity) as HeroEntity;
+			hero.mc.initData(`hero_${kaId}`, `hero_${kaId}`);
+			hero.speedCom.setData(40, 0);
+			hero.actionCom.setAction(Action.None);
+			hero.dirCom.setDir(Direction.Right);
+			hero.campCom.setCamp(Camp.We);
+			hero.attackCom.setAttack(10, 100);
+			hero.healthCom.setHealth(1000);
+			WarDataMgr.Ins().addEntity(hero);
+
+			// 血量条
+			let entityInfo = new EntityInfoView();
+			entityInfo.entityId = hero.uniqueCode;
+			entityInfo.initHealth(hero.healthCom.hp, hero.healthCom.hp);
+			WarDataMgr.Ins().infoMap.set(hero.uniqueCode, entityInfo);
+			return hero;
+		}
+
+		private static CreateKing(kingId:number, isLeftPos:boolean)
+		{
+			let king:KingEntity = PoolManager.Ins().pop(KingEntity) as KingEntity;
+			king.mc.initData(`hero_${kingId}`, `hero_${kingId}`);
+			king.actionCom.setAction(Action.None);
+
+			if(isLeftPos == true)
+			{
+				king.dirCom.setDir(Direction.Right);
+				king.campCom.setCamp(Camp.We);
+			}
+			else
+			{
+				king.dirCom.setDir(Direction.Left);
+				king.campCom.setCamp(Camp.Enemy);
+			}
+			
+			king.attackCom.setAttack(10, 240);
+			DrawUtils.DrawEntityRange(king);
+			king.healthCom.setHealth(100);
+			WarDataMgr.Ins().addEntity(king);
+
+			// 血量条
+			let entityInfo = new EntityInfoView();
+			entityInfo.entityId = king.uniqueCode;
+			entityInfo.initHealth(king.healthCom.hp, king.healthCom.hp);
+			WarDataMgr.Ins().infoMap.set(king.uniqueCode, entityInfo);
+			return king;
+		}
+
+		private static CreateQueen(queenId:number, isLeftPos:boolean)
+		{
+			let queen:QueenEntity = PoolManager.Ins().pop(QueenEntity) as QueenEntity;
+			queen.mc.initData(`hero_${queenId}`, `hero_${queenId}`);
+			queen.actionCom.setAction(Action.None);
+
+			if(isLeftPos == true)
+			{
+				queen.dirCom.setDir(Direction.Right);
+				queen.campCom.setCamp(Camp.We);
+			}
+			else
+			{
+				queen.dirCom.setDir(Direction.Left);
+				queen.campCom.setCamp(Camp.Enemy);
+			}
+			
+			queen.attackCom.setAttack(10, 40);
+			DrawUtils.DrawEntityRange(queen);
+			queen.healthCom.setHealth(100);
+			WarDataMgr.Ins().addEntity(queen);
+
+			// 血量条
+			let entityInfo = new EntityInfoView();
+			entityInfo.entityId = queen.uniqueCode;
+			entityInfo.initHealth(queen.healthCom.hp, queen.healthCom.hp);
+			WarDataMgr.Ins().infoMap.set(queen.uniqueCode, entityInfo);
+			return queen;
+		}
 	}
 }

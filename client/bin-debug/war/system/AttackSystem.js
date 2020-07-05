@@ -19,24 +19,55 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         AttackSystem.prototype.init = function () {
-            this.systemId = war.SYSTEM.ATTACK;
+            this.systemId = war.System.Attack;
         };
         AttackSystem.prototype.destroy = function () {
         };
         AttackSystem.prototype.update = function (entity, deltaTime) {
             if (entity == null)
                 return;
+            if (entity.attackCom.range == null)
+                return;
+            // 普攻且只会攻击一个人的情况
+            this.calcCommonAttack(entity);
+        };
+        // 目标是不会移动的实体
+        AttackSystem.prototype.calcCommonAttack = function (entity) {
+            if (entity.attackCom.atkTarArray.length <= 0) {
+                var entityArray = DataUtils.CopyArray(war.WarDataMgr.Ins().entityMap.values());
+                var distance = 0;
+                for (var _i = 0, entityArray_1 = entityArray; _i < entityArray_1.length; _i++) {
+                    var tarEntity_1 = entityArray_1[_i];
+                    if (tarEntity_1 == null)
+                        continue;
+                    if (entity.uniqueCode == tarEntity_1.uniqueCode)
+                        continue;
+                    // 同阵营
+                    var camp = entity.campCom.camp;
+                    var tarCamp = tarEntity_1.campCom.camp;
+                    if (camp == null || tarCamp == null || camp == tarCamp)
+                        continue;
+                    // 射程范围外
+                    var range = entity.attackCom.range;
+                    distance = MathUtils.CalcDistance(entity.x, entity.y, tarEntity_1.x, tarEntity_1.y, true);
+                    if (distance > range)
+                        continue;
+                    // 此处只对第一个人进行攻击
+                    entity.actionCom.setAction(war.Action.Attack);
+                    entity.speedCom.setSpeed(0);
+                    entity.attackCom.setTarArray([tarEntity_1]);
+                    break;
+                }
+            }
             // 攻击
-            if (entity.action == war.ACTION.ATTACK && entity.attackLoopOK == true) {
-                var tarEntity = entity.attackTargets[0]; // 只打一个人
-                if (tarEntity == null)
-                    return;
+            var tarEntity = entity.attackCom.atkTarArray[0]; // 只打一个人
+            if (entity.actionCom.action == war.Action.Attack && entity.attackLoopOK == true && tarEntity != null) {
                 var entityInfo = war.WarDataMgr.Ins().infoMap.get(tarEntity.uniqueCode);
                 if (entityInfo == null)
                     return;
-                tarEntity.health -= entity.attack;
-                entityInfo.updateHealth(tarEntity.health);
-                if (tarEntity.health <= 0) {
+                tarEntity.healthCom.hp -= entity.attackCom.attack;
+                entityInfo.updateHealth(tarEntity.healthCom.hp); // 这个用属性发射啊！
+                if (tarEntity.healthCom.hp <= 0) {
                     var infoView = war.WarDataMgr.Ins().infoMap.get(tarEntity.uniqueCode);
                     if (infoView != null && infoView.parent != null && infoView.parent.getChildIndex(infoView) >= 0)
                         infoView.parent.removeChild(infoView);
@@ -44,11 +75,11 @@ var war;
                         war.WarDataMgr.Ins().removeEntity(tarEntity.uniqueCode);
                         tarEntity.parent.removeChild(tarEntity);
                     }
-                    entity.action = war.ACTION.RUN;
-                    entity.speed = 20;
+                    entity.actionCom.setAction(war.Action.None);
+                    entity.attackCom.setTarArray([]);
                 }
+                entity.attackLoopOK = false;
             }
-            entity.attackLoopOK = false;
         };
         return AttackSystem;
     }(war.SystemBase));

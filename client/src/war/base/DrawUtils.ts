@@ -78,32 +78,32 @@ module war
 			if(DrawUtils.isTest == false)
 				return;
 
-			if(entity.camp == null)
+			if(entity.campCom.camp == null)
 				return;
 
 			let shape = new egret.Shape();
-			if(entity.camp == CAMP.WE)
+			if(entity.campCom.camp == Camp.We)
 				shape.graphics.beginFill(0x00ff00, 1);
-			else if(entity.camp == CAMP.ENEMY)
+			else if(entity.campCom.camp == Camp.Enemy)
 				shape.graphics.beginFill(0xff0000, 1);
 			shape.graphics.drawCircle(0, 0, 5);
 			shape.graphics.endFill();
 			entity.addChild(shape);
 		}
 
-		// ---------------------------------------------------------------------- 绘制实体射程
+		// ---------------------------------------------------------------------- 绘制实体普攻射程
 		public static DrawEntityRange(entity:EntityBase)
 		{
 			if(DrawUtils.isTest == false)
 				return;
 
-			if(entity.range == null)
+			if(entity.attackCom.range == null)
 				return;
 
 			let shape = new egret.Shape();
 			shape.graphics.beginFill(0xffff00, 0.3);
 			shape.graphics.lineStyle(1, 0x000000);
-			shape.graphics.drawCircle(0, 0, entity.range);
+			shape.graphics.drawCircle(0, 0, entity.attackCom.range);
 			shape.graphics.endFill();
 			entity.addChildAt(shape, 0);
 		}
@@ -151,7 +151,7 @@ module war
 			if(this.isTest == false)
 				return;
 			
-			let pCom:PathCom = entity.getCom(COMPONENT.PATH) as PathCom;
+			let pCom:PathCom = entity.getCom(Component.Path) as PathCom;
 			if(pCom == null)
 				return;
 

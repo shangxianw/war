@@ -7,7 +7,7 @@ module war
 	{
 		protected init()
 		{
-			this.systemId = SYSTEM.RENDER;
+			this.systemId = System.Render;
 		}
 
 		protected destroy()
@@ -20,22 +20,22 @@ module war
 			if(entity == null)
 				return;
 
-			if(entity.entityType == ENTITY.QUEEN)
+			if(entity.entityType == Entity.Queen)
 			{
 				// 暂时不处理，是个bug，会导致不能移动
 				// this.showRenderByQueen(entity, entity.action);
 			}
 			else
 			{
-				if(entity.action == ACTION.STAND)
+				if(entity.actionCom.action == Action.Stand)
 				{
 					this.showRender(entity, "stand");
 				}
-				else if(entity.action == ACTION.RUN)
+				else if(entity.actionCom.action == Action.Run)
 				{
 					this.showRender(entity, "run");
 				}
-				else if(entity.action == ACTION.ATTACK)
+				else if(entity.actionCom.action == Action.Attack)
 				{
 					this.showRender(entity, "attack");
 				}
@@ -44,43 +44,43 @@ module war
 
 		private showRender(entity:EntityBase, action:string)
 		{
-			let dir = entity.dir;
-			if(dir == DIRECTION.RIGHT) // 右
+			let dir = entity.dirCom.direction;
+			if(dir == Direction.Right) // 右
 			{
 				entity.mc.scaleX = 1;
 				entity.mc.play(`${action}2`, -1);
 			}
-			else if(dir == DIRECTION.RIGHT_DOWN) // 右下
+			else if(dir == Direction.RightDown) // 右下
 			{
 				entity.mc.scaleX = 1;
 				entity.mc.play(`${action}3`, -1);
 			}
-			else if(dir == DIRECTION.DOWN)
+			else if(dir == Direction.Down)
 			{
 				entity.mc.scaleX = 1;
 				entity.mc.play(`${action}4`, -1);
 			}
-			else if(dir == DIRECTION.LEFT_DOWN)
+			else if(dir == Direction.LeftDown)
 			{
 				entity.mc.scaleX = -1;
 				entity.mc.play(`${action}3`, -1);
 			}
-			else if(dir == DIRECTION.LEFT)
+			else if(dir == Direction.Left)
 			{
 				entity.mc.scaleX = -1;
 				entity.mc.play(`${action}2`, -1);
 			}
-			else if(dir == DIRECTION.LEFT_UP)
+			else if(dir == Direction.LeftUp)
 			{
 				entity.mc.scaleX = -1;
 				entity.mc.play(`${action}1`, -1);
 			}
-			else if(dir == DIRECTION.UP)
+			else if(dir == Direction.Up)
 			{
 				entity.mc.scaleX = -1;
 				entity.mc.play(`${action}0`, -1);
 			}
-			else if(dir == DIRECTION.RIGHT_UP)
+			else if(dir == Direction.RightUp)
 			{
 				entity.mc.scaleX = 1;
 				entity.mc.play(`${action}1`, -1);

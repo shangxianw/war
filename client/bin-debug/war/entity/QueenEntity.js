@@ -16,7 +16,7 @@ var war;
             return _super.call(this) || this;
         }
         QueenEntity.prototype.init = function () {
-            this.entityType = war.ENTITY.QUEEN;
+            this.entityType = war.Entity.Queen;
             this.anchorOffsetX = this.width >> 1;
             this.anchorOffsetY = this.height;
             war.DrawUtils.DrawEntityId(this);

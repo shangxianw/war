@@ -1,62 +1,66 @@
 module war
 {
-	export enum COMPONENT
+	export enum Component
 	{
-		SPEED = 1,
-		ACTION = 2,
-		PATH = 3,
+		Demo = 0,
+		Speed = 1,
+		Action = 2,
+		Direction = 3,
+		Path = 4,
+		Camp = 5,
+		Attack = 6,
+		Health = 7,
+
 		GRIGD = 4,
-		ATTACK = 5,
-		CAMP = 6,
 		INPUT = 7,
 		HP = 8,
-		RANGE = 9,
 	}
 
-	export enum SYSTEM
+	export enum System
 	{
-		MOVE = 1,
-		ACTION = 2,
-		COLLISION = 3,
-		PATH = 4,
-		ATTACK = 5,
-		RENDER = 6,
-		RANGE = 7
+		Move = 1,
+		Action = 2,
+		Speed = 3,
+		Path = 4,
+		Attack = 5,
+		Render = 6,
+		NextAction = 7
 	}
 
-	export enum CAMP
+	export enum Camp
 	{
-		NONE = 0,
-		WE = 1,
-		ENEMY = 2
+		None = 0,
+		We = 1,
+		Enemy = 2
 	}
 
-	export enum ACTION
+	export enum Action
 	{
-		STAND = 1,
-		RUN = 2,
-		ATTACK = 3
+		None = 0,
+		Stand = 1,
+		Run = 2,
+		Attack = 3,
 	}
 
-	export enum DIRECTION
+	export enum Direction
 	{
-		NONE = 0,
-		UP = 1,
-		RIGHT_UP = 2,
-		RIGHT = 3,
-		RIGHT_DOWN = 4,
-		DOWN = 5,
-		LEFT_DOWN = 6,
-		LEFT = 7,
-		LEFT_UP = 8
+		None = 0,
+		Right = 3,
+		Up = 1,
+		RightUp = 2,
+		RightDown = 4,
+		Down = 5,
+		LeftDown = 6,
+		Left = 7,
+		LeftUp = 8
 	}
 
-	export enum ENTITY
+	export enum Entity
 	{
-		NONE = 0,
-		KING = 1,
-		QUEEN = 2,
-		HERO = 3
+		None = 0,
+		Hero = 3,
+		King = 1,
+		Queen = 2,
 	}
 
 	export class ANGLE

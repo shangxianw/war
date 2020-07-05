@@ -16,7 +16,7 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         PathCom.prototype.init = function () {
-            this.componentId = war.COMPONENT.PATH;
+            this.comId = war.Component.Path;
             this.path = [];
             this.currStep = 0;
         };

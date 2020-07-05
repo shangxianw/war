@@ -16,7 +16,7 @@ var war;
             return _super.call(this) || this;
         }
         KingEntity.prototype.init = function () {
-            this.entityType = war.ENTITY.KING;
+            this.entityType = war.Entity.King;
             this.anchorOffsetX = this.width >> 1;
             this.anchorOffsetY = this.height;
             war.DrawUtils.DrawEntityId(this);

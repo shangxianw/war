@@ -3,59 +3,62 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 };
 var war;
 (function (war) {
-    var COMPONENT;
-    (function (COMPONENT) {
-        COMPONENT[COMPONENT["SPEED"] = 1] = "SPEED";
-        COMPONENT[COMPONENT["ACTION"] = 2] = "ACTION";
-        COMPONENT[COMPONENT["PATH"] = 3] = "PATH";
-        COMPONENT[COMPONENT["GRIGD"] = 4] = "GRIGD";
-        COMPONENT[COMPONENT["ATTACK"] = 5] = "ATTACK";
-        COMPONENT[COMPONENT["CAMP"] = 6] = "CAMP";
-        COMPONENT[COMPONENT["INPUT"] = 7] = "INPUT";
-        COMPONENT[COMPONENT["HP"] = 8] = "HP";
-        COMPONENT[COMPONENT["RANGE"] = 9] = "RANGE";
-    })(COMPONENT = war.COMPONENT || (war.COMPONENT = {}));
-    var SYSTEM;
-    (function (SYSTEM) {
-        SYSTEM[SYSTEM["MOVE"] = 1] = "MOVE";
-        SYSTEM[SYSTEM["ACTION"] = 2] = "ACTION";
-        SYSTEM[SYSTEM["COLLISION"] = 3] = "COLLISION";
-        SYSTEM[SYSTEM["PATH"] = 4] = "PATH";
-        SYSTEM[SYSTEM["ATTACK"] = 5] = "ATTACK";
-        SYSTEM[SYSTEM["RENDER"] = 6] = "RENDER";
-        SYSTEM[SYSTEM["RANGE"] = 7] = "RANGE";
-    })(SYSTEM = war.SYSTEM || (war.SYSTEM = {}));
-    var CAMP;
-    (function (CAMP) {
-        CAMP[CAMP["NONE"] = 0] = "NONE";
-        CAMP[CAMP["WE"] = 1] = "WE";
-        CAMP[CAMP["ENEMY"] = 2] = "ENEMY";
-    })(CAMP = war.CAMP || (war.CAMP = {}));
-    var ACTION;
-    (function (ACTION) {
-        ACTION[ACTION["STAND"] = 1] = "STAND";
-        ACTION[ACTION["RUN"] = 2] = "RUN";
-        ACTION[ACTION["ATTACK"] = 3] = "ATTACK";
-    })(ACTION = war.ACTION || (war.ACTION = {}));
-    var DIRECTION;
-    (function (DIRECTION) {
-        DIRECTION[DIRECTION["NONE"] = 0] = "NONE";
-        DIRECTION[DIRECTION["UP"] = 1] = "UP";
-        DIRECTION[DIRECTION["RIGHT_UP"] = 2] = "RIGHT_UP";
-        DIRECTION[DIRECTION["RIGHT"] = 3] = "RIGHT";
-        DIRECTION[DIRECTION["RIGHT_DOWN"] = 4] = "RIGHT_DOWN";
-        DIRECTION[DIRECTION["DOWN"] = 5] = "DOWN";
-        DIRECTION[DIRECTION["LEFT_DOWN"] = 6] = "LEFT_DOWN";
-        DIRECTION[DIRECTION["LEFT"] = 7] = "LEFT";
-        DIRECTION[DIRECTION["LEFT_UP"] = 8] = "LEFT_UP";
-    })(DIRECTION = war.DIRECTION || (war.DIRECTION = {}));
-    var ENTITY;
-    (function (ENTITY) {
-        ENTITY[ENTITY["NONE"] = 0] = "NONE";
-        ENTITY[ENTITY["KING"] = 1] = "KING";
-        ENTITY[ENTITY["QUEEN"] = 2] = "QUEEN";
-        ENTITY[ENTITY["HERO"] = 3] = "HERO";
-    })(ENTITY = war.ENTITY || (war.ENTITY = {}));
+    var Component;
+    (function (Component) {
+        Component[Component["Demo"] = 0] = "Demo";
+        Component[Component["Speed"] = 1] = "Speed";
+        Component[Component["Action"] = 2] = "Action";
+        Component[Component["Direction"] = 3] = "Direction";
+        Component[Component["Path"] = 4] = "Path";
+        Component[Component["Camp"] = 5] = "Camp";
+        Component[Component["Attack"] = 6] = "Attack";
+        Component[Component["Health"] = 7] = "Health";
+        Component[Component["GRIGD"] = 4] = "GRIGD";
+        Component[Component["INPUT"] = 7] = "INPUT";
+        Component[Component["HP"] = 8] = "HP";
+    })(Component = war.Component || (war.Component = {}));
+    var System;
+    (function (System) {
+        System[System["Move"] = 1] = "Move";
+        System[System["Action"] = 2] = "Action";
+        System[System["Speed"] = 3] = "Speed";
+        System[System["Path"] = 4] = "Path";
+        System[System["Attack"] = 5] = "Attack";
+        System[System["Render"] = 6] = "Render";
+        System[System["NextAction"] = 7] = "NextAction";
+    })(System = war.System || (war.System = {}));
+    var Camp;
+    (function (Camp) {
+        Camp[Camp["None"] = 0] = "None";
+        Camp[Camp["We"] = 1] = "We";
+        Camp[Camp["Enemy"] = 2] = "Enemy";
+    })(Camp = war.Camp || (war.Camp = {}));
+    var Action;
+    (function (Action) {
+        Action[Action["None"] = 0] = "None";
+        Action[Action["Stand"] = 1] = "Stand";
+        Action[Action["Run"] = 2] = "Run";
+        Action[Action["Attack"] = 3] = "Attack";
+    })(Action = war.Action || (war.Action = {}));
+    var Direction;
+    (function (Direction) {
+        Direction[Direction["None"] = 0] = "None";
+        Direction[Direction["Right"] = 3] = "Right";
+        Direction[Direction["Up"] = 1] = "Up";
+        Direction[Direction["RightUp"] = 2] = "RightUp";
+        Direction[Direction["RightDown"] = 4] = "RightDown";
+        Direction[Direction["Down"] = 5] = "Down";
+        Direction[Direction["LeftDown"] = 6] = "LeftDown";
+        Direction[Direction["Left"] = 7] = "Left";
+        Direction[Direction["LeftUp"] = 8] = "LeftUp";
+    })(Direction = war.Direction || (war.Direction = {}));
+    var Entity;
+    (function (Entity) {
+        Entity[Entity["None"] = 0] = "None";
+        Entity[Entity["Hero"] = 3] = "Hero";
+        Entity[Entity["King"] = 1] = "King";
+        Entity[Entity["Queen"] = 2] = "Queen";
+    })(Entity = war.Entity || (war.Entity = {}));
     var ANGLE = (function () {
         function ANGLE() {
         }

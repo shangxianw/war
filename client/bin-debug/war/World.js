@@ -18,14 +18,14 @@ var war;
         World.prototype.init = function () {
             this.lastTime = 0;
             this.sysArray = [];
+            this.nextActionSystem = new war.NextActionSystem();
+            this.sysArray.push(this.nextActionSystem);
             this.speedSystem = new war.SpeedSystem();
             this.sysArray.push(this.speedSystem);
             this.moveSystem = new war.MoveSystem();
             this.sysArray.push(this.moveSystem);
             this.pathSystem = new war.PathSystem();
             this.sysArray.push(this.pathSystem);
-            this.rangeSystem = new war.RangeSystem();
-            this.sysArray.push(this.rangeSystem);
             this.renderSystem = new war.RenderSystem();
             this.sysArray.push(this.renderSystem);
             this.attackSystem = new war.AttackSystem();
@@ -45,19 +45,12 @@ var war;
                 entity = entityArray[i];
                 if (entity == null)
                     continue;
+                this.nextActionSystem.update(entity, deltaTime);
                 this.speedSystem.update(entity, deltaTime);
                 this.moveSystem.update(entity, deltaTime);
                 this.pathSystem.update(entity, deltaTime);
-                this.rangeSystem.update(entity, deltaTime);
                 this.renderSystem.update(entity, deltaTime);
                 this.attackSystem.update(entity, deltaTime);
-            }
-        };
-        World.prototype.updateSystem = function (deltaTime) {
-            var warData = war.WarDataMgr.Ins();
-            for (var _i = 0, _a = this.sysArray; _i < _a.length; _i++) {
-                var system = _a[_i];
-                system.update(deltaTime);
             }
         };
         return World;

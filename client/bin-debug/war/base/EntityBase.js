@@ -20,53 +20,68 @@ var war;
             return _this;
         }
         EntityBase.prototype.initAll = function () {
-            this.comMap = new Hash();
             this.touchEnabled = false;
             this.touchChildren = false;
-            this.mc = new MovieClip();
-            this.addChild(this.mc);
-            this.entityType = war.ENTITY.NONE;
-            this.attackTargets = [];
-            this.camp = war.CAMP.NONE;
-            this.action = war.ACTION.STAND;
-            this.dir = war.DIRECTION.DOWN;
-            this.path = [];
-            this.speed = 0;
-            this.angle = 90;
-            this.range = 0;
-            this.health = 0;
-            this.attack = 2;
-            this.attackLoopOK = false;
-            this.mc.mc.addEventListener(egret.Event.LOOP_COMPLETE, this.OnLoopComplete, this);
+            this.comMap = new Hash();
+            this.speedCom = WarPool.Ins().pop(war.SpeedCom);
+            this.actionCom = WarPool.Ins().pop(war.ActionCom);
+            this.dirCom = WarPool.Ins().pop(war.DirCom);
+            this.attackCom = WarPool.Ins().pop(war.AttackCom);
+            this.campCom = WarPool.Ins().pop(war.CampCom);
+            this.healthCom = WarPool.Ins().pop(war.HealthCom);
             _super.prototype.initAll.call(this);
         };
         EntityBase.prototype.destroyAll = function () {
-            this.attackTargets.length = 0;
-            this.mc.mc.removeEventListener(egret.Event.LOOP_COMPLETE, this.OnLoopComplete, this);
+            this.speedCom.destroyAll();
+            WarPool.Ins().push(this.speedCom);
+            this.speedCom = null;
+            this.actionCom.destroyAll();
+            WarPool.Ins().push(this.actionCom);
+            this.actionCom = null;
+            this.dirCom.destroyAll();
+            WarPool.Ins().push(this.dirCom);
+            this.dirCom = null;
+            this.attackCom.destroyAll();
+            WarPool.Ins().push(this.attackCom);
+            this.attackCom = null;
+            this.campCom.destroyAll();
+            WarPool.Ins().push(this.campCom);
+            this.campCom = null;
+            this.healthCom.destroyAll();
+            WarPool.Ins().push(this.healthCom);
+            this.healthCom = null;
             DataUtils.DestroyDataBaseMap(this.comMap);
-            this.mc.destroy();
+            this._mc.mc.removeEventListener(egret.Event.LOOP_COMPLETE, this.OnLoopComplete, this);
+            this._mc.destroy();
             _super.prototype.destroyAll.call(this);
         };
-        EntityBase.prototype.getCom = function (id) {
-            return this.comMap.get(id);
-        };
-        EntityBase.prototype.removeCom = function (id) {
-            var com = this.comMap.remove(id);
-            if (com == null)
-                return;
-            com.destroyAll();
-            PoolManager.Ins().push(com);
-        };
-        EntityBase.prototype.setCom = function (com) {
-            if (this.comMap.has(com.componentId) == true)
-                return;
-            this.comMap.set(com.componentId, com);
-        };
-        EntityBase.prototype.hasCom = function (id) {
-            return this.comMap.has(id);
-        };
+        Object.defineProperty(EntityBase.prototype, "mc", {
+            get: function () {
+                if (this._mc == null) {
+                    this._mc = new MovieClip();
+                    this.addChildAt(this._mc, 0);
+                    this._mc.mc.addEventListener(egret.Event.LOOP_COMPLETE, this.OnLoopComplete, this);
+                }
+                return this._mc;
+            },
+            enumerable: true,
+            configurable: true
+        });
         EntityBase.prototype.OnLoopComplete = function (e) {
             this.attackLoopOK = true;
+        };
+        EntityBase.prototype.getCom = function (comType) {
+            return this.comMap.get(comType);
+        };
+        EntityBase.prototype.setCom = function (com) {
+            if (this.comMap.has(com.comId) == true)
+                return false;
+            this.comMap.set(com.comId, com);
+        };
+        EntityBase.prototype.removeCom = function (comId) {
+            var pathC = this.comMap.remove(comId);
+            pathC.destroyAll();
+            WarPool.Ins().push(pathC);
         };
         return EntityBase;
     }(UIBase));

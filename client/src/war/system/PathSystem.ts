@@ -9,7 +9,7 @@ module war
 	{
 		protected init()
 		{
-			this.systemId = SYSTEM.PATH;
+			this.systemId = System.Path;
 		}
 
 		protected destroy()
@@ -23,7 +23,7 @@ module war
 			if(entity == null)
 				return;
 
-			let pCom = entity.getCom(COMPONENT.PATH) as PathCom;
+			let pCom = entity.getCom(Component.Path) as PathCom;
 			if(pCom == null)
 				return;
 			
@@ -32,7 +32,11 @@ module war
 			{
 				let currEndNode = pCom.getCurrEndNode();
 				if(currEndNode == null)
+				{
+					entity.removeCom(Component.Path);
+					entity.actionCom.setAction(Action.None);
 					return;
+				}
 				let startX = WarUtils.ToLocalX(currStartNode.x);
 				let startY = WarUtils.ToLocalY(currStartNode.y);
 				let endX = WarUtils.ToLocalX(currEndNode.x);

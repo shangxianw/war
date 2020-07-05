@@ -21,7 +21,7 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         PathSystem.prototype.init = function () {
-            this.systemId = war.SYSTEM.PATH;
+            this.systemId = war.System.Path;
         };
         PathSystem.prototype.destroy = function () {
         };
@@ -29,14 +29,17 @@ var war;
             var warData = war.WarDataMgr.Ins();
             if (entity == null)
                 return;
-            var pCom = entity.getCom(war.COMPONENT.PATH);
+            var pCom = entity.getCom(war.Component.Path);
             if (pCom == null)
                 return;
             var currStartNode = pCom.getCurrStartNode();
             if (currStartNode != null) {
                 var currEndNode = pCom.getCurrEndNode();
-                if (currEndNode == null)
+                if (currEndNode == null) {
+                    entity.removeCom(war.Component.Path);
+                    entity.actionCom.setAction(war.Action.None);
                     return;
+                }
                 var startX = war.WarUtils.ToLocalX(currStartNode.x);
                 var startY = war.WarUtils.ToLocalY(currStartNode.y);
                 var endX = war.WarUtils.ToLocalX(currEndNode.x);

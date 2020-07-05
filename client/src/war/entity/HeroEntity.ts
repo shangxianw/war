@@ -9,7 +9,7 @@ module war
 
 		protected init()
 		{
-			this.entityType = ENTITY.HERO;
+			this.entityType = Entity.Hero;
 			this.anchorOffsetX = this.width >> 1;
 			this.anchorOffsetY = this.height;
 			DrawUtils.DrawEntityId(this);
@@ -17,7 +17,7 @@ module war
 
 		protected destroy()
 		{
-
+			
 		}
 	}
 }

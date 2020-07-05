@@ -1,6 +1,10 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
+/**
+ * 数学计算工具
+ * 关于角度的东西：0角在x轴正方向上，顺时针方向递增。
+ */
 var MathUtils = (function () {
     function MathUtils() {
     }
