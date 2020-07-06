@@ -41,7 +41,8 @@ var war;
     var CostBar = (function (_super) {
         __extends(CostBar, _super);
         function CostBar() {
-            return _super.call(this, "CostBarSkin") || this;
+            return _super.call(this) || this;
+            // "CostBarSkin"
         }
         CostBar.prototype.init = function () {
         };

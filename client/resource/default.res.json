@@ -5,8 +5,8 @@
 			"name": "common_preload"
 		},
 		{
-			"keys": "bg_login_nr_png,bg_login_d_png,bg_com_jpg",
-			"name": "loading"
+			"keys": "bg_login_nr_png,bg_login_d_png,bg_com_jpg,playericon_08_png,playericon_07_png,playericon_06_png,playericon_05_png,playericon_04_png,playericon_03_png,playericon_02_png,playericon_01_png,bg_phb_heroicon_png,bg_phb_heroicon_up03_png,bg_phb_heroicon_up02_png,bg_phb_heroicon_up01_png",
+			"name": "common_loading"
 		}
 	],
 	"resources": [

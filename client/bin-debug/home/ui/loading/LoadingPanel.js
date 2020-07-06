@@ -13,11 +13,12 @@ var home;
     var LoadingPanelData = (function (_super) {
         __extends(LoadingPanelData, _super);
         function LoadingPanelData() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.resGroup = ["loading"];
+            _this.layer = LayerManager.Ins().Panel;
+            return _this;
         }
         LoadingPanelData.prototype.init = function () {
-            this.resGroup = ["loading"];
-            this.layer = LayerManager.Ins().Panel;
         };
         LoadingPanelData.prototype.destroy = function () {
         };
@@ -27,13 +28,13 @@ var home;
             this.cfgGroupArray = ["hero_json", "upgrade_json"];
         };
         return LoadingPanelData;
-    }(ViewData));
+    }(DataBase));
     home.LoadingPanelData = LoadingPanelData;
-    __reflect(LoadingPanelData.prototype, "home.LoadingPanelData");
+    __reflect(LoadingPanelData.prototype, "home.LoadingPanelData", ["IViewData"]);
     var LoadingPanel = (function (_super) {
         __extends(LoadingPanel, _super);
         function LoadingPanel() {
-            return _super.call(this, "LoadingPanelSkin", LoadingPanelData) || this;
+            return _super.call(this, "LoadingPanelSkin") || this;
         }
         LoadingPanel.prototype.init = function () {
             this.info.packData();

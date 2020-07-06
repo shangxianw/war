@@ -53,9 +53,9 @@ var war;
         };
         // ---------------------------------------------------------------------- 实体
         WarDataMgr.prototype.addEntity = function (entity) {
-            if (this.entityMap.has(entity.uniqueCode) == true)
+            if (this.entityMap.has(entity.iii) == true)
                 return false;
-            this.entityMap.set(entity.uniqueCode, entity);
+            this.entityMap.set(entity.iii, entity);
         };
         WarDataMgr.prototype.removeEntity = function (id) {
             if (this.entityMap.has(id) == false)

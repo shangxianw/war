@@ -1,14 +1,16 @@
 module home
 {
-	export class LoadingPanelData extends ViewData
+	export class LoadingPanelData extends DataBase implements IViewData
 	{
 		public resGroupArray:string[];	// 加载资源组
 		public cfgGroupArray:string[];  // 加载配置表资源
 		public currCount:number;
+		public resGroup = ["loading"];
+		public layer = LayerManager.Ins().Panel;
+		public resGroupId:number;
 		protected init()
 		{
-			this.resGroup = ["loading"];
-			this.layer = LayerManager.Ins().Panel;
+			
 		}
 
 		protected destroy()
@@ -33,7 +35,7 @@ module home
 		public info:LoadingPanelData;
 		public constructor()
 		{
-			super("LoadingPanelSkin", LoadingPanelData);
+			super("LoadingPanelSkin");
 		}
 
 		protected init()

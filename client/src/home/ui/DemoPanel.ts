@@ -1,11 +1,14 @@
 module home
 {
-	export class DemoPanelData extends ViewData
+	export class DemoPanelData extends DataBase implements IViewData
 	{
+		public resGroup = [];
+		public layer = LayerManager.Ins().Panel;
+		public resGroupId:number;
+
 		protected init()
 		{
-			this.resGroup = [];
-			this.layer = LayerManager.Ins().Panel;
+			
 		}
 
 		protected destroy()
@@ -24,7 +27,7 @@ module home
 		public info:DemoPanelData;
 		public constructor()
 		{
-			super("DemoPanelSkin", DemoPanelData);	
+			super("DemoPanelSkin");	
 		}
 
 		protected init()

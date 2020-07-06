@@ -53,12 +53,14 @@ module war
 					let currEndNode = pCom.getCurrEndNode();
 					if(currEndNode == null)
 						return;
+					if(entity.speedCom.isSamePos(currStartNode.x, currStartNode.y, currEndNode.x, currEndNode.y) == true) // 重复的坐标就没必要再算一次了
+						return;
 					let startX = WarUtils.ToLocalX(currStartNode.x);
 					let startY = WarUtils.ToLocalY(currStartNode.y);
 					let endX = WarUtils.ToLocalX(currEndNode.x);
 					let endY = WarUtils.ToLocalY(currEndNode.y);
 					let angle = MathUtils.CalcAngle(startX, startY, endX, endY);
-					entity.speedCom.angle = angle;
+					entity.speedCom.setAngle(angle, currStartNode.x, currStartNode.y, currEndNode.x, currEndNode.y);
 					this.setDir(entity, entity.speedCom.angle);
 				}
 			}

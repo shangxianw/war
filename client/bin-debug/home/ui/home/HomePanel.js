@@ -13,24 +13,25 @@ var home;
     var HomePanelData = (function (_super) {
         __extends(HomePanelData, _super);
         function HomePanelData() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.resGroup = [];
+            _this.layer = LayerManager.Ins().Panel;
+            return _this;
         }
         HomePanelData.prototype.init = function () {
-            this.resGroup = [];
-            this.layer = LayerManager.Ins().Panel;
         };
         HomePanelData.prototype.destroy = function () {
         };
         HomePanelData.prototype.packData = function () {
         };
         return HomePanelData;
-    }(ViewData));
+    }(DataBase));
     home.HomePanelData = HomePanelData;
-    __reflect(HomePanelData.prototype, "home.HomePanelData");
+    __reflect(HomePanelData.prototype, "home.HomePanelData", ["IViewData"]);
     var HomePanel = (function (_super) {
         __extends(HomePanel, _super);
         function HomePanel() {
-            return _super.call(this, "HomePanelSkin", HomePanelData) || this;
+            return _super.call(this, "HomePanelSkin") || this;
         }
         HomePanel.prototype.init = function () {
         };

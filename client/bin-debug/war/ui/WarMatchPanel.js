@@ -13,12 +13,12 @@ var war;
     var WarMatchPanelData = (function (_super) {
         __extends(WarMatchPanelData, _super);
         function WarMatchPanelData() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.resGroup = ["war_preload"];
+            _this.layer = LayerManager.Ins().Panel;
+            return _this;
         }
-        // 应该load资源
         WarMatchPanelData.prototype.init = function () {
-            this.resGroup = ["war_preload"];
-            this.layer = LayerManager.Ins().Panel;
         };
         WarMatchPanelData.prototype.destroy = function () {
             // WarDataMgr.Ins().destroyAll();
@@ -26,13 +26,13 @@ var war;
         WarMatchPanelData.prototype.packData = function () {
         };
         return WarMatchPanelData;
-    }(ViewData));
+    }(DataBase));
     war.WarMatchPanelData = WarMatchPanelData;
-    __reflect(WarMatchPanelData.prototype, "war.WarMatchPanelData");
+    __reflect(WarMatchPanelData.prototype, "war.WarMatchPanelData", ["IViewData"]);
     var WarMatchPanel = (function (_super) {
         __extends(WarMatchPanel, _super);
         function WarMatchPanel() {
-            return _super.call(this, "WarMatchPanelSkin", WarMatchPanelData) || this;
+            return _super.call(this, "WarMatchPanelSkin") || this;
         }
         WarMatchPanel.prototype.init = function () {
             this.info.packData();

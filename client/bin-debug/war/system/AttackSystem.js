@@ -29,10 +29,10 @@ var war;
             if (entity.attackCom.range == null)
                 return;
             // 普攻且只会攻击一个人的情况
-            this.calcCommonAttack(entity);
+            this.calcCommonAttack(entity, deltaTime);
         };
         // 目标是不会移动的实体
-        AttackSystem.prototype.calcCommonAttack = function (entity) {
+        AttackSystem.prototype.calcCommonAttack = function (entity, deltaTime) {
             if (entity.attackCom.atkTarArray.length <= 0) {
                 var entityArray = DataUtils.CopyArray(war.WarDataMgr.Ins().entityMap.values());
                 var distance = 0;
@@ -40,7 +40,7 @@ var war;
                     var tarEntity_1 = entityArray_1[_i];
                     if (tarEntity_1 == null)
                         continue;
-                    if (entity.uniqueCode == tarEntity_1.uniqueCode)
+                    if (entity.iii == tarEntity_1.iii)
                         continue;
                     // 同阵营
                     var camp = entity.campCom.camp;
@@ -62,17 +62,16 @@ var war;
             // 攻击
             var tarEntity = entity.attackCom.atkTarArray[0]; // 只打一个人
             if (entity.actionCom.action == war.Action.Attack && entity.attackLoopOK == true && tarEntity != null) {
-                var entityInfo = war.WarDataMgr.Ins().infoMap.get(tarEntity.uniqueCode);
+                var entityInfo = war.WarDataMgr.Ins().infoMap.get(tarEntity.iii);
                 if (entityInfo == null)
                     return;
-                tarEntity.healthCom.hp -= entity.attackCom.attack;
-                entityInfo.updateHealth(tarEntity.healthCom.hp); // 这个用属性发射啊！
-                if (tarEntity.healthCom.hp <= 0) {
-                    var infoView = war.WarDataMgr.Ins().infoMap.get(tarEntity.uniqueCode);
+                tarEntity.healthCom.setHealth(-entity.attackCom.attack * deltaTime);
+                if (tarEntity.healthCom.isDie() == true) {
+                    var infoView = war.WarDataMgr.Ins().infoMap.get(tarEntity.iii);
                     if (infoView != null && infoView.parent != null && infoView.parent.getChildIndex(infoView) >= 0)
                         infoView.parent.removeChild(infoView);
                     if (tarEntity != null && tarEntity.parent != null && tarEntity.parent.getChildIndex(tarEntity) >= 0) {
-                        war.WarDataMgr.Ins().removeEntity(tarEntity.uniqueCode);
+                        war.WarDataMgr.Ins().removeEntity(tarEntity.iii);
                         tarEntity.parent.removeChild(tarEntity);
                     }
                     entity.actionCom.setAction(war.Action.None);

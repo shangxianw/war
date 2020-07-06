@@ -8,32 +8,16 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var ViewData = (function (_super) {
-    __extends(ViewData, _super);
-    function ViewData() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    ViewData.prototype.init = function () {
-    };
-    ViewData.prototype.destroy = function () {
-    };
-    ViewData.prototype.initAll = function () {
-        _super.prototype.initAll.call(this);
-    };
-    ViewData.prototype.destroyAll = function () {
-        _super.prototype.destroyAll.call(this);
-    };
-    return ViewData;
-}(DataBase));
-__reflect(ViewData.prototype, "ViewData");
 var ViewBase = (function (_super) {
     __extends(ViewBase, _super);
-    function ViewBase(skinName, data) {
-        return _super.call(this, skinName, data) || this;
+    function ViewBase(skinName) {
+        return _super.call(this, skinName) || this;
     }
-    ViewBase.prototype.initAll = function (data) {
-        this.viewInfo = new data();
-        this["info"] = this.viewInfo;
+    ViewBase.prototype.initData = function (data) {
+        if (data === void 0) { data = null; }
+    };
+    ;
+    ViewBase.prototype.initAll = function () {
         _super.prototype.initAll.call(this);
     };
     ViewBase.prototype.destroyAll = function () {
@@ -59,7 +43,7 @@ var ViewBase = (function (_super) {
         }
     };
     ViewBase.prototype.calcGroupSource = function () {
-        for (var _i = 0, _a = this.viewInfo.resGroup; _i < _a.length; _i++) {
+        for (var _i = 0, _a = this["info"].resGroup; _i < _a.length; _i++) {
             var groupName = _a[_i];
             var resItemArray = RES.getGroupByName(groupName);
             for (var _b = 0, resItemArray_1 = resItemArray; _b < resItemArray_1.length; _b++) {

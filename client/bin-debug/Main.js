@@ -139,6 +139,9 @@ var Main = (function (_super) {
         });
     };
     Main.prototype.createGameScene = function () {
+        applyMixins(DataBase, [DataBaseMixin]);
+        applyMixins(UIBase, [DataBaseMixin, UIBaseMixin]);
+        applyMixins(WItemRenderBase, [DataBaseMixin, UIBaseMixin]);
         GameUtils.main = this;
         LayerManager.Ins();
         NetManager.Ins();
@@ -147,10 +150,6 @@ var Main = (function (_super) {
         // SocketManager.Ins()
         ViewManager.Ins().open(home.LoginPanel);
         // ViewManager.Ins().open(war.WarMatchPanel);
-        // let a = new home.HeadIcon();
-        // a.info.packData(2, 1);
-        // a.update();
-        // this.addChild(a);
     };
     return Main;
 }(eui.UILayer));
@@ -163,5 +162,12 @@ function deletee(cls) {
 }
 function removee(cls) {
     PoolManager.Ins().push(cls);
+}
+function applyMixins(derivedCtor, baseCtors) {
+    baseCtors.forEach(function (baseCtor) {
+        Object.getOwnPropertyNames(baseCtor.prototype).forEach(function (name) {
+            derivedCtor.prototype[name] = baseCtor.prototype[name];
+        });
+    });
 }
 //# sourceMappingURL=Main.js.map

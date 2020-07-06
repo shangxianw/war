@@ -107,7 +107,7 @@ var war;
             if (DrawUtils.isTest == false)
                 return;
             var idLb = new eui.Label();
-            idLb.text = "" + entity.uniqueCode;
+            idLb.text = "" + entity.iii;
             idLb.stroke = 2;
             idLb.strokeColor = 0x000;
             idLb.x = -20;
@@ -121,12 +121,12 @@ var war;
             if (pCom == null)
                 return;
             var pathShape;
-            if (this.pathMap.has(entity.uniqueCode) == false) {
+            if (this.pathMap.has(entity.iii) == false) {
                 pathShape = new egret.Shape();
-                this.pathMap.set(entity.uniqueCode, pathShape);
+                this.pathMap.set(entity.iii, pathShape);
                 entity.parent.parent.addChild(pathShape);
             }
-            pathShape = this.pathMap.get(entity.uniqueCode);
+            pathShape = this.pathMap.get(entity.iii);
             pathShape.graphics.clear();
             pathShape.graphics.lineStyle(1, 0xff0000);
             pathShape.graphics.moveTo(entity.x, entity.y);

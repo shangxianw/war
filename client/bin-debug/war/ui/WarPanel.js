@@ -14,6 +14,8 @@ var war;
         __extends(WarPanelData, _super);
         function WarPanelData() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.resGroup = [];
+            _this.layer = LayerManager.Ins().War;
             _this.lastTime = 0;
             _this.currEnergy = 0;
             _this.speed = 2;
@@ -29,8 +31,6 @@ var war;
             return _this;
         }
         WarPanelData.prototype.init = function () {
-            this.resGroup = [];
-            this.layer = LayerManager.Ins().War;
         };
         WarPanelData.prototype.destroy = function () {
             war.WarDataMgr.Ins().endWar();
@@ -56,13 +56,13 @@ var war;
             this.currEnergy -= cfg.cost;
         };
         return WarPanelData;
-    }(ViewData));
+    }(DataBase));
     war.WarPanelData = WarPanelData;
-    __reflect(WarPanelData.prototype, "war.WarPanelData");
+    __reflect(WarPanelData.prototype, "war.WarPanelData", ["IViewData"]);
     var WarPanel = (function (_super) {
         __extends(WarPanel, _super);
         function WarPanel() {
-            return _super.call(this, "WarPanelSkin", WarPanelData) || this;
+            return _super.call(this, "WarPanelSkin") || this;
         }
         WarPanel.prototype.init = function () {
         };
@@ -225,7 +225,7 @@ var war;
             this.info.currKa.info.refreshKa(preKaData.kaId);
             this.preKa.info.refreshKa(this.info.getMyNextKa());
             // 血量条
-            var entityInfo = war.WarDataMgr.Ins().infoMap.get(hero.uniqueCode);
+            var entityInfo = war.WarDataMgr.Ins().infoMap.get(hero.iii);
             if (entityInfo != null) {
                 entityInfo.x = hero.x;
                 entityInfo.y = hero.y;
@@ -240,7 +240,7 @@ var war;
             war.DrawUtils.DrawEntityRange(king);
             this.entityGroup.addChild(king);
             // 血量条
-            var entityInfo = war.WarDataMgr.Ins().infoMap.get(king.uniqueCode);
+            var entityInfo = war.WarDataMgr.Ins().infoMap.get(king.iii);
             if (entityInfo != null) {
                 this.entityInfoGroup.addChild(entityInfo);
             }
@@ -250,7 +250,7 @@ var war;
             war.DrawUtils.DrawEntityRange(king);
             this.entityGroup.addChild(king);
             // 血量条
-            entityInfo = war.WarDataMgr.Ins().infoMap.get(king.uniqueCode);
+            entityInfo = war.WarDataMgr.Ins().infoMap.get(king.iii);
             if (entityInfo != null) {
                 this.entityInfoGroup.addChild(entityInfo);
             }
@@ -262,7 +262,7 @@ var war;
             war.DrawUtils.DrawEntityRange(queen);
             this.entityGroup.addChild(queen);
             // 血量条
-            var entityInfo = war.WarDataMgr.Ins().infoMap.get(queen.uniqueCode);
+            var entityInfo = war.WarDataMgr.Ins().infoMap.get(queen.iii);
             if (entityInfo != null) {
                 this.entityInfoGroup.addChild(entityInfo);
             }
@@ -273,7 +273,7 @@ var war;
             war.DrawUtils.DrawEntityRange(queen);
             this.entityGroup.addChild(queen);
             // 血量条
-            entityInfo = war.WarDataMgr.Ins().infoMap.get(queen.uniqueCode);
+            entityInfo = war.WarDataMgr.Ins().infoMap.get(queen.iii);
             if (entityInfo != null) {
                 this.entityInfoGroup.addChild(entityInfo);
             }
@@ -284,7 +284,7 @@ var war;
             war.DrawUtils.DrawEntityRange(queen);
             this.entityGroup.addChild(queen);
             // 血量条
-            entityInfo = war.WarDataMgr.Ins().infoMap.get(queen.uniqueCode);
+            entityInfo = war.WarDataMgr.Ins().infoMap.get(queen.iii);
             if (entityInfo != null) {
                 this.entityInfoGroup.addChild(entityInfo);
             }
@@ -295,7 +295,7 @@ var war;
             war.DrawUtils.DrawEntityRange(queen);
             this.entityGroup.addChild(queen);
             // 血量条
-            entityInfo = war.WarDataMgr.Ins().infoMap.get(queen.uniqueCode);
+            entityInfo = war.WarDataMgr.Ins().infoMap.get(queen.iii);
             if (entityInfo != null) {
                 this.entityInfoGroup.addChild(entityInfo);
             }

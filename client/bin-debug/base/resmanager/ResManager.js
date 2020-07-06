@@ -92,18 +92,18 @@ var ResManager = (function (_super) {
                 resData.addRefCount();
             }
         }
-        LogUtils.Log("\u3010\u8D44\u6E90\u7EC4\u96C6\u52A0\u5165\u5230\u5217\u8868\u3011id:" + collectData.uniqueCode + " " + collectArray.toString());
-        return collectData.uniqueCode;
+        LogUtils.Log("\u3010\u8D44\u6E90\u7EC4\u96C6\u52A0\u5165\u5230\u5217\u8868\u3011id:" + collectData.iii + " " + collectArray.toString());
+        return collectData.iii;
     };
-    ResManager.prototype.destroyGroup = function (uniqueCode) {
-        if (uniqueCode == null || uniqueCode <= 0) {
+    ResManager.prototype.destroyGroup = function (iii) {
+        if (iii == null || iii <= 0) {
             LogUtils.Error("\u3010\u8D44\u6E90\u7EC4\u96C6\u53C2\u6570\u9519\u8BEF\u3011");
             return false;
         }
         var cData;
         for (var _i = 0, _a = this.collectArray; _i < _a.length; _i++) {
             var collectData = _a[_i];
-            if (collectData.uniqueCode == uniqueCode) {
+            if (collectData.iii == iii) {
                 cData = collectData;
                 var index = this.collectArray.indexOf(collectData);
                 this.collectArray.splice(index, 1);
@@ -113,7 +113,7 @@ var ResManager = (function (_super) {
         if (cData == null) {
             for (var _b = 0, _c = this.useCollectArray; _b < _c.length; _b++) {
                 var collectData = _c[_b];
-                if (collectData.uniqueCode == uniqueCode) {
+                if (collectData.iii == iii) {
                     cData = collectData;
                     var index = this.useCollectArray.indexOf(collectData);
                     this.collectArray.splice(index, 1);
@@ -122,13 +122,13 @@ var ResManager = (function (_super) {
             }
         }
         if (cData == null) {
-            if (this.currCollectData.uniqueCode == uniqueCode) {
-                this.waitDestroyArray.push(uniqueCode);
-                LogUtils.Warn("\u3010\u8D44\u6E90\u7EC4\u96C6\u6B63\u5728\u5728\u52A0\u8F7D\u4E2D\uFF0C\u7A0D\u540E\u91CA\u653E\u3011id:" + uniqueCode);
+            if (this.currCollectData.iii == iii) {
+                this.waitDestroyArray.push(iii);
+                LogUtils.Warn("\u3010\u8D44\u6E90\u7EC4\u96C6\u6B63\u5728\u5728\u52A0\u8F7D\u4E2D\uFF0C\u7A0D\u540E\u91CA\u653E\u3011id:" + iii);
                 return true;
             }
             else {
-                LogUtils.Warn("\u3010\u9500\u6BC1\u4E0D\u5B58\u5728\u7684\u8D44\u6E90\u7EC4\u96C6\u3011id:" + uniqueCode);
+                LogUtils.Warn("\u3010\u9500\u6BC1\u4E0D\u5B58\u5728\u7684\u8D44\u6E90\u7EC4\u96C6\u3011id:" + iii);
                 return true;
             }
         }
@@ -137,7 +137,7 @@ var ResManager = (function (_super) {
         cData.destroyAll();
         removee(cData);
         cData = null;
-        LogUtils.Log("\u3010\u9500\u6BC1\u8D44\u6E90\u7EC4\u96C6\u3011id:" + uniqueCode);
+        LogUtils.Log("\u3010\u9500\u6BC1\u8D44\u6E90\u7EC4\u96C6\u3011id:" + iii);
         return true;
     };
     ResManager.prototype.loadRes = function (resName) {
@@ -186,24 +186,24 @@ var ResManager = (function (_super) {
     };
     // ----------------------------------------------------------------------
     ResManager.prototype.OnResourceLoadComplete = function (e) {
-        LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u5B8C\u6210\u3011id:" + this.currCollectData.uniqueCode + " groupName:" + e.groupName);
+        LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u5B8C\u6210\u3011id:" + this.currCollectData.iii + " groupName:" + e.groupName);
         this.isLoading = false;
         if (this.currCollectData.isEnd() == true) {
             if (this.waitDestroyArray.length <= 0) {
                 this.currCollectData.execCb(e);
                 this.useCollectArray.push(this.currCollectData);
-                LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u96C6\u5B8C\u6210\u3011id:" + this.currCollectData.uniqueCode);
+                LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u96C6\u5B8C\u6210\u3011id:" + this.currCollectData.iii);
             }
             else {
                 var i = 0;
                 for (var _i = 0, _a = this.waitDestroyArray; _i < _a.length; _i++) {
-                    var uniqueCode = _a[_i];
-                    if (this.currCollectData.uniqueCode == uniqueCode) {
+                    var iii = _a[_i];
+                    if (this.currCollectData.iii == iii) {
                         this.waitDestroyArray.splice(i, 1);
                         this.reduceRefCount(this.currCollectData);
                         this.currCollectData.destroyAll();
                         removee(this.currCollectData);
-                        LogUtils.Log("\u3010\u9500\u6BC1\u5DF2\u5B8C\u6210\u7684\u8D44\u6E90\u7EC4\u96C6\u3011id:" + this.currCollectData.uniqueCode);
+                        LogUtils.Log("\u3010\u9500\u6BC1\u5DF2\u5B8C\u6210\u7684\u8D44\u6E90\u7EC4\u96C6\u3011id:" + this.currCollectData.iii);
                         break;
                     }
                     i++;
@@ -216,16 +216,16 @@ var ResManager = (function (_super) {
         this.currCollectData.itemsLoaded = e.itemsLoaded;
         this.currCollectData.itemsTotal = e.itemsTotal;
         this.currCollectData.execProg(e);
-        LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u3011id:" + this.currCollectData.uniqueCode + " groupName:" + e.groupName + " resName:" + e.resItem.name);
+        LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u3011id:" + this.currCollectData.iii + " groupName:" + e.groupName + " resName:" + e.resItem.name);
     };
     ResManager.prototype.OnResourceLoadError = function (e) {
         this.currCollectData.addErrCount();
         if (this.currCollectData.errLoadCount <= this.ERROR_LOAD_COUNT) {
-            LogUtils.Warn("\u3010\u91CD\u65B0\u52A0\u8F7D\u8D44\u6E90\u7EC4\u3011id:" + this.currCollectData.uniqueCode + " groupName:" + e.groupName + " count:" + this.currCollectData.errLoadCount);
+            LogUtils.Warn("\u3010\u91CD\u65B0\u52A0\u8F7D\u8D44\u6E90\u7EC4\u3011id:" + this.currCollectData.iii + " groupName:" + e.groupName + " count:" + this.currCollectData.errLoadCount);
             this.reloadGroup(e.groupName);
         }
         else {
-            LogUtils.Error("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u9519\u8BEF\u3011id:" + this.currCollectData.uniqueCode + " groupName:" + e.groupName + " count:" + this.currCollectData.errLoadCount);
+            LogUtils.Error("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u9519\u8BEF\u3011id:" + this.currCollectData.iii + " groupName:" + e.groupName + " count:" + this.currCollectData.errLoadCount);
             if (this.currCollectData.isEnd() == true)
                 this.currCollectData = null;
             this.loadNextGroup();
@@ -260,13 +260,13 @@ var ResManager = (function (_super) {
             this.currCollectData = this.collectArray.shift();
             var groupName = this.currCollectData.currGroup();
             RES.loadGroup(groupName);
-            LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u3011id:" + this.currCollectData.uniqueCode + " groupName:" + groupName);
+            LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u3011id:" + this.currCollectData.iii + " groupName:" + groupName);
             return true;
         }
         else {
             var groupName = this.currCollectData.nextGroup();
             RES.loadGroup(groupName);
-            LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u3011id:" + this.currCollectData.uniqueCode + " groupName:" + groupName);
+            LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u3011id:" + this.currCollectData.iii + " groupName:" + groupName);
             return true;
         }
     };

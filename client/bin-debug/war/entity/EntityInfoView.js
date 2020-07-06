@@ -22,21 +22,27 @@ var war;
         };
         EntityInfoView.prototype.destroy = function () {
         };
-        EntityInfoView.prototype.initHealth = function (value, max) {
+        EntityInfoView.prototype.initData = function (entityId, value, max) {
+            this.entityId = entityId;
             this.healthBar.minimum = 0;
             this.healthBar.value = value;
             this.healthBar.maximum = max;
-        };
-        EntityInfoView.prototype.updateHealth = function (value, max) {
-            this.healthBar.value = value;
-            if (max != null)
-                this.healthBar.maximum = max;
+            var entity = war.WarDataMgr.Ins().entityMap.get(this.entityId);
+            if (entity == null) {
+                LogUtils.Error("\u4E0D\u5B58\u5728\u5BF9\u5E94\u5B9E\u4F53 " + entityId);
+                return false;
+            }
+            this.addAttrCB(entity.healthCom, "hp", this.OnHpUpdate, this);
         };
         EntityInfoView.prototype.updatePos = function () {
             var entity = war.WarDataMgr.Ins().entityMap.get(this.entityId);
             if (entity == null)
                 return;
             this.healthBar.y = -entity.mc.height;
+        };
+        EntityInfoView.prototype.OnHpUpdate = function () {
+            var entity = war.WarDataMgr.Ins().entityMap.get(this.entityId);
+            this.healthBar.value = entity.healthCom.hp;
         };
         return EntityInfoView;
     }(UIBase));

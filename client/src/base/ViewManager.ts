@@ -93,8 +93,9 @@ class ViewManager extends DataBase
 			LogUtils.Warn(`面板没有父级`);
 			return false;
 		}
-		if(view.viewInfo.resGroup != null && view.viewInfo.resGroup.length <= 0 && view.viewInfo.resGroupId != null)
-			ResManager.Ins().destroyGroup(view.viewInfo.resGroupId);
+		let viewInfo:IViewData = view["info"];
+		if(viewInfo.resGroup != null && viewInfo.resGroup.length > 0)
+			ResManager.Ins().destroyGroup(viewInfo.resGroupId);
 		this.uiMap.remove(className);
 		view = null;
 		return true;
@@ -127,11 +128,12 @@ class ViewManager extends DataBase
 		}
 		
 		let view = this.uiMap.get(className);
-		let parent:eui.UILayer = view.viewInfo.layer;
-		let resGroup = view.viewInfo.resGroup;
+		let viewInfo:IViewData = view["info"];
+		let parent:eui.UILayer = viewInfo.layer;
+		let resGroup = viewInfo.resGroup;
 
 		// 先加载资源，再添加面板
-		if(resGroup != null)
+		if(resGroup != null && resGroup.length > 0)
 		{
 			this.open(home.LoadingTips); // 需要保证 home.LoadingTips 面板内的resGroup不能有值，让它走else的部分，否则会陷入死循环。
 			ResManager.Ins().loadGroup(resGroup, (e:RES.ResourceEvent)=>{

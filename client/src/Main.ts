@@ -85,6 +85,9 @@ class Main extends eui.UILayer
     }
     
     protected createGameScene(): void {
+        applyMixins(DataBase, [DataBaseMixin]);
+        applyMixins(UIBase, [DataBaseMixin, UIBaseMixin]);
+        applyMixins(WItemRenderBase, [DataBaseMixin, UIBaseMixin]);
         GameUtils.main = this;
         LayerManager.Ins();
         NetManager.Ins();
@@ -93,11 +96,6 @@ class Main extends eui.UILayer
         // SocketManager.Ins()
         ViewManager.Ins().open(home.LoginPanel);
         // ViewManager.Ins().open(war.WarMatchPanel);
-
-        // let a = new home.HeadIcon();
-        // a.info.packData(2, 1);
-        // a.update();
-        // this.addChild(a);
     }
 }
 
@@ -114,4 +112,11 @@ function deletee<T>(cls:T)
 function removee<T>(cls:T)
 {
     PoolManager.Ins().push(cls);
+}
+function applyMixins(derivedCtor: any, baseCtors: any[]) {
+    baseCtors.forEach(baseCtor => {
+        Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
+            derivedCtor.prototype[name] = baseCtor.prototype[name];
+        })
+    });
 }

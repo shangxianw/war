@@ -13,23 +13,25 @@ var home;
     var LoadingTipsData = (function (_super) {
         __extends(LoadingTipsData, _super);
         function LoadingTipsData() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.resGroup = [];
+            _this.layer = LayerManager.Ins().Tips;
+            return _this;
         }
         LoadingTipsData.prototype.init = function () {
-            this.layer = LayerManager.Ins().Tips;
         };
         LoadingTipsData.prototype.destroy = function () {
         };
         LoadingTipsData.prototype.packData = function () {
         };
         return LoadingTipsData;
-    }(ViewData));
+    }(DataBase));
     home.LoadingTipsData = LoadingTipsData;
-    __reflect(LoadingTipsData.prototype, "home.LoadingTipsData");
+    __reflect(LoadingTipsData.prototype, "home.LoadingTipsData", ["IViewData"]);
     var LoadingTips = (function (_super) {
         __extends(LoadingTips, _super);
         function LoadingTips() {
-            return _super.call(this, "LoadingTipsSkin", LoadingTipsData) || this;
+            return _super.call(this, "LoadingTipsSkin") || this;
         }
         LoadingTips.prototype.init = function () {
             this.info.packData();

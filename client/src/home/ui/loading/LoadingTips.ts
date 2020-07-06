@@ -1,10 +1,13 @@
 module home
 {
-	export class LoadingTipsData extends ViewData
+	export class LoadingTipsData extends DataBase implements IViewData
 	{
+		public resGroup = [];
+		public layer = LayerManager.Ins().Tips;
+		public resGroupId:number;
 		protected init()
 		{
-			this.layer = LayerManager.Ins().Tips;
+			
 		}
 
 		protected destroy()
@@ -25,7 +28,7 @@ module home
 		public info:LoadingTipsData;
 		public constructor()
 		{
-			super("LoadingTipsSkin", LoadingTipsData);	
+			super("LoadingTipsSkin");	
 		}
 
 		protected init()

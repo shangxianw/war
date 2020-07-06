@@ -102,13 +102,13 @@ class ResManager extends DataBase
 				resData.addRefCount();
 			}
 		}
-		LogUtils.Log(`【资源组集加入到列表】id:${collectData.uniqueCode} ${collectArray.toString()}`)
-		return collectData.uniqueCode;
+		LogUtils.Log(`【资源组集加入到列表】id:${collectData.iii} ${collectArray.toString()}`)
+		return collectData.iii;
 	}	
 
-	public destroyGroup(uniqueCode:number)
+	public destroyGroup(iii:number)
 	{
-		if(uniqueCode == null || uniqueCode <= 0)
+		if(iii == null || iii <= 0)
 		{
 			LogUtils.Error(`【资源组集参数错误】`);
 			return false;
@@ -117,7 +117,7 @@ class ResManager extends DataBase
 		let cData:CollectData;
 		for(let collectData of this.collectArray)
 		{
-			if(collectData.uniqueCode == uniqueCode)
+			if(collectData.iii == iii)
 			{
 				cData = collectData;
 				let index = this.collectArray.indexOf(collectData);
@@ -129,7 +129,7 @@ class ResManager extends DataBase
 		{
 			for(let collectData of this.useCollectArray)
 			{
-				if(collectData.uniqueCode == uniqueCode)
+				if(collectData.iii == iii)
 				{
 					cData = collectData;
 					let index = this.useCollectArray.indexOf(collectData);
@@ -141,15 +141,15 @@ class ResManager extends DataBase
 
 		if(cData == null)
 		{
-			if(this.currCollectData.uniqueCode == uniqueCode)
+			if(this.currCollectData.iii == iii)
 			{
-				this.waitDestroyArray.push(uniqueCode);
-				LogUtils.Warn(`【资源组集正在在加载中，稍后释放】id:${uniqueCode}`);
+				this.waitDestroyArray.push(iii);
+				LogUtils.Warn(`【资源组集正在在加载中，稍后释放】id:${iii}`);
 				return true;
 			}
 			else
 			{
-				LogUtils.Warn(`【销毁不存在的资源组集】id:${uniqueCode}`);
+				LogUtils.Warn(`【销毁不存在的资源组集】id:${iii}`);
 				return true;
 			}
 		}
@@ -159,7 +159,7 @@ class ResManager extends DataBase
 		cData.destroyAll();
 		removee(cData);
 		cData = null;
-		LogUtils.Log(`【销毁资源组集】id:${uniqueCode}`)
+		LogUtils.Log(`【销毁资源组集】id:${iii}`)
 		return true;
 	}
 
@@ -227,7 +227,7 @@ class ResManager extends DataBase
 	// ----------------------------------------------------------------------
 	private OnResourceLoadComplete(e:RES.ResourceEvent)
 	{
-		LogUtils.Log(`【加载资源组完成】id:${this.currCollectData.uniqueCode} groupName:${e.groupName}`);
+		LogUtils.Log(`【加载资源组完成】id:${this.currCollectData.iii} groupName:${e.groupName}`);
 		this.isLoading = false;
 		if(this.currCollectData.isEnd() == true)
 		{
@@ -235,20 +235,20 @@ class ResManager extends DataBase
 			{
 				this.currCollectData.execCb(e);
 				this.useCollectArray.push(this.currCollectData);
-				LogUtils.Log(`【加载资源组集完成】id:${this.currCollectData.uniqueCode}`);
+				LogUtils.Log(`【加载资源组集完成】id:${this.currCollectData.iii}`);
 			}
 			else
 			{
 				let i=0;
-				for(let uniqueCode of this.waitDestroyArray)
+				for(let iii of this.waitDestroyArray)
 				{
-					if(this.currCollectData.uniqueCode == uniqueCode)
+					if(this.currCollectData.iii == iii)
 					{
 						this.waitDestroyArray.splice(i, 1);
 						this.reduceRefCount(this.currCollectData);
 						this.currCollectData.destroyAll();
 						removee(this.currCollectData);
-						LogUtils.Log(`【销毁已完成的资源组集】id:${this.currCollectData.uniqueCode}`);
+						LogUtils.Log(`【销毁已完成的资源组集】id:${this.currCollectData.iii}`);
 						break;
 					}
 					i++;
@@ -263,7 +263,7 @@ class ResManager extends DataBase
 		this.currCollectData.itemsLoaded = e.itemsLoaded;
 		this.currCollectData.itemsTotal = e.itemsTotal;
 		this.currCollectData.execProg(e);
-		LogUtils.Log(`【加载资源】id:${this.currCollectData.uniqueCode} groupName:${e.groupName} resName:${e.resItem.name}`)
+		LogUtils.Log(`【加载资源】id:${this.currCollectData.iii} groupName:${e.groupName} resName:${e.resItem.name}`)
 	}
 
 	private OnResourceLoadError(e:RES.ResourceEvent)
@@ -271,12 +271,12 @@ class ResManager extends DataBase
 		this.currCollectData.addErrCount();
 		if(this.currCollectData.errLoadCount <= this.ERROR_LOAD_COUNT)
 		{
-			LogUtils.Warn(`【重新加载资源组】id:${this.currCollectData.uniqueCode} groupName:${e.groupName} count:${this.currCollectData.errLoadCount}`);
+			LogUtils.Warn(`【重新加载资源组】id:${this.currCollectData.iii} groupName:${e.groupName} count:${this.currCollectData.errLoadCount}`);
 			this.reloadGroup(e.groupName);
 		}
 		else
 		{
-			LogUtils.Error(`【加载资源组错误】id:${this.currCollectData.uniqueCode} groupName:${e.groupName} count:${this.currCollectData.errLoadCount}`);
+			LogUtils.Error(`【加载资源组错误】id:${this.currCollectData.iii} groupName:${e.groupName} count:${this.currCollectData.errLoadCount}`);
 			if(this.currCollectData.isEnd() == true)
 				this.currCollectData = null;
 			this.loadNextGroup();
@@ -319,14 +319,14 @@ class ResManager extends DataBase
 			this.currCollectData = this.collectArray.shift();
 			let groupName = this.currCollectData.currGroup();
 			RES.loadGroup(groupName);
-			LogUtils.Log(`【加载资源组】id:${this.currCollectData.uniqueCode} groupName:${groupName}`);
+			LogUtils.Log(`【加载资源组】id:${this.currCollectData.iii} groupName:${groupName}`);
 			return true;
 		}
 		else	// 加载当前资源组集的下一个资源组
 		{
 			let groupName = this.currCollectData.nextGroup();
 			RES.loadGroup(groupName);
-			LogUtils.Log(`【加载资源组】id:${this.currCollectData.uniqueCode} groupName:${groupName}`);
+			LogUtils.Log(`【加载资源组】id:${this.currCollectData.iii} groupName:${groupName}`);
 			return true;
 		}
 	}

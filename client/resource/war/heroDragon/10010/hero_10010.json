@@ -20,7 +20,8 @@
 			
 			],
 		"events":[
-			
+				{"name":"@fallhalf","frame":90},
+				{"name":"@fallhalf","frame":92}
 			],
 		"frames":[
 			

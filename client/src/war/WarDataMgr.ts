@@ -67,9 +67,9 @@ module war
 		// ---------------------------------------------------------------------- 实体
 		public addEntity(entity:EntityBase)
 		{
-			if(this.entityMap.has(entity.uniqueCode) == true)
+			if(this.entityMap.has(entity.iii) == true)
 				return false;
-			this.entityMap.set(entity.uniqueCode, entity);
+			this.entityMap.set(entity.iii, entity);
 		}
 
 		public removeEntity(id:number):EntityBase

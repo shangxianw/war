@@ -24,11 +24,11 @@ module war
 				return;
 			
 			// 普攻且只会攻击一个人的情况
-			this.calcCommonAttack(entity);
+			this.calcCommonAttack(entity, deltaTime);
 		}
 
 		// 目标是不会移动的实体
-		private calcCommonAttack(entity:EntityBase)
+		private calcCommonAttack(entity:EntityBase, deltaTime:number)
 		{
 			if(entity.attackCom.atkTarArray.length <= 0)
 			{
@@ -39,7 +39,7 @@ module war
 					if(tarEntity == null)
 						continue;
 					
-					if(entity.uniqueCode == tarEntity.uniqueCode)
+					if(entity.iii == tarEntity.iii)
 						continue;
 					
 					// 同阵营
@@ -66,21 +66,20 @@ module war
 			let tarEntity:EntityBase = entity.attackCom.atkTarArray[0]; // 只打一个人
 			if(entity.actionCom.action == Action.Attack && entity.attackLoopOK == true && tarEntity != null)
 			{
-				let entityInfo:EntityInfoView = WarDataMgr.Ins().infoMap.get(tarEntity.uniqueCode) as EntityInfoView;
+				let entityInfo:EntityInfoView = WarDataMgr.Ins().infoMap.get(tarEntity.iii) as EntityInfoView;
 				if(entityInfo == null)
 					return;
 				
-				tarEntity.healthCom.hp -= entity.attackCom.attack;
-				entityInfo.updateHealth(tarEntity.healthCom.hp); // 这个用属性发射啊！
+				tarEntity.healthCom.setHealth(-entity.attackCom.attack * deltaTime);
 
-				if(tarEntity.healthCom.hp <= 0) // 死亡
+				if(tarEntity.healthCom.isDie() == true) // 死亡
 				{
-					let infoView = WarDataMgr.Ins().infoMap.get(tarEntity.uniqueCode) as EntityInfoView;
+					let infoView = WarDataMgr.Ins().infoMap.get(tarEntity.iii) as EntityInfoView;
 					if(infoView != null && infoView.parent != null && infoView.parent.getChildIndex(infoView) >= 0)
 						infoView.parent.removeChild(infoView);
 					if(tarEntity != null && tarEntity.parent != null && tarEntity.parent.getChildIndex(tarEntity) >= 0)
 					{
-						WarDataMgr.Ins().removeEntity(tarEntity.uniqueCode);
+						WarDataMgr.Ins().removeEntity(tarEntity.iii);
 						tarEntity.parent.removeChild(tarEntity);
 					}
 					entity.actionCom.setAction(Action.None);

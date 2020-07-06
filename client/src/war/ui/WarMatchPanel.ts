@@ -1,12 +1,12 @@
 module war
 {
-	export class WarMatchPanelData extends ViewData
+	export class WarMatchPanelData extends DataBase implements IViewData
 	{
-		// 应该load资源
+		public resGroup = ["war_preload"];
+		public layer = LayerManager.Ins().Panel;
+		public resGroupId:number;
 		protected init()
 		{
-			this.resGroup = ["war_preload"];
-			this.layer = LayerManager.Ins().Panel;
 
 		}
 
@@ -27,7 +27,7 @@ module war
 		public info:WarMatchPanelData;
 		public constructor()
 		{
-			super("WarMatchPanelSkin", WarMatchPanelData);	
+			super("WarMatchPanelSkin");	
 		}
 
 		protected init()

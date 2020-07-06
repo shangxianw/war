@@ -48,9 +48,10 @@ module home
 			this.skinName = "HeroKaSkin";
 		}
 
-		protected init()
+		public init()
 		{
 			this.touchChildren = false;
+			return null;
 		}
 
 		public destroy()

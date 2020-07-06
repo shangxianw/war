@@ -1,14 +1,13 @@
 module home
 {
-	export class HeroKa2Data extends ViewData
+	export class HeroKa2Data extends DataBase implements IViewData
 	{
+		public resGroup = [];
+		public layer = LayerManager.Ins().Panel;
+		public resGroupId:number;
+
 		public heroId:number;
 		public heroKaData:HeroKaData;
-		protected init()
-		{
-			this.resGroup = [];
-			this.layer = LayerManager.Ins().Panel;
-		}
 
 		protected destroy()
 		{

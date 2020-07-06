@@ -50,7 +50,8 @@ module war
 		public info:CostBarData;
 		public constructor()
 		{
-			super("CostBarSkin");
+			super();
+			// "CostBarSkin"
 		}
 
 		protected init()

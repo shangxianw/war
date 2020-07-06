@@ -30,6 +30,24 @@ var war;
         SpeedCom.prototype.setSpeed = function (speed) {
             this.speed = speed;
         };
+        SpeedCom.prototype.setAngle = function (angle, x1, y1, x2, y2) {
+            if (x1 === void 0) { x1 = null; }
+            if (y1 === void 0) { y1 = null; }
+            if (x2 === void 0) { x2 = null; }
+            if (y2 === void 0) { y2 = null; }
+            this.angle = angle;
+            if (x1 == null || y1 == null || x2 == null || y2 == null)
+                return;
+            this.lastPosArray = [x1, y1, x2, y2];
+        };
+        SpeedCom.prototype.isSamePos = function (x1, y1, x2, y2) {
+            if (this.lastPosArray[0] == x1 &&
+                this.lastPosArray[1] == y1 &&
+                this.lastPosArray[2] == x2 &&
+                this.lastPosArray[3] == y2)
+                return true;
+            return false;
+        };
         return SpeedCom;
     }(war.ComBase));
     war.SpeedCom = SpeedCom;

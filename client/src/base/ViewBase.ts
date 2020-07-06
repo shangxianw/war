@@ -1,45 +1,23 @@
-class ViewData extends DataBase
+interface IViewData
 {
-	protected static ID:number;
-	public resGroup:string[];
-	public resGroupId:number;
-	public layer:eui.UILayer;
-
-	protected init()
-	{
-		
-	}
-
-	protected destroy()
-	{
-		
-	}
-	protected initAll()
-	{
-		super.initAll();
-	}
-
-	public destroyAll()
-	{
-		super.destroyAll();
-	}
+	resGroup:string[];
+	resGroupId:number;
+	layer:eui.UILayer;
 }
 
 abstract class ViewBase extends UIBase
 {
-	public viewInfo:ViewData;
-	public constructor(skinName:string, data:any)
+	public constructor(skinName:string)
 	{
-		super(skinName, data);
+		super(skinName);
 	}
 
+	public initData(data:any=null){};
 	public abstract initView();  	// 添加到舞台之后调用
-	public abstract initData(data:any);
+	protected abstract destroy();
 
-	protected initAll(data:any)
+	protected initAll()
 	{
-		this.viewInfo = new data();
-		this["info"] = this.viewInfo;
 		super.initAll();
 	}
 
@@ -79,7 +57,7 @@ abstract class ViewBase extends UIBase
 
 	private calcGroupSource()
 	{
-		for(let groupName of this.viewInfo.resGroup)
+		for(let groupName of (this["info"] as IViewData).resGroup)
 		{
 			let resItemArray = RES.getGroupByName(groupName);
 			for(let resItem of resItemArray)

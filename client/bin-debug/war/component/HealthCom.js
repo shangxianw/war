@@ -25,8 +25,12 @@ var war;
         };
         HealthCom.prototype.destroy = function () {
         };
-        HealthCom.prototype.setHealth = function (hp) {
-            this.hp = hp;
+        HealthCom.prototype.setHealth = function (addHp) {
+            this.hp = this.hp + addHp;
+            this.flushAttr("hp");
+        };
+        HealthCom.prototype.isDie = function () {
+            return this.hp <= 0;
         };
         return HealthCom;
     }(war.ComBase));

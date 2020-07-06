@@ -13,24 +13,21 @@ var home;
     var LoginPanelData = (function (_super) {
         __extends(LoginPanelData, _super);
         function LoginPanelData() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.resGroup = ["war_preload", "common_loading"];
+            _this.layer = LayerManager.Ins().Panel;
+            return _this;
         }
-        LoginPanelData.prototype.init = function () {
-            this.resGroup = [];
-            this.layer = LayerManager.Ins().Panel;
-        };
         LoginPanelData.prototype.destroy = function () {
         };
-        LoginPanelData.prototype.packData = function () {
-        };
         return LoginPanelData;
-    }(ViewData));
+    }(DataBase));
     home.LoginPanelData = LoginPanelData;
-    __reflect(LoginPanelData.prototype, "home.LoginPanelData");
+    __reflect(LoginPanelData.prototype, "home.LoginPanelData", ["IViewData"]);
     var LoginPanel = (function (_super) {
         __extends(LoginPanel, _super);
         function LoginPanel() {
-            return _super.call(this, "LoginPanelSkin", LoginPanelData) || this;
+            return _super.call(this, "LoginPanelSkin") || this;
         }
         LoginPanel.prototype.init = function () {
         };
@@ -40,11 +37,11 @@ var home;
             this.loginBtn.destroy();
         };
         LoginPanel.prototype.initData = function (data) {
-            this.info.packData();
         };
         LoginPanel.prototype.initView = function () {
             this.accountInput.text = "wsx";
             this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
+            this.test();
         };
         LoginPanel.prototype.OnLoginTap = function (e) {
             var _this = this;
@@ -58,6 +55,11 @@ var home;
                 ViewManager.Ins().open(home.LoadingPanel);
                 1;
             }, this);
+        };
+        LoginPanel.prototype.test = function () {
+            var head = new home.HeadIcon();
+            head.info.packData(1, 1);
+            this.addChild(head);
         };
         return LoginPanel;
     }(ViewBase));

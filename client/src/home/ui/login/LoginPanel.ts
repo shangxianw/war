@@ -1,21 +1,12 @@
 module home
 {
-	export class LoginPanelData extends ViewData
+	export class LoginPanelData extends DataBase implements IViewData
 	{
-		
-		protected init()
-		{
-			this.resGroup = [];
-			this.layer = LayerManager.Ins().Panel;
-			
-		}
+		public resGroup = [`war_preload`, `common_loading`];
+		public layer = LayerManager.Ins().Panel;
+		public resGroupId:number;
 
 		protected destroy()
-		{
-			
-		}
-
-		public packData()
 		{
 			
 		}
@@ -30,7 +21,7 @@ module home
 		public info:LoginPanelData;
 		public constructor()
 		{
-			super("LoginPanelSkin", LoginPanelData);	
+			super("LoginPanelSkin");	
 		}
 
 		protected init()
@@ -47,13 +38,15 @@ module home
 
 		public initData(data:any)
 		{
-			this.info.packData();
+			
 		}
 
 		public initView()
 		{
 			this.accountInput.text = "wsx";
 			this.addEvent(this.loginBtn, egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
+
+			this.test();
 		}
 
 		private OnLoginTap(e:egret.TouchEvent)
@@ -69,6 +62,13 @@ module home
 				ViewManager.Ins().open(home.LoadingPanel);
 				1;
 			}, this)
+		}
+
+		private test()
+		{
+			let head = new HeadIcon();
+			head.info.packData(1, 1);
+			this.addChild(head);
 		}
 	}
 }

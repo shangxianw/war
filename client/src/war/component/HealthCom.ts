@@ -18,9 +18,15 @@ module war
 			
 		}
 
-		public setHealth(hp:number)
+		public setHealth(addHp:number)
 		{
-			this.hp = hp;
+			this.hp = this.hp + addHp;
+			this.flushAttr("hp");
+		}
+
+		public isDie()
+		{
+			return this.hp <= 0
 		}
 	}
 }

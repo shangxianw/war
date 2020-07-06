@@ -45,6 +45,7 @@ var home;
         }
         HeroKa.prototype.init = function () {
             this.touchChildren = false;
+            return null;
         };
         HeroKa.prototype.destroy = function () {
             if (this.info != null) {

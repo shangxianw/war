@@ -33,7 +33,7 @@ var war;
             var speedY = speedArray[1] * deltaTime;
             entity.x = Number((entity.x + speedX));
             entity.y = Number((entity.y + speedY));
-            var entityInfo = war.WarDataMgr.Ins().infoMap.get(entity.uniqueCode);
+            var entityInfo = war.WarDataMgr.Ins().infoMap.get(entity.iii);
             if (entityInfo == null)
                 return;
             entityInfo.x = entity.x;

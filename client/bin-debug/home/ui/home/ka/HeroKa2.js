@@ -13,12 +13,11 @@ var home;
     var HeroKa2Data = (function (_super) {
         __extends(HeroKa2Data, _super);
         function HeroKa2Data() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.resGroup = [];
+            _this.layer = LayerManager.Ins().Panel;
+            return _this;
         }
-        HeroKa2Data.prototype.init = function () {
-            this.resGroup = [];
-            this.layer = LayerManager.Ins().Panel;
-        };
         HeroKa2Data.prototype.destroy = function () {
             this.heroKaData.destroyAll();
             removee(this.heroKaData);
@@ -33,9 +32,9 @@ var home;
             return this;
         };
         return HeroKa2Data;
-    }(ViewData));
+    }(DataBase));
     home.HeroKa2Data = HeroKa2Data;
-    __reflect(HeroKa2Data.prototype, "home.HeroKa2Data");
+    __reflect(HeroKa2Data.prototype, "home.HeroKa2Data", ["IViewData"]);
     var HeroKa2 = (function (_super) {
         __extends(HeroKa2, _super);
         function HeroKa2() {

@@ -29,7 +29,7 @@ module war
 			entity.x = Number((entity.x + speedX));
 			entity.y = Number((entity.y + speedY));
 
-			let entityInfo = WarDataMgr.Ins().infoMap.get(entity.uniqueCode) as EntityInfoView;
+			let entityInfo = WarDataMgr.Ins().infoMap.get(entity.iii) as EntityInfoView;
 			if(entityInfo == null)
 				return;
 			entityInfo.x = entity.x;

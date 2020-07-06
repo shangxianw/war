@@ -1,7 +1,11 @@
 module war
 {
-	export class WarPanelData extends ViewData
+	export class WarPanelData extends DataBase implements IViewData
 	{
+		public resGroup = [];
+		public layer = LayerManager.Ins().War;
+		public resGroupId:number;
+
 		public myKaArray:number[];
 		public enemyKaArray:number[];
 		public myCurrStep:number;
@@ -24,8 +28,7 @@ module war
 
 		protected init()
 		{
-			this.resGroup = [];
-			this.layer = LayerManager.Ins().War;
+			
 		}
 
 		protected destroy()
@@ -75,7 +78,7 @@ module war
 		public info:WarPanelData;
 		public constructor()
 		{
-			super("WarPanelSkin", WarPanelData);
+			super("WarPanelSkin");
 		}
 
 		protected init()
@@ -286,7 +289,7 @@ module war
 			this.preKa.info.refreshKa(this.info.getMyNextKa());
 
 			// 血量条
-			let entityInfo = WarDataMgr.Ins().infoMap.get(hero.uniqueCode);
+			let entityInfo = WarDataMgr.Ins().infoMap.get(hero.iii);
 			if(entityInfo != null)
 			{
 				entityInfo.x = hero.x;
@@ -305,7 +308,7 @@ module war
 			DrawUtils.DrawEntityRange(king);
 			this.entityGroup.addChild(king);
 			// 血量条
-			let entityInfo = WarDataMgr.Ins().infoMap.get(king.uniqueCode);
+			let entityInfo = WarDataMgr.Ins().infoMap.get(king.iii);
 			if(entityInfo != null)
 			{
 				this.entityInfoGroup.addChild(entityInfo);
@@ -317,7 +320,7 @@ module war
 			DrawUtils.DrawEntityRange(king);
 			this.entityGroup.addChild(king);
 			// 血量条
-			entityInfo = WarDataMgr.Ins().infoMap.get(king.uniqueCode);
+			entityInfo = WarDataMgr.Ins().infoMap.get(king.iii);
 			if(entityInfo != null)
 			{
 				this.entityInfoGroup.addChild(entityInfo);
@@ -332,7 +335,7 @@ module war
 			DrawUtils.DrawEntityRange(queen);
 			this.entityGroup.addChild(queen);
 			// 血量条
-			let entityInfo = WarDataMgr.Ins().infoMap.get(queen.uniqueCode);
+			let entityInfo = WarDataMgr.Ins().infoMap.get(queen.iii);
 			if(entityInfo != null)
 			{
 				this.entityInfoGroup.addChild(entityInfo);
@@ -345,7 +348,7 @@ module war
 			DrawUtils.DrawEntityRange(queen);
 			this.entityGroup.addChild(queen);
 			// 血量条
-			entityInfo = WarDataMgr.Ins().infoMap.get(queen.uniqueCode);
+			entityInfo = WarDataMgr.Ins().infoMap.get(queen.iii);
 			if(entityInfo != null)
 			{
 				this.entityInfoGroup.addChild(entityInfo);
@@ -358,7 +361,7 @@ module war
 			DrawUtils.DrawEntityRange(queen);
 			this.entityGroup.addChild(queen);
 			// 血量条
-			entityInfo = WarDataMgr.Ins().infoMap.get(queen.uniqueCode);
+			entityInfo = WarDataMgr.Ins().infoMap.get(queen.iii);
 			if(entityInfo != null)
 			{
 				this.entityInfoGroup.addChild(entityInfo);
@@ -371,7 +374,7 @@ module war
 			DrawUtils.DrawEntityRange(queen);
 			this.entityGroup.addChild(queen);
 			// 血量条
-			entityInfo = WarDataMgr.Ins().infoMap.get(queen.uniqueCode);
+			entityInfo = WarDataMgr.Ins().infoMap.get(queen.iii);
 			if(entityInfo != null)
 			{
 				this.entityInfoGroup.addChild(entityInfo);

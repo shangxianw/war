@@ -52,12 +52,14 @@ var war;
                     var currEndNode = pCom.getCurrEndNode();
                     if (currEndNode == null)
                         return;
+                    if (entity.speedCom.isSamePos(currStartNode.x, currStartNode.y, currEndNode.x, currEndNode.y) == true)
+                        return;
                     var startX = war.WarUtils.ToLocalX(currStartNode.x);
                     var startY = war.WarUtils.ToLocalY(currStartNode.y);
                     var endX = war.WarUtils.ToLocalX(currEndNode.x);
                     var endY = war.WarUtils.ToLocalY(currEndNode.y);
                     var angle = MathUtils.CalcAngle(startX, startY, endX, endY);
-                    entity.speedCom.angle = angle;
+                    entity.speedCom.setAngle(angle, currStartNode.x, currStartNode.y, currEndNode.x, currEndNode.y);
                     this.setDir(entity, entity.speedCom.angle);
                 }
             }

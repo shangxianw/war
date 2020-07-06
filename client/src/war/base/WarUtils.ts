@@ -117,9 +117,8 @@ module war
 
 			// 血量条
 			let entityInfo = new EntityInfoView();
-			entityInfo.entityId = hero.uniqueCode;
-			entityInfo.initHealth(hero.healthCom.hp, hero.healthCom.hp);
-			WarDataMgr.Ins().infoMap.set(hero.uniqueCode, entityInfo);
+			entityInfo.initData(hero.iii, hero.healthCom.hp, hero.healthCom.hp);
+			WarDataMgr.Ins().infoMap.set(hero.iii, entityInfo);
 			return hero;
 		}
 
@@ -147,9 +146,8 @@ module war
 
 			// 血量条
 			let entityInfo = new EntityInfoView();
-			entityInfo.entityId = king.uniqueCode;
-			entityInfo.initHealth(king.healthCom.hp, king.healthCom.hp);
-			WarDataMgr.Ins().infoMap.set(king.uniqueCode, entityInfo);
+			entityInfo.initData(king.iii, king.healthCom.hp, king.healthCom.hp);
+			WarDataMgr.Ins().infoMap.set(king.iii, entityInfo);
 			return king;
 		}
 
@@ -177,9 +175,8 @@ module war
 
 			// 血量条
 			let entityInfo = new EntityInfoView();
-			entityInfo.entityId = queen.uniqueCode;
-			entityInfo.initHealth(queen.healthCom.hp, queen.healthCom.hp);
-			WarDataMgr.Ins().infoMap.set(queen.uniqueCode, entityInfo);
+			entityInfo.initData(queen.iii, queen.healthCom.hp, queen.healthCom.hp);
+			WarDataMgr.Ins().infoMap.set(queen.iii, entityInfo);
 			return queen;
 		}
 	}

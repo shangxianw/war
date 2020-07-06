@@ -90,9 +90,8 @@ var war;
             war.WarDataMgr.Ins().addEntity(hero);
             // 血量条
             var entityInfo = new war.EntityInfoView();
-            entityInfo.entityId = hero.uniqueCode;
-            entityInfo.initHealth(hero.healthCom.hp, hero.healthCom.hp);
-            war.WarDataMgr.Ins().infoMap.set(hero.uniqueCode, entityInfo);
+            entityInfo.initData(hero.iii, hero.healthCom.hp, hero.healthCom.hp);
+            war.WarDataMgr.Ins().infoMap.set(hero.iii, entityInfo);
             return hero;
         };
         WarUtils.CreateKing = function (kingId, isLeftPos) {
@@ -113,9 +112,8 @@ var war;
             war.WarDataMgr.Ins().addEntity(king);
             // 血量条
             var entityInfo = new war.EntityInfoView();
-            entityInfo.entityId = king.uniqueCode;
-            entityInfo.initHealth(king.healthCom.hp, king.healthCom.hp);
-            war.WarDataMgr.Ins().infoMap.set(king.uniqueCode, entityInfo);
+            entityInfo.initData(king.iii, king.healthCom.hp, king.healthCom.hp);
+            war.WarDataMgr.Ins().infoMap.set(king.iii, entityInfo);
             return king;
         };
         WarUtils.CreateQueen = function (queenId, isLeftPos) {
@@ -136,9 +134,8 @@ var war;
             war.WarDataMgr.Ins().addEntity(queen);
             // 血量条
             var entityInfo = new war.EntityInfoView();
-            entityInfo.entityId = queen.uniqueCode;
-            entityInfo.initHealth(queen.healthCom.hp, queen.healthCom.hp);
-            war.WarDataMgr.Ins().infoMap.set(queen.uniqueCode, entityInfo);
+            entityInfo.initData(queen.iii, queen.healthCom.hp, queen.healthCom.hp);
+            war.WarDataMgr.Ins().infoMap.set(queen.iii, entityInfo);
             return queen;
         };
         return WarUtils;
