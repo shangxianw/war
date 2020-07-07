@@ -50,7 +50,7 @@ module war
 
 					// 射程范围外
 					let range = entity.attackCom.range;
-					distance = MathUtils.CalcDistance(entity.x, entity.y, tarEntity.x, tarEntity.y, true);
+					distance = MathUtils.CalcTwoPointDistance(entity.x, entity.y, tarEntity.x, tarEntity.y, true);
 					if(distance > range)
 						continue;
 					

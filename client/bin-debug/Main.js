@@ -146,9 +146,9 @@ var Main = (function (_super) {
         LayerManager.Ins();
         NetManager.Ins();
         NetManager.Ins();
-        war.WarDataMgr.Ins();
+        // war.WarDataMgr.Ins();
         // SocketManager.Ins()
-        ViewManager.Ins().open(home.LoginPanel);
+        // ViewManager.Ins().open(home.LoginPanel);
         // ViewManager.Ins().open(war.WarMatchPanel);
     };
     return Main;

@@ -5,94 +5,109 @@
 class MathUtils
 {
 	/**
-	 * 计算直角三角形的两个边
+	 * 直角三角形的两个边
 	 * @param htpoSide 斜边
 	 * @param angle 斜边与x轴形成的角
 	 */
 	public static CalcLegSide(hypoSide:number, angle:number):number[]
 	{
 		if(hypoSide == null && angle == null)
+		{
+			console.error(`MathUtils.CalcLegSide 方法参数为空`)
 			return [0, 0];
+		}
 		let r = angle * Math.PI / 180;
 		let h = Math.cos(r) * hypoSide; // 邻边
 		let w = Math.sin(r) * hypoSide; // 对边
-		return [h, w]; // 返回后记得保留小数点后两位
+		return [h, w];
 	}
 
-	public static CalcAngle(x1:number, y1:number, x2:number, y2:number)
+	/**
+	 * 两点之间形成的射线 与 x轴 的角度
+	 * 角度为0时时x轴正方向，顺时针递增
+	 * @param toFixed 保留小数点(其实只是根据小数点为数进行四舍五入，如果结果为整数，则不会带小数点)
+	 */
+	public static CalcAngle(x1:number, y1:number, x2:number, y2:number, toFixed:number=5)
 	{
-		y1 = -y1; // 因为舞台的坐标系统与数学的坐标系统y是相反的。
-		y2 = -y2;
-		if(x1 == x2 && y1 == y2)
-			return 0; // 其实应该是报错才对。
-		if(x1 == x2 && y2 - y1 < 0)
-			return 90;
-		else if(x1 == x2 && y2 - y1 > 0)
-			return 270;
+		if(x1 == null || y1 == null || x2 == null || y2 == null)
+		{
+			console.error(`MathUtils.CalcAngle 参数为空`)
+			return 0;
+		}
 
-		let h = x2 - x1;
-		let w = y2 - y1;
-		let hypo = Math.sqrt( h*h + w*w );
-		let angle = Math.acos((w*w - h*h - hypo*hypo)/(-2*h*hypo)) * 180 / Math.PI;
-		if(w > 0)
-			angle = 180 + (180-angle);
+		if(x1 == x2 && x2 == y2)
+		{
+			console.error(`MathUtils.CalcAngle 两个坐标为同一点`);
+			return 0;
+		}
+
+		let w = x2 - x1;
+		let h = y2 - y1;
+
+		// 特殊情况处理，减少计算量
+		if(x1 == x2)
+			return h > 0 ? 270 : 90;
+
+		if(y1 == y2)
+			return w > 0 ? 0 : 180;
+
+		let ww = Math.abs(w);
+		let hh = Math.abs(h);
+		if(ww == hh)
+		{
+			if(w > 0 && h < 0)
+				return 45;
+			else if(w < 0 && h < 0)
+				return 135;
+			else if(w < 0 && h > 0)
+				return 225;
+			else if(w > 0 && h > 0)
+				return 315;
+		}
+
+		let hypo = Math.sqrt(h*h + w*w);
+		let angle = 360*Math.atan(hh/ww)/(2*Math.PI);
+		// angel计算结果范围在[0, 90]，四个象限均以x轴为旋转角
+		if(w < 0 && h < 0)
+			angle = 180 - angle;
+		else if(w < 0 && h > 0)
+			angle = 180 + angle;
+		else if(w > 0 && h > 0)
+			angle = 360 - angle;
+		angle = Number(angle.toFixed(toFixed));
 		return angle;
 	}
 
-	public static IsCircleIntersect(x1:number, y1:number, radius1:number, x2:number, y2:number, radius2:number)
+	/**
+	 * 两点之间的距离
+	 */
+	public static TwoPointDistance(x1:number, y1:number, x2:number, y2:number, needKaiFang:boolean = true)
 	{
-		let width = x2 - x1;
-		let height = y2 - y1;
-		let distance = Math.sqrt(width * width + height * height);
-		return distance < radius1 + radius2;
-	}
-
-	// ---------------------------------------------------------------------- 两点距离
-	public static CalcDistance(x1:number, y1:number, x2:number, y2:number, needKaiFang:boolean = false)
-	{
-		let a = (x2 - x1)*(x2- x1) + (y2 - y1)*(y2 - y1);
+		let w = x2 - x1;
+		let h = y2 - y1;
+		let a = w * w + h * h;
 		if(needKaiFang == false)
 			return a;
 		return Math.sqrt(a);
 	}
 
-	public static CheckIsCross()
+	/**
+	 * 点(x, y)到直线(x1, y1),(x2, y2)的距离
+	 */
+	public static PointToLineDistance(x:number, y:number, x1:number, y1:number, x2:number, y2:number):number
 	{
-		//计算向量叉乘
-		var crossMul=function(v1,v2){  
-			return   v1.x*v2.y-v1.y*v2.x;  
-		}  
-		//判断两条线段是否相交  
-		var checkCross=function(p1,p2,p3,p4){  
-			var v1={x:p1.x-p3.x,y:p1.y-p3.y},  
-			v2={x:p2.x-p3.x,y:p2.y-p3.y},  
-			v3={x:p4.x-p3.x,y:p4.y-p3.y},  
-			v=crossMul(v1,v3)*crossMul(v2,v3)  
-			v1={x:p3.x-p1.x,y:p3.y-p1.y}  
-			v2={x:p4.x-p1.x,y:p4.y-p1.y}  
-			v3={x:p2.x-p1.x,y:p2.y-p1.y}  
-			return (v<=0&&crossMul(v1,v3)*crossMul(v2,v3)<=0)?true:false 
-		}  
-		//判断点是否在多边形内  
-		var  checkPP=function(point,polygon){  
-			var p1,p2,p3,p4  
-			p1=point  
-			p2={x:-100,y:point.y}  
-			var count=0  
-			//对每条边都和射线作对比  
-			for(var i=0;i<polygon.length-1;i++){  
-				p3=polygon[i]  
-				p4=polygon[i+1]  
-				if(checkCross(p1,p2,p3,p4)==true){  
-					count++  
-				}  
-			}  
-			p3=polygon[polygon.length-1]  
-			p4=polygon[0]  
-			if(checkCross(p1,p2,p3,p4)==true){  
-				count++  
-			}  
-			return (count%2==0)?false:true 
+		if(x == null || y == null || x1 == null || y1 == null || x2 == null || y2 == null)
+		{
+			console.error(`MathUtils.PointToLineDistance 参数为空`);
+			return 0;
 		}
+
+		let a = y2 - y1;
+		let b = x1 - x2;
+		let c = x2 * y1 - x1 * y2;
+		if(Math.abs(a) > 0 || Math.abs(b) > 0)
+			return Math.abs(a * x + b * y + c) / Math.sqrt(a * a + b * b);
+		else
+			return 0;
 	}
 }

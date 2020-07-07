@@ -49,7 +49,7 @@ var war;
                         continue;
                     // 射程范围外
                     var range = entity.attackCom.range;
-                    distance = MathUtils.CalcDistance(entity.x, entity.y, tarEntity_1.x, tarEntity_1.y, true);
+                    distance = MathUtils.CalcTwoPointDistance(entity.x, entity.y, tarEntity_1.x, tarEntity_1.y, true);
                     if (distance > range)
                         continue;
                     // 此处只对第一个人进行攻击

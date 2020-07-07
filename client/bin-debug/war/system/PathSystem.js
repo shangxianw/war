@@ -44,8 +44,8 @@ var war;
                 var startY = war.WarUtils.ToLocalY(currStartNode.y);
                 var endX = war.WarUtils.ToLocalX(currEndNode.x);
                 var endY = war.WarUtils.ToLocalY(currEndNode.y);
-                var d1 = MathUtils.CalcDistance(startX, startY, endX, endY);
-                var d2 = MathUtils.CalcDistance(startX, startY, entity.x, entity.y);
+                var d1 = MathUtils.CalcTwoPointDistance(startX, startY, endX, endY);
+                var d2 = MathUtils.CalcTwoPointDistance(startX, startY, entity.x, entity.y);
                 if (d2 >= d1) {
                     pCom.toNextNode();
                 }

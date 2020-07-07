@@ -41,8 +41,8 @@ module war
 				let startY = WarUtils.ToLocalY(currStartNode.y);
 				let endX = WarUtils.ToLocalX(currEndNode.x);
 				let endY = WarUtils.ToLocalY(currEndNode.y);
-				let d1 = MathUtils.CalcDistance(startX, startY, endX, endY);
-				let d2 = MathUtils.CalcDistance(startX, startY, entity.x, entity.y);
+				let d1 = MathUtils.CalcTwoPointDistance(startX, startY, endX, endY);
+				let d2 = MathUtils.CalcTwoPointDistance(startX, startY, entity.x, entity.y);
 				if(d2 >= d1)
 				{
 					pCom.toNextNode();
