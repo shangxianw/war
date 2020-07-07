@@ -112,12 +112,13 @@ module war
 			hero.dirCom.setDir(Direction.Right);
 			hero.campCom.setCamp(Camp.We);
 			hero.attackCom.setAttack(10, 100);
-			hero.healthCom.setHealth(1000);
+			hero.healthCom.setHealth(100);
 			WarDataMgr.Ins().addEntity(hero);
 
 			// 血量条
 			let entityInfo = new EntityInfoView();
-			entityInfo.initData(hero.iii, hero.healthCom.hp, hero.healthCom.hp);
+			entityInfo.info.packData(hero.iii, hero.healthCom.hp, hero.healthCom.hp);
+			entityInfo.initView();
 			WarDataMgr.Ins().infoMap.set(hero.iii, entityInfo);
 			return hero;
 		}
@@ -146,7 +147,8 @@ module war
 
 			// 血量条
 			let entityInfo = new EntityInfoView();
-			entityInfo.initData(king.iii, king.healthCom.hp, king.healthCom.hp);
+			entityInfo.info.packData(king.iii, king.healthCom.hp, king.healthCom.hp);
+			entityInfo.initView();
 			WarDataMgr.Ins().infoMap.set(king.iii, entityInfo);
 			return king;
 		}
@@ -175,7 +177,8 @@ module war
 
 			// 血量条
 			let entityInfo = new EntityInfoView();
-			entityInfo.initData(queen.iii, queen.healthCom.hp, queen.healthCom.hp);
+			entityInfo.info.packData(queen.iii, queen.healthCom.hp, queen.healthCom.hp);
+			entityInfo.initView();
 			WarDataMgr.Ins().infoMap.set(queen.iii, entityInfo);
 			return queen;
 		}

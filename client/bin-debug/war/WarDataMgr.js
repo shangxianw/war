@@ -13,7 +13,9 @@ var war;
     var WarDataMgr = (function (_super) {
         __extends(WarDataMgr, _super);
         function WarDataMgr() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this.enemyTarget = [[40, 4], [40, 18], [42, 12]];
+            return _this;
         }
         WarDataMgr.prototype.init = function () {
             this.mapId = 1001;
@@ -80,6 +82,25 @@ var war;
             path = this.astar.findPath(startX, startY, endX, endY, this.grid);
             this.pathMap.set(key, path);
             return path;
+        };
+        WarDataMgr.prototype.getEnemyTarget = function (entity) {
+            var x = war.WarUtils.ToGridX(entity.x);
+            var y = war.WarUtils.ToGridY(entity.y);
+            var distanceArray = [];
+            for (var _i = 0, _a = this.enemyTarget; _i < _a.length; _i++) {
+                var pos = _a[_i];
+                var distance = MathUtils.CalcDistance(x, y, pos[0], pos[1]);
+                distanceArray.push(distance);
+            }
+            var minIndex = 0;
+            var i = 0;
+            for (var _b = 0, distanceArray_1 = distanceArray; _b < distanceArray_1.length; _b++) {
+                var distance = distanceArray_1[_b];
+                if (distance < distanceArray[minIndex])
+                    minIndex = i;
+                i++;
+            }
+            return this.enemyTarget[minIndex];
         };
         WarDataMgr.Ins = function () {
             if (WarDataMgr.instance == null)

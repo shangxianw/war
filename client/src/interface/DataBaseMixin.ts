@@ -151,6 +151,7 @@ class DataBaseMixin
 		let cbData = (new CBData).packData(cbFn, thisObj);
 		arr.push(cbData);
 		cbData.exec();
+		obj.addAttrListener(propName, cbFn, thisObj);
 		return true;
 	}
 
@@ -172,12 +173,18 @@ class DataBaseMixin
 		}
 
 		let arr:CBData[] = otherHash.get(propName);
+		let index:number = 0;
 		for(let cbData of arr)
 		{
 			if(cbData.cbFn == cbFn && cbData.thisObj == thisObj)
 			{
+				obj.removeAttrListener(propName, cbFn, thisObj);
+				cbData.destroy();
+				cbData = null;
+				arr.splice(index);
 				return true;
 			}
+			index++;
 		}
 		LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : ${this} 没有注册 ${propName}`);
 		return false;

@@ -39,7 +39,8 @@ var war;
                 var pathc = WarPool.Ins().pop(war.PathCom);
                 var x = war.WarUtils.ToGridX(entity.x);
                 var y = war.WarUtils.ToGridY(entity.y);
-                var path = war.WarDataMgr.Ins().findPath(x, y, 45, 12);
+                var pos = war.WarDataMgr.Ins().getEnemyTarget(entity);
+                var path = war.WarDataMgr.Ins().findPath(x, y, pos[0], pos[1]);
                 pathc.setPath(path);
                 entity.setCom(pathc);
             }

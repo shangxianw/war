@@ -67,10 +67,7 @@ var war;
             if (this.info != null)
                 this.info.destroyAll();
         };
-        Ka1.prototype.initData = function (info) {
-            if (info == null)
-                return;
-            this.info = info;
+        Ka1.prototype.initView = function () {
             this.addAttrCB(this.info, "kaId", this.OnInitView, this);
             this.addAttrCB(this.info, "currEnergy", this.OnRefreshKaCost, this);
         };

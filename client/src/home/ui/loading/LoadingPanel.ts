@@ -5,7 +5,7 @@ module home
 		public resGroupArray:string[];	// 加载资源组
 		public cfgGroupArray:string[];  // 加载配置表资源
 		public currCount:number;
-		public resGroup = ["loading"];
+		public resGroup = ["common_loading"];
 		public layer = LayerManager.Ins().Panel;
 		public resGroupId:number;
 		protected init()

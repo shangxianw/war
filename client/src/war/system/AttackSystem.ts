@@ -70,7 +70,7 @@ module war
 				if(entityInfo == null)
 					return;
 				
-				tarEntity.healthCom.setHealth(-entity.attackCom.attack * deltaTime);
+				tarEntity.healthCom.setHealth(-entity.attackCom.attack);
 
 				if(tarEntity.healthCom.isDie() == true) // 死亡
 				{

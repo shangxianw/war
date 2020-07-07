@@ -134,18 +134,15 @@ module war
 		private initKa()
 		{
 			let kaId = this.info.getMyNextKa();
-			let kaData = PoolManager.Ins().pop(Ka1Data) as Ka1Data;
-			kaData.packData(kaId, this.preKa.x, this.preKa.y, 0);
-			this.preKa.initData(kaData);
+			this.preKa.info.packData(kaId, this.preKa.x, this.preKa.y, 0);
 
 			let kaArray = this.info.myKaArray.slice(0, 4);
 			for(let i=0, len=4; i<len; i++)
 			{
 				let kaId = this.info.getMyNextKa();
 				let ka = PoolManager.Ins().pop(Ka1) as Ka1;
-				let kaData = PoolManager.Ins().pop(Ka1Data) as Ka1Data;
-				kaData.packData(kaId, this.info.kaX[i], this.info.kaY, 0);
-				ka.initData(kaData);
+				ka.info.packData(kaId, this.info.kaX[i], this.info.kaY, 0);
+				ka.initView();
 				ka.x = this.info.initX;
 				ka.y = this.info.initY;
 				ka.scaleX = ka.scaleY = this.info.initScale;
@@ -275,7 +272,8 @@ module war
 			let pathc:PathCom = WarPool.Ins().pop(PathCom) as PathCom;
 			let x = WarUtils.ToGridX(this.info.createKa.x);
 			let y = WarUtils.ToGridY(this.info.createKa.y);
-			let path = WarDataMgr.Ins().findPath(x, y, 40, 18);
+			let pos = WarDataMgr.Ins().getEnemyTarget(hero);
+			let path = WarDataMgr.Ins().findPath(x, y, pos[0], pos[1]);
 			pathc.setPath(path);
 			hero.setCom(pathc);
 			

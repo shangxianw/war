@@ -65,7 +65,7 @@ var war;
                 var entityInfo = war.WarDataMgr.Ins().infoMap.get(tarEntity.iii);
                 if (entityInfo == null)
                     return;
-                tarEntity.healthCom.setHealth(-entity.attackCom.attack * deltaTime);
+                tarEntity.healthCom.setHealth(-entity.attackCom.attack);
                 if (tarEntity.healthCom.isDie() == true) {
                     var infoView = war.WarDataMgr.Ins().infoMap.get(tarEntity.iii);
                     if (infoView != null && infoView.parent != null && infoView.parent.getChildIndex(infoView) >= 0)
