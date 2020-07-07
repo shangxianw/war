@@ -14,7 +14,7 @@ var home;
         __extends(LoadingPanelData, _super);
         function LoadingPanelData() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.resGroup = ["loading"];
+            _this.resGroup = ["common_loading"];
             _this.layer = LayerManager.Ins().Panel;
             return _this;
         }

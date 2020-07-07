@@ -112,6 +112,7 @@ var DataBaseMixin = (function () {
         var cbData = (new CBData).packData(cbFn, thisObj);
         arr.push(cbData);
         cbData.exec();
+        obj.addAttrListener(propName, cbFn, thisObj);
         return true;
     };
     // ---------------------------------------------------------------------- 给某对象移除属性
@@ -126,11 +127,17 @@ var DataBaseMixin = (function () {
             return true;
         }
         var arr = otherHash.get(propName);
+        var index = 0;
         for (var _i = 0, arr_3 = arr; _i < arr_3.length; _i++) {
             var cbData = arr_3[_i];
             if (cbData.cbFn == cbFn && cbData.thisObj == thisObj) {
+                obj.removeAttrListener(propName, cbFn, thisObj);
+                cbData.destroy();
+                cbData = null;
+                arr.splice(index);
                 return true;
             }
+            index++;
         }
         LogUtils.Warn(Utils.GetClassNameByObj(this) + " : " + this + " \u6CA1\u6709\u6CE8\u518C " + propName);
         return false;

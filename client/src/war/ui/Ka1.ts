@@ -81,12 +81,8 @@ module war
 				this.info.destroyAll();
 		}
 
-		public initData(info:Ka1Data)
+		public initView()
 		{
-			
-			if(info == null)
-				return;
-			this.info = info;
 			this.addAttrCB(this.info, "kaId", this.OnInitView, this);
 			this.addAttrCB(this.info, "currEnergy", this.OnRefreshKaCost, this);
 		}

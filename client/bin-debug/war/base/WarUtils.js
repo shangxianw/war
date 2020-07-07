@@ -86,11 +86,12 @@ var war;
             hero.dirCom.setDir(war.Direction.Right);
             hero.campCom.setCamp(war.Camp.We);
             hero.attackCom.setAttack(10, 100);
-            hero.healthCom.setHealth(1000);
+            hero.healthCom.setHealth(100);
             war.WarDataMgr.Ins().addEntity(hero);
             // 血量条
             var entityInfo = new war.EntityInfoView();
-            entityInfo.initData(hero.iii, hero.healthCom.hp, hero.healthCom.hp);
+            entityInfo.info.packData(hero.iii, hero.healthCom.hp, hero.healthCom.hp);
+            entityInfo.initView();
             war.WarDataMgr.Ins().infoMap.set(hero.iii, entityInfo);
             return hero;
         };
@@ -112,7 +113,8 @@ var war;
             war.WarDataMgr.Ins().addEntity(king);
             // 血量条
             var entityInfo = new war.EntityInfoView();
-            entityInfo.initData(king.iii, king.healthCom.hp, king.healthCom.hp);
+            entityInfo.info.packData(king.iii, king.healthCom.hp, king.healthCom.hp);
+            entityInfo.initView();
             war.WarDataMgr.Ins().infoMap.set(king.iii, entityInfo);
             return king;
         };
@@ -134,7 +136,8 @@ var war;
             war.WarDataMgr.Ins().addEntity(queen);
             // 血量条
             var entityInfo = new war.EntityInfoView();
-            entityInfo.initData(queen.iii, queen.healthCom.hp, queen.healthCom.hp);
+            entityInfo.info.packData(queen.iii, queen.healthCom.hp, queen.healthCom.hp);
+            entityInfo.initView();
             war.WarDataMgr.Ins().infoMap.set(queen.iii, entityInfo);
             return queen;
         };

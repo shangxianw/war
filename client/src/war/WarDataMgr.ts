@@ -14,6 +14,7 @@ module war
 		public startY:number;
 
 		public world:World;
+		public enemyTarget = [[40, 4], [40, 18], [42, 12]];
 
 		protected init()
 		{
@@ -102,6 +103,28 @@ module war
 			path = this.astar.findPath(startX, startY, endX, endY, this.grid);
 			this.pathMap.set(key, path);
 			return path;
+		}
+
+		public getEnemyTarget(entity:EntityBase)
+		{
+			let x = WarUtils.ToGridX(entity.x);
+			let y = WarUtils.ToGridY(entity.y);
+
+			let distanceArray = [];
+			for(let pos of this.enemyTarget)
+			{
+				let distance = MathUtils.CalcDistance(x, y, pos[0], pos[1]);
+				distanceArray.push(distance);
+			}
+			let minIndex = 0;
+			let i = 0;
+			for(let distance of distanceArray)
+			{
+				if(distance < distanceArray[minIndex])
+					minIndex = i;
+				i++;
+			}
+			return this.enemyTarget[minIndex];
 		}
 
 		private static instance:WarDataMgr;

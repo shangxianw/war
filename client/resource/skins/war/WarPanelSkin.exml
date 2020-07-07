@@ -11,8 +11,8 @@
 	<e:Group id="kaGroup" left="0" right="0" top="0" bottom="0" touchEnabled="false">
 	</e:Group>
 	<e:Group id="optionGroup" anchorOffsetY="0" left="0" right="0" bottom="0" top="0" touchEnabled="false">
-		<!--<war:CostBar id="costBar" y="670.23" skinName="CostBarSkin" horizontalCenter="-23"/>-->
-		<!--<war:Ka1 id="preKa" x="198" y="656" skinName="Ka1Skin" anchorOffsetX="106" anchorOffsetY="68" scaleX="0.6" scaleY="0.6"/>-->
+		<war:CostBar id="costBar" y="670.23" skinName="CostBarSkin" horizontalCenter="-23"/>
+		<war:Ka1 id="preKa" x="198" y="656" skinName="Ka1Skin" anchorOffsetX="106" anchorOffsetY="68" scaleX="0.6" scaleY="0.6"/>
 	</e:Group>
 
 </e:Skin>

@@ -36,7 +36,8 @@ module war
 				let pathc:PathCom = WarPool.Ins().pop(PathCom) as PathCom;
 				let x = WarUtils.ToGridX(entity.x);
 				let y = WarUtils.ToGridY(entity.y);
-				let path = WarDataMgr.Ins().findPath(x, y, 45, 12);
+				let pos = WarDataMgr.Ins().getEnemyTarget(entity);
+				let path = WarDataMgr.Ins().findPath(x, y, pos[0], pos[1]);
 				pathc.setPath(path);
 				entity.setCom(pathc);
 			}
