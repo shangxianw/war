@@ -41,11 +41,6 @@ module home
 				this.info.destroyAll();
 		}
 
-		public initData(data:any)
-		{
-			this.info.packData();
-		}
-
 		public initView()
 		{
 			
