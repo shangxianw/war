@@ -40,8 +40,8 @@ class Hash<K, V>
 		if(index < 0)
 			return null;
 		let keyItem = this.keyArray.splice(index, 1); // 所以不要用对象作key，否则就很难destroy掉
-		// if(keyItem["initAll"] != null)
-		// 	keyItem["initAll"]();
+		if(keyItem["initAll"] != null)
+			keyItem["initAll"]();
 		return this.valueArray.splice(index, 1)[0];
 	}
 

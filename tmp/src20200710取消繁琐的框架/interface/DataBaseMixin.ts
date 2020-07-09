@@ -5,13 +5,11 @@ class DataBaseMixin
 	public otherAttrHash:Hash<DataBase, Hash<string ,CBData[]>> // 惰性加载
 
 	// ---------------------------------------------------------------------- 注册属性
-	public addAttrListener(propName:string, cbFn:Function, thisObj:any):number
+	public addAttrListener(propName:string, cbFn:Function, thisObj:any):boolean
 	{
-		if(propName == null || cbFn == null || thisObj == null)
-		{
-			LogUtils.Error(`注册错误`)
-			return -1;
-		}
+		if(LogUtils.CheckParamValid(propName, cbFn, thisObj) == false)
+			return false;
+
 		if(this.attrHash.has(propName) == false)
 		{
 			this.attrHash.set(propName, []);

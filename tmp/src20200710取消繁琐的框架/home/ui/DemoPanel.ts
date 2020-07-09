@@ -6,7 +6,6 @@ module home
 		public layer = LayerManager.Ins().Panel;
 		public resGroupId:number;
 
-		public ad:number;
 		protected init()
 		{
 			
@@ -19,11 +18,7 @@ module home
 
 		public packData()
 		{
-			let homeData = HomeDataMgr.Ins()
-			homeData.addAttrListener("sex", ()=>{
 
-			}, this)
-			this.addAttrListener(homeData, "sex", ) // database注册肯定是注册别人的data，所以此处的addAttrListener需要多一个参数来保存那个data，以便内部销毁
 		}
 	}
 
@@ -48,12 +43,7 @@ module home
 
 		public initView()
 		{
-			this.addAttrListener("ad", this.OnDemoCB, this)
-		}
-
-		private OnDemoCB()
-		{
-
+			
 		}
 	}
 }
