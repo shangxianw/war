@@ -6,8 +6,10 @@ var DataBaseMixin = (function () {
     }
     // ---------------------------------------------------------------------- 注册属性
     DataBaseMixin.prototype.addAttrListener = function (propName, cbFn, thisObj) {
-        if (LogUtils.CheckParamValid(propName, cbFn, thisObj) == false)
-            return false;
+        if (propName == null || cbFn == null || thisObj == null) {
+            LogUtils.Error("\u6CE8\u518C\u9519\u8BEF");
+            return -1;
+        }
         if (this.attrHash.has(propName) == false) {
             this.attrHash.set(propName, []);
         }

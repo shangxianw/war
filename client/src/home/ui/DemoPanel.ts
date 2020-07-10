@@ -23,7 +23,7 @@ module home
 			homeData.addAttrListener("sex", ()=>{
 
 			}, this)
-			this.addAttrListener(homeData, "sex", ) // database注册肯定是注册别人的data，所以此处的addAttrListener需要多一个参数来保存那个data，以便内部销毁
+			this.addAttrListener(homeData, "sex", )
 		}
 	}
 

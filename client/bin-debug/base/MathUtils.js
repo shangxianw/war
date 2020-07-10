@@ -72,7 +72,7 @@ var MathUtils = (function () {
     /**
      * 两点之间的距离
      */
-    MathUtils.CalcTwoPointDistance = function (x1, y1, x2, y2, needKaiFang) {
+    MathUtils.TwoPointDistance = function (x1, y1, x2, y2, needKaiFang) {
         if (needKaiFang === void 0) { needKaiFang = true; }
         var w = x2 - x1;
         var h = y2 - y1;

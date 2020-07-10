@@ -1,16 +1,21 @@
 module war
 {
-	export abstract class ComBase extends DataBase
+	export abstract class ComBase
 	{
-		public comId:number;
-		protected initAll()
+		public hasCode:number;
+		public constructor()
 		{
-			super.initAll();
+
 		}
 
-		public destroyAll()
+		public init()
 		{
-			super.destroyAll();
+
+		}
+
+		public destroy()
+		{
+			
 		}
 	}
 }

@@ -92,6 +92,7 @@ class Main extends eui.UILayer
         LayerManager.Ins();
         NetManager.Ins();
         NetManager.Ins();
+        ViewManager.Ins().open(war.WarPanel)
         // war.WarDataMgr.Ins();
         // SocketManager.Ins()
         // ViewManager.Ins().open(home.LoginPanel);

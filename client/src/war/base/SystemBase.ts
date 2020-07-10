@@ -1,8 +1,11 @@
 module war
 {
-	export abstract class SystemBase extends DataBase
+	export class SystemBase
 	{
-		public systemId:number;
-		public update(...param:any[]){};
+		public hasCode:number;
+		public update(...param:any[])
+		{
+
+		}
 	}
 }

@@ -79,7 +79,7 @@ var war;
                 return this.CreateQueen(kaId, isLeftPos);
         };
         WarUtils.CreateHero = function (kaId) {
-            var hero = WarPool.Ins().pop(war.HeroEntity);
+            var hero = WarPool.Ins().pop(HeroEntity);
             hero.mc.initData("hero_" + kaId, "hero_" + kaId);
             hero.speedCom.setData(40, 0);
             hero.actionCom.setAction(war.Action.None);
@@ -89,14 +89,14 @@ var war;
             hero.healthCom.setHealth(100);
             war.WarDataMgr.Ins().addEntity(hero);
             // 血量条
-            var entityInfo = new war.EntityInfoView();
+            var entityInfo = new EntityInfoView();
             entityInfo.info.packData(hero.iii, hero.healthCom.hp, hero.healthCom.hp);
             entityInfo.initView();
             war.WarDataMgr.Ins().infoMap.set(hero.iii, entityInfo);
             return hero;
         };
         WarUtils.CreateKing = function (kingId, isLeftPos) {
-            var king = PoolManager.Ins().pop(war.KingEntity);
+            var king = PoolManager.Ins().pop(KingEntity);
             king.mc.initData("hero_" + kingId, "hero_" + kingId);
             king.actionCom.setAction(war.Action.None);
             if (isLeftPos == true) {
@@ -112,14 +112,14 @@ var war;
             king.healthCom.setHealth(100);
             war.WarDataMgr.Ins().addEntity(king);
             // 血量条
-            var entityInfo = new war.EntityInfoView();
+            var entityInfo = new EntityInfoView();
             entityInfo.info.packData(king.iii, king.healthCom.hp, king.healthCom.hp);
             entityInfo.initView();
             war.WarDataMgr.Ins().infoMap.set(king.iii, entityInfo);
             return king;
         };
         WarUtils.CreateQueen = function (queenId, isLeftPos) {
-            var queen = PoolManager.Ins().pop(war.QueenEntity);
+            var queen = PoolManager.Ins().pop(QueenEntity);
             queen.mc.initData("hero_" + queenId, "hero_" + queenId);
             queen.actionCom.setAction(war.Action.None);
             if (isLeftPos == true) {
@@ -135,7 +135,7 @@ var war;
             queen.healthCom.setHealth(100);
             war.WarDataMgr.Ins().addEntity(queen);
             // 血量条
-            var entityInfo = new war.EntityInfoView();
+            var entityInfo = new EntityInfoView();
             entityInfo.info.packData(queen.iii, queen.healthCom.hp, queen.healthCom.hp);
             entityInfo.initView();
             war.WarDataMgr.Ins().infoMap.set(queen.iii, entityInfo);

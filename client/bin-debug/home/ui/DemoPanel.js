@@ -23,6 +23,10 @@ var home;
         DemoPanelData.prototype.destroy = function () {
         };
         DemoPanelData.prototype.packData = function () {
+            var homeData = home.HomeDataMgr.Ins();
+            homeData.addAttrListener("sex", function () {
+            }, this);
+            this.addAttrListener(homeData, "sex");
         };
         return DemoPanelData;
     }(DataBase));
@@ -39,10 +43,10 @@ var home;
             if (this.info != null)
                 this.info.destroyAll();
         };
-        DemoPanel.prototype.initData = function (data) {
-            this.info.packData();
-        };
         DemoPanel.prototype.initView = function () {
+            this.addAttrListener("ad", this.OnDemoCB, this);
+        };
+        DemoPanel.prototype.OnDemoCB = function () {
         };
         return DemoPanel;
     }(ViewBase));

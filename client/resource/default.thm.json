@@ -47,7 +47,6 @@
 		"resource/skins/war/EntityInfoViewSkin.exml",
 		"resource/skins/war/HeroEntitySkin.exml",
 		"resource/skins/war/Ka1Skin.exml",
-		"resource/skins/war/WarMatchPanelSkin.exml",
 		"resource/skins/war/WarPanelSkin.exml"
 	],
 	"path": "resource/default.thm.json"
