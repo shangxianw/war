@@ -2,6 +2,7 @@ module war
 {
 	export abstract class SystemBase extends DataBase
 	{
-		public abstract update(deltaTime:number);
+		public sysType:number;
+		public abstract update(entity:EntityBase, deltaTime:number);
 	}
 }

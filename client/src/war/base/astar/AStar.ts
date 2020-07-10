@@ -216,7 +216,7 @@ module astar
 
 		private checkIsCross(x1:number, y1:number, x2:number, y2:number):boolean
 		{
-			let cellSize = war.WarDataMgr.Ins().grid.space;
+			let cellSize = 20;//war.WarDataMgr.Ins().grid.space;
 			let startX = x1*cellSize + cellSize*0.5;
 			let startY = y1*cellSize + cellSize*0.5;
 			let endX = x2*cellSize + cellSize*0.5;
@@ -271,7 +271,7 @@ module astar
 				return false;
 			}
 
-			let cellSize = war.WarDataMgr.Ins().grid.space;
+			let cellSize = 20;//war.WarDataMgr.Ins().grid.space;
 			let xmin = node.x*cellSize;
 			let xmax = xmin+cellSize;
 			let ymin = node.y*cellSize;

@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="HomePanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:home="home.*" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect fillColor="0x8c7a54" left="0" right="0" top="0" bottom="0" visible="false"/>
-	<e:Label text="HOME" horizontalCenter="0" verticalCenter="0"/>
-	<e:Button id="fightBtn" label="fight" x="116.82" y="587.88" skinName="btn1Skin"/>
-</e:Skin>

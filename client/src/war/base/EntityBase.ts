@@ -2,13 +2,13 @@ module war
 {
 	export abstract class EntityBase extends DataBase
 	{
-		public hasCode:number;
-		private comMap:Hash<number, ComBase>
+		public entityType:number;
+		public comMap:Hash<number, ComBase>
 
 		public initAll()
 		{
+			super.initAll()
 			this.comMap = new Hash<number, ComBase>();
-			this.initAll()
 		}
 
 		public destroyAll()
@@ -18,27 +18,27 @@ module war
 				com.destroyAll()
 			}
 			this.comMap.destroy();
-			this.comMap = null;
+			// this.comMap = null;
 			super.destroyAll();
 		}
 
-		public getCom(comType:number)
+		public getComponent(comType:number)
 		{
 			return this.comMap.get(comType);
 		}
 
-		public setCom(com:ComBase)
+		public setComponent(com:ComBase)
 		{
-			if(this.comMap.has(com.hasCode) == true)
+			if(this.comMap.has(com.comType) == true)
 				return false;
-			this.comMap.set(com.hasCode, com);
+			this.comMap.set(com.comType, com);
 		}
 
-		public removeCom(hasCode:number)
+		public removeComponent(comType:number)
 		{
-			if(this.comMap.has(hasCode) == false)
+			if(this.comMap.has(comType) == false)
 				return false;
-			let com:ComBase = this.comMap.remove(hasCode)
+			let com:ComBase = this.comMap.remove(comType)
 			com.destroyAll();
 		}
 	}

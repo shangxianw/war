@@ -110,4 +110,12 @@ class MathUtils
 		else
 			return 0;
 	}
+
+	/**
+	 * 两个矩形是否香蕉(前提是两个矩形无旋转)
+	 */
+	public static CheckTwoRectIntersect(x1:number, y1:number, w1:number, h1:number, x2:number, y2:number, w2:number, h2:number)
+	{
+		return Math.abs(x1 - x2) <= w1/2 + w2/2 && Math.abs(y1 -y2) <= h1/2 + h2/2;
+	}
 }

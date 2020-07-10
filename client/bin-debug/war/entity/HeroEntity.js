@@ -13,13 +13,10 @@ var war;
     var HeroEntity = (function (_super) {
         __extends(HeroEntity, _super);
         function HeroEntity() {
-            return _super.call(this) || this;
+            return _super !== null && _super.apply(this, arguments) || this;
         }
         HeroEntity.prototype.init = function () {
             this.entityType = war.Entity.Hero;
-            this.anchorOffsetX = this.width >> 1;
-            this.anchorOffsetY = this.height;
-            war.DrawUtils.DrawEntityId(this);
         };
         HeroEntity.prototype.destroy = function () {
         };

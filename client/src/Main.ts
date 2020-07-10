@@ -1,4 +1,3 @@
-import DemoPanel = home.DemoPanel;
 //////////////////////////////////////////////////////////////////////////////////////
 //
 //  Copyright (c) 2014-present, Egret Technology.
@@ -85,39 +84,10 @@ class Main extends eui.UILayer
     }
     
     protected createGameScene(): void {
-        applyMixins(DataBase, [DataBaseMixin]);
-        applyMixins(UIBase, [DataBaseMixin, UIBaseMixin]);
-        applyMixins(WItemRenderBase, [DataBaseMixin, UIBaseMixin]);
-        GameUtils.main = this;
-        LayerManager.Ins();
-        NetManager.Ins();
-        NetManager.Ins();
-        ViewManager.Ins().open(war.WarPanel)
-        // war.WarDataMgr.Ins();
-        // SocketManager.Ins()
-        // ViewManager.Ins().open(home.LoginPanel);
-        // ViewManager.Ins().open(war.WarMatchPanel);
+        let warData = new war.WarPanelData()
+        let warPanel = new war.WarPanel()
+        this.addChild(warPanel)
+        warPanel.initData(warData)
+        warPanel.initView();
     }
-}
-
-function neww(cls:any):any
-{
-    return PoolManager.Ins().pop(cls);
-}
-
-function deletee<T>(cls:T)
-{
-    PoolManager.Ins().push(cls);
-}
-
-function removee<T>(cls:T)
-{
-    PoolManager.Ins().push(cls);
-}
-function applyMixins(derivedCtor: any, baseCtors: any[]) {
-    baseCtors.forEach(baseCtor => {
-        Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
-            derivedCtor.prototype[name] = baseCtor.prototype[name];
-        })
-    });
 }

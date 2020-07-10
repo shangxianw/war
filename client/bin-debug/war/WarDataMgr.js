@@ -17,18 +17,38 @@ var war;
         }
         WarDataMgr.prototype.init = function () {
             this.lastTime = 0;
+            this.MaxAiCount = 20;
             this.sysArray = [];
-            this.world = new war.World();
             this.entityMap = new Hash();
+            this.mouseX = null;
+            this.mouseY = null;
+            this.warPanel = null;
+            this.bgEntity = null;
+            this.renderSystem = new war.RenderSystem();
+            this.sysArray.push(this.renderSystem);
+            this.inputSystem = new war.InputSystem();
+            this.sysArray.push(this.inputSystem);
+            this.decaySystem = new war.DecaySystem();
+            this.sysArray.push(this.decaySystem);
+            this.aiSystem = new war.AISystem();
+            this.sysArray.push(this.aiSystem);
+            this.collisionSystem = new war.CollisionSystem();
+            this.sysArray.push(this.collisionSystem);
         };
         WarDataMgr.prototype.destroy = function () {
-            this.world.destroy();
-            for (var _i = 0, _a = this.entityMap.values(); _i < _a.length; _i++) {
-                var item = _a[_i];
-                item.destroy();
-            }
-            this.entityMap.destroy();
+            this.bgEntity = null;
+            this.destroyEntityMap();
             this.entityMap = null;
+            this.renderSystem.destroyAll();
+            this.renderSystem = null;
+            this.inputSystem.destroyAll();
+            this.inputSystem = null;
+            this.decaySystem.destroyAll();
+            this.decaySystem = null;
+            this.aiSystem.destroyAll();
+            this.aiSystem = null;
+            this.collisionSystem.destroyAll();
+            this.collisionSystem = null;
             this.sysArray.length = 0;
         };
         WarDataMgr.prototype.startWar = function () {
@@ -36,6 +56,11 @@ var war;
         };
         WarDataMgr.prototype.endWar = function () {
             egret.stopTick(this.update, this);
+            this.bgEntity = null;
+            this.destroyEntityMap();
+            this.mouseX = null;
+            this.mouseY = null;
+            this.warPanel.OnEndWar();
         };
         WarDataMgr.prototype.update = function (currTime) {
             if (currTime === void 0) { currTime = null; }
@@ -48,6 +73,11 @@ var war;
                 entity = entityArray[i];
                 if (entity == null)
                     continue;
+                this.inputSystem.update(entity, deltaTime);
+                this.decaySystem.update(entity, deltaTime);
+                this.aiSystem.update(entity, deltaTime);
+                this.collisionSystem.update(entity, deltaTime);
+                this.renderSystem.update(entity, deltaTime);
             }
             return true;
         };
@@ -57,10 +87,17 @@ var war;
                 return false;
             this.entityMap.set(entity.hasCode, entity);
         };
-        WarDataMgr.prototype.removeEntity = function (id) {
-            if (this.entityMap.has(id) == false)
+        WarDataMgr.prototype.removeEntity = function (hasCode) {
+            if (this.entityMap.has(hasCode) == false)
                 return null;
-            return this.entityMap.remove(id);
+            return this.entityMap.remove(hasCode);
+        };
+        WarDataMgr.prototype.destroyEntityMap = function () {
+            for (var _i = 0, _a = this.entityMap.values(); _i < _a.length; _i++) {
+                var item = _a[_i];
+                item.destroyAll();
+            }
+            this.entityMap.destroy();
         };
         WarDataMgr.Ins = function () {
             if (WarDataMgr.instance == null)
@@ -68,7 +105,7 @@ var war;
             return WarDataMgr.instance;
         };
         return WarDataMgr;
-    }(DataBase));
+    }(war.DataBase));
     war.WarDataMgr = WarDataMgr;
     __reflect(WarDataMgr.prototype, "war.WarDataMgr");
 })(war || (war = {}));

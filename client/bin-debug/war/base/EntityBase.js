@@ -13,37 +13,37 @@ var war;
     var EntityBase = (function (_super) {
         __extends(EntityBase, _super);
         function EntityBase() {
-            var _this = _super.call(this) || this;
-            _this.init();
-            return _this;
+            return _super !== null && _super.apply(this, arguments) || this;
         }
-        EntityBase.prototype.init = function () {
+        EntityBase.prototype.initAll = function () {
+            _super.prototype.initAll.call(this);
             this.comMap = new Hash();
         };
-        EntityBase.prototype.destroy = function () {
+        EntityBase.prototype.destroyAll = function () {
             for (var _i = 0, _a = this.comMap.values(); _i < _a.length; _i++) {
                 var com = _a[_i];
-                com.destroy();
+                com.destroyAll();
             }
             this.comMap.destroy();
-            this.comMap = null;
+            // this.comMap = null;
+            _super.prototype.destroyAll.call(this);
         };
-        EntityBase.prototype.getCom = function (comType) {
+        EntityBase.prototype.getComponent = function (comType) {
             return this.comMap.get(comType);
         };
-        EntityBase.prototype.setCom = function (com) {
-            if (this.comMap.has(com.hasCode) == true)
+        EntityBase.prototype.setComponent = function (com) {
+            if (this.comMap.has(com.comType) == true)
                 return false;
-            this.comMap.set(com.hasCode, com);
+            this.comMap.set(com.comType, com);
         };
-        EntityBase.prototype.removeCom = function (hasCode) {
-            if (this.comMap.has(hasCode) == false)
+        EntityBase.prototype.removeComponent = function (comType) {
+            if (this.comMap.has(comType) == false)
                 return false;
-            var com = this.comMap.remove(hasCode);
-            com.destroy();
+            var com = this.comMap.remove(comType);
+            com.destroyAll();
         };
         return EntityBase;
-    }(eui.Component));
+    }(war.DataBase));
     war.EntityBase = EntityBase;
     __reflect(EntityBase.prototype, "war.EntityBase");
 })(war || (war = {}));

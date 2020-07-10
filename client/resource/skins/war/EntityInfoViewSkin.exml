@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="EntityInfoViewSkin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" width="0" height="0">
-	<e:ProgressBar id="healthBar" skinName="HealthBarSkin" horizontalCenter="0" slideDuration="0"/>
-</e:Skin>

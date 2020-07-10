@@ -4,7 +4,7 @@ module war
 	{
 		protected init()
 		{
-
+			this.comType = Component.Demo;
 		}
 
 		protected destroy()

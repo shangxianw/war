@@ -2,17 +2,17 @@ module war
 {
 	export class DemoSystem extends SystemBase
 	{
-		public init()
+		protected init()
 		{
-
+			this.sysType = System.Demo;
 		}
 
-		public destroy()
+		protected destroy()
 		{
 
 		}
 		
-		public update(deltaTime:number)
+		public update(entity:EntityBase, deltaTime:number)
 		{
 			
 		}

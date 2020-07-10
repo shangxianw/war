@@ -97,6 +97,12 @@ var MathUtils = (function () {
         else
             return 0;
     };
+    /**
+     * 两个矩形是否香蕉(前提是两个矩形无旋转)
+     */
+    MathUtils.CheckTwoRectIntersect = function (x1, y1, w1, h1, x2, y2, w2, h2) {
+        return Math.abs(x1 - x2) <= w1 / 2 + w2 / 2 && Math.abs(y1 - y2) <= h1 / 2 + h2 / 2;
+    };
     return MathUtils;
 }());
 __reflect(MathUtils.prototype, "MathUtils");

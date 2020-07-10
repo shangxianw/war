@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="HeroEntitySkin" width="100" height="200" xmlns:e="http://ns.egret.com/eui">
-	<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0xfcce44"/>
-	<e:Rect width="10" height="10" strokeAlpha="2" fillColor="0x1a77ed" bottom="0" horizontalCenter="0"/>
-</e:Skin>

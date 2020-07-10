@@ -163,7 +163,7 @@ var astar;
             return this.openArray.splice(minIndex, 1)[0];
         };
         AStar.prototype.checkIsCross = function (x1, y1, x2, y2) {
-            var cellSize = war.WarDataMgr.Ins().grid.space;
+            var cellSize = 20; //war.WarDataMgr.Ins().grid.space;
             var startX = x1 * cellSize + cellSize * 0.5;
             var startY = y1 * cellSize + cellSize * 0.5;
             var endX = x2 * cellSize + cellSize * 0.5;
@@ -210,7 +210,7 @@ var astar;
                     return true;
                 return false;
             }
-            var cellSize = war.WarDataMgr.Ins().grid.space;
+            var cellSize = 20; //war.WarDataMgr.Ins().grid.space;
             var xmin = node.x * cellSize;
             var xmax = xmin + cellSize;
             var ymin = node.y * cellSize;

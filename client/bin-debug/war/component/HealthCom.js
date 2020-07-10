@@ -10,27 +10,18 @@ r.prototype = e.prototype, t.prototype = new r();
 };
 var war;
 (function (war) {
-    /**
-     * 健康系统
-     * 主要保存血量和蓝量(当然这里没有)
-     */
     var HealthCom = (function (_super) {
         __extends(HealthCom, _super);
         function HealthCom() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         HealthCom.prototype.init = function () {
-            this.comId = war.Component.Health;
-            this.hp = 0;
+            this.comType = war.Component.Health;
         };
         HealthCom.prototype.destroy = function () {
         };
-        HealthCom.prototype.setHealth = function (addHp) {
-            this.hp = this.hp + addHp;
-            this.flushAttr("hp");
-        };
-        HealthCom.prototype.isDie = function () {
-            return this.hp <= 0;
+        HealthCom.prototype.setHp = function (hp) {
+            this.hp = hp;
         };
         return HealthCom;
     }(war.ComBase));

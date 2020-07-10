@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="HeroKa2Skin" width="268" height="237" currentState="common" xmlns:e="http://ns.egret.com/eui" xmlns:home="home.*" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing" states="common,active" >
-	<e:Image source="bg_lz_tc02_png" scale9Grid="26,25,19,17" left="0" right="0" top="0" bottom="0" includeIn="active"/>
-	<home:HeroKa id="heroKa" skinName="HeroKaSkin" horizontalCenter="3" verticalCenter="-30" scaleX.common="0.9" scaleY.common="0.9" name="heroKa"/>
-	<ns1:WButton id="infoBtn" label="信息" skinName="btn1Skin" horizontalCenter="-53.5" verticalCenter="69" scaleX="0.9" scaleY="0.9" includeIn="active" name="infoBtn" touchChildren="false"/>
-	<ns1:WButton id="fightBtn" label="出战" horizontalCenter="57.5" verticalCenter="69" scaleX="0.9" scaleY="0.9" skinName="btn2Skin" includeIn="active" name="fightBtn" touchChildren="false"/>
-</e:Skin>
