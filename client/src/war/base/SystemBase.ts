@@ -1,11 +1,7 @@
 module war
 {
-	export class SystemBase
+	export abstract class SystemBase extends DataBase
 	{
-		public hasCode:number;
-		public update(...param:any[])
-		{
-
-		}
+		public abstract update(deltaTime:number);
 	}
 }

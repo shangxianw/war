@@ -1,28 +1,25 @@
 module war
 {
-	export abstract class EntityBase extends eui.Component
+	export abstract class EntityBase extends DataBase
 	{
 		public hasCode:number;
 		private comMap:Hash<number, ComBase>
-		public constructor()
-		{
-			super();
-			this.init()
-		}
 
-		public init()
+		public initAll()
 		{
 			this.comMap = new Hash<number, ComBase>();
+			this.initAll()
 		}
 
-		public destroy()
+		public destroyAll()
 		{
 			for(let com of this.comMap.values())
 			{
-				com.destroy()
+				com.destroyAll()
 			}
 			this.comMap.destroy();
 			this.comMap = null;
+			super.destroyAll();
 		}
 
 		public getCom(comType:number)
@@ -42,7 +39,7 @@ module war
 			if(this.comMap.has(hasCode) == false)
 				return false;
 			let com:ComBase = this.comMap.remove(hasCode)
-			com.destroy();
+			com.destroyAll();
 		}
 	}
 }
