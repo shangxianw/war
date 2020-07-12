@@ -16,48 +16,24 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         PosCom.prototype.init = function () {
-            this.x = 0;
-            this.y = 0;
-            this.width = 0;
-            this.height = 0;
-            this.anchorX = this.anchorY = 0;
-            this.scaleX = this.scaleY = 1;
-            this.color = 0x000000;
-            this.alpha = 1;
             this.comType = war.Component.Pos;
         };
         PosCom.prototype.destroy = function () {
-        };
-        PosCom.prototype.setX = function (x) {
-            this.x = x;
-        };
-        PosCom.prototype.setY = function (y) {
-            this.y = y;
         };
         PosCom.prototype.setXY = function (x, y) {
             this.x = x;
             this.y = y;
         };
-        PosCom.prototype.setWidth = function (w) {
-            this.width = w;
+        PosCom.prototype.setWH = function (width, height) {
+            this.width = width;
+            this.height = height;
         };
-        PosCom.prototype.setHeight = function (h) {
-            this.height = h;
+        // 获取左上角坐标
+        PosCom.prototype.getOriX = function () {
+            return this.x - this.width / 2;
         };
-        PosCom.prototype.setSize = function (w, h) {
-            this.width = w;
-            this.height = h;
-        };
-        PosCom.prototype.setColor = function (color) {
-            this.color = color;
-        };
-        PosCom.prototype.setAnchorXY = function (x, y) {
-            this.anchorX = x;
-            this.anchorY = y;
-        };
-        PosCom.prototype.setScaleXY = function (x, y) {
-            this.scaleX = x;
-            this.scaleY = y;
+        PosCom.prototype.getOriY = function () {
+            return this.y - this.height; ///2; // ??????????????????????????????????
         };
         return PosCom;
     }(war.ComBase));

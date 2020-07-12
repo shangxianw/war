@@ -2,3 +2,32 @@
 所有图片都倒到一张4096的尺寸的图片上，再压缩
 如果ecs有东西要映射到warPanel的，用事件才对！
 碰撞问题！
+事件管理器
+
+消除一个对象，要 destroyAll
+内部销毁方法是destroy
+
+
+render对象，本身宽高是0，这样就不用设置锚点了。锚点默认在
+因为是个竖版跳跃游戏，所以只需要两个X就可以了，而不需要专门定制一个方向，再加一个速度
+
+每一帧都重绘矢量图形会越来越卡，但应该是没有clear的原因，对的，如果矢量图形过多，会导致卡顿
+
+
+如果要比较位置之类的，一定不要拿render来弄，因为他是最后才执行的，也就意味着第一次执行时，render的坐标为0.
+应该拿poscom来比较，所有的操作都是操作poscom的。然后rendersystem来刷新状态！
+如镜头系统的比较
+let render = renderCom.render;
+let point = render.parent.localToGlobal(posCom.x, posCom.y);
+if(point.y >= 640)
+	return;
+
+Math.max(Math.random() * topLine, bottomLine); 这种写法得出的概率是不等的。
+应该为Math.floor(bottomLine + Math.random() * topLine);
+
+别把事情搞那么麻烦，序列帧资源的问题真的奇怪，没销毁，复用就不显示，要换在9377那套，显示就是显示，不显示就是不显示，哪那么多规则
+
+Ai那一块特别恶心，其实分解出一步步就好：首先标准线画出来，标准线对了，后面能继续走。
+
+
+矢量图性能消耗 > 创建对象 > 循环

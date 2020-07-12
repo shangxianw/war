@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="MenuPanelSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0x1fb4d3"/>
+	<e:Button id="startBtn" label="开始游戏" skinName="skins.ButtonSkin" horizontalCenter="0" verticalCenter="0" scaleX="2" scaleY="2"/>
+</e:Skin>

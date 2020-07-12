@@ -23,65 +23,31 @@ var war;
         CollisionSystem.prototype.update = function (entity, deltaTime) {
             if (entity == null)
                 return;
-            var ctrlCom = entity.getComponent(war.Component.Ctrl);
-            if (ctrlCom == null)
-                return;
+            var rigidCom = entity.getComponent(war.Component.Rigid);
             var posCom = entity.getComponent(war.Component.Pos);
-            if (posCom == null)
+            var speedCom = entity.getComponent(war.Component.Speed);
+            var ctrlCom = entity.getComponent(war.Component.Ctrl);
+            if (rigidCom == null || posCom == null || speedCom == null || ctrlCom == null)
                 return;
-            var healthCom = entity.getComponent(war.Component.Health);
-            if (healthCom == null)
-                return;
-            var warData = war.WarDataMgr.Ins();
-            var entityArray = DataUtils.CopyArray(warData.entityMap.values());
-            var entity2;
-            for (var i = 0, len = entityArray.length; i < len; i++) {
-                entity2 = entityArray[i];
+            var entityArray = DataUtils.CopyArray(war.WarDataMgr.Ins().entityMap.values());
+            for (var _i = 0, entityArray_1 = entityArray; _i < entityArray_1.length; _i++) {
+                var entity2 = entityArray_1[_i];
                 if (entity2 == null)
                     continue;
-                if (entity2.hasCode == entity.hasCode)
+                if (entity.hasCode == entity2.hasCode)
                     continue;
-                var aiCom = entity2.getComponent(war.Component.AI); // 只和ai发生碰撞（即除了背景板）
-                if (aiCom == null)
-                    continue;
+                var rigidCom2 = entity2.getComponent(war.Component.Rigid);
                 var posCom2 = entity2.getComponent(war.Component.Pos);
-                if (posCom2 == null)
+                if (rigidCom2 == null || posCom2 == null)
                     continue;
-                var flag = MathUtils.CheckTwoRectIntersect(posCom.x - posCom.width / 2, posCom.y - posCom.height / 2, posCom.width, posCom.height, posCom2.x - posCom2.width / 2, posCom2.y - posCom2.height / 2, posCom2.width, posCom2.height);
+                var flag = MathUtils.CheckTwoRectIntersect(posCom.getOriX(), posCom.getOriY(), posCom.width, posCom.height, posCom2.getOriX(), posCom2.getOriY(), posCom2.width, posCom2.height);
                 if (flag == false)
                     continue;
-                if (aiCom.aiType == war.AIType.Nice) {
-                    healthCom.setHp(healthCom.hp + posCom2.width / 2);
-                    var score = Math.floor(posCom2.width / 2);
-                    war.WarDataMgr.Ins().warPanel.OnRefreshScore(score);
-                    this.changeBgColor(1);
-                }
-                else {
-                    healthCom.setHp(healthCom.hp - posCom2.width / 2);
-                    var score = Math.floor(posCom2.width / 2);
-                    war.WarDataMgr.Ins().warPanel.OnRefreshScore(-score);
-                    this.changeBgColor(2);
-                }
-                posCom.setScaleXY(healthCom.hp / 100, healthCom.hp / 100);
-                war.WarUtils.RemoveEntity(entity2);
-            }
-        };
-        CollisionSystem.prototype.changeBgColor = function (type) {
-            var bgEntity = war.WarDataMgr.Ins().bgEntity;
-            if (bgEntity == null)
-                return;
-            var posCom = bgEntity.getComponent(war.Component.Pos);
-            if (posCom == null)
-                return;
-            if (type == 1) {
-                posCom.setColor(war.EntityColor.NiceBg);
-                // let bgPosCom = WarDataMgr.Ins().bgEntity.getComponent(Component.Pos) as PosCom
-                // bgPosCom.alpha = 1;
-            }
-            else {
-                posCom.setColor(war.EntityColor.BadBg);
-                var bgPosCom = war.WarDataMgr.Ins().bgEntity.getComponent(war.Component.Pos);
-                bgPosCom.alpha = 1;
+                if (speedCom.isUp() == true)
+                    continue;
+                if (posCom.y > posCom2.y)
+                    continue;
+                speedCom.speedY = war.WarDataMgr.Ins().jumpSpeed;
             }
         };
         return CollisionSystem;

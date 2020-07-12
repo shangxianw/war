@@ -16,20 +16,20 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         WarPanelData.prototype.init = function () {
+            this.resGroup = [];
+            this.layer = LayerManager.Ins().war;
         };
         WarPanelData.prototype.destroy = function () {
-            war.WarDataMgr.Ins().endWar();
-            war.WarDataMgr.Ins().destroyAll();
         };
         WarPanelData.prototype.startWar = function () {
-            this.score = 0;
-            war.WarDataMgr.Ins();
+            war.WarDataMgr.Ins().updateStepLevel();
             war.WarDataMgr.Ins().startWar();
         };
         WarPanelData.prototype.endWar = function () {
+            war.WarDataMgr.Ins().endWar();
         };
         return WarPanelData;
-    }(war.DataBase));
+    }(ViewData));
     war.WarPanelData = WarPanelData;
     __reflect(WarPanelData.prototype, "war.WarPanelData");
     var WarPanel = (function (_super) {
@@ -42,80 +42,80 @@ var war;
         WarPanel.prototype.init = function () {
         };
         WarPanel.prototype.destroy = function () {
-            if (this.info != null)
-                this.info.destroyAll();
-            this.startBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnStarTap, this);
-            this.gameArea.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchBegin, this);
-            this.gameArea.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchMove, this);
-            this.gameArea.removeEventListener(egret.TouchEvent.TOUCH_END, this.OnTouchEnd, this);
-            this.gameArea.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnTouchRelease, this);
+            // MessageMgr.Ins().unObserve(1, this.OnRefreshScore, this);
+            MessageMgr.Ins().unObserve(2, this.OnRefreshScro, this);
+            MessageMgr.Ins().unObserve(3, this.OnEndGame, this);
+            this.optionGroup.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnOptionTap, this);
+            this.optionGroup.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnOptionMoveTap, this);
+            this.optionGroup.removeEventListener(egret.TouchEvent.TOUCH_END, this.OnOptionEndTap, this);
+            this.optionGroup.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnOptionOutsideTap, this);
+            this.restartBtn2.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnReStartTap, this);
+            this.restartBtn2.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnReStart2Tap, this);
         };
-        WarPanel.prototype.initData = function (data) {
-            this.info = data;
-            war.WarDataMgr.Ins().warPanel = this;
-        };
-        WarPanel.prototype.initView = function () {
-            this.startBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnStarTap, this);
-            this.gameArea.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchBegin, this);
-            this.gameArea.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchMove, this);
-            this.gameArea.addEventListener(egret.TouchEvent.TOUCH_END, this.OnTouchEnd, this);
-            this.gameArea.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnTouchRelease, this);
-        };
-        WarPanel.prototype.OnStarTap = function (e) {
-            this.optionGroup.visible = false;
+        WarPanel.prototype.open = function () {
+            this.endGameGroup.visible = false;
+            this.score.text = "\u5206\u6570\uFF1A" + 0;
+            this.gameScro.viewport.scrollV = 0;
             this.info.startWar();
-            war.WarUtils.CreateBgEntity(0, 0, this.gameArea.width, this.gameArea.height, this.gameArea);
-            var p = this.optionGroup.localToGlobal(e.stageX, e.stageY);
-            var p2 = this.gameArea.globalToLocal(p.x, p.y);
-            war.WarUtils.CreateMe(p2.x, p2.y, 50, 50, this.gameArea);
+            war.WarUtils.CreatePlayerEntity(200, 1000, this.gameArea);
+            // WarUtils.CreateStepEntity(360, 1280, 720, 50, this.gameArea);
+            war.WarUtils.CreateStepEntity(360, 1200, 720, 50, this.gameArea);
+            // WarUtils.CreateStepEntity(360, 500, 720, 50, this.gameArea);
+            // WarUtils.CreateStepEntity(360, 200, 720, 50, this.gameArea);
+            // WarUtils.CreateStepEntity(360, -100, 720, 50, this.gameArea);
+            // WarUtils.CreateStepEntity(360, -400, 720, 50, this.gameArea);
+            MessageMgr.Ins().observe(1, this.OnRefreshScore, this);
+            MessageMgr.Ins().observe(2, this.OnRefreshScro, this);
+            MessageMgr.Ins().observe(3, this.OnEndGame, this);
+            this.optionGroup.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnOptionTap, this);
+            this.optionGroup.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnOptionMoveTap, this);
+            this.optionGroup.addEventListener(egret.TouchEvent.TOUCH_END, this.OnOptionEndTap, this);
+            this.optionGroup.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnOptionOutsideTap, this);
+            this.restartBtn2.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnReStartTap, this);
+            this.restartBtn2.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnReStart2Tap, this);
+            war.DrawUtils.DrawStandardLine(war.WarDataMgr.Ins().currStepLevel, this.gameArea);
         };
-        WarPanel.prototype.OnTouchBegin = function (e) {
-            var p = this.optionGroup.localToGlobal(e.stageX, e.stageY);
-            var p2 = this.gameArea.globalToLocal(p.x, p.y);
-            war.WarDataMgr.Ins().mouseX = p2.x;
-            war.WarDataMgr.Ins().mouseY = p2.y;
+        WarPanel.prototype.OnRefreshScore = function (score) {
+            this.score.text = "\u5206\u6570\uFF1A" + score;
         };
-        WarPanel.prototype.OnTouchMove = function (e) {
-            var p = this.optionGroup.localToGlobal(e.stageX, e.stageY);
-            var p2 = this.gameArea.globalToLocal(p.x, p.y);
-            if (p2.x < 0)
-                p2.x = 0;
-            else if (p2.x > this.gameArea.width)
-                p2.x = this.gameArea.width;
-            if (p2.y < 0)
-                p2.y = 0;
-            else if (p2.y > this.gameArea.height)
-                p2.y = this.gameArea.height;
-            war.WarDataMgr.Ins().mouseX = p2.x;
-            war.WarDataMgr.Ins().mouseY = p2.y;
+        WarPanel.prototype.OnRefreshScro = function (addScro) {
+            this.gameScro.viewport.scrollV += addScro;
+            this.score.text = "\u5206\u6570\uFF1A" + Math.floor(Math.abs(this.gameScro.viewport.scrollV)) + " stepCount:" + war.WarDataMgr.Ins().MaxStepCount;
+            // WarDataMgr.Ins().updateStepLevel(WarDataMgr.Ins().currStepLevel - addScro);
         };
-        WarPanel.prototype.OnTouchEnd = function (e) {
-            war.WarDataMgr.Ins().mouseX = null;
-            war.WarDataMgr.Ins().mouseY = null;
+        WarPanel.prototype.OnEndGame = function () {
+            this.info.endWar();
+            this.endGameGroup.visible = true;
         };
-        WarPanel.prototype.OnTouchRelease = function (e) {
-            war.WarDataMgr.Ins().mouseX = null;
-            war.WarDataMgr.Ins().mouseY = null;
+        // ---------------------------------------------------------------------- Event
+        WarPanel.prototype.OnOptionTap = function (e) {
+            war.WarDataMgr.Ins().beginX = e.localX;
+            war.WarDataMgr.Ins().endX = e.localX;
         };
-        WarPanel.prototype.OnEndWar = function () {
-            this.optionGroup.visible = true;
-            this.startBtn.label = "\u91CD\u65B0\u5F00\u59CB";
-            this.info.score = 0;
-            this.score.text = "\u5206\u6570:" + this.info.score;
-            this.destroyGameArea();
+        WarPanel.prototype.OnOptionMoveTap = function (e) {
+            war.WarDataMgr.Ins().beginX;
+            war.WarDataMgr.Ins().endX = e.localX;
+            console.log(war.WarDataMgr.Ins().beginX, war.WarDataMgr.Ins().endX);
         };
-        WarPanel.prototype.OnRefreshScore = function (addScore) {
-            this.info.score += addScore;
-            this.score.text = "\u5206\u6570:" + this.info.score;
+        WarPanel.prototype.OnOptionEndTap = function (e) {
+            war.WarDataMgr.Ins().beginX = 0;
+            war.WarDataMgr.Ins().endX = 0;
         };
-        WarPanel.prototype.destroyGameArea = function () {
-            while (this.gameArea.numChildren > 0) {
-                var child = this.gameArea.removeChildAt(0);
-                child.destroyAll();
-            }
+        WarPanel.prototype.OnOptionOutsideTap = function (e) {
+            war.WarDataMgr.Ins().beginX = 0;
+            war.WarDataMgr.Ins().endX = 0;
+        };
+        WarPanel.prototype.OnReStartTap = function () {
+            this.info.endWar();
+            this.destroy();
+            this.open();
+        };
+        WarPanel.prototype.OnReStart2Tap = function () {
+            this.endGameGroup.visible = false;
+            this.info.startWar();
         };
         return WarPanel;
-    }(eui.Component));
+    }(ViewBase));
     war.WarPanel = WarPanel;
     __reflect(WarPanel.prototype, "war.WarPanel");
 })(war || (war = {}));

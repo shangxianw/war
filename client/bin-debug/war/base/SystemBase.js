@@ -16,7 +16,7 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         return SystemBase;
-    }(war.DataBase));
+    }(DataBase));
     war.SystemBase = SystemBase;
     __reflect(SystemBase.prototype, "war.SystemBase");
 })(war || (war = {}));

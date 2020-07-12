@@ -84,10 +84,13 @@ class Main extends eui.UILayer
     }
     
     protected createGameScene(): void {
-        let warData = new war.WarPanelData()
-        let warPanel = new war.WarPanel()
-        this.addChild(warPanel)
-        warPanel.initData(warData)
-        warPanel.initView();
+        war.WarDataMgr.Ins();
+        LayerManager.Ins().initLayer(this);
+        ViewManager.Ins().open(home.MenuPanel);
+        // let warData = new war.WarPanelData()
+        // let warPanel = new war.WarPanel()
+        // this.addChild(warPanel)
+        // warPanel.initData(warData)
+        // warPanel.initView();
     }
 }

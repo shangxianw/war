@@ -22,7 +22,7 @@ var war;
             _super.prototype.destroyAll.call(this);
         };
         return ComBase;
-    }(war.DataBase));
+    }(DataBase));
     war.ComBase = ComBase;
     __reflect(ComBase.prototype, "war.ComBase");
 })(war || (war = {}));

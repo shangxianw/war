@@ -3,7 +3,6 @@ module war
 	export class RenderCom extends ComBase
 	{
 		public render:RenderBase;
-		public parent:egret.DisplayObjectContainer
 		protected init()
 		{
 			this.comType = Component.Render;
@@ -11,16 +10,19 @@ module war
 
 		protected destroy()
 		{
+			this.render.destroyAll();
 			if(this.render.parent != null)
 				this.render.parent.removeChild(this.render);
-			this.render.destroyAll();
-			this.parent = null;
 		}
 
-		public setRender(uiobj:RenderBase, parent:egret.DisplayObjectContainer)
+		public setRender(render:RenderBase)
 		{
-			this.render = uiobj;
-			this.parent = parent;
+			this.render = render;
+		}
+
+		public updateRender(posCom:PosCom)
+		{
+			this.render.updateRender(posCom);
 		}
 	}
 }

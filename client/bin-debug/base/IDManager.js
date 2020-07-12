@@ -6,14 +6,14 @@ var IDManager = (function () {
         this.init();
     }
     IDManager.prototype.init = function () {
-        this.newId = 0;
+        this.hasCode = 0;
     };
     IDManager.prototype.destroy = function () {
-        this.newId = 0;
+        this.hasCode = 0;
     };
-    IDManager.prototype.getNewId = function () {
-        this.newId++;
-        return this.newId;
+    IDManager.prototype.getHashCode = function () {
+        this.hasCode++;
+        return this.hasCode;
     };
     IDManager.Ins = function () {
         if (IDManager.Instance == null)

@@ -16,11 +16,14 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         DemoRender.prototype.init = function () {
+            this.renderType = war.Render.Demo;
         };
         DemoRender.prototype.destroy = function () {
         };
+        DemoRender.prototype.updateRender = function () {
+        };
         return DemoRender;
-    }(war.UIBase));
+    }(war.RenderBase));
     war.DemoRender = DemoRender;
     __reflect(DemoRender.prototype, "war.DemoRender");
 })(war || (war = {}));

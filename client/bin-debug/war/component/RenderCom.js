@@ -19,14 +19,15 @@ var war;
             this.comType = war.Component.Render;
         };
         RenderCom.prototype.destroy = function () {
+            this.render.destroyAll();
             if (this.render.parent != null)
                 this.render.parent.removeChild(this.render);
-            this.render.destroyAll();
-            this.parent = null;
         };
-        RenderCom.prototype.setRender = function (uiobj, parent) {
-            this.render = uiobj;
-            this.parent = parent;
+        RenderCom.prototype.setRender = function (render) {
+            this.render = render;
+        };
+        RenderCom.prototype.updateRender = function (posCom) {
+            this.render.updateRender(posCom);
         };
         return RenderCom;
     }(war.ComBase));

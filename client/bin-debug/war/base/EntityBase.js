@@ -43,7 +43,7 @@ var war;
             com.destroyAll();
         };
         return EntityBase;
-    }(war.DataBase));
+    }(DataBase));
     war.EntityBase = EntityBase;
     __reflect(EntityBase.prototype, "war.EntityBase");
 })(war || (war = {}));

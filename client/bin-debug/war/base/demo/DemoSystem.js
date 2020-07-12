@@ -21,6 +21,11 @@ var war;
         DemoSystem.prototype.destroy = function () {
         };
         DemoSystem.prototype.update = function (entity, deltaTime) {
+            if (entity == null)
+                return;
+            var posCom = entity.getComponent(war.Component.Pos);
+            if (posCom == null)
+                return;
         };
         return DemoSystem;
     }(war.SystemBase));

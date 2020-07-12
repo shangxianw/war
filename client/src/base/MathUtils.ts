@@ -112,10 +112,30 @@ class MathUtils
 	}
 
 	/**
-	 * 两个矩形是否香蕉(前提是两个矩形无旋转)
+	 * 两个矩形是否相交(前提是两个矩形无旋转)
 	 */
 	public static CheckTwoRectIntersect(x1:number, y1:number, w1:number, h1:number, x2:number, y2:number, w2:number, h2:number)
 	{
-		return Math.abs(x1 - x2) <= w1/2 + w2/2 && Math.abs(y1 -y2) <= h1/2 + h2/2;
+		return Math.max(x1, x2) <= Math.min(x1+w1, x2+w2) && Math.max(y1, y2) <= Math.min(y1+h1, y2+h2);
+		// 白鹭自带一些碰撞检测
+		// let a = new egret.Rectangle(x1, y1, w1, h1);
+		// let b = new egret.Rectangle(x2, y2, w2, h2);
+		// return a.intersects(b);
+	}
+
+	/**
+	 * 四舍五入到某个标准的整数倍位置
+	 * @param value 当前值
+	 * @param space 间隔
+	 * @returns 返回该值更靠近space倍数的那个数
+	 */
+	public static CalcRoundBySpace(value:number, space:number):number
+	{
+		let times = Math.floor(value / space);
+		let bottomLine = times * space;
+		let topLine = (times + 1) * space;
+		if(topLine - value <= value - bottomLine)
+			return topLine;
+		return bottomLine;
 	}
 }

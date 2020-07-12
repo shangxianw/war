@@ -3,58 +3,36 @@ module war
 	export enum Component
 	{
 		Demo = 0,
-		Render = 1,
-		Pos = 2,
-		Ctrl = 3,
-		Health = 4,
-		AI = 5
+		Ctrl = 1,
+		Render = 2,
+		Pos = 3,
+		Speed = 4,
+		Gravity = 5,
+		Rigid = 6,
+		Step = 7
 	}
 
 	export enum Render
 	{
-		Bg = 1,
-		Hero = 2
+		Demo = 1,
+		Step = 2,
+		Player = 3
 	}
 
 	export enum System
 	{
 		Demo = 0,
-		Input = 1,
-		Render = 2,
-		Decay = 3,
-		AI = 4,
-		Collision = 5
-	}
-
-	export enum AIType
-	{
-		Nice = 1,
-		Bad = 2
-	}
-
-	export class EntityColor
-	{
-		public static Me = 0x0000ff;
-		public static NiceAI = 0x77ff77;
-		public static BadAI = 0xff7777;
-		public static Bg = 0xffffff;
-		public static NiceBg = 0x00ff00;
-		public static BadBg = 0xff0000;
-	}
-
-	export enum Action
-	{
-		
-	}
-
-	export enum Direction
-	{
-		
+		Render = 1,
+		Move = 2,
+		Gravity = 3,
+		Collision = 4,
+		Input = 5,
+		Camera = 6,
+		AI = 7
 	}
 
 	export enum Entity
 	{
-		Bg = 1,
-		Hero = 2
+		
 	}
 }

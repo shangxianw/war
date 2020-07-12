@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="WarPanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:war="war.*" xmlns:w="http://ns.egret.com/wing">
-	<e:Group id="gameArea" left="50" right="50" top="100" bottom="50" touchChildren="false">
+<e:Skin class="WarPanelSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:war="war.*" xmlns:w="http://ns.egret.com/wing">
+	<e:Group id="bgGroup" left="0" right="0" top="0" bottom="0" touchChildren="false" touchEnabled="false">
+		<e:Rect left="0" right="0" top="0" bottom="0" x="0" y="0" scaleX="1" scaleY="1" fillColor="0xffffff"/>
+	</e:Group>
+	<e:Scroller id="gameScro" left="0" right="0" top="0" bottom="0">
+		<e:Group id="gameArea">
+		</e:Group>
+	</e:Scroller>
+	<e:Group id="optionGroup" left="0" right="0" top="0" bottom="0" touchEnabled="true" touchChildren="false"/>
 
+
+	<e:Group id="infoGroup" touchChildren="true" touchEnabled="false" left="0" right="0" top="0" bottom="0">
+		<e:Rect height="100" left="0" right="0" fillColor="0x309bd3" top="0" touchEnabled="false" touchChildren="false"/>
+		<e:Label id="score" text="分数：0" horizontalCenter="0.5" x="92" scaleX="1" scaleY="1" top="33" touchEnabled="false"/>
+		<e:Button id="restartBtn" label="restart" x="566" y="25" scaleX="1" scaleY="1" skinName="skins.ButtonSkin"/>
 	</e:Group>
-	<e:Group id="optionGroup" left="0" right="0" top="0" bottom="0" touchEnabled="false">
-		<e:Rect left="0" right="0" top="0" bottom="0"/>
-		<e:Button id="startBtn" label="开始游戏" skinName="skins.ButtonSkin" horizontalCenter="0" verticalCenter="0"/>
+	<e:Group id="endGameGroup" left="0" right="0" top="0" bottom="0" touchEnabled="false" touchChildren="true">
+		<e:Rect scaleX="1" scaleY="1" left="0" right="0" top="0" bottom="0" fillColor="0x9563e2"/>
+		<e:Button id="restartBtn2" skinName="skins.ButtonSkin" horizontalCenter="0" verticalCenter="0" label="restart"></e:Button>
 	</e:Group>
-	<e:Label id="score" text="分数：0" y="41" horizontalCenter="0"/>
+
 
 
 

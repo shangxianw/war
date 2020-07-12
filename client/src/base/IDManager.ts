@@ -1,6 +1,6 @@
 class IDManager
 {
-	private newId:number;
+	private hasCode:number;
 	public constructor()
 	{
 		this.init();
@@ -8,18 +8,18 @@ class IDManager
 
 	public init()
 	{
-		this.newId = 0;
+		this.hasCode = 0;
 	}
 
 	public destroy()
 	{
-		this.newId = 0;
+		this.hasCode = 0;
 	}
 
-	public getNewId()
+	public getHashCode()
 	{
-		this.newId++;
-		return this.newId;
+		this.hasCode++;
+		return this.hasCode;
 	}
 
 	private static Instance:IDManager;

@@ -16,18 +16,13 @@ var war;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         RenderBase.prototype.initAll = function () {
-            this.width = 0;
-            this.height = 0;
-            this.renderType = war.Render.Bg;
-            this.rect = new eui.Rect();
-            this.addChild(this.rect);
             _super.prototype.initAll.call(this);
         };
         RenderBase.prototype.destroyAll = function () {
             _super.prototype.destroyAll.call(this);
         };
         return RenderBase;
-    }(war.UIBase));
+    }(UIBase));
     war.RenderBase = RenderBase;
     __reflect(RenderBase.prototype, "war.RenderBase");
 })(war || (war = {}));

@@ -6,7 +6,7 @@ module war
 		{
 			this.sysType = System.Render;
 		}
-		
+
 		protected destroy()
 		{
 
@@ -17,31 +17,22 @@ module war
 			if(entity == null)
 				return;
 			
-			let renderCom = entity.getComponent(Component.Render) as RenderCom;
-			if(renderCom == null)
-				return;
-			
 			let posCom = entity.getComponent(Component.Pos) as PosCom;
 			if(posCom == null)
 				return;
 			
-			let render = renderCom.render;
-			render.scaleX = posCom.scaleX;
-			render.scaleY = posCom.scaleY;
-			render.x = posCom.x;
-			render.y = posCom.y;
+			let renderCom = entity.getComponent(Component.Render) as RenderCom;
+			if(renderCom == null)
+				return;
 
-			render.rect.anchorOffsetX = posCom.anchorX;
-			render.rect.anchorOffsetY = posCom.anchorY;
-			render.rect.width = posCom.width;
-			render.rect.height = posCom.height;
-			render.rect.fillColor = posCom.color;
-
-			if(entity.entityType == Entity.Bg)
-			{
-				posCom.alpha = posCom.alpha - 2 * deltaTime;
-				render.rect.alpha = posCom.alpha;
-			}
+			renderCom.render.x = posCom.x;
+			renderCom.render.y = posCom.y;
+			renderCom.render.width = posCom.width;
+			renderCom.render.height = posCom.height;
+			renderCom.render.anchorOffsetX = posCom.width >> 1;
+			renderCom.render.anchorOffsetY = posCom.height;
+			renderCom.updateRender(posCom);
+			DrawUtils.DrawHasCode(entity);
 		}
 	}
 }

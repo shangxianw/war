@@ -2,101 +2,71 @@ module war
 {
 	export class WarDataMgr extends DataBase
 	{	
+		public StageWidth:number = 640;
+		public StageHeight:number = 1280;
+		public StepWidth:number = 100;
+		public StepHeight:number = 30;
+		public G:number = 1000;
+		public MaxStepCount:number = 10;   // 一个区域最多有N个阶梯
+		public CheckSpaceCount:number = 5;
+		public StepLevelHeight = 300;
+
 		public entityMap:Hash<number, EntityBase>;
-		public lastTime:number;
-		public MaxAiCount:number;
-
-		public sysArray:SystemBase[];
-		public renderSystem:RenderSystem;
-		public inputSystem:InputSystem;
-		public decaySystem:DecaySystem;
-		public aiSystem:AISystem;
-		public collisionSystem:CollisionSystem;
-
-		public mouseX:number;
-		public mouseY:number;
-		public warPanel:WarPanel;
-		public bgEntity:EntityBase;
+		public world:World;
+		public jumpSpeed:number;
+		public moveXSpeed:number;
+		public stepProductHeight:number;
+		
+		public currStepLevel:number;
+		public lastStepLevel:number;
+		
+		public beginX:number;
+		public endX:number;
 
 		protected init()
 		{
-			this.lastTime = 0;
-			this.MaxAiCount = 20;
-			this.sysArray = [];
+			this.jumpSpeed = -1000;
+			this.moveXSpeed = 700;
+			this.currStepLevel = 0;
+			this.lastStepLevel = null;
+			this.world = new World();
 			this.entityMap = new Hash<number, EntityBase>();
-			this.mouseX = null;
-			this.mouseY = null;
-			this.warPanel = null;
-			this.bgEntity = null;
-
-			this.renderSystem = new RenderSystem();
-			this.sysArray.push(this.renderSystem);
-			this.inputSystem = new InputSystem();
-			this.sysArray.push(this.inputSystem);
-			this.decaySystem = new DecaySystem();
-			this.sysArray.push(this.decaySystem);
-			this.aiSystem = new AISystem();
-			this.sysArray.push(this.aiSystem);
-			this.collisionSystem = new CollisionSystem();
-			this.sysArray.push(this.collisionSystem);
 		}
 
 		protected destroy()
 		{
-			this.bgEntity = null;
+			this.world.destroy();
+			this.world = null;
 			this.destroyEntityMap();
 			this.entityMap = null;
-
-			this.renderSystem.destroyAll();
-			this.renderSystem = null;
-			this.inputSystem.destroyAll();
-			this.inputSystem = null;
-			this.decaySystem.destroyAll();
-			this.decaySystem = null;
-			this.aiSystem.destroyAll();
-			this.aiSystem = null;
-			this.collisionSystem.destroyAll();
-			this.collisionSystem = null;
-			this.sysArray.length = 0;
 		}
 
 		public startWar()
 		{
+			this.beginX = 0;
+			this.endX = 0;
 			egret.startTick(this.update, this);
 		}
 
 		public endWar()
 		{
+			this.beginX = 0;
+			this.endX = 0;
 			egret.stopTick(this.update, this);
-			this.bgEntity = null;
 			this.destroyEntityMap();
-			this.mouseX = null;
-			this.mouseY = null;
-			this.warPanel.OnEndWar();
 		}
 
 		public update(currTime:number = null):boolean
 		{
-			let deltaTime = (currTime - this.lastTime)/1000;
-			this.lastTime = currTime;
-			
-			let warData = WarDataMgr.Ins();
-			let entityArray = DataUtils.CopyArray(warData.entityMap.values());
-			let entity:EntityBase;
-			for(let i=0, len=entityArray.length; i<len; i++)
+			try
 			{
-				entity = entityArray[i];
-				if(entity == null)
-					continue;
-				
-				this.inputSystem.update(entity, deltaTime);
-				this.decaySystem.update(entity, deltaTime);
-				this.aiSystem.update(entity, deltaTime);
-				this.collisionSystem.update(entity, deltaTime)
-
-				this.renderSystem.update(entity, deltaTime);
+				this.world.update(currTime);
+				return true;
 			}
-			return true;
+			catch(e)
+			{
+				return false;
+			}
 		}
 
 		// ---------------------------------------------------------------------- 实体
@@ -107,11 +77,12 @@ module war
 			this.entityMap.set(entity.hasCode, entity);
 		}
 
-		public removeEntity(hasCode:number):EntityBase
+		public removeEntity(entity:EntityBase):EntityBase
 		{
-			if(this.entityMap.has(hasCode) == false)
+			if(this.entityMap.has(entity.hasCode) == false)
 				return null;
-			return this.entityMap.remove(hasCode);
+			this.entityMap.remove(entity.hasCode);
+			entity.destroyAll();
 		}
 
 		private destroyEntityMap()
@@ -121,6 +92,44 @@ module war
 				item.destroyAll()
 			}
 			this.entityMap.destroy();
+		}
+
+		public updateStepLevel(height:number=null)
+		{
+			let standLine = 0;
+			if(height == null) // 初始化
+			{
+				standLine = MathUtils.CalcRoundBySpace(this.StageHeight, this.StepLevelHeight);
+			}
+			else
+			{
+				standLine = MathUtils.CalcRoundBySpace(height, this.StepLevelHeight);
+			}
+			this.lastStepLevel = this.currStepLevel;
+			this.currStepLevel = standLine;
+			this.updateMaxStepCount();
+		}
+
+		public updateMaxStepCount()
+		{
+			if(this.currStepLevel > -1000)
+				this.MaxStepCount = 10
+			else if(this.currStepLevel > -2000)
+				this.MaxStepCount = 9
+			else if(this.currStepLevel > -3000)
+				this.MaxStepCount = 8
+			else if(this.currStepLevel > -4000)
+				this.MaxStepCount = 7
+			else if(this.currStepLevel > -5000)
+				this.MaxStepCount = 6
+			else if(this.currStepLevel > -6000)
+				this.MaxStepCount = 5
+			else if(this.currStepLevel > -7000)
+				this.MaxStepCount = 4
+			else if(this.currStepLevel > -8000)
+				this.MaxStepCount = 3
+			else if(this.currStepLevel > -9000)
+				this.MaxStepCount = 2
 		}
 
 		private static instance:WarDataMgr;

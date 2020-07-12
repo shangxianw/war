@@ -2,6 +2,13 @@ module war
 {
 	export class CollisionSystem extends SystemBase
 	{
+		/**
+		 * 名称：碰撞检测
+		 * 功能：检测是否跳跃到台阶上
+		 * 原理：计算矩形与矩形之间是否发生碰撞，只有速度向下，且脚踩在台阶上才算是作为跳跃的标志
+		 * 注意：1、即使发生碰撞，也需要检测速度方向，按照游戏需求，玩家向上是可以穿过台阶，向下则是进行跳跃的，所以需要判断速度方向
+		 * 		2、即使速度向下了，也需要判断玩家的脚是否踩在台阶上，否则会发生只要满足碰撞+速度向下，就会发生碰撞。
+		 */
 		protected init()
 		{
 			this.sysType = System.Collision;
@@ -17,92 +24,47 @@ module war
 			if(entity == null)
 				return;
 			
-			let ctrlCom = entity.getComponent(Component.Ctrl) as ControlCom;
-			if(ctrlCom == null) // 只有玩家自己才能检测碰撞比吃掉他们
-				return;
-			
+			let rigidCom = entity.getComponent(Component.Rigid) as RigidCom;
 			let posCom = entity.getComponent(Component.Pos) as PosCom;
-			if(posCom == null)
+			let speedCom = entity.getComponent(Component.Speed) as SpeedCom;
+			let ctrlCom = entity.getComponent(Component.Ctrl) as CtrlCom;
+			if(rigidCom == null || posCom == null || speedCom == null || ctrlCom == null)
 				return;
 			
-			let healthCom = entity.getComponent(Component.Health) as HealthCom;
-			if(healthCom == null)
-				return;
-			
-			let warData = WarDataMgr.Ins();
-			let entityArray = DataUtils.CopyArray(warData.entityMap.values());
-			let entity2:EntityBase;
-			for(let i=0, len=entityArray.length; i<len; i++)
+			let entityArray:EntityBase[] = DataUtils.CopyArray(WarDataMgr.Ins().entityMap.values());
+			for(let entity2 of entityArray)
 			{
-				entity2 = entityArray[i];
 				if(entity2 == null)
 					continue;
 				
-				if(entity2.hasCode == entity.hasCode) // 自己
-					continue
-				
-				let aiCom = entity2.getComponent(Component.AI) as AICom; // 只和ai发生碰撞（即除了背景板）
-				if(aiCom == null)
+				if(entity.hasCode == entity2.hasCode)
 					continue;
-				
+
+				let rigidCom2 = entity2.getComponent(Component.Rigid) as RigidCom;
 				let posCom2 = entity2.getComponent(Component.Pos) as PosCom;
-				if(posCom2 == null)
+				if(rigidCom2 == null || posCom2 == null)
 					continue;
 				
 				let flag = MathUtils.CheckTwoRectIntersect(
-						posCom.x - posCom.width/2, 
-						posCom.y - posCom.height/2, 
-						posCom.width, 
-						posCom.height, 
-						posCom2.x - posCom2.width/2, 
-						posCom2.y - posCom2.height/2, 
-						posCom2.width, 
+						posCom.getOriX(), 
+						posCom.getOriY(), 
+						posCom.width,
+						posCom.height,
+						posCom2.getOriX(), 
+						posCom2.getOriY(), 
+						posCom2.width,
 						posCom2.height
 					)
 				if(flag == false)
 					continue;
+					
+				if(speedCom.isUp() == true)
+					continue;
 				
-				if(aiCom.aiType == AIType.Nice)
-				{
-					healthCom.setHp(healthCom.hp + posCom2.width/2);
-					let score = Math.floor(posCom2.width/2);
-					WarDataMgr.Ins().warPanel.OnRefreshScore(score);
-					this.changeBgColor(1);
-				}
-				else
-				{
-					healthCom.setHp(healthCom.hp - posCom2.width/2);
-					let score = Math.floor(posCom2.width/2);
-					WarDataMgr.Ins().warPanel.OnRefreshScore(-score);
-					this.changeBgColor(2);
-				}
-				posCom.setScaleXY(healthCom.hp/100, healthCom.hp/100);
-				WarUtils.RemoveEntity(entity2);
+				if(posCom.y > posCom2.y) // 因为碰撞不一定是要触发跳跃，只有player的脚碰到阶梯的上部分才算是跳跃，这里简化了流程，准确应该是 posCom2.y - posCom2.height
+					continue;
+				speedCom.speedY = WarDataMgr.Ins().jumpSpeed;
 			}
-		}
-
-		private changeBgColor(type:number)
-		{
-			let bgEntity = WarDataMgr.Ins().bgEntity;
-			if(bgEntity == null)
-				return;
-			
-			let posCom = bgEntity.getComponent(Component.Pos) as PosCom;
-			if(posCom == null)
-				return;
-			if(type == 1) // good
-			{
-				posCom.setColor(EntityColor.NiceBg)
-				// let bgPosCom = WarDataMgr.Ins().bgEntity.getComponent(Component.Pos) as PosCom
-				// bgPosCom.alpha = 1;
-			}
-			else
-			{
-				posCom.setColor(EntityColor.BadBg)
-				let bgPosCom = WarDataMgr.Ins().bgEntity.getComponent(Component.Pos) as PosCom
-				bgPosCom.alpha = 1;
-			}
-
 		}
 	}
 }

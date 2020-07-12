@@ -138,11 +138,14 @@ var Main = (function (_super) {
         });
     };
     Main.prototype.createGameScene = function () {
-        var warData = new war.WarPanelData();
-        var warPanel = new war.WarPanel();
-        this.addChild(warPanel);
-        warPanel.initData(warData);
-        warPanel.initView();
+        war.WarDataMgr.Ins();
+        LayerManager.Ins().initLayer(this);
+        ViewManager.Ins().open(home.MenuPanel);
+        // let warData = new war.WarPanelData()
+        // let warPanel = new war.WarPanel()
+        // this.addChild(warPanel)
+        // warPanel.initData(warData)
+        // warPanel.initView();
     };
     return Main;
 }(eui.UILayer));

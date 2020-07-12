@@ -23,26 +23,20 @@ var war;
         RenderSystem.prototype.update = function (entity, deltaTime) {
             if (entity == null)
                 return;
-            var renderCom = entity.getComponent(war.Component.Render);
-            if (renderCom == null)
-                return;
             var posCom = entity.getComponent(war.Component.Pos);
             if (posCom == null)
                 return;
-            var render = renderCom.render;
-            render.scaleX = posCom.scaleX;
-            render.scaleY = posCom.scaleY;
-            render.x = posCom.x;
-            render.y = posCom.y;
-            render.rect.anchorOffsetX = posCom.anchorX;
-            render.rect.anchorOffsetY = posCom.anchorY;
-            render.rect.width = posCom.width;
-            render.rect.height = posCom.height;
-            render.rect.fillColor = posCom.color;
-            if (entity.entityType == war.Entity.Bg) {
-                posCom.alpha = posCom.alpha - 2 * deltaTime;
-                render.rect.alpha = posCom.alpha;
-            }
+            var renderCom = entity.getComponent(war.Component.Render);
+            if (renderCom == null)
+                return;
+            renderCom.render.x = posCom.x;
+            renderCom.render.y = posCom.y;
+            renderCom.render.width = posCom.width;
+            renderCom.render.height = posCom.height;
+            renderCom.render.anchorOffsetX = posCom.width >> 1;
+            renderCom.render.anchorOffsetY = posCom.height;
+            renderCom.updateRender(posCom);
+            war.DrawUtils.DrawHasCode(entity);
         };
         return RenderSystem;
     }(war.SystemBase));

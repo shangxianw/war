@@ -3,15 +3,11 @@ module war
 	export abstract class RenderBase extends UIBase
 	{
 		public renderType:number;
-		public rect:eui.Rect; // 大家都是这个形式
+		public collisionShape:egret.Shape;
+		public hasCodeLb:eui.Label;
 
 		public initAll()
 		{
-			this.width = 0;
-			this.height = 0;
-			this.renderType = Render.Bg;
-			this.rect = new eui.Rect();
-			this.addChild(this.rect);
 			super.initAll();
 		}
 
@@ -19,5 +15,7 @@ module war
 		{
 			super.destroyAll();
 		}
+
+		public abstract updateRender(data:ComBase);
 	}
 }
