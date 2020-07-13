@@ -15,6 +15,13 @@ var war;
         function CollisionSystem() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+        /**
+         * 名称：碰撞检测
+         * 功能：检测是否跳跃到台阶上
+         * 原理：计算矩形与矩形之间是否发生碰撞，只有速度向下，且脚踩在台阶上才算是作为跳跃的标志
+         * 注意：1、即使发生碰撞，也需要检测速度方向，按照游戏需求，玩家向上是可以穿过台阶，向下则是进行跳跃的，所以需要判断速度方向
+         * 		2、即使速度向下了，也需要判断玩家的脚是否踩在台阶上，否则会发生只要满足碰撞+速度向下，就会发生碰撞。
+         */
         CollisionSystem.prototype.init = function () {
             this.sysType = war.System.Collision;
         };
@@ -55,4 +62,3 @@ var war;
     war.CollisionSystem = CollisionSystem;
     __reflect(CollisionSystem.prototype, "war.CollisionSystem");
 })(war || (war = {}));
-//# sourceMappingURL=CollisionSystem.js.map

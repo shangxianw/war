@@ -33,14 +33,14 @@ module war
 			let halfStageHeight = render.stage.height/2;
 			if(point.y > 1400) // 死亡
 			{
-				MessageMgr.Ins().fire(3);
+				MessageManager.Ins().fire(3);
 				return;
 			}
 
 			if(point.y >= 640)
 				return;
 			let addScro = point.y - 640;
-			MessageMgr.Ins().fire(2, addScro);
+			MessageManager.Ins().fire(2, addScro);
 			WarDataMgr.Ins().updateStepLevel(posCom.y + WarDataMgr.Ins().StageHeight/2) // 用的是poscom，不是point！！！因为标准线是在滚动条上的，不是在舞台上
 		}
 	}

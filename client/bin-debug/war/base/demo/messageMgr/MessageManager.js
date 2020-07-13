@@ -8,15 +8,15 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var MessageMgr = (function (_super) {
-    __extends(MessageMgr, _super);
-    function MessageMgr() {
+var MessageManager = (function (_super) {
+    __extends(MessageManager, _super);
+    function MessageManager() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    MessageMgr.prototype.init = function () {
+    MessageManager.prototype.init = function () {
         this.msgMap = new Hash();
     };
-    MessageMgr.prototype.destroy = function () {
+    MessageManager.prototype.destroy = function () {
         for (var _i = 0, _a = this.msgMap.values(); _i < _a.length; _i++) {
             var msgDataArray = _a[_i];
             for (var _b = 0, msgDataArray_1 = msgDataArray; _b < msgDataArray_1.length; _b++) {
@@ -28,7 +28,7 @@ var MessageMgr = (function (_super) {
         this.msgMap.destroy();
         this.msgMap = null;
     };
-    MessageMgr.prototype.observe = function (type, cbFn, thisObj) {
+    MessageManager.prototype.subscribe = function (type, cbFn, thisObj) {
         if (type == null || cbFn == null || thisObj == null)
             return false;
         if (this.msgMap.has(type) == false) {
@@ -45,7 +45,7 @@ var MessageMgr = (function (_super) {
         msgDataArray.push(msgData);
         return true;
     };
-    MessageMgr.prototype.unObserve = function (type, cbFn, thisObj) {
+    MessageManager.prototype.unSubscribe = function (type, cbFn, thisObj) {
         if (type == null || cbFn == null || thisObj == null)
             return false;
         if (this.msgMap.has(type) == false)
@@ -64,7 +64,7 @@ var MessageMgr = (function (_super) {
         }
         return false;
     };
-    MessageMgr.prototype.fire = function (type, param) {
+    MessageManager.prototype.fire = function (type, param) {
         if (param === void 0) { param = null; }
         if (type == null)
             return false;
@@ -78,12 +78,11 @@ var MessageMgr = (function (_super) {
         }
         return true;
     };
-    MessageMgr.Ins = function () {
-        if (MessageMgr.Instance == null)
-            MessageMgr.Instance = new MessageMgr();
-        return MessageMgr.Instance;
+    MessageManager.Ins = function () {
+        if (MessageManager.Instance == null)
+            MessageManager.Instance = new MessageManager();
+        return MessageManager.Instance;
     };
-    return MessageMgr;
+    return MessageManager;
 }(DataBase));
-__reflect(MessageMgr.prototype, "MessageMgr");
-//# sourceMappingURL=MessageMgr.js.map
+__reflect(MessageManager.prototype, "MessageManager");

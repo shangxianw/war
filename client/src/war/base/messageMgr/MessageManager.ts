@@ -1,4 +1,4 @@
-class MessageMgr extends DataBase
+class MessageManager extends DataBase
 {
 	public msgMap:Hash<number, MessageMgrData[]>
 	protected init()
@@ -20,7 +20,7 @@ class MessageMgr extends DataBase
 		this.msgMap = null;
 	}
 
-	public observe(type:number, cbFn:Function, thisObj:Object):boolean
+	public subscribe(type:number, cbFn:Function, thisObj:Object):boolean
 	{
 		if(type == null || cbFn == null || thisObj == null)
 			return false;
@@ -43,7 +43,7 @@ class MessageMgr extends DataBase
 		return true;
 	}
 
-	public unObserve(type:number, cbFn:Function, thisObj:Object)
+	public unSubscribe(type:number, cbFn:Function, thisObj:Object)
 	{
 		if(type == null || cbFn == null || thisObj == null)
 			return false;
@@ -84,11 +84,11 @@ class MessageMgr extends DataBase
 		return true;
 	}
 
-	private static Instance:MessageMgr;
+	private static Instance:MessageManager;
 	public static Ins()
 	{
-		if(MessageMgr.Instance == null)
-			MessageMgr.Instance = new MessageMgr();
-		return MessageMgr.Instance;
+		if(MessageManager.Instance == null)
+			MessageManager.Instance = new MessageManager();
+		return MessageManager.Instance;
 	}
 }

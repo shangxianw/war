@@ -26,4 +26,3 @@ var war;
     war.RenderBase = RenderBase;
     __reflect(RenderBase.prototype, "war.RenderBase");
 })(war || (war = {}));
-//# sourceMappingURL=RenderBase.js.map

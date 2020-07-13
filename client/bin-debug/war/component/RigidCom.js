@@ -25,4 +25,3 @@ var war;
     war.RigidCom = RigidCom;
     __reflect(RigidCom.prototype, "war.RigidCom");
 })(war || (war = {}));
-//# sourceMappingURL=RigidCom.js.map

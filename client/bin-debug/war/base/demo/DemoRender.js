@@ -27,4 +27,3 @@ var war;
     war.DemoRender = DemoRender;
     __reflect(DemoRender.prototype, "war.DemoRender");
 })(war || (war = {}));
-//# sourceMappingURL=DemoRender.js.map

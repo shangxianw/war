@@ -25,4 +25,3 @@ var war;
     war.CtrlCom = CtrlCom;
     __reflect(CtrlCom.prototype, "war.CtrlCom");
 })(war || (war = {}));
-//# sourceMappingURL=CtrlCom.js.map

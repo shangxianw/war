@@ -47,4 +47,3 @@ var home;
     home.MenuPanel = MenuPanel;
     __reflect(MenuPanel.prototype, "home.MenuPanel");
 })(home || (home = {}));
-//# sourceMappingURL=MenuPanel.js.map

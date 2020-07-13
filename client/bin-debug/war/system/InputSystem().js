@@ -41,4 +41,3 @@ var war;
     war.InputSystem = InputSystem;
     __reflect(InputSystem.prototype, "war.InputSystem");
 })(war || (war = {}));
-//# sourceMappingURL=InputSystem().js.map

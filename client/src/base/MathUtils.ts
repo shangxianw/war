@@ -117,7 +117,7 @@ class MathUtils
 	public static CheckTwoRectIntersect(x1:number, y1:number, w1:number, h1:number, x2:number, y2:number, w2:number, h2:number)
 	{
 		return Math.max(x1, x2) <= Math.min(x1+w1, x2+w2) && Math.max(y1, y2) <= Math.min(y1+h1, y2+h2);
-		// 白鹭自带一些碰撞检测
+		// 白鹭自带的矩形碰撞检测
 		// let a = new egret.Rectangle(x1, y1, w1, h1);
 		// let b = new egret.Rectangle(x2, y2, w2, h2);
 		// return a.intersects(b);

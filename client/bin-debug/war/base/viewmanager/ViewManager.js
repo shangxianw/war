@@ -84,4 +84,3 @@ var ViewManager = (function (_super) {
     return ViewManager;
 }(DataBase));
 __reflect(ViewManager.prototype, "ViewManager");
-//# sourceMappingURL=ViewManager.js.map

@@ -40,7 +40,7 @@
 		"bin-debug/war/base/demo/DemoPanel.js",
 		"bin-debug/war/base/demo/DemoRender.js",
 		"bin-debug/base/DataUtils.js",
-		"bin-debug/war/base/demo/messageMgr/MessageMgr.js",
+		"bin-debug/war/base/demo/messageMgr/MessageManager.js",
 		"bin-debug/war/base/demo/messageMgr/MessageMgrData.js",
 		"bin-debug/base/egret/Platform.js",
 		"bin-debug/base/egret/ThemeAdapter.js",

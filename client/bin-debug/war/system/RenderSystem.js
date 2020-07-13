@@ -43,4 +43,3 @@ var war;
     war.RenderSystem = RenderSystem;
     __reflect(RenderSystem.prototype, "war.RenderSystem");
 })(war || (war = {}));
-//# sourceMappingURL=RenderSystem.js.map

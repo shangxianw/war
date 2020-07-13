@@ -24,4 +24,3 @@ var war;
     war.StepEntity = StepEntity;
     __reflect(StepEntity.prototype, "war.StepEntity");
 })(war || (war = {}));
-//# sourceMappingURL=StepEntity.js.map

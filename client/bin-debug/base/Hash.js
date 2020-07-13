@@ -60,4 +60,3 @@ var Hash = (function () {
     return Hash;
 }());
 __reflect(Hash.prototype, "Hash");
-//# sourceMappingURL=Hash.js.map

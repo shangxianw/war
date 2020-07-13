@@ -24,4 +24,3 @@ var war;
     war.DemoEntity = DemoEntity;
     __reflect(DemoEntity.prototype, "war.DemoEntity");
 })(war || (war = {}));
-//# sourceMappingURL=DemoEntity.js.map

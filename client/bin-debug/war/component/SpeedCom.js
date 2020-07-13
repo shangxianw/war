@@ -38,4 +38,3 @@ var war;
     war.SpeedCom = SpeedCom;
     __reflect(SpeedCom.prototype, "war.SpeedCom");
 })(war || (war = {}));
-//# sourceMappingURL=SpeedCom.js.map

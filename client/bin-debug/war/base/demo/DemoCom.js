@@ -25,4 +25,3 @@ var war;
     war.DemoCom = DemoCom;
     __reflect(DemoCom.prototype, "war.DemoCom");
 })(war || (war = {}));
-//# sourceMappingURL=DemoCom.js.map

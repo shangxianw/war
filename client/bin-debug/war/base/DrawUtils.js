@@ -67,4 +67,3 @@ var war;
     war.DrawUtils = DrawUtils;
     __reflect(DrawUtils.prototype, "war.DrawUtils");
 })(war || (war = {}));
-//# sourceMappingURL=DrawUtils.js.map

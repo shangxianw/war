@@ -40,4 +40,3 @@ var war;
     war.PosCom = PosCom;
     __reflect(PosCom.prototype, "war.PosCom");
 })(war || (war = {}));
-//# sourceMappingURL=PosCom.js.map

@@ -54,8 +54,8 @@ module war
 		protected destroy()
 		{
 			// MessageMgr.Ins().unObserve(1, this.OnRefreshScore, this);
-			MessageMgr.Ins().unObserve(2, this.OnRefreshScro, this);
-			MessageMgr.Ins().unObserve(3, this.OnEndGame, this);
+			MessageManager.Ins().unSubscribe(2, this.OnRefreshScro, this);
+			MessageManager.Ins().unSubscribe(3, this.OnEndGame, this);
 			this.optionGroup.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnOptionTap, this);
 			this.optionGroup.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnOptionMoveTap, this);
 			this.optionGroup.removeEventListener(egret.TouchEvent.TOUCH_END, this.OnOptionEndTap, this);
@@ -77,9 +77,9 @@ module war
 			// WarUtils.CreateStepEntity(360, 200, 720, 50, this.gameArea);
 			// WarUtils.CreateStepEntity(360, -100, 720, 50, this.gameArea);
 			// WarUtils.CreateStepEntity(360, -400, 720, 50, this.gameArea);
-			MessageMgr.Ins().observe(1, this.OnRefreshScore, this);
-			MessageMgr.Ins().observe(2, this.OnRefreshScro, this);
-			MessageMgr.Ins().observe(3, this.OnEndGame, this);
+			MessageManager.Ins().subscribe(1, this.OnRefreshScore, this);
+			MessageManager.Ins().subscribe(2, this.OnRefreshScro, this);
+			MessageManager.Ins().subscribe(3, this.OnEndGame, this);
 			this.optionGroup.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnOptionTap, this);
 			this.optionGroup.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnOptionMoveTap, this);
 			this.optionGroup.addEventListener(egret.TouchEvent.TOUCH_END, this.OnOptionEndTap, this);

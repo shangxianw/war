@@ -32,4 +32,3 @@ var war;
     war.DemoSystem = DemoSystem;
     __reflect(DemoSystem.prototype, "war.DemoSystem");
 })(war || (war = {}));
-//# sourceMappingURL=DemoSystem.js.map

@@ -31,4 +31,3 @@ var MessageMgrData = (function (_super) {
     return MessageMgrData;
 }(DataBase));
 __reflect(MessageMgrData.prototype, "MessageMgrData");
-//# sourceMappingURL=MessageMgrData.js.map
