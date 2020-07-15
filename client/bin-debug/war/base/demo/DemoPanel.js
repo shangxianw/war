@@ -43,3 +43,4 @@ var home;
     home.DemoPanel = DemoPanel;
     __reflect(DemoPanel.prototype, "home.DemoPanel");
 })(home || (home = {}));
+//# sourceMappingURL=DemoPanel.js.map

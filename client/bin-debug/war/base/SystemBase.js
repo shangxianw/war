@@ -20,3 +20,4 @@ var war;
     war.SystemBase = SystemBase;
     __reflect(SystemBase.prototype, "war.SystemBase");
 })(war || (war = {}));
+//# sourceMappingURL=SystemBase.js.map

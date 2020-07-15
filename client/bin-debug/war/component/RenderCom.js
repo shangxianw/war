@@ -34,3 +34,4 @@ var war;
     war.RenderCom = RenderCom;
     __reflect(RenderCom.prototype, "war.RenderCom");
 })(war || (war = {}));
+//# sourceMappingURL=RenderCom.js.map

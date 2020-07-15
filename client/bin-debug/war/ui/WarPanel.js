@@ -119,3 +119,4 @@ var war;
     war.WarPanel = WarPanel;
     __reflect(WarPanel.prototype, "war.WarPanel");
 })(war || (war = {}));
+//# sourceMappingURL=WarPanel.js.map

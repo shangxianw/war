@@ -86,3 +86,4 @@ var MessageManager = (function (_super) {
     return MessageManager;
 }(DataBase));
 __reflect(MessageManager.prototype, "MessageManager");
+//# sourceMappingURL=MessageManager.js.map

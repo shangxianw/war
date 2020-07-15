@@ -41,3 +41,4 @@ var war;
     war.PlayerRender = PlayerRender;
     __reflect(PlayerRender.prototype, "war.PlayerRender");
 })(war || (war = {}));
+//# sourceMappingURL=PlayerRender.js.map

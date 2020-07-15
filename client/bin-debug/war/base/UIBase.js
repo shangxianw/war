@@ -26,3 +26,4 @@ var UIBase = (function (_super) {
     return UIBase;
 }(eui.Component));
 __reflect(UIBase.prototype, "UIBase");
+//# sourceMappingURL=UIBase.js.map

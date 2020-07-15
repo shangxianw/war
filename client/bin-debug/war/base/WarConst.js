@@ -32,3 +32,4 @@ var war;
     (function (Entity) {
     })(Entity = war.Entity || (war.Entity = {}));
 })(war || (war = {}));
+//# sourceMappingURL=WarConst.js.map

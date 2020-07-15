@@ -121,3 +121,4 @@ var war;
     war.WarDataMgr = WarDataMgr;
     __reflect(WarDataMgr.prototype, "war.WarDataMgr");
 })(war || (war = {}));
+//# sourceMappingURL=WarDataMgr.js.map

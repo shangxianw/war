@@ -24,3 +24,4 @@ var war;
     war.PlayerEntity = PlayerEntity;
     __reflect(PlayerEntity.prototype, "war.PlayerEntity");
 })(war || (war = {}));
+//# sourceMappingURL=PlayerEntity.js.map

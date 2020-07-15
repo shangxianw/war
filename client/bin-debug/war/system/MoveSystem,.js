@@ -35,3 +35,4 @@ var war;
     war.MoveSystem = MoveSystem;
     __reflect(MoveSystem.prototype, "war.MoveSystem");
 })(war || (war = {}));
+//# sourceMappingURL=MoveSystem,.js.map

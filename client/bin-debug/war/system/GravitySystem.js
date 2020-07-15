@@ -34,3 +34,4 @@ var war;
     war.GravitySystem = GravitySystem;
     __reflect(GravitySystem.prototype, "war.GravitySystem");
 })(war || (war = {}));
+//# sourceMappingURL=GravitySystem.js.map

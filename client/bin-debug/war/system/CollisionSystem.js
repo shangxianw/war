@@ -62,3 +62,4 @@ var war;
     war.CollisionSystem = CollisionSystem;
     __reflect(CollisionSystem.prototype, "war.CollisionSystem");
 })(war || (war = {}));
+//# sourceMappingURL=CollisionSystem.js.map

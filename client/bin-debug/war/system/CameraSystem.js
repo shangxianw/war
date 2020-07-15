@@ -51,3 +51,4 @@ var war;
     war.CameraSystem = CameraSystem;
     __reflect(CameraSystem.prototype, "war.CameraSystem");
 })(war || (war = {}));
+//# sourceMappingURL=CameraSystem.js.map

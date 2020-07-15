@@ -26,3 +26,4 @@ var war;
     war.ComBase = ComBase;
     __reflect(ComBase.prototype, "war.ComBase");
 })(war || (war = {}));
+//# sourceMappingURL=ComBase.js.map

@@ -24,3 +24,4 @@ var ViewData = (function (_super) {
     return ViewData;
 }(DataBase));
 __reflect(ViewData.prototype, "ViewData", ["IViewData"]);
+//# sourceMappingURL=ViewData.js.map

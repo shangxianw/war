@@ -30,3 +30,4 @@ var ViewBase = (function (_super) {
     return ViewBase;
 }(UIBase));
 __reflect(ViewBase.prototype, "ViewBase");
+//# sourceMappingURL=ViewBase.js.map

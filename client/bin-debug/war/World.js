@@ -67,3 +67,4 @@ var war;
     war.World = World;
     __reflect(World.prototype, "war.World");
 })(war || (war = {}));
+//# sourceMappingURL=World.js.map

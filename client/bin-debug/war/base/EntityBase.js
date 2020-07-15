@@ -47,3 +47,4 @@ var war;
     war.EntityBase = EntityBase;
     __reflect(EntityBase.prototype, "war.EntityBase");
 })(war || (war = {}));
+//# sourceMappingURL=EntityBase.js.map

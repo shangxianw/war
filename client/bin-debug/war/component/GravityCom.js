@@ -29,3 +29,4 @@ var war;
     war.GravityCom = GravityCom;
     __reflect(GravityCom.prototype, "war.GravityCom");
 })(war || (war = {}));
+//# sourceMappingURL=GravityCom.js.map

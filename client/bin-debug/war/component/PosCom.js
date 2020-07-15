@@ -33,10 +33,11 @@ var war;
             return this.x - this.width / 2;
         };
         PosCom.prototype.getOriY = function () {
-            return this.y - this.height; ///2; // ??????????????????????????????????
+            return this.y - this.height;
         };
         return PosCom;
     }(war.ComBase));
     war.PosCom = PosCom;
     __reflect(PosCom.prototype, "war.PosCom");
 })(war || (war = {}));
+//# sourceMappingURL=PosCom.js.map
