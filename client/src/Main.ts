@@ -86,51 +86,6 @@ class Main extends eui.UILayer
     protected createGameScene(): void {
         war.WarDataMgr.Ins();
         LayerManager.Ins().initLayer(this);
-        // ViewManager.Ins().open(home.MenuPanel);
-        // let warData = new war.WarPanelData()
-        // let warPanel = new war.WarPanel()
-        // this.addChild(warPanel)
-        // warPanel.initData(warData)
-        // warPanel.initView();
-
-        // this.testLb = new eui.Label();
-        // this.testLb.y = this.testLb.x = 200;
-        // this.testLb.textColor = 0xffffff;
-        // this.testLb.text = "1111"
-        // this.addChild(this.testLb);
-        // let motion = new egret.Motion();
-        // motion.addEventListener(egret.Event.CHANGE, this.OnMotionChange, this);
-        // motion.start();
-
-        // window.addEventListener('deviceorientation', this.oriListener, false);
-        // window.addEventListener('MozOrientation', this.oriListener, false); //为firefox所用
-        // window.addEventListener('devicemotion', this.oriListener, false);   //重力感应
-        // window.addEventListener('deviceorientation', function(event) { 
-        //     let alpha = event.alpha; 
-        //     let beta = event.beta; 
-        //     let gamma = event.gamma; 
-        //     alert(1)
-        // }, false);
-        
-        // 运用HTML5的deviceMotion，调用重力感应事件 
-        // if(window["DeviceMotionEvent"] == true){ 
-        //     // document.addEventListener('devicemotion', deviceMotionHandler, false) 
-        //     alert(1)
-        // }
-        // else
-        // {
-        //     alert(2)
-        // }
-    }
-    private testLb:eui.Label;
-
-    private OnMotionChange(e:egret.MotionEvent)
-    {
-        this.testLb.text = `加速度：\nx:${e.acceleration.x}\ny:${e.acceleration.y}\nz:${e.acceleration.z}`;
-    }
-
-    private oriListener(e)
-    {
-        alert(e);
+        RedPointMgr.Ins()
     }
 }
