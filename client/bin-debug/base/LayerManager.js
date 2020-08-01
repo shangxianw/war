@@ -18,18 +18,26 @@ var LayerManager = (function (_super) {
             return;
     };
     LayerManager.prototype.destroy = function () {
-        this.war = null;
+        this.map = null;
+        this.body = null;
+        this.effect = null;
         this.panel = null;
         this.stageMain = null;
     };
     LayerManager.prototype.initLayer = function (main) {
         this.stageMain = main;
-        this.war = new eui.UILayer();
-        this.war.name = "warLayer";
-        this.stageMain.addChild(this.war);
+        this.map = new eui.UILayer();
+        this.map.name = "map";
+        this.stageMain.addChild(this.map);
+        this.body = new eui.UILayer();
+        this.body.name = "body";
+        this.stageMain.addChild(this.body);
+        this.effect = new eui.UILayer();
+        this.effect.name = "effect";
+        this.stageMain.addChild(this.effect);
         this.panel = new eui.UILayer();
         this.stageMain.addChild(this.panel);
-        this.panel.name = "panelLayer";
+        this.panel.name = "panel";
     };
     LayerManager.Ins = function () {
         if (LayerManager.Instance == null)

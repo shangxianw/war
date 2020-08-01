@@ -17,7 +17,7 @@ var war;
         }
         WarPanelData.prototype.init = function () {
             this.resGroup = [];
-            this.layer = LayerManager.Ins().war;
+            this.layer = LayerManager.Ins().panel;
         };
         WarPanelData.prototype.destroy = function () {
         };
@@ -42,77 +42,8 @@ var war;
         WarPanel.prototype.init = function () {
         };
         WarPanel.prototype.destroy = function () {
-            // MessageMgr.Ins().unObserve(1, this.OnRefreshScore, this);
-            MessageManager.Ins().removeListener(2, this.OnRefreshScro, this);
-            MessageManager.Ins().removeListener(3, this.OnEndGame, this);
-            this.optionGroup.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnOptionTap, this);
-            this.optionGroup.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnOptionMoveTap, this);
-            this.optionGroup.removeEventListener(egret.TouchEvent.TOUCH_END, this.OnOptionEndTap, this);
-            this.optionGroup.removeEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnOptionOutsideTap, this);
-            this.restartBtn2.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnReStartTap, this);
-            this.restartBtn2.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnReStart2Tap, this);
         };
         WarPanel.prototype.open = function () {
-            this.endGameGroup.visible = false;
-            this.score.text = "\u5206\u6570\uFF1A" + 0;
-            this.gameScro.viewport.scrollV = 0;
-            this.info.startWar();
-            war.WarUtils.CreatePlayerEntity(200, 1000, this.gameArea);
-            // WarUtils.CreateStepEntity(360, 1280, 720, 50, this.gameArea);
-            war.WarUtils.CreateStepEntity(360, 1200, 720, 50, this.gameArea);
-            // WarUtils.CreateStepEntity(360, 500, 720, 50, this.gameArea);
-            // WarUtils.CreateStepEntity(360, 200, 720, 50, this.gameArea);
-            // WarUtils.CreateStepEntity(360, -100, 720, 50, this.gameArea);
-            // WarUtils.CreateStepEntity(360, -400, 720, 50, this.gameArea);
-            MessageManager.Ins().addListener(1, this.OnRefreshScore, this);
-            MessageManager.Ins().addListener(2, this.OnRefreshScro, this);
-            MessageManager.Ins().addListener(3, this.OnEndGame, this);
-            this.optionGroup.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnOptionTap, this);
-            this.optionGroup.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnOptionMoveTap, this);
-            this.optionGroup.addEventListener(egret.TouchEvent.TOUCH_END, this.OnOptionEndTap, this);
-            this.optionGroup.addEventListener(egret.TouchEvent.TOUCH_RELEASE_OUTSIDE, this.OnOptionOutsideTap, this);
-            this.restartBtn2.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnReStartTap, this);
-            this.restartBtn2.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnReStart2Tap, this);
-            war.DrawUtils.DrawStandardLine(war.WarDataMgr.Ins().currStepLevel, this.gameArea);
-        };
-        WarPanel.prototype.OnRefreshScore = function (score) {
-            this.score.text = "\u5206\u6570\uFF1A" + score;
-        };
-        WarPanel.prototype.OnRefreshScro = function (addScro) {
-            this.gameScro.viewport.scrollV += addScro;
-            this.score.text = "\u5206\u6570\uFF1A" + Math.floor(Math.abs(this.gameScro.viewport.scrollV)) + " stepCount:" + war.WarDataMgr.Ins().MaxStepCount;
-            // WarDataMgr.Ins().updateStepLevel(WarDataMgr.Ins().currStepLevel - addScro);
-        };
-        WarPanel.prototype.OnEndGame = function () {
-            this.info.endWar();
-            this.endGameGroup.visible = true;
-        };
-        // ---------------------------------------------------------------------- Event
-        WarPanel.prototype.OnOptionTap = function (e) {
-            war.WarDataMgr.Ins().beginX = e.localX;
-            war.WarDataMgr.Ins().endX = e.localX;
-        };
-        WarPanel.prototype.OnOptionMoveTap = function (e) {
-            war.WarDataMgr.Ins().beginX;
-            war.WarDataMgr.Ins().endX = e.localX;
-            console.log(war.WarDataMgr.Ins().beginX, war.WarDataMgr.Ins().endX);
-        };
-        WarPanel.prototype.OnOptionEndTap = function (e) {
-            war.WarDataMgr.Ins().beginX = 0;
-            war.WarDataMgr.Ins().endX = 0;
-        };
-        WarPanel.prototype.OnOptionOutsideTap = function (e) {
-            war.WarDataMgr.Ins().beginX = 0;
-            war.WarDataMgr.Ins().endX = 0;
-        };
-        WarPanel.prototype.OnReStartTap = function () {
-            this.info.endWar();
-            this.destroy();
-            this.open();
-        };
-        WarPanel.prototype.OnReStart2Tap = function () {
-            this.endGameGroup.visible = false;
-            this.info.startWar();
         };
         return WarPanel;
     }(ViewBase));

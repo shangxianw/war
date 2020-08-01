@@ -84,41 +84,6 @@ class Main extends eui.UILayer
     }
     
     protected createGameScene(): void {
-        war.WarDataMgr.Ins();
         LayerManager.Ins().initLayer(this);
-        RedPointMgr.Ins()
-
-        // ViewManager.Ins().open(home.DemoPanel)
-
-        let a = new AAA()
-        let _thatt = this
-        function a1()
-        {
-            alert(a.name)
-            a.removeAttrListener("name", a1, _thatt)
-        }
-
-        a.addAttrListener("name", a1, this)
-        aaa = a;
-    }
-
-    private OnUpdateE(state:boolean)
-    {
-        
-    }
-}
-let aaa = null
-class AAA extends DataBase
-{
-    name = "wsx"
-    age = 18
-    protected init()
-    {
-
-    }
-
-    protected destroy()
-    {
-
     }
 }
