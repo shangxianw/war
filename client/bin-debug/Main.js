@@ -142,45 +142,34 @@ var Main = (function (_super) {
         LayerManager.Ins().initLayer(this);
         RedPointMgr.Ins();
         // ViewManager.Ins().open(home.DemoPanel)
-        var a = new eui.Label();
-        a.text = "hahahah";
-        this.addChild(a);
-        var b = new eui.Label();
-        b.text = "hahahah";
-        b.y = 100;
-        this.addChild(b);
-        var c = new eui.Label();
-        c.text = "hahahah";
-        c.y = 200;
-        this.addChild(c);
-        var d = new eui.Label();
-        d.text = "hahahah";
-        d.y = 300;
-        this.addChild(d);
-        var e = new eui.Label();
-        e.text = "hahahah";
-        e.y = 400;
-        this.addChild(e);
-        RedPointMgr.Ins().addListenter("main_jundui", function (state) {
-            a.text = String(state);
-        }, this);
-        RedPointMgr.Ins().addListenter("kazu", function (state) {
-            b.text = String(state);
-        }, this);
-        RedPointMgr.Ins().addListenter("hero_upgrade", function (state) {
-            c.text = String(state);
-        }, this);
-        RedPointMgr.Ins().addListenter("hero_new", function (state) {
-            d.text = String(state);
-        }, this);
-        RedPointMgr.Ins().addListenter("kazu", this.OnUpdateE, this);
-        RedPointMgr.Ins().update("hero_new", true);
+        var a = new AAA();
+        var _thatt = this;
+        function a1() {
+            alert(a.name);
+            a.removeAttrListener("name", a1, _thatt);
+        }
+        a.addAttrListener("name", a1, this);
+        aaa = a;
     };
     Main.prototype.OnUpdateE = function (state) {
-        alert(state);
-        RedPointMgr.Ins().removeListenter("kazu", this.OnUpdateE, this);
     };
     return Main;
 }(eui.UILayer));
 __reflect(Main.prototype, "Main");
+var aaa = null;
+var AAA = (function (_super) {
+    __extends(AAA, _super);
+    function AAA() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.name = "wsx";
+        _this.age = 18;
+        return _this;
+    }
+    AAA.prototype.init = function () {
+    };
+    AAA.prototype.destroy = function () {
+    };
+    return AAA;
+}(DataBase));
+__reflect(AAA.prototype, "AAA");
 //# sourceMappingURL=Main.js.map

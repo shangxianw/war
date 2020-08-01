@@ -20,7 +20,7 @@ class MessageManager extends DataBase
 		this.msgMap = null;
 	}
 
-	public subscribe(type:number, cbFn:Function, thisObj:Object):boolean
+	public addListener(type:number, cbFn:Function, thisObj:Object):boolean
 	{
 		if(type == null || cbFn == null || thisObj == null)
 			return false;
@@ -43,7 +43,7 @@ class MessageManager extends DataBase
 		return true;
 	}
 
-	public unSubscribe(type:number, cbFn:Function, thisObj:Object)
+	public removeListener(type:number, cbFn:Function, thisObj:Object)
 	{
 		if(type == null || cbFn == null || thisObj == null)
 			return false;
@@ -67,7 +67,7 @@ class MessageManager extends DataBase
 		return false;
 	}
 
-	public fire(type:number, param:any=null)
+	public update(type:number, param:any=null)
 	{
 		if(type == null)
 			return false;

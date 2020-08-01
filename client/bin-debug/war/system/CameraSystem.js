@@ -37,13 +37,13 @@ var war;
             var point = render.parent.localToGlobal(posCom.x, posCom.y);
             var halfStageHeight = render.stage.height / 2;
             if (point.y > 1400) {
-                MessageManager.Ins().fire(3);
+                MessageManager.Ins().update(3);
                 return;
             }
             if (point.y >= 640)
                 return;
             var addScro = point.y - 640;
-            MessageManager.Ins().fire(2, addScro);
+            MessageManager.Ins().update(2, addScro);
             war.WarDataMgr.Ins().updateStepLevel(posCom.y + war.WarDataMgr.Ins().StageHeight / 2); // 用的是poscom，不是point！！！因为标准线是在滚动条上的，不是在舞台上
         };
         return CameraSystem;

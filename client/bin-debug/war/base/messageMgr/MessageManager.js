@@ -28,7 +28,7 @@ var MessageManager = (function (_super) {
         this.msgMap.destroy();
         this.msgMap = null;
     };
-    MessageManager.prototype.subscribe = function (type, cbFn, thisObj) {
+    MessageManager.prototype.addListener = function (type, cbFn, thisObj) {
         if (type == null || cbFn == null || thisObj == null)
             return false;
         if (this.msgMap.has(type) == false) {
@@ -45,7 +45,7 @@ var MessageManager = (function (_super) {
         msgDataArray.push(msgData);
         return true;
     };
-    MessageManager.prototype.unSubscribe = function (type, cbFn, thisObj) {
+    MessageManager.prototype.removeListener = function (type, cbFn, thisObj) {
         if (type == null || cbFn == null || thisObj == null)
             return false;
         if (this.msgMap.has(type) == false)
@@ -64,7 +64,7 @@ var MessageManager = (function (_super) {
         }
         return false;
     };
-    MessageManager.prototype.fire = function (type, param) {
+    MessageManager.prototype.update = function (type, param) {
         if (param === void 0) { param = null; }
         if (type == null)
             return false;

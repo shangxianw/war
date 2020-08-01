@@ -1,8 +1,9 @@
-abstract class DataBase
+abstract class UIBase extends eui.Component
 {
-	public hasCode:number
+	public hasCode:number;
 	public constructor()
 	{
+		super();
 		this.initAll()
 	}
 
