@@ -141,6 +141,44 @@ var Main = (function (_super) {
         war.WarDataMgr.Ins();
         LayerManager.Ins().initLayer(this);
         RedPointMgr.Ins();
+        // ViewManager.Ins().open(home.DemoPanel)
+        var a = new eui.Label();
+        a.text = "hahahah";
+        this.addChild(a);
+        var b = new eui.Label();
+        b.text = "hahahah";
+        b.y = 100;
+        this.addChild(b);
+        var c = new eui.Label();
+        c.text = "hahahah";
+        c.y = 200;
+        this.addChild(c);
+        var d = new eui.Label();
+        d.text = "hahahah";
+        d.y = 300;
+        this.addChild(d);
+        var e = new eui.Label();
+        e.text = "hahahah";
+        e.y = 400;
+        this.addChild(e);
+        RedPointMgr.Ins().addListenter("main_jundui", function (state) {
+            a.text = String(state);
+        }, this);
+        RedPointMgr.Ins().addListenter("kazu", function (state) {
+            b.text = String(state);
+        }, this);
+        RedPointMgr.Ins().addListenter("hero_upgrade", function (state) {
+            c.text = String(state);
+        }, this);
+        RedPointMgr.Ins().addListenter("hero_new", function (state) {
+            d.text = String(state);
+        }, this);
+        RedPointMgr.Ins().addListenter("kazu", this.OnUpdateE, this);
+        RedPointMgr.Ins().update("hero_new", true);
+    };
+    Main.prototype.OnUpdateE = function (state) {
+        alert(state);
+        RedPointMgr.Ins().removeListenter("kazu", this.OnUpdateE, this);
     };
     return Main;
 }(eui.UILayer));

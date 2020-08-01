@@ -90,17 +90,6 @@
         });
     });
     xhr.send(null);
-
-    //判断移动浏览器是否支持运动传感器事件
-    if(window.DeviceMotionEvent){
-        //添加一个事件监听器
-        alert(0)
-        window.addEventListener('deviceorientation',()=>{
-            alert(1111)
-        },false);
-    }else{
-        alert('not support mobile event');
-    }
 </script>
 </body>
 

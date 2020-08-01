@@ -87,5 +87,58 @@ class Main extends eui.UILayer
         war.WarDataMgr.Ins();
         LayerManager.Ins().initLayer(this);
         RedPointMgr.Ins()
+
+        // ViewManager.Ins().open(home.DemoPanel)
+
+        let a = new eui.Label()
+        a.text = "hahahah"
+        this.addChild(a)
+
+        let b = new eui.Label()
+        b.text = "hahahah"
+        b.y = 100
+        this.addChild(b)
+
+        let c = new eui.Label()
+        c.text = "hahahah"
+        c.y = 200
+        this.addChild(c)
+
+        let d = new eui.Label()
+        d.text = "hahahah"
+        d.y = 300
+        this.addChild(d)
+
+        let e = new eui.Label()
+        e.text = "hahahah"
+        e.y = 400
+        this.addChild(e)
+        RedPointMgr.Ins().addListenter("main_jundui", (state:boolean)=>{
+            a.text = String(state)
+        }, this)
+
+        RedPointMgr.Ins().addListenter("kazu", (state:boolean)=>{
+            b.text = String(state)
+        }, this)
+
+        RedPointMgr.Ins().addListenter("hero_upgrade", (state:boolean)=>{
+            c.text = String(state)
+        }, this)
+
+        RedPointMgr.Ins().addListenter("hero_new", (state:boolean)=>{
+            d.text = String(state)
+        }, this)
+
+        RedPointMgr.Ins().addListenter("kazu", this.OnUpdateE, this)
+
+        RedPointMgr.Ins().update("hero_new", true)
+
+        RedPointMgr.Ins().
+    }
+
+    private OnUpdateE(state:boolean)
+    {
+        alert(state)
+        RedPointMgr.Ins().removeListenter("kazu", this.OnUpdateE, this)
     }
 }
