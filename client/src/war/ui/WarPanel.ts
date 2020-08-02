@@ -27,18 +27,7 @@ module war
 	}
 
 	export class WarPanel extends ViewBase
-	{
-		private startBtn:eui.Button;
-		private infoGroup:eui.Group;
-		private bgGroup:eui.Group;
-		private gameArea:eui.Group;
-		private optionGroup:eui.Group;
-		private gameScro:eui.Scroller;
-		private score:eui.Label;
-		private restartBtn:eui.Button;
-		private restartBtn2:eui.Button;
-		private endGameGroup:eui.Group;
-		
+	{	
 		public info:WarPanelData;
 		public constructor()
 		{

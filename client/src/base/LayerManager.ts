@@ -28,22 +28,27 @@ class LayerManager extends DataBase
 
 		this.map = new eui.UILayer();
 		this.map.name = `map`;
+		this.map.touchEnabled = false
 		this.stageMain.addChild(this.map);
 
 		this.body = new eui.UILayer();
 		this.body.name = `body`;
+		this.body.touchEnabled = false
 		this.stageMain.addChild(this.body);
 
 		this.effect = new eui.UILayer();
 		this.effect.name = `effect`;
+		this.effect.touchEnabled = false
 		this.stageMain.addChild(this.effect);
 		
 		this.panel = new eui.UILayer();
 		this.panel.name = `panel`;
+		this.panel.touchEnabled = false
 		this.stageMain.addChild(this.panel);
 
 		this.tips = new eui.UILayer();
 		this.tips.name = `tips`;
+		this.tips.touchEnabled = false
 		this.stageMain.addChild(this.tips);
 	}
 

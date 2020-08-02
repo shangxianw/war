@@ -138,38 +138,10 @@ var Main = (function (_super) {
         });
     };
     Main.prototype.createGameScene = function () {
-        war.WarDataMgr.Ins();
         LayerManager.Ins().initLayer(this);
-        RedPointMgr.Ins();
-        // ViewManager.Ins().open(home.DemoPanel)
-        var a = new AAA();
-        var _thatt = this;
-        function a1() {
-            alert(a.name);
-            a.removeAttrListener("name", a1, _thatt);
-        }
-        a.addAttrListener("name", a1, this);
-        aaa = a;
-    };
-    Main.prototype.OnUpdateE = function (state) {
+        ViewManager.Ins().open(home.LoginPanel);
     };
     return Main;
 }(eui.UILayer));
 __reflect(Main.prototype, "Main");
-var aaa = null;
-var AAA = (function (_super) {
-    __extends(AAA, _super);
-    function AAA() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.name = "wsx";
-        _this.age = 18;
-        return _this;
-    }
-    AAA.prototype.init = function () {
-    };
-    AAA.prototype.destroy = function () {
-    };
-    return AAA;
-}(DataBase));
-__reflect(AAA.prototype, "AAA");
 //# sourceMappingURL=Main.js.map
