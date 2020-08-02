@@ -47,6 +47,8 @@ module war
 		public open()
 		{
 			this.info.startWar()
+			
+			// 初始化地图
 			let map = new eui.Image()
 			map.source = "map_1001_jpg"
 			map.horizontalCenter = 0
@@ -62,6 +64,9 @@ module war
 			.call(()=>{
 				DrawUtils.DrawMapGrid(WarDataMgr.Ins().Ncols, WarDataMgr.Ins().Nrows)
 			})
+
+			let path = WarDataMgr.Ins().findPath(0, 0, 10, 20)
+			1;
 		}
 	}
 }

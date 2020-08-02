@@ -24,6 +24,14 @@ module war
 			LayerManager.Ins().map.addChild(shape)
 		}
 
+		public static DrawPath(entity:EntityBase)
+		{
+			if(this.isTest == false)
+				return;
+			
+			let 
+		}
+
 		public static DrawHasCode(entity:EntityBase)
 		{
 			if(DrawUtils.isTest == false)

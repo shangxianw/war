@@ -7,17 +7,16 @@ var war;
         function DrawUtils() {
         }
         DrawUtils.DrawMapGrid = function (nCols, nRows) {
-            var shiftX = 100;
-            var shiftY = 90;
+            var shiftX = war.WarDataMgr.Ins().MapStartX;
+            var shiftY = war.WarDataMgr.Ins().MapStartY;
             var shape = new egret.Shape();
             shape.graphics.lineStyle(1, 0xff0000);
             for (var i = 0, len = nCols; i < len; i++) {
                 for (var j = 0, len2 = nRows; j < len2; j++) {
-                    var w = 20;
-                    var h = 20;
-                    var x = i * w + shiftX;
-                    var y = j * h + shiftY;
-                    shape.graphics.drawRect(x, y, w, h);
+                    var size = war.WarDataMgr.Ins().CeilSize;
+                    var x = i * size + shiftX;
+                    var y = j * size + shiftY;
+                    shape.graphics.drawRect(x, y, size, size);
                 }
             }
             shape.graphics.endFill();

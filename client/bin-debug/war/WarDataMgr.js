@@ -16,11 +16,18 @@ var war;
             var _this = _super !== null && _super.apply(this, arguments) || this;
             _this.StageWidth = 640;
             _this.StageHeight = 1280;
+            _this.MapStartX = 100;
+            _this.MapStartY = 100;
+            _this.Ncols = 54;
+            _this.Nrows = 24;
+            _this.CeilSize = 20;
             return _this;
         }
         WarDataMgr.prototype.init = function () {
             this.world = new war.World();
             this.entityMap = new Hash();
+            this.mapGrid = new astar.Grid();
+            this.astar = new astar.AStar();
         };
         WarDataMgr.prototype.destroy = function () {
             this.world.destroy();
@@ -29,11 +36,16 @@ var war;
             this.entityMap = null;
         };
         WarDataMgr.prototype.startWar = function () {
+            this.mapGrid.init(this.Nrows, this.Ncols, this.CeilSize);
             egret.startTick(this.update, this);
         };
         WarDataMgr.prototype.endWar = function () {
             egret.stopTick(this.update, this);
             this.destroyEntityMap();
+        };
+        WarDataMgr.prototype.findPath = function (x1, y1, x2, y2) {
+            var path = this.astar.findPath(x1, y1, x2, y2, this.mapGrid);
+            return path;
         };
         WarDataMgr.prototype.update = function (currTime) {
             if (currTime === void 0) { currTime = null; }

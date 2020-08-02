@@ -86,5 +86,7 @@ class Main extends eui.UILayer
     protected createGameScene(): void {
         LayerManager.Ins().initLayer(this);
         ViewManager.Ins().open(home.LoginPanel)
+        // let a = new astar.AStarTest()
+        // this.addChild(a)
     }
 }

@@ -9,6 +9,9 @@ module war
 		public Ncols:number = 54
 		public Nrows:number = 24
 		public CeilSize:number = 20
+		
+		public mapGrid:astar.Grid;
+		public astar:astar.AStar;
 
 		public entityMap:Hash<number, EntityBase>;
 		public world:World;
@@ -17,6 +20,8 @@ module war
 		{
 			this.world = new World();
 			this.entityMap = new Hash<number, EntityBase>();
+			this.mapGrid = new astar.Grid()
+			this.astar = new astar.AStar()
 		}
 
 		protected destroy()
@@ -29,6 +34,7 @@ module war
 
 		public startWar()
 		{
+			this.mapGrid.init(this.Nrows, this.Ncols, this.CeilSize);
 			egret.startTick(this.update, this);
 		}
 
@@ -36,6 +42,12 @@ module war
 		{
 			egret.stopTick(this.update, this);
 			this.destroyEntityMap();
+		}
+
+		public findPath(x1:number, y1:number, x2:number, y2:number)
+		{
+			let path = this.astar.findPath(x1, y1, x2, y2, this.mapGrid)
+			return path
 		}
 
 		public update(currTime:number = null):boolean

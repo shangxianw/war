@@ -44,6 +44,7 @@ var war;
         };
         WarPanel.prototype.open = function () {
             this.info.startWar();
+            // 初始化地图
             var map = new eui.Image();
             map.source = "map_1001_jpg";
             map.horizontalCenter = 0;
@@ -57,8 +58,10 @@ var war;
                 scaleY: 1
             }, 500)
                 .call(function () {
-                war.DrawUtils.DrawMapGrid(54, 25);
+                war.DrawUtils.DrawMapGrid(war.WarDataMgr.Ins().Ncols, war.WarDataMgr.Ins().Nrows);
             });
+            var path = war.WarDataMgr.Ins().findPath(0, 0, 10, 20);
+            1;
         };
         return WarPanel;
     }(ViewBase));
