@@ -51,6 +51,9 @@ var ViewManager = (function (_super) {
         else if (typeof cls == "object") {
             className = cls.constructor.prototype.__class__;
         }
+        else {
+            className = cls;
+        }
         if (className == null)
             return false;
         if (this.viewMap.has(className) == false)

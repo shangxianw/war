@@ -22,7 +22,6 @@ var war;
         WarPanelData.prototype.destroy = function () {
         };
         WarPanelData.prototype.startWar = function () {
-            war.WarDataMgr.Ins().updateStepLevel();
             war.WarDataMgr.Ins().startWar();
         };
         WarPanelData.prototype.endWar = function () {
@@ -44,6 +43,22 @@ var war;
         WarPanel.prototype.destroy = function () {
         };
         WarPanel.prototype.open = function () {
+            this.info.startWar();
+            var map = new eui.Image();
+            map.source = "map_1001_jpg";
+            map.horizontalCenter = 0;
+            map.verticalCenter = 0;
+            map.scaleX = map.scaleY = 2;
+            LayerManager.Ins().map.addChild(map);
+            egret.Tween.get(map)
+                .wait(100)
+                .to({
+                scaleX: 1,
+                scaleY: 1
+            }, 500)
+                .call(function () {
+                war.DrawUtils.DrawMapGrid(54, 25);
+            });
         };
         return WarPanel;
     }(ViewBase));

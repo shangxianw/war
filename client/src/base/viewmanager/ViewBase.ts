@@ -6,11 +6,13 @@ class ViewBase extends UIBase
 		let classNameArray:any = this.constructor.prototype.__class__.split(".");
 		let cls = window[classNameArray[0]][`${classNameArray[1]}Data`];
 		this.info = new cls();
+		this.init()
 	}
 
 	public destroyAll()
 	{
 		this.info.destroyAll();
+		this.destroy()
 	}
 
 	protected init(){}						// 创建对象时执行之前执行

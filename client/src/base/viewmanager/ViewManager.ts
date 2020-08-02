@@ -42,7 +42,7 @@ class ViewManager extends DataBase
 		return true;
 	}
 
-	public close(cls:Function | Object):boolean
+	public close(cls:Function | Object | string):boolean
 	{
 		let className:string;
 		if(typeof cls == "function")
@@ -52,6 +52,10 @@ class ViewManager extends DataBase
 		else if(typeof cls == "object")
 		{
 			className = cls.constructor.prototype.__class__;
+		}
+		else
+		{
+			className = cls
 		}
 		
 		if(className == null)

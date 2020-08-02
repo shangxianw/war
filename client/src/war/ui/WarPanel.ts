@@ -16,7 +16,6 @@ module war
 
 		public startWar()
 		{
-			WarDataMgr.Ins().updateStepLevel();
 			WarDataMgr.Ins().startWar();
 		}
 
@@ -47,7 +46,22 @@ module war
 
 		public open()
 		{
-			
+			this.info.startWar()
+			let map = new eui.Image()
+			map.source = "map_1001_jpg"
+			map.horizontalCenter = 0
+			map.verticalCenter = 0
+			map.scaleX = map.scaleY = 2
+			LayerManager.Ins().map.addChild(map)
+			egret.Tween.get(map)
+			.wait(100)
+			.to({
+				scaleX:1,
+				scaleY:1
+			}, 500)
+			.call(()=>{
+				DrawUtils.DrawMapGrid(WarDataMgr.Ins().Ncols, WarDataMgr.Ins().Nrows)
+			})
 		}
 	}
 }

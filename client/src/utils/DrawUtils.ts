@@ -3,6 +3,27 @@ module war
 	export class DrawUtils
 	{
 		public static isTest:boolean = false;
+
+		public static DrawMapGrid(nCols:number, nRows:number)
+		{
+			let shiftX = WarDataMgr.Ins().MapStartX
+			let shiftY = WarDataMgr.Ins().MapStartY
+			let shape = new egret.Shape()
+			shape.graphics.lineStyle(1, 0xff0000)
+			for(let i=0, len=nCols; i<len; i++)
+			{
+				for(let j=0, len2=nRows; j<len2; j++)
+				{
+					let size = WarDataMgr.Ins().CeilSize;
+					let x = i * size + shiftX
+					let y = j * size + shiftY
+					shape.graphics.drawRect(x, y, size, size)
+				}
+			}
+			shape.graphics.endFill()
+			LayerManager.Ins().map.addChild(shape)
+		}
+
 		public static DrawHasCode(entity:EntityBase)
 		{
 			if(DrawUtils.isTest == false)

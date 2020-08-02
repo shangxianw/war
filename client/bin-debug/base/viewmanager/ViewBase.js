@@ -17,9 +17,11 @@ var ViewBase = (function (_super) {
         var classNameArray = this.constructor.prototype.__class__.split(".");
         var cls = window[classNameArray[0]][classNameArray[1] + "Data"];
         this.info = new cls();
+        this.init();
     };
     ViewBase.prototype.destroyAll = function () {
         this.info.destroyAll();
+        this.destroy();
     };
     ViewBase.prototype.init = function () { }; // 创建对象时执行之前执行
     ViewBase.prototype.destroy = function () { }; // 关闭面板(移除舞台后)时执行
