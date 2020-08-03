@@ -6,6 +6,26 @@ var war;
     var DrawUtils = (function () {
         function DrawUtils() {
         }
+        DrawUtils.DrawMapGrid = function (nCols, nRows) {
+            var shiftX = war.WarDataMgr.Ins().MapStartX;
+            var shiftY = war.WarDataMgr.Ins().MapStartY;
+            var shape = new egret.Shape();
+            shape.graphics.lineStyle(1, 0xff0000);
+            for (var i = 0, len = nCols; i < len; i++) {
+                for (var j = 0, len2 = nRows; j < len2; j++) {
+                    var size = war.WarDataMgr.Ins().CeilSize;
+                    var x = i * size + shiftX;
+                    var y = j * size + shiftY;
+                    shape.graphics.drawRect(x, y, size, size);
+                }
+            }
+            shape.graphics.endFill();
+            LayerManager.Ins().map.addChild(shape);
+        };
+        DrawUtils.DrawPath = function (entity) {
+            if (this.isTest == false)
+                return;
+        };
         DrawUtils.DrawHasCode = function (entity) {
             if (DrawUtils.isTest == false)
                 return;

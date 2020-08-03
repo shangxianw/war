@@ -42,7 +42,7 @@ class ViewManager extends DataBase
 		return true;
 	}
 
-	public close(cls:Function | Object):boolean
+	public close(cls:Function | Object | string):boolean
 	{
 		let className:string;
 		if(typeof cls == "function")
@@ -53,6 +53,10 @@ class ViewManager extends DataBase
 		{
 			className = cls.constructor.prototype.__class__;
 		}
+		else
+		{
+			className = cls
+		}
 		
 		if(className == null)
 			return false;
@@ -60,7 +64,7 @@ class ViewManager extends DataBase
 		if(this.viewMap.has(className) == false)
 			return true;
 		
-		let view = this.viewMap.get(className);
+		let view = this.viewMap.remove(className);
 		let layer = view.info.layer;
 		if(layer == null)
 			return;
@@ -68,6 +72,15 @@ class ViewManager extends DataBase
 		view.destroyAll();
 		view = null;
 		return true;
+	}
+
+	public closeAll()
+	{
+		let itemArray:string[] = DataUtils.CopyArray(this.viewMap.keys())
+		for(let panel of itemArray)
+		{
+			this.close(panel)
+		}
 	}
 
 	private handView(className:string, data:any=null):boolean

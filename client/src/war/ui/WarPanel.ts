@@ -16,7 +16,6 @@ module war
 
 		public startWar()
 		{
-			WarDataMgr.Ins().updateStepLevel();
 			WarDataMgr.Ins().startWar();
 		}
 
@@ -27,18 +26,8 @@ module war
 	}
 
 	export class WarPanel extends ViewBase
-	{
-		private startBtn:eui.Button;
-		private infoGroup:eui.Group;
-		private bgGroup:eui.Group;
-		private gameArea:eui.Group;
-		private optionGroup:eui.Group;
-		private gameScro:eui.Scroller;
-		private score:eui.Label;
-		private restartBtn:eui.Button;
-		private restartBtn2:eui.Button;
-		private endGameGroup:eui.Group;
-		
+	{	
+		private touchGroup:eui.Group;
 		public info:WarPanelData;
 		public constructor()
 		{
@@ -53,12 +42,39 @@ module war
 
 		protected destroy()
 		{
-			
+			this.touchGroup.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchGroupTap, this)
 		}
 
 		public open()
 		{
+			this.info.startWar()
 			
+			// 初始化地图
+			let map = new eui.Image()
+			map.source = "map_1001_jpg"
+			map.horizontalCenter = 0
+			map.verticalCenter = 0
+			map.scaleX = map.scaleY = 2
+			LayerManager.Ins().map.addChild(map)
+			egret.Tween.get(map)
+			.wait(100)
+			.to({
+				scaleX:1,
+				scaleY:1
+			}, 500)
+			.call(()=>{
+				DrawUtils.DrawMapGrid(WarDataMgr.Ins().Ncols, WarDataMgr.Ins().Nrows)
+			})
+
+			let path = WarDataMgr.Ins().findPath(0, 0, 10, 20)
+			1;
+
+			this.touchGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchGroupTap, this)
+		}
+
+		private OnTouchGroupTap(e:egret.TouchEvent)
+		{
+			WarFactory.CreateHero(10010, e.localX, e.localY)
 		}
 	}
 }

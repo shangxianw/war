@@ -51,11 +51,14 @@ var ViewManager = (function (_super) {
         else if (typeof cls == "object") {
             className = cls.constructor.prototype.__class__;
         }
+        else {
+            className = cls;
+        }
         if (className == null)
             return false;
         if (this.viewMap.has(className) == false)
             return true;
-        var view = this.viewMap.get(className);
+        var view = this.viewMap.remove(className);
         var layer = view.info.layer;
         if (layer == null)
             return;
@@ -63,6 +66,13 @@ var ViewManager = (function (_super) {
         view.destroyAll();
         view = null;
         return true;
+    };
+    ViewManager.prototype.closeAll = function () {
+        var itemArray = DataUtils.CopyArray(this.viewMap.keys());
+        for (var _i = 0, itemArray_1 = itemArray; _i < itemArray_1.length; _i++) {
+            var panel = itemArray_1[_i];
+            this.close(panel);
+        }
     };
     ViewManager.prototype.handView = function (className, data) {
         if (data === void 0) { data = null; }
