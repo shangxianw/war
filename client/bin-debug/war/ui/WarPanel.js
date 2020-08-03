@@ -41,6 +41,7 @@ var war;
         WarPanel.prototype.init = function () {
         };
         WarPanel.prototype.destroy = function () {
+            this.touchGroup.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchGroupTap, this);
         };
         WarPanel.prototype.open = function () {
             this.info.startWar();
@@ -62,6 +63,10 @@ var war;
             });
             var path = war.WarDataMgr.Ins().findPath(0, 0, 10, 20);
             1;
+            this.touchGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchGroupTap, this);
+        };
+        WarPanel.prototype.OnTouchGroupTap = function (e) {
+            war.WarFactory.CreateHero(10010, e.localX, e.localY);
         };
         return WarPanel;
     }(ViewBase));

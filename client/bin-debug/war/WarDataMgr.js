@@ -20,7 +20,7 @@ var war;
             _this.MapStartY = 100;
             _this.Ncols = 54;
             _this.Nrows = 24;
-            _this.CeilSize = 20;
+            _this.CeilSize = 40;
             return _this;
         }
         WarDataMgr.prototype.init = function () {

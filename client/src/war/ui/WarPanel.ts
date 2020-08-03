@@ -27,6 +27,7 @@ module war
 
 	export class WarPanel extends ViewBase
 	{	
+		private touchGroup:eui.Group;
 		public info:WarPanelData;
 		public constructor()
 		{
@@ -41,7 +42,7 @@ module war
 
 		protected destroy()
 		{
-			
+			this.touchGroup.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchGroupTap, this)
 		}
 
 		public open()
@@ -67,6 +68,13 @@ module war
 
 			let path = WarDataMgr.Ins().findPath(0, 0, 10, 20)
 			1;
+
+			this.touchGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchGroupTap, this)
+		}
+
+		private OnTouchGroupTap(e:egret.TouchEvent)
+		{
+			WarFactory.CreateHero(10010, e.localX, e.localY)
 		}
 	}
 }

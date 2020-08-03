@@ -28,8 +28,6 @@ module war
 		{
 			if(this.isTest == false)
 				return;
-			
-			let 
 		}
 
 		public static DrawHasCode(entity:EntityBase)

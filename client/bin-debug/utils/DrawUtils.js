@@ -22,6 +22,10 @@ var war;
             shape.graphics.endFill();
             LayerManager.Ins().map.addChild(shape);
         };
+        DrawUtils.DrawPath = function (entity) {
+            if (this.isTest == false)
+                return;
+        };
         DrawUtils.DrawHasCode = function (entity) {
             if (DrawUtils.isTest == false)
                 return;
