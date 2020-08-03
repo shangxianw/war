@@ -200,7 +200,7 @@ class ResManager extends DataBase
 
 	public loadResAsync(resName:string, cbFn:Function , thisObj:Object)
 	{
-		
+		RES.getResAsync
 	}
 
 	public destroyRes(resName:string)

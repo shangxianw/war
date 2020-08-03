@@ -13,7 +13,10 @@ var home;
     var LoginPanelData = (function (_super) {
         __extends(LoginPanelData, _super);
         function LoginPanelData() {
-            return _super !== null && _super.apply(this, arguments) || this;
+            var _this = _super !== null && _super.apply(this, arguments) || this;
+            _this._name = "wsx";
+            _this.lab = "login";
+            return _this;
         }
         LoginPanelData.prototype.init = function () {
             this.resGroup = [];
@@ -21,6 +24,16 @@ var home;
         };
         LoginPanelData.prototype.destroy = function () {
         };
+        Object.defineProperty(LoginPanelData.prototype, "name", {
+            get: function () {
+                return this._name;
+            },
+            set: function (value) {
+                this._name = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return LoginPanelData;
     }(ViewData));
     home.LoginPanelData = LoginPanelData;
@@ -30,6 +43,11 @@ var home;
         function LoginPanel() {
             var _this = _super.call(this) || this;
             _this.skinName = "LoginPanelSkin";
+            _this.info = new LoginPanelData();
+            _this["data"] = _this.info;
+            _this.once(egret.Event.REMOVED_FROM_STAGE, function () {
+                _this.$children;
+            }, _this);
             return _this;
         }
         LoginPanel.prototype.init = function () {
@@ -39,6 +57,7 @@ var home;
         };
         LoginPanel.prototype.open = function () {
             this.loginBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
+            this.info.name = "www";
         };
         LoginPanel.prototype.OnLoginTap = function (e) {
             ViewManager.Ins().close(this);

@@ -88,5 +88,8 @@ class Main extends eui.UILayer
         ViewManager.Ins().open(home.LoginPanel)
         // let a = new astar.AStarTest()
         // this.addChild(a)
+        // ResManager.Ins().loadGroup(["war_preload"], ()=>{
+        //     1;
+        // }, this)
     }
 }

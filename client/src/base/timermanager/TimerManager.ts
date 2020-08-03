@@ -16,7 +16,7 @@ class TimerManager extends DataBase
 		for(let timer of this.timerArray)
 		{
 			timer.destroyAll();
-			PoolManager.Ins().push(timer);
+			timer = null
 		}
 		this.timerArray.length = 0;
 		egret.stopTick(this.update, this);
@@ -40,17 +40,17 @@ class TimerManager extends DataBase
 	{
 		if(delay == null || cbFn == null || thisObj == null)
 		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+			// LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
 			return false;
 		}
 
 		if(this.hasTimer(cbFn, thisObj) == true)
 		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 已存在同一个定时器 ${delay} ${cbFn} ${thisObj}`);
+			// LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 已存在同一个定时器 ${delay} ${cbFn} ${thisObj}`);
 			return false;
 		}
 
-		let timer:TimerData = PoolManager.Ins().pop(TimerData);
+		let timer:TimerData = new TimerData()
 		timer.packData(delay, cbFn, thisObj, exec, args);
 		this.timerArray.push(timer);
 		return true;
@@ -60,7 +60,7 @@ class TimerManager extends DataBase
 	{
 		if(cbFn == null || thisObj == null)
 		{
-			LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
+			// LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
 			return false;
 		}
 
@@ -75,7 +75,7 @@ class TimerManager extends DataBase
 			{
 				this.timerArray.splice(index, 1);
 				timer.destroyAll();
-				PoolManager.Ins().push(timer);
+				timer = null
 				return true;
 			}
 			index++;
@@ -119,7 +119,7 @@ class TimerManager extends DataBase
 				{
 					this.timerArray.splice(index, 1);
 					timer.destroyAll();
-					PoolManager.Ins().push(timer);
+					timer = null
 				}
 				continue;
 			}
@@ -136,7 +136,7 @@ class TimerManager extends DataBase
 					{
 						this.timerArray.splice(index, 1);
 						timer.destroyAll();
-						PoolManager.Ins().push(timer);
+						timer = null
 						break;
 					}
 				}
