@@ -13,6 +13,10 @@ module war
 			posCom.y = WarUtils.GridX2LocalX(gridY)
 			entity.setComponent(posCom)
 			
+			let speedCom = new SpeedCom()
+			speedCom.setData(60, 30)
+			entity.setComponent(speedCom)
+
 			let renderCom = new RenderCom()
 			let render = new HeroRender()
 			render.initData(heroId)
@@ -20,6 +24,11 @@ module war
 			render.y = posCom.y
 			renderCom.setRender(render)
 			entity.setComponent(renderCom)
+
+			let pathCom = new PathCom()
+			let path = WarDataMgr.Ins().findPath(gridX, gridY, 20, 15)
+			pathCom.setPath(path)
+			entity.setComponent(pathCom)
 
 			WarDataMgr.Ins().addEntity(entity)
 			LayerManager.Ins().body.addChild(render)

@@ -43,8 +43,14 @@ var war;
             egret.stopTick(this.update, this);
             this.destroyEntityMap();
         };
-        WarDataMgr.prototype.findPath = function (x1, y1, x2, y2) {
+        WarDataMgr.prototype.findPath = function (x1, y1, x2, y2, needFrist) {
+            if (needFrist === void 0) { needFrist = false; }
             var path = this.astar.findPath(x1, y1, x2, y2, this.mapGrid);
+            if (needFrist == false) {
+                var node = path.shift();
+                node.destroy();
+                node = null;
+            }
             return path;
         };
         WarDataMgr.prototype.update = function (currTime) {

@@ -166,7 +166,18 @@ var ResManager = (function (_super) {
         return resItem;
     };
     ResManager.prototype.loadResAsync = function (resName, cbFn, thisObj) {
-        RES.getResAsync;
+        var callBack = function (data, key) {
+            var resData;
+            if (this.resMap.has(resName) == false) {
+                resData = new ResData();
+                resData.packData(resName);
+                this.resMap.set(resName, resData);
+            }
+            resData = this.resMap.get(resName);
+            resData.addRefCount();
+            cbFn.call(thisObj, data, key);
+        };
+        RES.getResAsync(resName, callBack, this);
     };
     ResManager.prototype.destroyRes = function (resName) {
         if (resName == null || resName == "") {

@@ -17,5 +17,11 @@ module war
 		{
 			this.render = render;
 		}
+
+		public updatePos(x:number, y:number)
+		{
+			this.render.x = x
+			this.render.y = y
+		}
 	}
 }

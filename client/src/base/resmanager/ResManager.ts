@@ -200,7 +200,20 @@ class ResManager extends DataBase
 
 	public loadResAsync(resName:string, cbFn:Function , thisObj:Object)
 	{
-		RES.getResAsync
+		let callBack = function(data, key)
+		{
+			let resData:ResData;
+			if(this.resMap.has(resName) == false)
+			{
+				resData = new ResData()
+				resData.packData(resName);
+				this.resMap.set(resName, resData);
+			}
+			resData = this.resMap.get(resName);
+			resData.addRefCount();
+			cbFn.call(thisObj, data, key)
+		}
+		RES.getResAsync(resName, callBack, this)
 	}
 
 	public destroyRes(resName:string)

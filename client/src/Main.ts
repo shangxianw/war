@@ -93,3 +93,5 @@ class Main extends eui.UILayer
         // }, this)
     }
 }
+
+let mc:MovieClip

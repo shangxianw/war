@@ -44,9 +44,15 @@ module war
 			this.destroyEntityMap();
 		}
 
-		public findPath(x1:number, y1:number, x2:number, y2:number)
+		public findPath(x1:number, y1:number, x2:number, y2:number, needFrist:boolean=false)
 		{
 			let path = this.astar.findPath(x1, y1, x2, y2, this.mapGrid)
+			if(needFrist == false)
+			{
+				let node = path.shift()
+				node.destroy()
+				node = null
+			}
 			return path
 		}
 

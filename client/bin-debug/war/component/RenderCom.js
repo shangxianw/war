@@ -23,6 +23,10 @@ var war;
         RenderCom.prototype.setRender = function (render) {
             this.render = render;
         };
+        RenderCom.prototype.updatePos = function (x, y) {
+            this.render.x = x;
+            this.render.y = y;
+        };
         return RenderCom;
     }(war.ComBase));
     war.RenderCom = RenderCom;

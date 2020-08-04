@@ -13,5 +13,11 @@ module war
 		{
 
 		}
+
+		public setAddPos(x:number, y:number)
+		{
+			this.x += x
+			this.y += y
+		}
 	}
 }

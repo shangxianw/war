@@ -1,19 +1,27 @@
 class MovieClip extends UIBase
 {
+	private frameRate:number;
 	public mc:egret.MovieClip;
 	private mcFactory:egret.MovieClipDataFactory;
 	public constructor()
 	{
 		super();
+		this.width = 0
+		this.height = 0
 	}
 
 	protected init()
 	{
 		this.mc = new egret.MovieClip();
 		this.addChild(this.mc)
+		let shap = new egret.Shape()
+		shap.graphics.beginFill(0xff0000)
+		shap.graphics.drawCircle(0, 0, 5)
+		shap.graphics.endFill()
+		this.addChild(shap)
 	}
 
-	public initData(fileName:string, clipName:string, action:string=null, count:number=0)
+	public initData(fileName:string, clipName:string, action:string=null, count:number=-1)
 	{
 		if(fileName == null || clipName == null)
 		{
@@ -21,10 +29,10 @@ class MovieClip extends UIBase
 			return false;
 		}
 
-		let data = RES.getResAsync(`${fileName}_json`, ()=>{
-			let txtr = RES.getResAsync(`${fileName}_png`, ()=>{
-				data = RES.getRes(`${fileName}_json`)
-				let txtr = RES.getRes(`${fileName}_png`)
+		ResManager.Ins().loadResAsync(`${fileName}_json`, (data1, key1)=>{
+			ResManager.Ins().loadResAsync(`${fileName}_png`, (data2, key2)=>{
+				let data = data1
+				let txtr = data2
 				if(data == null || txtr == null)
 				{
 					// LogUtils.Error(`资源未加载`);
@@ -39,20 +47,31 @@ class MovieClip extends UIBase
 					this.play(action, count);
 				}
 				return true;
-			}, this);
-		}, this);
+			},this)
+		},this)
 	}
 
 	public destroy()
 	{
 		this.mcFactory.clearCache();
+		this.mcFactory = null
+		this.mc = null;
 	}
 
-	public play(action:string, count:number)
+	public play(action:string, count:number=-1)
 	{
 		if(this.mc.currentLabel == action)
 			return;
 		this.mc.gotoAndPlay(action, count);
-		this.height = this.mc.height;
+	}
+
+	public stop()
+	{
+		this.mc.stop()
+	}
+
+	public setFrameRate(frameRate:number)
+	{
+		this.mc.frameRate = frameRate
 	}
 }

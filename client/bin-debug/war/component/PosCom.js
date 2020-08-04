@@ -20,6 +20,10 @@ var war;
         };
         PosCom.prototype.destroy = function () {
         };
+        PosCom.prototype.setAddPos = function (x, y) {
+            this.x += x;
+            this.y += y;
+        };
         return PosCom;
     }(war.ComBase));
     war.PosCom = PosCom;

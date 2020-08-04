@@ -25,6 +25,9 @@ var war;
         DrawUtils.DrawPath = function (entity) {
             if (this.isTest == false)
                 return;
+            var pathCom = entity.getComponent(war.Component.Path);
+            if (pathCom == null)
+                return;
         };
         DrawUtils.DrawHasCode = function (entity) {
             if (DrawUtils.isTest == false)

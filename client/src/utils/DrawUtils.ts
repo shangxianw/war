@@ -28,6 +28,12 @@ module war
 		{
 			if(this.isTest == false)
 				return;
+			
+			let pathCom = entity.getComponent(Component.Path)
+			if(pathCom == null)
+				return;
+			
+			
 		}
 
 		public static DrawHasCode(entity:EntityBase)

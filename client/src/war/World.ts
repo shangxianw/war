@@ -4,6 +4,10 @@ module war
 	{
 		public lastTime:number;
 		public sysArray:SystemBase[];
+
+		public moveSystem:MoveSystem
+		public renderSystem:RenderSystem
+		public speedSystem:SpeedSystem
 		public constructor()
 		{
 			this.init()
@@ -13,10 +17,28 @@ module war
 		{
 			this.lastTime = 0;
 			this.sysArray = [];
+
+			this.moveSystem = new MoveSystem()
+			this.sysArray.push(this.moveSystem)
+
+			this.renderSystem = new RenderSystem()
+			this.sysArray.push(this.renderSystem)
+
+			this.speedSystem = new SpeedSystem()
+			this.sysArray.push(this.speedSystem)
 		}
 
 		public destroy()
 		{
+			this.moveSystem.destroyAll()
+			this.moveSystem = null
+
+			this.renderSystem.destroyAll()
+			this.renderSystem = null
+
+			this.speedSystem.destroyAll()
+			this.speedSystem = null
+
 			this.sysArray.length = 0;
 		}
 
@@ -33,6 +55,10 @@ module war
 				entity = entityArray[i];
 				if(entity == null)
 					continue;
+				
+				this.speedSystem.update(entity, deltaTime)
+				this.moveSystem.update(entity, deltaTime)
+				this.renderSystem.update(entity, deltaTime)
 			}
 		}
 	}
