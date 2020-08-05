@@ -19,7 +19,7 @@ module astar
 		{
 			this.numCols = 54;
 			this.numRows = 24;
-			this.space = 30;
+			this.space = 20;
 			this.astar = new AStar();
 			this.initData();
 		}
@@ -36,10 +36,13 @@ module astar
 			let tect = new eui.Rect();
 			tect.width = this.space * this.numCols;
 			tect.height = this.space * this.numRows;
+			tect.graphics.beginFill(0xeeeeee)
+			tect.graphics.drawRect(0, 0, this.space * this.numCols, this.space * this.numRows)
+			tect.graphics.endFill()
 			this.addChild(tect);
 			let gridMap = new egret.Shape();
 			let walkMap = new egret.Shape();
-			gridMap.graphics.lineStyle(1, 0xffff00);
+			gridMap.graphics.lineStyle(1, 0xdddddd);
 			walkMap.graphics.beginFill(0xffff00);
 			
 			this.grid = new Grid();
@@ -52,15 +55,10 @@ module astar
 					let x = j * this.space;
 					let y = i * this.space;
 					gridMap.graphics.drawRect(x, y, this.space, this.space);
-
-					// let walkable = Math.random() > 0.8;
-					// if(walkable == false)
-					// {
-					// 	walkMap.graphics.drawRect(x, y, this.space, this.space);
-					// 	let flag = this.grid.setWalkable(j, i, false);
-					// 	if(flag == false)
-					// 		1;
-					// }
+					let walkabel = Math.random() > 0.05;
+					this.grid.setWalkable(j, i, walkabel)
+					if(walkabel == false)
+						walkMap.graphics.drawRect(x, y, this.space, this.space)
 				}
 			}
 
@@ -73,9 +71,9 @@ module astar
 		}
 
 		private pathShap:egret.Shape;
+		private nodeShap:egret.Shape;
 		private OnTap(e:egret.TouchEvent)
 		{
-
 			let x = Math.floor(e.localX / this.space);
 			let y = Math.floor(e.localY / this.space);
 
@@ -83,9 +81,13 @@ module astar
 			{
 				this.pathShap = new egret.Shape();
 				this.addChild(this.pathShap);
+				this.nodeShap = new egret.Shape()
+				this.addChild(this.nodeShap);
 			}
 			this.pathShap.graphics.clear();
-			this.pathShap.graphics.beginFill(0xff0000);
+			this.pathShap.graphics.lineStyle(2, 0xff0000);
+			this.nodeShap.graphics.clear();
+			this.nodeShap.graphics.beginFill(0xff0000);
 
 			if(this.astar.startNode == null && this.astar.endNode == null)
 			{
@@ -98,12 +100,15 @@ module astar
 				this.astar.endNode = this.grid.getNode(x, y);
 			}
 			let path = this.astar.findPath(this.astar.startNode.x, this.astar.startNode.y, this.astar.endNode.x, this.astar.endNode.y, this.grid);
-			// let path = this.astar.findPath(9, 19, x, y, this.grid);
 			for(let node of path)
 			{
-				this.pathShap.graphics.drawRect(node.x*this.space, node.y*this.space, this.space, this.space);
+				let x = node.x * this.space + (this.space >> 1)
+				let y = node.y * this.space + (this.space >> 1)
+				this.pathShap.graphics.lineTo(x, y);
+				this.nodeShap.graphics.drawCircle(x, y, 5)
 			}
 			this.pathShap.graphics.endFill();
+			this.nodeShap.graphics.endFill();
 		}
 	}
 }

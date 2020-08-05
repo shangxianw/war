@@ -46,6 +46,7 @@ var astar;
             this.endNode = this.grid.getNode(endX, endY);
             this.grid = grid;
             this.tmpPath = this.search();
+            // return this.tmpPath
             var p = this.floydPath(this.tmpPath);
             return p;
         };
@@ -110,60 +111,28 @@ var astar;
                     i--;
                 }
             }
-            // 消除拐点
+            // 消除无效拐点
             var len = path.length;
             var ret;
             for (var i = len - 1; i >= 0; i--) {
                 for (var j = 0; j <= i - 2; j++) {
-                    // ret = true;// 判断线段是否穿过节点，没穿过
                     ret = this.checkIsCross(path[i].x, path[i].y, path[j].x, path[j].y);
-                    if (!ret) {
+                    if (ret == false) {
                         for (var k = i - 1; k > j; k--) {
                             path.splice(k, 1);
                         }
                         i = j + 1;
-                        len = path.length;
                         break;
                     }
                 }
             }
             return path;
         };
-        AStar.prototype.packPath = function () {
-            var currNode = this.endNode;
-            var path = [this.grid.getNode(currNode.x, currNode.y)];
-            while (currNode != this.startNode) {
-                currNode = currNode.parent;
-                if (currNode == null)
-                    break;
-                path.unshift(this.grid.getNode(currNode.x, currNode.y));
-            }
-            var arr = [].concat(this.openArray, this.closeArray);
-            for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
-                var node = arr_1[_i];
-                node.resetGHF();
-            }
-            return path;
-        };
-        AStar.prototype.getMinFNode = function () {
-            var minIndex;
-            var currIndex = 0;
-            for (var _i = 0, _a = this.openArray; _i < _a.length; _i++) {
-                var openNode = _a[_i];
-                if (minIndex == null) {
-                    minIndex = currIndex;
-                }
-                else {
-                    if (openNode.f < this.openArray[minIndex].f) {
-                        minIndex = currIndex;
-                    }
-                }
-                currIndex++;
-            }
-            return this.openArray.splice(minIndex, 1)[0];
-        };
+        /**
+         * 两点之间是否穿过障碍物
+         */
         AStar.prototype.checkIsCross = function (x1, y1, x2, y2) {
-            var cellSize = 30;
+            var cellSize = this.grid.space;
             var startX = x1 * cellSize + cellSize * 0.5;
             var startY = y1 * cellSize + cellSize * 0.5;
             var endX = x2 * cellSize + cellSize * 0.5;
@@ -237,6 +206,39 @@ var astar;
             if (segmentIntersection(x1, y1, x2, y2, xmin, ymax, xmin, ymin))
                 return true;
             return false;
+        };
+        AStar.prototype.packPath = function () {
+            var currNode = this.endNode;
+            var path = [this.grid.getNode(currNode.x, currNode.y)];
+            while (currNode != this.startNode) {
+                currNode = currNode.parent;
+                if (currNode == null)
+                    break;
+                path.unshift(this.grid.getNode(currNode.x, currNode.y));
+            }
+            var arr = [].concat(this.openArray, this.closeArray);
+            for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
+                var node = arr_1[_i];
+                node.resetGHF();
+            }
+            return path;
+        };
+        AStar.prototype.getMinFNode = function () {
+            var minIndex;
+            var currIndex = 0;
+            for (var _i = 0, _a = this.openArray; _i < _a.length; _i++) {
+                var openNode = _a[_i];
+                if (minIndex == null) {
+                    minIndex = currIndex;
+                }
+                else {
+                    if (openNode.f < this.openArray[minIndex].f) {
+                        minIndex = currIndex;
+                    }
+                }
+                currIndex++;
+            }
+            return this.openArray.splice(minIndex, 1)[0];
         };
         // 计算点(x, y)到经过两点(x1, y1)和(x2, y2)的直线的距离 (点到直线的垂直距离)
         AStar.prototype.distanceFromPointToLine = function (x, y, x1, y1, x2, y2) {

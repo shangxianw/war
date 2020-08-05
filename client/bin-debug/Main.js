@@ -138,13 +138,15 @@ var Main = (function (_super) {
         });
     };
     Main.prototype.createGameScene = function () {
-        LayerManager.Ins().initLayer(this);
-        ViewManager.Ins().open(home.LoginPanel);
+        // LayerManager.Ins().initLayer(this);
+        // ViewManager.Ins().open(home.LoginPanel)
         // let a = new astar.AStarTest()
         // this.addChild(a)
         // ResManager.Ins().loadGroup(["war_preload"], ()=>{
         //     1;
         // }, this)
+        var a = new astar.AStarTest();
+        this.addChild(a);
     };
     return Main;
 }(eui.UILayer));

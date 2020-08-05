@@ -125,6 +125,7 @@ class MathUtils
 
 	/**
 	 * 四舍五入到某个标准的整数倍位置
+	 * 如 value=5， space=3，则最终输出6，因为在3的整数倍0,3,6...中，5更靠近6，如果在中间位置，则取向上的值
 	 * @param value 当前值
 	 * @param space 间隔
 	 * @returns 返回该值更靠近space倍数的那个数
@@ -137,5 +138,19 @@ class MathUtils
 		if(topLine - value <= value - bottomLine)
 			return topLine;
 		return bottomLine;
+	}
+
+	/**
+	 * 贝塞尔曲线
+	 * tips：可根据传入的percent来控制物体沿着曲线的速度，如前慢后快，则前期的百分比调用多一点
+	 * @param percent 百分比0~1，即整段贝塞尔曲线中所处的位置
+	 */
+	public static BezierCurve(percent:number, x1:number, y1:number, x2:number, y2:number, x3:number, y3:number):number[]
+	{
+		if(percent < 0 || percent > 1)
+			return
+		let x = (1 - percent) * (1 - percent) * x1 + 2 * percent * (1 - percent) * x2 + percent * percent * x3;
+		let y = (1 - percent) * (1 - percent) * y1 + 2 * percent * (1 - percent) * y2 + percent * percent * y3;
+		return [x, y]
 	}
 }

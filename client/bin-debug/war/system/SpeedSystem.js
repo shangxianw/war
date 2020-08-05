@@ -27,10 +27,18 @@ var war;
         SpeedSystem.prototype.update = function (entity, deltaTime) {
             if (entity == null)
                 return;
+            var posCom = entity.getComponent(war.Component.Pos);
+            var speedCom = entity.getComponent(war.Component.Speed);
             var pathCom = entity.getComponent(war.Component.Path);
-            if (pathCom != null) {
-                1;
+            if (posCom == null || speedCom == null)
                 return;
+            if (pathCom != null) {
+                var node = pathCom.getCurrNode();
+                if (node == null)
+                    return;
+                var localX = war.WarUtils.GridX2LocalX(node.x);
+                var localY = war.WarUtils.GridX2LocalX(node.y);
+                var angle = MathUtils.CalcAngle(posCom.x, posCom.y, localX, localY);
             }
         };
         return SpeedSystem;

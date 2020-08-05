@@ -84,13 +84,16 @@ class Main extends eui.UILayer
     }
     
     protected createGameScene(): void {
-        LayerManager.Ins().initLayer(this);
-        ViewManager.Ins().open(home.LoginPanel)
+        // LayerManager.Ins().initLayer(this);
+        // ViewManager.Ins().open(home.LoginPanel)
         // let a = new astar.AStarTest()
         // this.addChild(a)
         // ResManager.Ins().loadGroup(["war_preload"], ()=>{
         //     1;
         // }, this)
+
+        let a = new astar.AStarTest()
+        this.addChild(a)
     }
 }
 

@@ -29,6 +29,9 @@ var war;
             this.path.length = 0;
             this.path = newPath;
         };
+        PathCom.prototype.getCurrNode = function () {
+            return this.path[0];
+        };
         return PathCom;
     }(war.ComBase));
     war.PathCom = PathCom;

@@ -62,6 +62,8 @@ module astar
 			this.endNode = this.grid.getNode(endX, endY);
 			this.grid = grid;
 			this.tmpPath = this.search();
+			
+			// return this.tmpPath
 			let p = this.floydPath(this.tmpPath);
 			return p;
 		}
@@ -147,23 +149,21 @@ module astar
 				}
 			}
 
-			// 消除拐点
+			// 消除无效拐点
 			let len = path.length;
 			let ret:boolean;
-			for (let i = len - 1; i >= 0; i--)
+			for (let i = len - 1; i >= 0; i--) // 从尾巴开始
 			{
-				for (let j:number = 0; j <= i - 2; j++)
+				for (let j = 0; j <= i - 2; j++)	// 从头开始
 				{
-					// ret = true;// 判断线段是否穿过节点，没穿过
 					ret = this.checkIsCross(path[i].x, path[i].y, path[j].x, path[j].y);
-					if (!ret)
+					if (ret == false)
 					{
-						for (var k:number = i - 1; k > j; k--)
+						for (let k = i - 1; k > j; k--)
 						{
 							path.splice(k, 1);
 						}
 						i = j+1;
-						len = path.length;
 						break;
 					}
 				}
@@ -172,59 +172,20 @@ module astar
 			return path;
 		}
 
-		private packPath()
-		{
-			let currNode:Node = this.endNode;
-			let path:Node[] = [this.grid.getNode(currNode.x, currNode.y)];
-			while(currNode != this.startNode)
-			{
-				currNode = currNode.parent;
-				if(currNode == null)
-					break;
-				path.unshift(this.grid.getNode(currNode.x, currNode.y));
-			}
-
-			let arr = [].concat(this.openArray, this.closeArray);
-			for(let node of arr)
-			{
-				node.resetGHF();
-			}
-			return path;
-		}
-
-		private getMinFNode():Node
-		{
-			let minIndex:number;
-			let currIndex:number = 0;
-			for(let openNode of this.openArray)
-			{
-				if(minIndex == null)
-				{
-					minIndex = currIndex;
-				}
-				else
-				{
-					if(openNode.f < this.openArray[minIndex].f)
-					{
-						minIndex = currIndex;
-					}
-				}
-				currIndex++;
-			}
-			return this.openArray.splice(minIndex, 1)[0];
-		}
-
+		/**
+		 * 两点之间是否穿过障碍物
+		 */
 		private checkIsCross(x1:number, y1:number, x2:number, y2:number):boolean
 		{
-			let cellSize = 30;
-			let startX = x1*cellSize + cellSize*0.5;
-			let startY = y1*cellSize + cellSize*0.5;
-			let endX = x2*cellSize + cellSize*0.5;
-			let endY = y2*cellSize + cellSize*0.5;
+			let cellSize = this.grid.space;
+			let startX = x1 * cellSize// + cellSize * 0.5;
+			let startY = y1 * cellSize// + cellSize * 0.5;
+			let endX   = x2 * cellSize// + cellSize * 0.5;
+			let endY   = y2 * cellSize// + cellSize * 0.5;
 			let nodeArray = this.grid.getNodeArray();
 			for(let node of nodeArray)
 			{
-				if(!node.walkable && this.isLineCross(node, startX, startY, endX, endY))
+				if(this.isLineCross(node, startX, startY, endX, endY))
 					return true;
 			}
 			return false;
@@ -305,6 +266,50 @@ module astar
 
 			return false;
 		}
+
+		private packPath()
+		{
+			let currNode:Node = this.endNode;
+			let path:Node[] = [this.grid.getNode(currNode.x, currNode.y)];
+			while(currNode != this.startNode)
+			{
+				currNode = currNode.parent;
+				if(currNode == null)
+					break;
+				path.unshift(this.grid.getNode(currNode.x, currNode.y));
+			}
+
+			let arr = [].concat(this.openArray, this.closeArray);
+			for(let node of arr)
+			{
+				node.resetGHF();
+			}
+			return path;
+		}
+
+		private getMinFNode():Node
+		{
+			let minIndex:number;
+			let currIndex:number = 0;
+			for(let openNode of this.openArray)
+			{
+				if(minIndex == null)
+				{
+					minIndex = currIndex;
+				}
+				else
+				{
+					if(openNode.f < this.openArray[minIndex].f)
+					{
+						minIndex = currIndex;
+					}
+				}
+				currIndex++;
+			}
+			return this.openArray.splice(minIndex, 1)[0];
+		}
+
+		
 
 		// 计算点(x, y)到经过两点(x1, y1)和(x2, y2)的直线的距离 (点到直线的垂直距离)
 		private distanceFromPointToLine(x:number, y:number, x1:number, y1:number, x2:number, y2:number):number
