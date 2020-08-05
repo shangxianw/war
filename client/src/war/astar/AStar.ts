@@ -232,16 +232,20 @@ module astar
 				return false;
 			}
 
-			let cellSize = 30;
-			let xmin = node.x*cellSize;
-			let xmax = xmin+cellSize;
-			let ymin = node.y*cellSize;
-			let ymax = ymin+cellSize;
+			let cellSize = this.grid.space;
+			let minX = node.x * cellSize;
+			let maxX = minX + cellSize;
+			let minY = node.y * cellSize;
+			let maxY = minY + cellSize;
+			let centerX = minX + cellSize/2
+			let centerY = minY + cellSize/2
 			
-			if(x1>=xmin && x1<=xmax
-			&&x2>=xmin && x2<=xmax
-			&&y1>=ymin && y1<=ymax
-			&&y2>=ymin && y2<=ymax)//线段在矩型内
+			if( // 线段在矩型内
+				x1 >= minX && x1 <= maxX &&
+				x2 >= minX && x2 <= maxX &&
+				y1 >= minY && y1 <= maxY &&
+				y2 >= minY && y2 <= maxY
+			)
 				return true;
 			
 			if(x1==x2 && y1==y2)
@@ -250,9 +254,9 @@ module astar
 			}
 			
 			//格子中心点到线段的距离 大于 cellSize*1.414 则线段和网格肯定不相交 通过这个过滤大部分情况 提高效率
-			let dis = this.distanceFromPointToLine(xmin+cellSize/2, ymin+cellSize/2, x1, y1, x2, y2);
-			if(dis >= cellSize*1.42)
-				return false;
+			// let dis = MathUtils.PointToLineDistance(centerX, centerY, x1, y1, x2, y2);
+			// if(dis >= cellSize)
+			// 	return false;
 			
 			//线段和格子的四个边框相交判断
 			if(segmentIntersection(x1, y1, x2, y2, xmin, ymin, xmax, ymin))

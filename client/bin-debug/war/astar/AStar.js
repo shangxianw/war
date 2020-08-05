@@ -133,14 +133,14 @@ var astar;
          */
         AStar.prototype.checkIsCross = function (x1, y1, x2, y2) {
             var cellSize = this.grid.space;
-            var startX = x1 * cellSize + cellSize * 0.5;
-            var startY = y1 * cellSize + cellSize * 0.5;
-            var endX = x2 * cellSize + cellSize * 0.5;
-            var endY = y2 * cellSize + cellSize * 0.5;
+            var startX = x1 * cellSize; // + cellSize * 0.5;
+            var startY = y1 * cellSize; // + cellSize * 0.5;
+            var endX = x2 * cellSize; // + cellSize * 0.5;
+            var endY = y2 * cellSize; // + cellSize * 0.5;
             var nodeArray = this.grid.getNodeArray();
             for (var _i = 0, nodeArray_1 = nodeArray; _i < nodeArray_1.length; _i++) {
                 var node = nodeArray_1[_i];
-                if (!node.walkable && this.isLineCross(node, startX, startY, endX, endY))
+                if (this.isLineCross(node, startX, startY, endX, endY))
                     return true;
             }
             return false;
@@ -179,32 +179,34 @@ var astar;
                     return true;
                 return false;
             }
-            var cellSize = 30;
-            var xmin = node.x * cellSize;
-            var xmax = xmin + cellSize;
-            var ymin = node.y * cellSize;
-            var ymax = ymin + cellSize;
-            if (x1 >= xmin && x1 <= xmax
-                && x2 >= xmin && x2 <= xmax
-                && y1 >= ymin && y1 <= ymax
-                && y2 >= ymin && y2 <= ymax)
+            var cellSize = this.grid.space;
+            var minX = node.x * cellSize;
+            var maxX = minX + cellSize;
+            var minY = node.y * cellSize;
+            var maxY = minY + cellSize;
+            var centerX = minX + cellSize / 2;
+            var centerY = minY + cellSize / 2;
+            if (x1 >= minX && x1 <= maxX &&
+                x2 >= minX && x2 <= maxX &&
+                y1 >= minY && y1 <= maxY &&
+                y2 >= minY && y2 <= maxY)
                 return true;
             if (x1 == x2 && y1 == y2) {
                 return false;
             }
             //格子中心点到线段的距离 大于 cellSize*1.414 则线段和网格肯定不相交 通过这个过滤大部分情况 提高效率
-            var dis = this.distanceFromPointToLine(xmin + cellSize / 2, ymin + cellSize / 2, x1, y1, x2, y2);
-            if (dis >= cellSize * 1.42)
+            var dis = MathUtils.PointToLineDistance(centerX, centerY, x1, y1, x2, y2);
+            if (dis >= cellSize)
                 return false;
             //线段和格子的四个边框相交判断
-            if (segmentIntersection(x1, y1, x2, y2, xmin, ymin, xmax, ymin))
-                return true;
-            if (segmentIntersection(x1, y1, x2, y2, xmax, ymin, xmax, ymax))
-                return true;
-            if (segmentIntersection(x1, y1, x2, y2, xmax, ymax, xmin, ymax))
-                return true;
-            if (segmentIntersection(x1, y1, x2, y2, xmin, ymax, xmin, ymin))
-                return true;
+            // if(segmentIntersection(x1, y1, x2, y2, xmin, ymin, xmax, ymin))
+            // 	return true;
+            // if(segmentIntersection(x1, y1, x2, y2, xmax, ymin, xmax, ymax))
+            // 	return true;
+            // if(segmentIntersection(x1, y1, x2, y2, xmax, ymax, xmin, ymax))
+            // 	return true;
+            // if(segmentIntersection(x1, y1, x2, y2, xmin, ymax, xmin, ymin))
+            // 	return true;
             return false;
         };
         AStar.prototype.packPath = function () {
