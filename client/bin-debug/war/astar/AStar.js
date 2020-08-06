@@ -195,9 +195,9 @@ var astar;
                 return false;
             }
             //格子中心点到线段的距离 大于 cellSize*1.414 则线段和网格肯定不相交 通过这个过滤大部分情况 提高效率
-            var dis = MathUtils.PointToLineDistance(centerX, centerY, x1, y1, x2, y2);
-            if (dis >= cellSize)
-                return false;
+            // let dis = MathUtils.PointToLineDistance(centerX, centerY, x1, y1, x2, y2);
+            // if(dis >= cellSize)
+            // 	return false;
             //线段和格子的四个边框相交判断
             // if(segmentIntersection(x1, y1, x2, y2, xmin, ymin, xmax, ymin))
             // 	return true;

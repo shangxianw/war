@@ -259,14 +259,14 @@ module astar
 			// 	return false;
 			
 			//线段和格子的四个边框相交判断
-			if(segmentIntersection(x1, y1, x2, y2, xmin, ymin, xmax, ymin))
-				return true;
-			if(segmentIntersection(x1, y1, x2, y2, xmax, ymin, xmax, ymax))
-				return true;
-			if(segmentIntersection(x1, y1, x2, y2, xmax, ymax, xmin, ymax))
-				return true;
-			if(segmentIntersection(x1, y1, x2, y2, xmin, ymax, xmin, ymin))
-				return true;
+			// if(segmentIntersection(x1, y1, x2, y2, xmin, ymin, xmax, ymin))
+			// 	return true;
+			// if(segmentIntersection(x1, y1, x2, y2, xmax, ymin, xmax, ymax))
+			// 	return true;
+			// if(segmentIntersection(x1, y1, x2, y2, xmax, ymax, xmin, ymax))
+			// 	return true;
+			// if(segmentIntersection(x1, y1, x2, y2, xmin, ymax, xmin, ymin))
+			// 	return true;
 
 			return false;
 		}

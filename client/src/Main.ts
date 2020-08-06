@@ -92,8 +92,13 @@ class Main extends eui.UILayer
         //     1;
         // }, this)
 
-        let a = new astar.AStarTest()
+        // let a = new astar.AStarTest()
+        // this.addChild(a)
+
+        let a = new MovieClip()
+        a.initData("hero_10050", "hero_10050", "attack2")
         this.addChild(a)
+        a.x = a.y = 200
     }
 }
 

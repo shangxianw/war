@@ -145,8 +145,12 @@ var Main = (function (_super) {
         // ResManager.Ins().loadGroup(["war_preload"], ()=>{
         //     1;
         // }, this)
-        var a = new astar.AStarTest();
+        // let a = new astar.AStarTest()
+        // this.addChild(a)
+        var a = new MovieClip();
+        a.initData("hero_10050", "hero_10050", "attack2");
         this.addChild(a);
+        a.x = a.y = 200;
     };
     return Main;
 }(eui.UILayer));

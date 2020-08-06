@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "hero_19021_png,hero_19021_json,hero_19020_png,hero_19020_json,hero_10010_png,hero_10010_json,hero_10010_red_png,hero_10010_red_json,hero_99040_png,hero_99040_json,hero_99030_png,hero_99030_json,hero_99030_red_png,hero_99030_red_json,hero_99020_png,hero_99020_json,hero_99010_png,hero_99010_json,199030_tex_png,199030_ske_json,199030_tex_json,111_png,111_json",
+			"keys": "hero_19021_png,hero_19021_json,hero_19020_png,hero_19020_json,hero_10010_png,hero_10010_json,hero_10010_red_png,hero_10010_red_json,hero_99040_png,hero_99040_json,hero_99030_png,hero_99030_json,hero_99030_red_png,hero_99030_red_json,hero_99020_png,hero_99020_json,hero_99010_png,hero_99010_json,199030_tex_png,199030_ske_json,199030_tex_json,111_png,111_json,hero_10050_png,hero_10050_json,hero_10050_red_png,hero_10050_red_json",
 			"name": "war_preload"
 		}
 	],
@@ -125,6 +125,26 @@
 			"url": "war/heroClip/111.json",
 			"type": "json",
 			"name": "111_json"
+		},
+		{
+			"url": "war/heroDragon/10050/hero_10050.png",
+			"type": "image",
+			"name": "hero_10050_png"
+		},
+		{
+			"url": "war/heroDragon/10050/hero_10050_red.png",
+			"type": "image",
+			"name": "hero_10050_red_png"
+		},
+		{
+			"url": "war/heroDragon/10050/hero_10050.json",
+			"type": "json",
+			"name": "hero_10050_json"
+		},
+		{
+			"url": "war/heroDragon/10050/hero_10050_red.json",
+			"type": "json",
+			"name": "hero_10050_red_json"
 		}
 	]
 }
