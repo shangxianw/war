@@ -15,8 +15,44 @@ class ViewBase extends UIBase
 		this.destroy()
 	}
 
-	protected init(){}						// 创建对象时执行之前执行
 	protected destroy(){}					// 关闭面板(移除舞台后)时执行
 	public initData(data:any=null){}		// 添加到舞台之前执行
-	public open(){}							// 舞台刷新后
+
+	// ----------在执行constructor时
+	public init()
+	{
+
+	}
+
+	// 执行constructor后，添加到舞台前
+	public openBefore()
+	{
+
+	}
+
+	// 添加到舞台后
+	public open()
+	{
+
+	}
+
+	public show()
+	{
+
+	}
+
+	public hide()
+	{
+
+	}
+
+	public close()
+	{
+
+	}
+
+	public closeBefore()
+	{
+
+	}
 }
