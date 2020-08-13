@@ -16,10 +16,9 @@ class ViewBase extends UIBase
 	}
 
 	protected destroy(){}					// 关闭面板(移除舞台后)时执行
-	public initData(data:any=null){}		// 添加到舞台之前执行
 
 	// ----------在执行constructor时
-	public init()
+	protected init()
 	{
 
 	}
@@ -52,6 +51,12 @@ class ViewBase extends UIBase
 	}
 
 	public closeBefore()
+	{
+
+	}
+
+	// ---------------------------------------------------------------------- 
+	public addAttrListener()
 	{
 
 	}

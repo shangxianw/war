@@ -84,7 +84,7 @@ class Main extends eui.UILayer
     }
     
     protected createGameScene(): void {
-        // LayerManager.Ins().initLayer(this);
+        LayerManager.Ins().initLayer(this);
         // ViewManager.Ins().open(home.LoginPanel)
         // let a = new astar.AStarTest()
         // this.addChild(a)
@@ -99,6 +99,8 @@ class Main extends eui.UILayer
         // a.initData("hero_10050", "hero_10050", "attack2")
         // this.addChild(a)
         // a.x = a.y = 200
+
+        ViewManager.Ins().open(home.DemoPanel)
     }
 }
 

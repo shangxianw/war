@@ -138,7 +138,7 @@ var Main = (function (_super) {
         });
     };
     Main.prototype.createGameScene = function () {
-        // LayerManager.Ins().initLayer(this);
+        LayerManager.Ins().initLayer(this);
         // ViewManager.Ins().open(home.LoginPanel)
         // let a = new astar.AStarTest()
         // this.addChild(a)
@@ -147,10 +147,11 @@ var Main = (function (_super) {
         // }, this)
         // let a = new astar.AStarTest()
         // this.addChild(a)
-        var a = new MovieClip();
-        a.initData("hero_10050", "hero_10050", "attack2");
-        this.addChild(a);
-        a.x = a.y = 200;
+        // let a = new MovieClip()
+        // a.initData("hero_10050", "hero_10050", "attack2")
+        // this.addChild(a)
+        // a.x = a.y = 200
+        ViewManager.Ins().open(home.DemoPanel);
     };
     return Main;
 }(eui.UILayer));

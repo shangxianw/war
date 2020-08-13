@@ -68,8 +68,9 @@ class ViewManager extends DataBase
 		let layer = view.info.layer;
 		if(layer == null)
 			return;
+		view.closeBefore();
 		layer.removeChild(view);
-		view.destroyAll();
+		view.close();
 		view = null;
 		return true;
 	}
@@ -93,7 +94,7 @@ class ViewManager extends DataBase
 
 		if(layer == null)
 			return;
-		view.initData(data);
+		view.openBefore()
 		layer.addChild(view);
 		view.open();
 	}

@@ -23,12 +23,27 @@ var ViewBase = (function (_super) {
         this.info.destroyAll();
         this.destroy();
     };
-    ViewBase.prototype.init = function () { }; // 创建对象时执行之前执行
     ViewBase.prototype.destroy = function () { }; // 关闭面板(移除舞台后)时执行
     ViewBase.prototype.initData = function (data) {
         if (data === void 0) { data = null; }
     }; // 添加到舞台之前执行
-    ViewBase.prototype.open = function () { }; // 舞台刷新后
+    // ----------在执行constructor时
+    ViewBase.prototype.init = function () {
+    };
+    // 执行constructor后，添加到舞台前
+    ViewBase.prototype.openBefore = function () {
+    };
+    // 添加到舞台后
+    ViewBase.prototype.open = function () {
+    };
+    ViewBase.prototype.show = function () {
+    };
+    ViewBase.prototype.hide = function () {
+    };
+    ViewBase.prototype.close = function () {
+    };
+    ViewBase.prototype.closeBefore = function () {
+    };
     return ViewBase;
 }(UIBase));
 __reflect(ViewBase.prototype, "ViewBase");

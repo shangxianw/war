@@ -62,8 +62,9 @@ var ViewManager = (function (_super) {
         var layer = view.info.layer;
         if (layer == null)
             return;
+        view.closeBefore();
         layer.removeChild(view);
-        view.destroyAll();
+        view.close();
         view = null;
         return true;
     };
@@ -82,7 +83,7 @@ var ViewManager = (function (_super) {
         var layer = view.info.layer;
         if (layer == null)
             return;
-        view.initData(data);
+        view.openBefore();
         layer.addChild(view);
         view.open();
     };

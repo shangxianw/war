@@ -29,7 +29,7 @@ abstract class DataBase
 		this.destroy();
 	}
 
-	protected abstract init()
+	protected init(){}
 	protected abstract destroy()
 
 	public addAttrListener(attr:string, cbFn:Function, thisObj:Object)

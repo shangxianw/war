@@ -35,7 +35,7 @@ module war
 			this.skinName = "WarPanelSkin";
 		}
 
-		protected init() 
+		protected init()
 		{
 			
 		}
