@@ -22,6 +22,7 @@ var DataBase = (function () {
         this.attrMap.destroy();
         this.destroy();
     };
+    DataBase.prototype.init = function () { };
     DataBase.prototype.addAttrListener = function (attr, cbFn, thisObj) {
         if (attr == null || cbFn == null || thisObj == null) {
             return false;

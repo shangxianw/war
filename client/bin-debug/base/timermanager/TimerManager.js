@@ -22,47 +22,31 @@ var TimerManager = (function (_super) {
         egret.startTick(this.update, this);
     };
     TimerManager.prototype.destroy = function () {
-        for (var _i = 0, _a = this.timerArray; _i < _a.length; _i++) {
-            var timer = _a[_i];
-            timer.destroyAll();
-            timer = null;
-        }
-        this.timerArray.length = 0;
         egret.stopTick(this.update, this);
-    };
-    TimerManager.Ins = function () {
-        if (TimerManager.instance == null)
-            TimerManager.instance = new TimerManager();
-        return TimerManager.instance;
+        this.removeAllTimer();
     };
     /**
      * 增加定时器
      * @param delay 间隔(毫秒)
      * @param cnFn 执行回调函数
-     * @param exec 是否立即执行一次(为false则会隔一个delay后才执行第一次)
+     * @param isExec 是否立即执行一次(为false则会隔一个delay后才执行第一次)
      */
-    TimerManager.prototype.addTimer = function (delay, cbFn, thisObj, exec) {
-        if (exec === void 0) { exec = true; }
+    TimerManager.prototype.addTimer = function (delay, cbFn, thisObj, isExec) {
+        if (isExec === void 0) { isExec = true; }
         var args = [];
         for (var _i = 4; _i < arguments.length; _i++) {
             args[_i - 4] = arguments[_i];
         }
         if (delay == null || cbFn == null || thisObj == null) {
-            // LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
-            return false;
-        }
-        if (this.hasTimer(cbFn, thisObj) == true) {
-            // LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 已存在同一个定时器 ${delay} ${cbFn} ${thisObj}`);
             return false;
         }
         var timer = new TimerData();
-        timer.packData(delay, cbFn, thisObj, exec, args);
+        timer.packData(delay, cbFn, thisObj, isExec, args);
         this.timerArray.push(timer);
         return true;
     };
     TimerManager.prototype.removeTimer = function (cbFn, thisObj) {
         if (cbFn == null || thisObj == null) {
-            // LogUtils.Warn(`${Utils.GetClassNameByObj(this)} : 参数有误`);
             return false;
         }
         var array = DataUtils.CopyArray(this.timerArray);
@@ -92,6 +76,13 @@ var TimerManager = (function (_super) {
         }
         return false;
     };
+    TimerManager.prototype.removeAllTimer = function () {
+        for (var _i = 0, _a = this.timerArray; _i < _a.length; _i++) {
+            var timer = _a[_i];
+            timer.destroyAll();
+        }
+        this.timerArray.length = 0;
+    };
     TimerManager.prototype.update = function (t) {
         var array = DataUtils.CopyArray(this.timerArray);
         var flag;
@@ -105,7 +96,7 @@ var TimerManager = (function (_super) {
             if (timer.execIm == true) {
                 timer.execIm = false;
                 timer.count += 1;
-                flag = timer.exec();
+                flag = timer.exec(timer.count);
                 if (flag == false) {
                     this.timerArray.splice(index, 1);
                     timer.destroyAll();
@@ -116,20 +107,23 @@ var TimerManager = (function (_super) {
             var count = Math.floor((t - timer.lastTime) / timer.delay);
             if (count >= 1) {
                 timer.lastTime += count * timer.delay;
-                for (var i = 0, len = count; i < len; i++) {
-                    timer.count += 1;
-                    flag = timer.exec();
-                    if (flag == false || flag == null) {
-                        this.timerArray.splice(index, 1);
-                        timer.destroyAll();
-                        timer = null;
-                        break;
-                    }
+                timer.count += count;
+                flag = timer.exec(timer.count);
+                if (flag == false || flag == null) {
+                    this.timerArray.splice(index, 1);
+                    timer.destroyAll();
+                    timer = null;
+                    break;
                 }
             }
             index++;
         }
         return true;
+    };
+    TimerManager.Ins = function () {
+        if (TimerManager.instance == null)
+            TimerManager.instance = new TimerManager();
+        return TimerManager.instance;
     };
     return TimerManager;
 }(DataBase));

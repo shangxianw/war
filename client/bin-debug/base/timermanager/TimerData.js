@@ -39,26 +39,25 @@ var TimerData = (function (_super) {
         this.execIm = execIm;
         return this;
     };
-    // 应该支持参数
-    TimerData.prototype.exec = function () {
+    TimerData.prototype.exec = function (query) {
         if (this.cbFn == null || this.thisObj == null)
             return false;
         if (this.args == null || this.args.length == 0)
-            return this.cbFn.call(this.thisObj, this);
+            return this.cbFn.call(this.thisObj, query);
         if (this.args.length == 1)
-            return this.cbFn.call(this.thisObj, this, this.args[0]);
+            return this.cbFn.call(this.thisObj, this.args[0], query);
         if (this.args.length == 2)
-            return this.cbFn.call(this.thisObj, this, this.args[0], this.args[1]);
+            return this.cbFn.call(this.thisObj, this.args[0], this.args[1], query);
         if (this.args.length == 3)
-            return this.cbFn.call(this.thisObj, this, this.args[0], this.args[1], this.args[2]);
+            return this.cbFn.call(this.thisObj, this.args[0], this.args[1], this.args[2], query);
         if (this.args.length == 4)
-            return this.cbFn.call(this.thisObj, this, this.args[0], this.args[1], this.args[2], this.args[3]);
+            return this.cbFn.call(this.thisObj, this.args[0], this.args[1], this.args[2], this.args[3], query);
         if (this.args.length == 5)
-            return this.cbFn.call(this.thisObj, this, this.args[0], this.args[1], this.args[2], this.args[3], this.args[4]);
+            return this.cbFn.call(this.thisObj, this.args[0], this.args[1], this.args[2], this.args[3], this.args[4], query);
         if (this.args.length == 6)
-            return this.cbFn.call(this.thisObj, this, this.args[0], this.args[1], this.args[2], this.args[3], this.args[4], this.args[5]);
+            return this.cbFn.call(this.thisObj, this.args[0], this.args[1], this.args[2], this.args[3], this.args[4], this.args[5], query);
         if (this.args.length == 7)
-            return this.cbFn.call(this.thisObj, this, this.args[0], this.args[1], this.args[2], this.args[3], this.args[4], this.args[5], this.args[6]);
+            return this.cbFn.call(this.thisObj, this.args[0], this.args[1], this.args[2], this.args[3], this.args[4], this.args[5], this.args[6], query);
     };
     return TimerData;
 }(DataBase));

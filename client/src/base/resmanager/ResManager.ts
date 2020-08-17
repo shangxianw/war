@@ -104,7 +104,7 @@ class ResManager extends DataBase
 		}
 		LogUtils.Log(`【资源组集加入到列表】id:${collectData.hasCode} ${collectArray.toString()}`)
 		return collectData.hasCode;
-	}	
+	}
 
 	public destroyGroup(hasCode:number)
 	{
@@ -161,6 +161,19 @@ class ResManager extends DataBase
 		cData = null;
 		LogUtils.Log(`【销毁资源组集】id:${hasCode}`)
 		return true;
+	}
+
+	public destroyAllGroup()
+	{
+		let cData:CollectData;
+		for(let collectData of this.collectArray)
+		{
+			cData = collectData;
+			let index = this.collectArray.indexOf(collectData);
+			this.collectArray.splice(index, 1);
+		}
+		if(cData != null)
+			this.destroyGroup(cData.hasCode)
 	}
 
 	public loadRes(resName:string)

@@ -38,9 +38,6 @@ module home
 			this.skinName = "LoginPanelSkin";
 			this.info = new LoginPanelData()
 			this["data"] = this.info
-			this.once(egret.Event.REMOVED_FROM_STAGE, ()=>{
-				this.$children
-			},this)
 		}
 
 		protected init() 
@@ -57,12 +54,19 @@ module home
 		{
 			this.loginBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this)
 			this.info.name = "www"
+
+			let name = "wsx"
+			TimerManager.Ins().addTimer(1000, (haha, count)=>{
+				if(count >= 10)
+					return false
+				console.log(haha, count)
+				return true
+			}, this, true, name)
 		}
 
 		private OnLoginTap(e:egret.TouchEvent)
 		{
-			ViewManager.Ins().close(this)
-			ViewManager.Ins().open(home.HomePanel)
+			SceneManager.Ins().changeScene(SceneType.None)
 		}
 	}
 }

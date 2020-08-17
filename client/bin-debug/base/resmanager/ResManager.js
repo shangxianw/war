@@ -140,6 +140,17 @@ var ResManager = (function (_super) {
         LogUtils.Log("\u3010\u9500\u6BC1\u8D44\u6E90\u7EC4\u96C6\u3011id:" + hasCode);
         return true;
     };
+    ResManager.prototype.destroyAllGroup = function () {
+        var cData;
+        for (var _i = 0, _a = this.collectArray; _i < _a.length; _i++) {
+            var collectData = _a[_i];
+            cData = collectData;
+            var index = this.collectArray.indexOf(collectData);
+            this.collectArray.splice(index, 1);
+        }
+        if (cData != null)
+            this.destroyGroup(cData.hasCode);
+    };
     ResManager.prototype.loadRes = function (resName) {
         if (resName == null || resName == "") {
             LogUtils.Warn("【加载资源错误】参数错误");

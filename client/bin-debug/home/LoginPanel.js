@@ -45,9 +45,6 @@ var home;
             _this.skinName = "LoginPanelSkin";
             _this.info = new LoginPanelData();
             _this["data"] = _this.info;
-            _this.once(egret.Event.REMOVED_FROM_STAGE, function () {
-                _this.$children;
-            }, _this);
             return _this;
         }
         LoginPanel.prototype.init = function () {
@@ -58,10 +55,16 @@ var home;
         LoginPanel.prototype.open = function () {
             this.loginBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
             this.info.name = "www";
+            var name = "wsx";
+            TimerManager.Ins().addTimer(1000, function (haha, count) {
+                if (count >= 10)
+                    return false;
+                console.log(haha, count);
+                return true;
+            }, this, true, name);
         };
         LoginPanel.prototype.OnLoginTap = function (e) {
-            ViewManager.Ins().close(this);
-            ViewManager.Ins().open(home.HomePanel);
+            SceneManager.Ins().changeScene(SceneType.None);
         };
         return LoginPanel;
     }(ViewBase));

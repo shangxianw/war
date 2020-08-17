@@ -31,7 +31,7 @@ module war
 			entity.setComponent(pathCom)
 
 			WarDataMgr.Ins().addEntity(entity)
-			LayerManager.Ins().body.addChild(render)
+			LayerManager.Ins().war.body.addChild(render)
 		}
 	}
 }

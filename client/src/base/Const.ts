@@ -1,10 +1,19 @@
 enum SceneType
 {
-	Home = 1,
-	War = 2
+	None = 1,
+	Home = 2,
+	War = 3,
+	SelectServer = 4,
+	Login = 5
 }
 
 enum DevelopMode
 {
 	DEBUG = 1
+}
+
+enum FrameRateType
+{
+	Home = 1,
+	War = 2
 }

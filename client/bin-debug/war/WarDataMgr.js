@@ -30,10 +30,14 @@ var war;
             this.astar = new astar.AStar();
         };
         WarDataMgr.prototype.destroy = function () {
-            this.world.destroy();
-            this.world = null;
-            this.destroyEntityMap();
-            this.entityMap = null;
+            try {
+                this.world.destroy();
+                this.world = null;
+                this.destroyEntityMap();
+                this.entityMap = null;
+            }
+            catch (e) {
+            }
         };
         WarDataMgr.prototype.startWar = function () {
             this.mapGrid.init(this.Nrows, this.Ncols, this.CeilSize);

@@ -26,10 +26,17 @@ module war
 
 		protected destroy()
 		{
-			this.world.destroy();
-			this.world = null;
-			this.destroyEntityMap();
-			this.entityMap = null;
+			try
+			{
+				this.world.destroy();
+				this.world = null;
+				this.destroyEntityMap();
+				this.entityMap = null;
+			}
+			catch(e)
+			{
+
+			}
 		}
 
 		public startWar()

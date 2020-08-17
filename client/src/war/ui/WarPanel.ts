@@ -55,7 +55,7 @@ module war
 			map.horizontalCenter = 0
 			map.verticalCenter = 0
 			map.scaleX = map.scaleY = 2
-			LayerManager.Ins().map.addChild(map)
+			LayerManager.Ins().war.map.addChild(map)
 			egret.Tween.get(map)
 			.wait(100)
 			.to({

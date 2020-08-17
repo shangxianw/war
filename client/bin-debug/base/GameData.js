@@ -4,6 +4,12 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 var GameData = (function () {
     function GameData() {
     }
+    GameData.setFrameRate = function (frameRate) {
+        LayerManager.Ins().stageMain.stage.frameRate = frameRate;
+    };
+    GameData.getFrameRate = function () {
+        return LayerManager.Ins().stageMain.stage.frameRate;
+    };
     return GameData;
 }());
 __reflect(GameData.prototype, "GameData");

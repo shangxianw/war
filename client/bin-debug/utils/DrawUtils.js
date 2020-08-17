@@ -20,7 +20,7 @@ var war;
                 }
             }
             shape.graphics.endFill();
-            LayerManager.Ins().map.addChild(shape);
+            LayerManager.Ins().war.map.addChild(shape);
         };
         DrawUtils.DrawPath = function (entity) {
             if (this.isTest == false)
