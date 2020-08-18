@@ -58,7 +58,8 @@ class ViewManager extends DataBase
 		view.closeBefore();
 		layer.removeChild(view);
 		view.close();
-		ResManager.Ins().destroyGroup(view.info.resGroupKey)
+		if(view.info.resGroupKey != null)
+			ResManager.Ins().destroyGroup(view.info.resGroupKey)
 		view = null;
 		return true;
 	}

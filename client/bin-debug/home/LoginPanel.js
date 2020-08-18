@@ -19,7 +19,7 @@ var home;
             return _this;
         }
         LoginPanelData.prototype.init = function () {
-            this.resGroup = ["common_preload", "common_loading"];
+            // this.resGroup = ["common_preload", "common_loading"];
             this.layer = LayerManager.Ins().panel;
         };
         LoginPanelData.prototype.destroy = function () {
