@@ -33,13 +33,14 @@ var ViewBase = (function (_super) {
     // 添加到舞台后
     ViewBase.prototype.open = function () {
     };
-    ViewBase.prototype.show = function () {
-    };
-    ViewBase.prototype.hide = function () {
-    };
     ViewBase.prototype.close = function () {
     };
     ViewBase.prototype.closeBefore = function () {
+    };
+    // ---------------------------------------------------------------------- 显示与隐藏，不会从舞台中移除，用于二级页面
+    ViewBase.prototype.show = function () {
+    };
+    ViewBase.prototype.hide = function () {
     };
     // ---------------------------------------------------------------------- 
     ViewBase.prototype.addAttrListener = function () {

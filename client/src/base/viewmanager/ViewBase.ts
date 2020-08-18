@@ -35,22 +35,23 @@ class ViewBase extends UIBase
 
 	}
 
-	public show()
-	{
-
-	}
-
-	public hide()
-	{
-
-	}
-
 	public close()
 	{
 
 	}
 
 	public closeBefore()
+	{
+
+	}
+
+	// ---------------------------------------------------------------------- 显示与隐藏，不会从舞台中移除，用于二级页面
+	public show()
+	{
+
+	}
+
+	public hide()
 	{
 
 	}

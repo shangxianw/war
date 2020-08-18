@@ -66,7 +66,7 @@ module home
 
 		private OnLoginTap(e:egret.TouchEvent)
 		{
-			SceneManager.Ins().changeScene(SceneType.None)
+			SceneManager.Ins().changeScene(SceneType.Home)
 		}
 	}
 }

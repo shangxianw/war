@@ -27,21 +27,27 @@ var SceneManager = (function () {
         // war.WarDataMgr.Ins().destroyAll()
         if (type == SceneType.None) {
             // 用于检查内存
+            return true;
         }
         if (type == SceneType.Home) {
             this.enterHome();
+            return true;
         }
         else if (type == SceneType.War) {
             this.enterWar();
+            return true;
         }
         else if (type == SceneType.SelectServer) {
             this.enterSelectServer();
+            return true;
         }
         else if (type == SceneType.Login) {
             this.enterLogin();
+            return true;
         }
         else {
             // error
+            return false;
         }
     };
     // ---------------------------------------------------------------------- 进入主城

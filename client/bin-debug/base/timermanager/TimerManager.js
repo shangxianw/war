@@ -9,8 +9,7 @@ for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
 /**
- * 定时器
- * 可以通过查看timerArray来看下
+ * 定时器管理器
  */
 var TimerManager = (function (_super) {
     __extends(TimerManager, _super);
@@ -24,12 +23,14 @@ var TimerManager = (function (_super) {
     TimerManager.prototype.destroy = function () {
         egret.stopTick(this.update, this);
         this.removeAllTimer();
+        this.timerArray = null;
     };
     /**
      * 增加定时器
      * @param delay 间隔(毫秒)
      * @param cnFn 执行回调函数
      * @param isExec 是否立即执行一次(为false则会隔一个delay后才执行第一次)
+     * @returns 通过在回调函数内返回 true 或 false 来判断是否执行下一次定时操作，如果为false，则会删除定时器
      */
     TimerManager.prototype.addTimer = function (delay, cbFn, thisObj, isExec) {
         if (isExec === void 0) { isExec = true; }
@@ -45,6 +46,10 @@ var TimerManager = (function (_super) {
         this.timerArray.push(timer);
         return true;
     };
+    /**
+     * 删除定时器
+     * 增加定时器一定要销毁掉，但不一定通过该方法，也可以在回调函数中返回false，则同样会删除定时器
+     */
     TimerManager.prototype.removeTimer = function (cbFn, thisObj) {
         if (cbFn == null || thisObj == null) {
             return false;
@@ -83,6 +88,7 @@ var TimerManager = (function (_super) {
         }
         this.timerArray.length = 0;
     };
+    // ---------------------------------------------------------------------- 更新
     TimerManager.prototype.update = function (t) {
         var array = DataUtils.CopyArray(this.timerArray);
         var flag;

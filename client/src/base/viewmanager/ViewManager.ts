@@ -17,7 +17,9 @@ class ViewManager extends DataBase
 
 	public open(cls:Function, data:any=null):boolean
 	{
-		let className = cls.prototype.__class__;
+		if(cls == null)
+			return false
+		let className = this.getClassName(cls)
 		if(className == null)
 			return false;
 		
@@ -29,10 +31,7 @@ class ViewManager extends DataBase
 
 		try
 		{
-			let viewClass:any = cls;
-			let view = new viewClass();
-			this.viewMap.set(className, view);
-			this.handView(className, data);
+			this.handView(cls, data);
 		}
 		catch(e)
 		{
@@ -44,19 +43,7 @@ class ViewManager extends DataBase
 
 	public close(cls:Function | Object | string):boolean
 	{
-		let className:string;
-		if(typeof cls == "function")
-		{
-			className = cls.prototype.__class__;
-		}
-		else if(typeof cls == "object")
-		{
-			className = cls.constructor.prototype.__class__;
-		}
-		else
-		{
-			className = cls
-		}
+		let className:string = this.getClassName(cls)
 		
 		if(className == null)
 			return false;
@@ -75,6 +62,28 @@ class ViewManager extends DataBase
 		return true;
 	}
 
+	public show(cls:Function | Object | string)
+	{
+		let className = this.getClassName(cls)
+		if(className == null)
+			return false;
+		if(this.viewMap.has(className) == false)
+			return false
+		let view = this.viewMap.get(className)
+		view.visible = true;
+	}
+
+	public hide(cls:Function | Object | string)
+	{
+		let className = this.getClassName(cls)
+		if(className == null)
+			return false;
+		if(this.viewMap.has(className) == false)
+			return false
+		let view = this.viewMap.get(className)
+		view.visible = false;
+	}
+
 	public closeAll()
 	{
 		let itemArray:string[] = DataUtils.CopyArray(this.viewMap.keys())
@@ -84,16 +93,34 @@ class ViewManager extends DataBase
 		}
 	}
 
-	private handView(className:string, data:any=null):boolean
+	private getClassName(cls:Function | Object | string)
 	{
-		if(this.viewMap.has(className) == false)
-			return false;
-		
-		let view = this.viewMap.get(className);
+		let className:string;
+		if(typeof cls == "function")
+		{
+			className = cls.prototype.__class__;
+		}
+		else if(typeof cls == "object")
+		{
+			className = cls.constructor.prototype.__class__;
+		}
+		else
+		{
+			className = cls
+		}
+		return className;
+	}
+
+	private handView(cls:Function, data:any=null):boolean
+	{
+		let viewClass:any = cls;
+		let view = new viewClass();
 		let layer = view.info.layer;
 
 		if(layer == null)
 			return;
+		let className = this.getClassName(cls)
+		this.viewMap.set(className, view);
 		view.openBefore()
 		layer.addChild(view);
 		view.open();
