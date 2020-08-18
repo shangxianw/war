@@ -58,6 +58,7 @@ class ViewManager extends DataBase
 		view.closeBefore();
 		layer.removeChild(view);
 		view.close();
+		ResManager.Ins().destroyGroup(view.info.resGroupKey)
 		view = null;
 		return true;
 	}
@@ -115,15 +116,17 @@ class ViewManager extends DataBase
 	{
 		let viewClass:any = cls;
 		let view = new viewClass();
-		let layer = view.info.layer;
-
+		let info:IViewData = view.info
+		let layer = info.layer;
 		if(layer == null)
 			return;
-		let className = this.getClassName(cls)
-		this.viewMap.set(className, view);
-		view.openBefore()
-		layer.addChild(view);
-		view.open();
+		info.resGroupKey = ResManager.Ins().loadGroup(info.resGroup, ()=>{
+			let className = this.getClassName(cls)
+			view.openBefore()
+			layer.addChild(view);
+			view.open();
+			this.viewMap.set(className, view);
+		}, this)
 	}
 
 	private static Instance:ViewManager;

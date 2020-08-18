@@ -10,6 +10,7 @@ var GameData = (function () {
     GameData.getFrameRate = function () {
         return LayerManager.Ins().stageMain.stage.frameRate;
     };
+    GameData.DevelopMode = DevelopMode.DEBUG;
     return GameData;
 }());
 __reflect(GameData.prototype, "GameData");

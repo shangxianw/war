@@ -116,7 +116,7 @@ var ResManager = (function (_super) {
                 if (collectData.hasCode == hasCode) {
                     cData = collectData;
                     var index = this.useCollectArray.indexOf(collectData);
-                    this.collectArray.splice(index, 1);
+                    this.useCollectArray.splice(index, 1);
                     break;
                 }
             }

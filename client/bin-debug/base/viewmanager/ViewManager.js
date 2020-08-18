@@ -55,6 +55,7 @@ var ViewManager = (function (_super) {
         view.closeBefore();
         layer.removeChild(view);
         view.close();
+        ResManager.Ins().destroyGroup(view.info.resGroupKey);
         view = null;
         return true;
     };
@@ -97,17 +98,21 @@ var ViewManager = (function (_super) {
         return className;
     };
     ViewManager.prototype.handView = function (cls, data) {
+        var _this = this;
         if (data === void 0) { data = null; }
         var viewClass = cls;
         var view = new viewClass();
-        var layer = view.info.layer;
+        var info = view.info;
+        var layer = info.layer;
         if (layer == null)
             return;
-        var className = this.getClassName(cls);
-        this.viewMap.set(className, view);
-        view.openBefore();
-        layer.addChild(view);
-        view.open();
+        info.resGroupKey = ResManager.Ins().loadGroup(info.resGroup, function () {
+            var className = _this.getClassName(cls);
+            view.openBefore();
+            layer.addChild(view);
+            view.open();
+            _this.viewMap.set(className, view);
+        }, this);
     };
     ViewManager.Ins = function () {
         if (ViewManager.Instance == null)

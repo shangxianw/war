@@ -6,7 +6,7 @@ module home
 		public lab = "login"
 		protected init()
 		{
-			this.resGroup = [];
+			this.resGroup = ["common_preload", "common_loading"];
 			this.layer = LayerManager.Ins().panel;
 		}
 

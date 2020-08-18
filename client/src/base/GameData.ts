@@ -1,6 +1,6 @@
 class GameData
 {
-	public static DevelopMode
+	public static DevelopMode:number = DevelopMode.DEBUG
 
 	public static setFrameRate(frameRate:number)
 	{

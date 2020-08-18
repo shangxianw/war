@@ -16,6 +16,7 @@ var ViewData = (function (_super) {
     ViewData.prototype.initAll = function () {
         this.resGroup = [];
         this.layer = LayerManager.Ins().panel;
+        this.init();
     };
     ViewData.prototype.destroyAll = function () {
         this.resGroup.length = 0;

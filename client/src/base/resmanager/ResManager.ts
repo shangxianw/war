@@ -133,7 +133,7 @@ class ResManager extends DataBase
 				{
 					cData = collectData;
 					let index = this.useCollectArray.indexOf(collectData);
-					this.collectArray.splice(index, 1);
+					this.useCollectArray.splice(index, 1);
 					break;
 				}
 			}
