@@ -37,6 +37,8 @@ module home
 
 		public open()
 		{
+			this.info.data;
+			1;
 			this.fightBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this)
 		}
 

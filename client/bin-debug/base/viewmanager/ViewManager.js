@@ -55,7 +55,8 @@ var ViewManager = (function (_super) {
         view.closeBefore();
         layer.removeChild(view);
         view.close();
-        ResManager.Ins().destroyGroup(view.info.resGroupKey);
+        if (view.info.resGroupKey != null)
+            ResManager.Ins().destroyGroup(view.info.resGroupKey);
         view = null;
         return true;
     };
@@ -104,6 +105,7 @@ var ViewManager = (function (_super) {
         var view = new viewClass();
         var info = view.info;
         var layer = info.layer;
+        info.data = data;
         if (layer == null)
             return;
         info.resGroupKey = ResManager.Ins().loadGroup(info.resGroup, function () {

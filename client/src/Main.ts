@@ -101,6 +101,10 @@ class Main extends eui.UILayer
         // a.x = a.y = 200
         // ViewManager.Ins().open(home.DemoPanel)
         SceneManager.Ins().changeScene(SceneType.Login)
+
+
+
+        
     }
 }
 

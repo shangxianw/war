@@ -38,6 +38,8 @@ var home;
             this.fightBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
         };
         HomePanel.prototype.open = function () {
+            this.info.data;
+            1;
             this.fightBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
         };
         HomePanel.prototype.OnFightTap = function (e) {

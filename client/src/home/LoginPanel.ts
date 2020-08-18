@@ -56,17 +56,25 @@ module home
 			this.info.name = "www"
 
 			let name = "wsx"
-			TimerManager.Ins().addTimer(1000, (haha, count)=>{
+			TimerManager.Ins().addTimer(1000, (count)=>{
 				if(count >= 10)
 					return false
-				console.log(haha, count)
+				console.log(count)
 				return true
-			}, this, true, name)
+			}, this)
+
+			// ViewManager.Ins().open(home.LoginPanel)
+			// ViewManager.Ins().close(home.LoginPanel)
+			// ViewManager.Ins().close(this)
+
 		}
 
 		private OnLoginTap(e:egret.TouchEvent)
 		{
-			SceneManager.Ins().changeScene(SceneType.Home)
+			ViewManager.Ins().open(home.HomePanel, "wsx")
+			// SceneManager.Ins().changeScene(SceneType.Home)
+			// ViewManager.Ins().close(home.LoginPanel)
+			// ViewManager.Ins().close("home.LoginPanel")
 		}
 	}
 }

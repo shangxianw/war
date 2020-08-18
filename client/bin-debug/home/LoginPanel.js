@@ -56,15 +56,21 @@ var home;
             this.loginBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
             this.info.name = "www";
             var name = "wsx";
-            TimerManager.Ins().addTimer(1000, function (haha, count) {
+            TimerManager.Ins().addTimer(1000, function (count) {
                 if (count >= 10)
                     return false;
-                console.log(haha, count);
+                console.log(count);
                 return true;
-            }, this, true, name);
+            }, this);
+            // ViewManager.Ins().open(home.LoginPanel)
+            // ViewManager.Ins().close(home.LoginPanel)
+            // ViewManager.Ins().close(this)
         };
         LoginPanel.prototype.OnLoginTap = function (e) {
-            SceneManager.Ins().changeScene(SceneType.Home);
+            ViewManager.Ins().open(home.HomePanel, "wsx");
+            // SceneManager.Ins().changeScene(SceneType.Home)
+            // ViewManager.Ins().close(home.LoginPanel)
+            // ViewManager.Ins().close("home.LoginPanel")
         };
         return LoginPanel;
     }(ViewBase));

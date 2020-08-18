@@ -1,5 +1,6 @@
 abstract class ViewData extends DataBase implements IViewData
 {
+	public data:any;
 	public resGroupKey:number;
 	public resGroup:string[];
 	public layer:eui.UILayer;

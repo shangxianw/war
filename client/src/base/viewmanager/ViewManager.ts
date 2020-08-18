@@ -119,6 +119,7 @@ class ViewManager extends DataBase
 		let view = new viewClass();
 		let info:IViewData = view.info
 		let layer = info.layer;
+		info.data = data;
 		if(layer == null)
 			return;
 		info.resGroupKey = ResManager.Ins().loadGroup(info.resGroup, ()=>{
