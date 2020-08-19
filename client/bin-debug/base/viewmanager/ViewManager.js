@@ -8,6 +8,11 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
+/**
+ * 面板管理器
+ * 打开就创建，关闭即销毁，隐藏也不会从舞台移除，不做缓存
+ * 打开一个面板之前会加载所需资源
+ */
 var ViewManager = (function (_super) {
     __extends(ViewManager, _super);
     function ViewManager() {
@@ -110,10 +115,10 @@ var ViewManager = (function (_super) {
             return;
         info.resGroupKey = ResManager.Ins().loadGroup(info.resGroup, function () {
             var className = _this.getClassName(cls);
+            _this.viewMap.set(className, view);
             view.openBefore();
             layer.addChild(view);
             view.open();
-            _this.viewMap.set(className, view);
         }, this);
     };
     ViewManager.Ins = function () {

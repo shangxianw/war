@@ -49,6 +49,7 @@
 		"bin-debug/home/HomePanel.js",
 		"bin-debug/home/LoginPanel.js",
 		"bin-debug/home/ui/demo/DemoPanel.js",
+		"bin-debug/home/ui/demo/SubDemoPanel1.js",
 		"bin-debug/utils/DrawUtils.js",
 		"bin-debug/war/WarDataMgr.js",
 		"bin-debug/war/World.js",

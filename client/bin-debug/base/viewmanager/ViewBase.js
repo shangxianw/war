@@ -17,7 +17,7 @@ var ViewBase = (function (_super) {
         var classNameArray = this.constructor.prototype.__class__.split(".");
         var cls = window[classNameArray[0]][classNameArray[1] + "Data"];
         this.info = new cls();
-        this.init();
+        _super.prototype.initAll.call(this);
     };
     ViewBase.prototype.destroyAll = function () {
         this.info.destroyAll();
@@ -33,9 +33,9 @@ var ViewBase = (function (_super) {
     // 添加到舞台后
     ViewBase.prototype.open = function () {
     };
-    ViewBase.prototype.close = function () {
-    };
     ViewBase.prototype.closeBefore = function () {
+    };
+    ViewBase.prototype.close = function () {
     };
     // ---------------------------------------------------------------------- 显示与隐藏，不会从舞台中移除，用于二级页面
     ViewBase.prototype.show = function () {

@@ -23,7 +23,7 @@ var home;
         DemoPanelData.prototype.destroy = function () {
         };
         return DemoPanelData;
-    }(DataBase));
+    }(ViewData));
     home.DemoPanelData = DemoPanelData;
     __reflect(DemoPanelData.prototype, "home.DemoPanelData");
     var DemoPanel = (function (_super) {
@@ -35,6 +35,8 @@ var home;
             this.skinName = "DemoPanelSkin";
         };
         DemoPanel.prototype.open = function () {
+            // this.demo1.visible = false
+            // this.demo1.visible = true;
         };
         DemoPanel.prototype.close = function () {
         };

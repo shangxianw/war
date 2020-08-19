@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="DemoPanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui">
+<e:Skin class="DemoPanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:home="home.*" xmlns:w="http://ns.egret.com/wing">
 	<e:Rect width="287" height="171" x="307" y="449"/>
+	<home:SubDemoPanel1 id="demo1" skinName="SubDemoPanel1Skin"/>
 </e:Skin>

@@ -6,7 +6,7 @@ class ViewBase extends UIBase
 		let classNameArray:any = this.constructor.prototype.__class__.split(".");
 		let cls = window[classNameArray[0]][`${classNameArray[1]}Data`];
 		this.info = new cls();
-		this.init()
+		super.initAll();
 	}
 
 	public destroyAll()
@@ -35,12 +35,12 @@ class ViewBase extends UIBase
 
 	}
 
-	public close()
+	public closeBefore()
 	{
 
 	}
 
-	public closeBefore()
+	public close()
 	{
 
 	}

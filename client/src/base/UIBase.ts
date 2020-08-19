@@ -10,7 +10,7 @@ abstract class UIBase extends eui.Component
 	public initAll()
 	{
 		this.hasCode = IDManager.Ins().getHashCode();
-		this.init();
+		this.init()
 	}
 
 	public destroyAll()
@@ -19,6 +19,10 @@ abstract class UIBase extends eui.Component
 		this.destroy();
 	}
 
-	protected abstract init()
+	protected init()
+	{
+
+	}
+	
 	protected abstract destroy()
 }

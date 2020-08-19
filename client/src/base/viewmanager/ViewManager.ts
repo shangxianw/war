@@ -1,3 +1,8 @@
+/**
+ * 面板管理器
+ * 打开就创建，关闭即销毁，隐藏也不会从舞台移除，不做缓存
+ * 打开一个面板之前会加载所需资源
+ */
 class ViewManager extends DataBase
 {
 	private viewMap:Hash<string, ViewBase>;
@@ -124,10 +129,10 @@ class ViewManager extends DataBase
 			return;
 		info.resGroupKey = ResManager.Ins().loadGroup(info.resGroup, ()=>{
 			let className = this.getClassName(cls)
+			this.viewMap.set(className, view);
 			view.openBefore()
 			layer.addChild(view);
 			view.open();
-			this.viewMap.set(className, view);
 		}, this)
 	}
 

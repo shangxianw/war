@@ -99,8 +99,8 @@ class Main extends eui.UILayer
         // a.initData("hero_10050", "hero_10050", "attack2")
         // this.addChild(a)
         // a.x = a.y = 200
-        // ViewManager.Ins().open(home.DemoPanel)
-        SceneManager.Ins().changeScene(SceneType.Login)
+        ViewManager.Ins().open(home.DemoPanel)
+        // SceneManager.Ins().changeScene(SceneType.Login)
 
 
 
