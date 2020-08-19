@@ -14,6 +14,6 @@ enum DevelopMode
 
 enum FrameRateType
 {
-	Home = 1,
-	War = 2
+	Home = 30,
+	War = 60
 }

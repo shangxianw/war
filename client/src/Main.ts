@@ -100,11 +100,32 @@ class Main extends eui.UILayer
         // this.addChild(a)
         // a.x = a.y = 200
         // ViewManager.Ins().open(home.DemoPanel)
-        SceneManager.Ins().changeScene(SceneType.War)
+        // SceneManager.Ins().changeScene(SceneType.Login)
+        let ats = 1
+        let fps = 10
+        let mc = new MovieClip()
+        mc.initData("hero_10010", "hero_10010", "attack3")
+        this.addChild(mc)
+        mc.x = 200
+        mc.y = 200
 
+        let mc1 = new MovieClip()
+        mc1.initData("hero_10010", "hero_10010", "attack3")
+        this.addChild(mc1)
+        mc1.x = 400
+        mc1.y = 200
 
+        let mc2 = new MovieClip()
+        mc2.initData("hero_10010", "hero_10010", "attack3")
+        this.addChild(mc2)
+        mc2.x = 600
+        mc2.y = 200
 
-        
+        setTimeout(function() {
+          mc.setFrameRate(10)  
+          mc1.setFrameRate(5)
+          mc2.setFrameRate(15)
+        }, 2000);
     }
 }
 

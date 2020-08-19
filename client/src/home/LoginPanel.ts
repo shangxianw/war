@@ -53,19 +53,7 @@ module home
 		public open()
 		{
 			this.loginBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this)
-			this.info.name = "www"
-
-			let name = "wsx"
-			TimerManager.Ins().addTimer(1000, (count)=>{
-				if(count >= 10)
-					return false
-				console.log(count)
-				return true
-			}, this)
-
-			// ViewManager.Ins().open(home.LoginPanel)
-			// ViewManager.Ins().close(home.LoginPanel)
-			// ViewManager.Ins().close(this)
+			
 
 		}
 

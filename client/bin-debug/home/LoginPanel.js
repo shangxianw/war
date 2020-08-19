@@ -54,17 +54,6 @@ var home;
         };
         LoginPanel.prototype.open = function () {
             this.loginBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
-            this.info.name = "www";
-            var name = "wsx";
-            TimerManager.Ins().addTimer(1000, function (count) {
-                if (count >= 10)
-                    return false;
-                console.log(count);
-                return true;
-            }, this);
-            // ViewManager.Ins().open(home.LoginPanel)
-            // ViewManager.Ins().close(home.LoginPanel)
-            // ViewManager.Ins().close(this)
         };
         LoginPanel.prototype.OnLoginTap = function (e) {
             ViewManager.Ins().open(home.HomePanel, "wsx");
