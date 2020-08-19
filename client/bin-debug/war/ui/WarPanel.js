@@ -21,12 +21,6 @@ var war;
         };
         WarPanelData.prototype.destroy = function () {
         };
-        WarPanelData.prototype.startWar = function () {
-            war.WarDataMgr.Ins().startWar();
-        };
-        WarPanelData.prototype.endWar = function () {
-            war.WarDataMgr.Ins().endWar();
-        };
         return WarPanelData;
     }(ViewData));
     war.WarPanelData = WarPanelData;
@@ -44,7 +38,10 @@ var war;
             this.touchGroup.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchGroupTap, this);
         };
         WarPanel.prototype.open = function () {
-            this.info.startWar();
+            this.initMap();
+            war.WarDataMgr.Ins().startWar();
+        };
+        WarPanel.prototype.initMap = function () {
             // 初始化地图
             var map = new eui.Image();
             map.source = "map_1001_jpg";
@@ -61,8 +58,6 @@ var war;
                 .call(function () {
                 war.DrawUtils.DrawMapGrid(war.WarDataMgr.Ins().Ncols, war.WarDataMgr.Ins().Nrows);
             });
-            var path = war.WarDataMgr.Ins().findPath(0, 0, 10, 20);
-            1;
             this.touchGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchGroupTap, this);
         };
         WarPanel.prototype.OnTouchGroupTap = function (e) {

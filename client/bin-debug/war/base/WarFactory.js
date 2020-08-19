@@ -15,7 +15,7 @@ var war;
             posCom.y = war.WarUtils.GridX2LocalX(gridY);
             entity.setComponent(posCom);
             var speedCom = new war.SpeedCom();
-            speedCom.setData(60, 30);
+            speedCom.setData(60, 0);
             entity.setComponent(speedCom);
             var renderCom = new war.RenderCom();
             var render = new war.HeroRender();

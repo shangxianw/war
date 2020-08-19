@@ -34,7 +34,7 @@ var home;
         SubDemoPanel1.prototype.destroy = function () {
         };
         return SubDemoPanel1;
-    }(UIBase));
+    }(eui.Component));
     home.SubDemoPanel1 = SubDemoPanel1;
     __reflect(SubDemoPanel1.prototype, "home.SubDemoPanel1");
 })(home || (home = {}));

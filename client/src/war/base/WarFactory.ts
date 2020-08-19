@@ -14,7 +14,7 @@ module war
 			entity.setComponent(posCom)
 			
 			let speedCom = new SpeedCom()
-			speedCom.setData(60, 30)
+			speedCom.setData(60, 0)
 			entity.setComponent(speedCom)
 
 			let renderCom = new RenderCom()

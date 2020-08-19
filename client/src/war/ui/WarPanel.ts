@@ -13,16 +13,6 @@ module war
 		{
 			
 		}
-
-		public startWar()
-		{
-			WarDataMgr.Ins().startWar();
-		}
-
-		public endWar()
-		{
-			WarDataMgr.Ins().endWar();
-		}
 	}
 
 	export class WarPanel extends ViewBase
@@ -47,8 +37,12 @@ module war
 
 		public open()
 		{
-			this.info.startWar()
-			
+			this.initMap()
+			WarDataMgr.Ins().startWar();
+		}
+
+		private initMap()
+		{
 			// 初始化地图
 			let map = new eui.Image()
 			map.source = "map_1001_jpg"
@@ -65,9 +59,6 @@ module war
 			.call(()=>{
 				DrawUtils.DrawMapGrid(WarDataMgr.Ins().Ncols, WarDataMgr.Ins().Nrows)
 			})
-
-			let path = WarDataMgr.Ins().findPath(0, 0, 10, 20)
-			1;
 
 			this.touchGroup.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchGroupTap, this)
 		}

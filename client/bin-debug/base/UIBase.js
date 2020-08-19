@@ -23,6 +23,8 @@ var UIBase = (function (_super) {
         this.hasCode = null;
         this.destroy();
     };
+    UIBase.prototype.init = function () {
+    };
     return UIBase;
 }(eui.Component));
 __reflect(UIBase.prototype, "UIBase");

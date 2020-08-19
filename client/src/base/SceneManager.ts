@@ -72,6 +72,7 @@ class SceneManager
 	private enterWar()
 	{
 		GameData.setFrameRate(FrameRateType.War)
+		ViewManager.Ins().open(war.WarPanel)
 	}
 
 	// ---------------------------------------------------------------------- 进入选服

@@ -58,6 +58,7 @@ var SceneManager = (function () {
     // ---------------------------------------------------------------------- 进入战场
     SceneManager.prototype.enterWar = function () {
         GameData.setFrameRate(FrameRateType.War);
+        ViewManager.Ins().open(war.WarPanel);
     };
     // ---------------------------------------------------------------------- 进入选服
     SceneManager.prototype.enterSelectServer = function () {
