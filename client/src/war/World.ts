@@ -58,6 +58,7 @@ module war
 				
 				this.speedSystem.update(entity, deltaTime)
 				this.moveSystem.update(entity, deltaTime)
+
 				this.renderSystem.update(entity, deltaTime)
 			}
 		}

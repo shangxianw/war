@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="HomePanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
 	<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0x4c4242"/>
-	<e:Button id="fightBtn" label="战斗" x="588" y="314" skinName="skins.ButtonSkin"/>
+	<e:Button id="fightBtn" label="战斗" x="588" y="314" skinName="skins.ButtonSkin" visible="false"/>
+	<e:Label id="logicLb" text="Label" x="48" y="93.6"/>
+	<e:Label id="renderLb" text="Label" x="42.85" y="179.35"/>
+	<e:Rect id="frameTest" width="20" height="20" x="71.4" y="142.55"/>
+	<e:Rect id="frameTest0" width="20" height="20" x="71.4" y="228.3"/>
 </e:Skin>

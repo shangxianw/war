@@ -152,7 +152,7 @@ var Main = (function (_super) {
         // this.addChild(a)
         // a.x = a.y = 200
         // ViewManager.Ins().open(home.DemoPanel)
-        SceneManager.Ins().changeScene(SceneType.War);
+        SceneManager.Ins().changeScene(SceneType.Home);
     };
     return Main;
 }(eui.UILayer));

@@ -65,7 +65,7 @@ class SceneManager
 	private enterHome()
 	{
 		GameData.setFrameRate(FrameRateType.Home)
-		ViewManager.Ins().open(home.DemoPanel)
+		ViewManager.Ins().open(home.HomePanel)
 	}
 
 	// ---------------------------------------------------------------------- 进入战场
