@@ -84,6 +84,7 @@ class SceneManager
 	// ---------------------------------------------------------------------- 登录
 	private enterLogin()
 	{
+		GameData.setFrameRate(FrameRateType.War)
 		ViewManager.Ins().open(home.LoginPanel)
 	}
 

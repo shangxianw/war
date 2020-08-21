@@ -62,7 +62,7 @@ class MovieClip extends UIBase
 	{
 		if(this.mc.currentLabel == action)
 			return;
-		this.mc.gotoAndPlay(action, count);
+		this.mc.gotoAndPlay(action, count)
 	}
 
 	public stop()

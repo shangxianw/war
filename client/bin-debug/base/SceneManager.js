@@ -66,6 +66,7 @@ var SceneManager = (function () {
     };
     // ---------------------------------------------------------------------- 登录
     SceneManager.prototype.enterLogin = function () {
+        GameData.setFrameRate(FrameRateType.War);
         ViewManager.Ins().open(home.LoginPanel);
     };
     SceneManager.prototype.destroy = function () {

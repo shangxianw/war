@@ -37,7 +37,7 @@ module war
 
 		public open()
 		{
-			this.initMap()
+			this.initMap();
 			WarDataMgr.Ins().startWar();
 		}
 

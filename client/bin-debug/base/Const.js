@@ -12,7 +12,7 @@ var DevelopMode;
 })(DevelopMode || (DevelopMode = {}));
 var FrameRateType;
 (function (FrameRateType) {
-    FrameRateType[FrameRateType["Home"] = 1] = "Home";
-    FrameRateType[FrameRateType["War"] = 2] = "War";
+    FrameRateType[FrameRateType["Home"] = 30] = "Home";
+    FrameRateType[FrameRateType["War"] = 60] = "War";
 })(FrameRateType || (FrameRateType = {}));
 //# sourceMappingURL=Const.js.map
