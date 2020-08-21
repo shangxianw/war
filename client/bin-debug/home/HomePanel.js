@@ -76,10 +76,10 @@ var home;
                 return true;
             this.lastRender = t;
             this.updateRender -= delay;
-            // let distance = this.testX - this.frameTest.x
-            // this.frameTest.x += distance / dt;
+            var distance = this.testX - this.frameTest.x;
+            this.frameTest.x += distance / dt;
             this.frameTest0.x = Math.floor(t / 10);
-            this.frameTest.x = this.testX;
+            // this.frameTest.x = this.testX;
             this.renderLb.text = "render:" + t;
             return true;
         };

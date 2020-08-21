@@ -14,19 +14,19 @@ module war
 			entity.setComponent(posCom)
 			
 			let speedCom = new SpeedCom()
-			speedCom.setData(60, 0)
+			speedCom.setData(0.06, 0)
 			entity.setComponent(speedCom)
 
 			let renderCom = new RenderCom()
 			let render = new HeroRender()
-			render.initData(heroId)
+			// render.initData(heroId)
 			render.x = posCom.x
 			render.y = posCom.y
 			renderCom.setRender(render)
 			entity.setComponent(renderCom)
 
 			let pathCom = new PathCom()
-			let path = WarDataMgr.Ins().findPath(gridX, gridY, 20, 15)
+			let path = WarDataMgr.Ins().findPath(gridX, gridY, Math.floor(Math.random() * WarDataMgr.Ins().Ncols), Math.floor(Math.random() * WarDataMgr.Ins().Nrows))
 			pathCom.setPath(path)
 			entity.setComponent(pathCom)
 

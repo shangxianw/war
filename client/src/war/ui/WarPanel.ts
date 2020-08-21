@@ -19,6 +19,9 @@ module war
 	{	
 		private touchGroup:eui.Group;
 		public info:WarPanelData;
+		private addEntity:eui.Button
+		private addSpeed:eui.Button;
+		private rmSpeed:eui.Button;
 		public constructor()
 		{
 			super();
@@ -33,12 +36,18 @@ module war
 		protected destroy()
 		{
 			this.touchGroup.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchGroupTap, this)
+			this.addEntity.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnAddTap, this)
+			this.addSpeed.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnAddSpeed, this)
+			this.rmSpeed.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnRmSpeed, this)
 		}
 
 		public open()
 		{
-			this.initMap();
 			WarDataMgr.Ins().startWar();
+			this.initMap();
+			this.addEntity.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnAddTap, this)
+			this.addSpeed.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnAddSpeed, this)
+			this.rmSpeed.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnRmSpeed, this)
 		}
 
 		private initMap()
@@ -66,6 +75,44 @@ module war
 		private OnTouchGroupTap(e:egret.TouchEvent)
 		{
 			WarFactory.CreateHero(10010, e.localX, e.localY)
+		}
+
+		private heroId:number;
+		private OnAddTap(e:egret.TouchEvent)
+		{
+			// WarFactory.CreateHero(10010, e.localX, e.localY)
+			let heroId = 10010
+			let entity = new HeroEntity()
+			this.heroId = entity.hasCode
+			let posCom = new PosCom()
+			posCom.x = 640
+			posCom.y = 360
+			entity.setComponent(posCom)
+
+			let renderCom = new RenderCom()
+			let render = new HeroRender()
+			render.initData(heroId)
+			render.x = posCom.x
+			render.y = posCom.y
+			renderCom.setRender(render)
+			entity.setComponent(renderCom)
+
+			WarDataMgr.Ins().addEntity(entity)
+			LayerManager.Ins().war.body.addChild(render)
+		}
+
+		private OnAddSpeed()
+		{
+			let entity = WarDataMgr.Ins().entityMap.get(this.heroId)
+			let speedCom = new SpeedCom()
+			speedCom.setData(0.06, 90)
+			entity.setComponent(speedCom)
+		}
+
+		private OnRmSpeed()
+		{
+			let entity = WarDataMgr.Ins().entityMap.get(this.heroId)
+			entity.removeComponent(Component.Speed)
 		}
 	}
 }

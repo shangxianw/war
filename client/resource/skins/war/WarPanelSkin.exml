@@ -2,6 +2,9 @@
 <e:Skin class="WarPanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:war="war.*" xmlns:w="http://ns.egret.com/wing">
 	<e:Group id="touchGroup" left="0" right="0" top="0" bottom="0">
 		<e:Rect left="0" right="0" top="0" bottom="0" alpha="0.1"/>
+		<e:Button id="addEntity" label="添加英雄" x="887" y="102" skinName="skins.ButtonSkin" visible="false"/>
+		<e:Button id="addSpeed" label="添加速度" x="887" y="172" skinName="skins.ButtonSkin" visible="false"/>
+		<e:Button id="rmSpeed" label="remove速度" x="887" y="232" skinName="skins.ButtonSkin" visible="false"/>
 	</e:Group>
 
 

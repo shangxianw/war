@@ -16,17 +16,17 @@ module war
 
 		}
 		
-		public update(entity:EntityBase, deltaTime:number)
+		public update(entity:EntityBase, dt:number)
 		{
 			if(entity == null)
 				return;
 			
 			let posCom = entity.getComponent(Component.Pos) as PosCom;
 			let speedCom = entity.getComponent(Component.Speed) as SpeedCom;
-			let pathCom = entity.getComponent(Component.Path) as PathCom;
 			if(posCom == null || speedCom == null)
 				return
 
+			let pathCom = entity.getComponent(Component.Path) as PathCom;
 			if(pathCom != null)
 			{
 				let node = pathCom.getCurrNode()
@@ -36,6 +36,7 @@ module war
 				let localX = WarUtils.GridX2LocalX(node.x)
 				let localY = WarUtils.GridX2LocalX(node.y)
 				let angle = MathUtils.CalcAngle(posCom.x, posCom.y, localX, localY)
+				speedCom.setAngle(angle)
 			}
 		}
 	}

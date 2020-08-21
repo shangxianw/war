@@ -12,7 +12,7 @@ module war
 
 		}
 		
-		public update(entity:EntityBase, deltaTime:number)
+		public update(entity:EntityBase, dt:number)
 		{
 			if(entity == null)
 				return;
@@ -23,7 +23,7 @@ module war
 				return;
 			
 			let speed = MathUtils.CalcLegSide(speedCom.speed, speedCom.angle) // 计算速度在xy轴上的分速度
-			posCom.setAddPos(speed[0] * deltaTime, speed[1] * deltaTime)
+			posCom.setAddPos(speed[0] * dt, speed[1] * dt)
 		}
 	}
 }

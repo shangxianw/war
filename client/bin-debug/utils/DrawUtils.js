@@ -7,27 +7,52 @@ var war;
         function DrawUtils() {
         }
         DrawUtils.DrawMapGrid = function (nCols, nRows) {
+            if (this.isTest == false)
+                return;
             var shiftX = war.WarDataMgr.Ins().MapStartX;
             var shiftY = war.WarDataMgr.Ins().MapStartY;
             var shape = new egret.Shape();
-            shape.graphics.lineStyle(1, 0xff0000);
+            var shape2 = new egret.Shape();
+            shape.graphics.lineStyle(0.5, 0xff0000);
+            shape2.graphics.beginFill(0xff0000, 0.5);
             for (var i = 0, len = nCols; i < len; i++) {
                 for (var j = 0, len2 = nRows; j < len2; j++) {
                     var size = war.WarDataMgr.Ins().CeilSize;
                     var x = i * size + shiftX;
                     var y = j * size + shiftY;
+                    var node = war.WarDataMgr.Ins().grid.getNode(i, j);
+                    if (node.walkable == false)
+                        shape2.graphics.drawRect(x, y, size, size);
                     shape.graphics.drawRect(x, y, size, size);
                 }
             }
             shape.graphics.endFill();
+            shape2.graphics.endFill();
             LayerManager.Ins().war.map.addChild(shape);
+            LayerManager.Ins().war.map.addChild(shape2);
         };
         DrawUtils.DrawPath = function (entity) {
             if (this.isTest == false)
                 return;
+            var renderCom = entity.getComponent(war.Component.Render);
+            var posCom = entity.getComponent(war.Component.Pos);
             var pathCom = entity.getComponent(war.Component.Path);
-            if (pathCom == null)
+            if (pathCom == null || posCom == null || renderCom == null)
                 return;
+            if (renderCom.pathShap == null) {
+                renderCom.pathShap = new egret.Shape;
+                LayerManager.Ins().war.map.addChild(renderCom.pathShap);
+            }
+            renderCom.pathShap.graphics.clear();
+            renderCom.pathShap.graphics.lineStyle(2, 0xffff00);
+            renderCom.pathShap.graphics.moveTo(posCom.x, posCom.y);
+            for (var _i = 0, _a = pathCom.path; _i < _a.length; _i++) {
+                var node = _a[_i];
+                var localX = war.WarUtils.GridX2LocalX(node.x);
+                var localY = war.WarUtils.GridY2LocalY(node.y);
+                renderCom.pathShap.graphics.lineTo(localX, localY);
+            }
+            renderCom.pathShap.graphics.endFill();
         };
         DrawUtils.DrawHasCode = function (entity) {
             if (DrawUtils.isTest == false)
@@ -53,7 +78,7 @@ var war;
             render.collisionShape.graphics.drawCircle(0, 0, 5); // 这个是没有设置锚点的，所以直接在0，0上即可
             render.collisionShape.graphics.endFill();
         };
-        DrawUtils.isTest = false;
+        DrawUtils.isTest = true;
         return DrawUtils;
     }());
     war.DrawUtils = DrawUtils;

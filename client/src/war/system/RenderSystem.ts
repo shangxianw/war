@@ -12,17 +12,33 @@ module war
 
 		}
 		
-		public update(entity:EntityBase, deltaTime:number)
+		public update(entity:EntityBase, dt:number)
 		{
 			if(entity == null)
 				return;
 			
-			let posCom = entity.getComponent(Component.Pos) as PosCom;
 			let renderCom = entity.getComponent(Component.Render) as RenderCom;
-			if(posCom == null || renderCom == null)
+			if(renderCom == null)
 				return;
 			
-			renderCom.updatePos(posCom.x, posCom.y)
+			let posCom = entity.getComponent(Component.Pos) as PosCom;
+			let pathCom = entity.getComponent(Component.Path) as PathCom
+
+			if(posCom != null)
+			{
+				// let distance = posCom.x - renderCom.render.x
+				// renderCom.render.x += distance / dt
+
+				// let distancey = posCom.y - renderCom.render.y
+				// renderCom.render.y += distancey / dt
+				renderCom.render.x = posCom.x
+				renderCom.render.y = posCom.y
+			}
+
+			if(pathCom != null && posCom != null)
+			{
+				DrawUtils.DrawPath(entity)
+			}
 		}
 	}
 }

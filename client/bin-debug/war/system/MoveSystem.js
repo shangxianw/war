@@ -20,7 +20,7 @@ var war;
         };
         MoveSystem.prototype.destroy = function () {
         };
-        MoveSystem.prototype.update = function (entity, deltaTime) {
+        MoveSystem.prototype.update = function (entity, dt) {
             if (entity == null)
                 return;
             var posCom = entity.getComponent(war.Component.Pos);
@@ -28,7 +28,7 @@ var war;
             if (posCom == null || speedCom == null)
                 return;
             var speed = MathUtils.CalcLegSide(speedCom.speed, speedCom.angle); // 计算速度在xy轴上的分速度
-            posCom.setAddPos(speed[0] * deltaTime, speed[1] * deltaTime);
+            posCom.setAddPos(speed[0] * dt, speed[1] * dt);
         };
         return MoveSystem;
     }(war.SystemBase));

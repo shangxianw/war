@@ -24,14 +24,14 @@ var war;
         };
         SpeedSystem.prototype.destroy = function () {
         };
-        SpeedSystem.prototype.update = function (entity, deltaTime) {
+        SpeedSystem.prototype.update = function (entity, dt) {
             if (entity == null)
                 return;
             var posCom = entity.getComponent(war.Component.Pos);
             var speedCom = entity.getComponent(war.Component.Speed);
-            var pathCom = entity.getComponent(war.Component.Path);
             if (posCom == null || speedCom == null)
                 return;
+            var pathCom = entity.getComponent(war.Component.Path);
             if (pathCom != null) {
                 var node = pathCom.getCurrNode();
                 if (node == null)
@@ -39,6 +39,7 @@ var war;
                 var localX = war.WarUtils.GridX2LocalX(node.x);
                 var localY = war.WarUtils.GridX2LocalX(node.y);
                 var angle = MathUtils.CalcAngle(posCom.x, posCom.y, localX, localY);
+                speedCom.setAngle(angle);
             }
         };
         return SpeedSystem;

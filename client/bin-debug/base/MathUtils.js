@@ -34,7 +34,7 @@ var MathUtils = (function () {
             console.error("MathUtils.CalcAngle \u53C2\u6570\u4E3A\u7A7A");
             return 0;
         }
-        if (x1 == x2 && x2 == y2) {
+        if (x1 == x2 && y1 == y2) {
             console.error("MathUtils.CalcAngle \u4E24\u4E2A\u5750\u6807\u4E3A\u540C\u4E00\u70B9");
             return 0;
         }
@@ -42,29 +42,31 @@ var MathUtils = (function () {
         var h = y2 - y1;
         // 特殊情况处理，减少计算量
         if (x1 == x2)
-            return h > 0 ? 270 : 90;
+            return h > 0 ? 90 : 270;
         if (y1 == y2)
             return w > 0 ? 0 : 180;
         var ww = Math.abs(w);
         var hh = Math.abs(h);
         if (ww == hh) {
             if (w > 0 && h < 0)
+                return 315;
+            else if (w > 0 && h > 0)
                 return 45;
             else if (w < 0 && h < 0)
-                return 135;
-            else if (w < 0 && h > 0)
                 return 225;
-            else if (w > 0 && h > 0)
-                return 315;
+            else if (w < 0 && h > 0)
+                return 135;
         }
         var hypo = Math.sqrt(h * h + w * w);
         var angle = 360 * Math.atan(hh / ww) / (2 * Math.PI);
         // angel计算结果范围在[0, 90]，四个象限均以x轴为旋转角
         if (w < 0 && h < 0)
-            angle = 180 - angle;
-        else if (w < 0 && h > 0)
             angle = 180 + angle;
+        else if (w < 0 && h > 0)
+            angle = 180 - angle;
         else if (w > 0 && h > 0)
+            angle = angle;
+        else if (w > 0 && h < 0)
             angle = 360 - angle;
         angle = Number(angle.toFixed(toFixed));
         return angle;

@@ -14,5 +14,12 @@ var FrameRateType;
 (function (FrameRateType) {
     FrameRateType[FrameRateType["Home"] = 30] = "Home";
     FrameRateType[FrameRateType["War"] = 60] = "War";
+    FrameRateType[FrameRateType["LogicWar"] = 10] = "LogicWar";
+    FrameRateType[FrameRateType["RenderWar"] = 60] = "RenderWar";
 })(FrameRateType || (FrameRateType = {}));
+var FrameFps;
+(function (FrameFps) {
+    FrameFps[FrameFps["Logic"] = 60] = "Logic";
+    FrameFps[FrameFps["Render"] = 60] = "Render";
+})(FrameFps || (FrameFps = {}));
 //# sourceMappingURL=Const.js.map

@@ -9,19 +9,18 @@ module war
 		public Ncols:number = 54
 		public Nrows:number = 24
 		public CeilSize:number = 20
-		
-		public mapGrid:astar.Grid;
-		public astar:astar.AStar;
 
 		public entityMap:Hash<number, EntityBase>;
 		public world:World;
+
+		public grid:astar.Grid;
+		private astar:astar.AStar;
 
 		protected init()
 		{
 			this.world = new World();
 			this.entityMap = new Hash<number, EntityBase>();
-			this.mapGrid = new astar.Grid()
-			this.astar = new astar.AStar()
+			this.grid = new astar.Grid()
 		}
 
 		protected destroy()
@@ -41,33 +40,25 @@ module war
 
 		public startWar()
 		{
-			this.mapGrid.init(this.Nrows, this.Ncols, this.CeilSize);
+			this.astar = new astar.AStar()
+			this.grid.init(this.Nrows, this.Ncols, this.CeilSize)
 			egret.startTick(this.update, this);
 		}
 
 		public endWar()
 		{
+			this.astar.destroy()
 			egret.stopTick(this.update, this);
+			this.grid.destroy();
 			this.destroyEntityMap();
-		}
-
-		public findPath(x1:number, y1:number, x2:number, y2:number, needFrist:boolean=false)
-		{
-			let path = this.astar.findPath(x1, y1, x2, y2, this.mapGrid)
-			if(needFrist == false)
-			{
-				let node = path.shift()
-				node.destroy()
-				node = null
-			}
-			return path
 		}
 
 		public update(currTime:number = null):boolean
 		{
 			try
 			{
-				this.world.update(currTime);
+				this.world.logicLoop(currTime);
+				this.world.renderLoop(currTime);
 				return true;
 			}
 			catch(e)
@@ -99,6 +90,33 @@ module war
 				item.destroyAll()
 			}
 			this.entityMap.destroy();
+		}
+
+		// ---------------------------------------------------------------------- 寻路相关
+		public findPath(gridX1:number, gridY1:number, gridX2:number, gridY2:number, needFrist:boolean = false)
+		{
+			let path = this.astar.findPath(gridX1, gridY1, gridX2, gridY2, this.grid)
+			if(needFrist == false)
+			{
+				let node = path.shift()
+				node.destroy()
+				node = null
+			}
+			return path
+		}
+
+		public getCanWalkNodeByRandom()
+		{
+			let node = null
+			while(node == null)
+			{
+				let gridX = Math.floor(Math.random() * this.Ncols)
+				let gridY = Math.floor(Math.random() * this.Nrows)
+				node = this.grid.getNode(gridX, gridY)
+				if(node.walkable == false)
+					node = null
+			}
+			return node
 		}
 
 		private static instance:WarDataMgr;

@@ -20,7 +20,8 @@ module war
 		Demo = 0,
 		Move = 1,
 		Render = 2,
-		Speed = 3
+		Speed = 3,
+		Path = 4
 	}
 
 	export enum Entity

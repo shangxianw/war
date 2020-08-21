@@ -46,9 +46,9 @@ var astar;
             this.endNode = this.grid.getNode(endX, endY);
             this.grid = grid;
             this.tmpPath = this.search();
-            // return this.tmpPath
-            var p = this.floydPath(this.tmpPath);
-            return p;
+            return this.tmpPath;
+            // let p = this.floydPath(this.tmpPath);
+            // return p;
         };
         AStar.prototype.search = function () {
             var currNode = this.startNode;
@@ -60,6 +60,8 @@ var astar;
                 this.closeArray.push(currNode);
                 var node = void 0;
                 for (var i = 0, len = 8; i < len; i++) {
+                    // if(i == 1 || i == 3 || i == 4 || i == 6) // 如何排除斜边的情况
+                    // 	continue
                     node = this.grid.getNode(currNode.x + this.posArray[i][0], currNode.y + this.posArray[i][1]);
                     if (node == null)
                         continue;

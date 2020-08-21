@@ -36,10 +36,16 @@ var war;
         };
         WarPanel.prototype.destroy = function () {
             this.touchGroup.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchGroupTap, this);
+            this.addEntity.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnAddTap, this);
+            this.addSpeed.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnAddSpeed, this);
+            this.rmSpeed.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnRmSpeed, this);
         };
         WarPanel.prototype.open = function () {
-            this.initMap();
             war.WarDataMgr.Ins().startWar();
+            this.initMap();
+            this.addEntity.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnAddTap, this);
+            this.addSpeed.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnAddSpeed, this);
+            this.rmSpeed.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnRmSpeed, this);
         };
         WarPanel.prototype.initMap = function () {
             // 初始化地图
@@ -62,6 +68,35 @@ var war;
         };
         WarPanel.prototype.OnTouchGroupTap = function (e) {
             war.WarFactory.CreateHero(10010, e.localX, e.localY);
+        };
+        WarPanel.prototype.OnAddTap = function (e) {
+            // WarFactory.CreateHero(10010, e.localX, e.localY)
+            var heroId = 10010;
+            var entity = new war.HeroEntity();
+            this.heroId = entity.hasCode;
+            var posCom = new war.PosCom();
+            posCom.x = 640;
+            posCom.y = 360;
+            entity.setComponent(posCom);
+            var renderCom = new war.RenderCom();
+            var render = new war.HeroRender();
+            render.initData(heroId);
+            render.x = posCom.x;
+            render.y = posCom.y;
+            renderCom.setRender(render);
+            entity.setComponent(renderCom);
+            war.WarDataMgr.Ins().addEntity(entity);
+            LayerManager.Ins().war.body.addChild(render);
+        };
+        WarPanel.prototype.OnAddSpeed = function () {
+            var entity = war.WarDataMgr.Ins().entityMap.get(this.heroId);
+            var speedCom = new war.SpeedCom();
+            speedCom.setData(0.06, 90);
+            entity.setComponent(speedCom);
+        };
+        WarPanel.prototype.OnRmSpeed = function () {
+            var entity = war.WarDataMgr.Ins().entityMap.get(this.heroId);
+            entity.removeComponent(war.Component.Speed);
         };
         return WarPanel;
     }(ViewBase));

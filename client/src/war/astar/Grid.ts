@@ -19,6 +19,7 @@ module astar
 
 			this.nodeArray = [];
 			let x:number, y:number;
+			let count = 1
 			for(let i=0, len=this.numRows; i<len; i++)
 			{
 				let rowArray:Node[] = [];
@@ -27,7 +28,12 @@ module astar
 					x = j;
 					y = i;
 					let node = new Node();
-					let walkable = true;
+					let walkable = Math.random() > 0.1
+					// if(Math.random() > 0.8 && count <= 10)
+					// {
+					// 	walkable = true;
+					// 	count += 1
+					// }
 					node.init(x, y, walkable);
 					rowArray.push(node);
 				}

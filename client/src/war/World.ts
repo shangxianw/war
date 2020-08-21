@@ -2,12 +2,12 @@ module war
 {
 	export class World
 	{
-		public lastTime:number;
 		public sysArray:SystemBase[];
 
 		public moveSystem:MoveSystem
 		public renderSystem:RenderSystem
 		public speedSystem:SpeedSystem
+		public pathSystem:PathSystem
 		public constructor()
 		{
 			this.init()
@@ -15,7 +15,11 @@ module war
 
 		protected init()
 		{
-			this.lastTime = 0;
+			this.lastLogic = 0
+			this.updateLogic = 0
+			this.lastRender = 0
+			this.updateRender = 0
+
 			this.sysArray = [];
 
 			this.moveSystem = new MoveSystem()
@@ -26,6 +30,9 @@ module war
 
 			this.speedSystem = new SpeedSystem()
 			this.sysArray.push(this.speedSystem)
+
+			this.pathSystem = new PathSystem()
+			this.sysArray.push(this.pathSystem)
 		}
 
 		public destroy()
@@ -39,14 +46,26 @@ module war
 			this.speedSystem.destroyAll()
 			this.speedSystem = null
 
+			this.pathSystem.destroyAll()
+			this.pathSystem = null;
+
 			this.sysArray.length = 0;
 		}
 
-		public update(currTime:number)
+		private lastLogic:number = 0
+		private updateLogic:number = 0
+		public logicLoop(t:number)
 		{
-			let deltaTime = (currTime - this.lastTime)/1000;
-			this.lastTime = currTime;
+			let dt = t - this.lastLogic
+			let delay = 1000 / FrameFps.Logic
+			this.updateLogic += dt
+			if(this.updateLogic < delay)
+				return true
 			
+			this.lastLogic = t
+			let count = Math.floor(this.updateLogic / delay)
+			this.updateLogic -= delay * count
+
 			let warData = WarDataMgr.Ins();
 			let entityArray = DataUtils.CopyArray(warData.entityMap.values());
 			let entity:EntityBase;
@@ -56,10 +75,35 @@ module war
 				if(entity == null)
 					continue;
 				
-				this.speedSystem.update(entity, deltaTime)
-				this.moveSystem.update(entity, deltaTime)
+				this.speedSystem.update(entity, dt)
+				this.moveSystem.update(entity, dt)
+				this.pathSystem.update(entity, dt)
+			}
+		}
 
-				this.renderSystem.update(entity, deltaTime)
+		private lastRender:number = 0
+		private updateRender:number = 0
+		public renderLoop(t:number)
+		{
+			let dt = t - this.lastRender
+			let delay = 1000 / FrameFps.Render
+			this.updateRender += dt
+			if(this.updateRender < delay)
+				return true
+			
+			this.lastRender = t
+			let count = Math.floor(this.updateRender / delay)
+			this.updateRender -= delay & count
+
+			let warData = WarDataMgr.Ins();
+			let entityArray = DataUtils.CopyArray(warData.entityMap.values());
+			let entity:EntityBase;
+			for(let i=0, len=entityArray.length; i<len; i++)
+			{
+				entity = entityArray[i];
+				if(entity == null)
+					continue;
+				this.renderSystem.update(entity, dt)
 			}
 		}
 	}

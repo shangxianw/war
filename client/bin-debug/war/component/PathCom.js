@@ -29,6 +29,10 @@ var war;
             this.path.length = 0;
             this.path = newPath;
         };
+        PathCom.prototype.toNextNode = function () {
+            var node = this.path.shift();
+            return node;
+        };
         PathCom.prototype.getCurrNode = function () {
             return this.path[0];
         };

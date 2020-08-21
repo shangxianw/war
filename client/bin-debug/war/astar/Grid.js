@@ -12,13 +12,19 @@ var astar;
             this.space = space;
             this.nodeArray = [];
             var x, y;
+            var count = 1;
             for (var i = 0, len = this.numRows; i < len; i++) {
                 var rowArray = [];
                 for (var j = 0, len2 = this.numCols; j < len2; j++) {
                     x = j;
                     y = i;
                     var node = new astar.Node();
-                    var walkable = true;
+                    var walkable = Math.random() > 0.1;
+                    // if(Math.random() > 0.8 && count <= 10)
+                    // {
+                    // 	walkable = true;
+                    // 	count += 1
+                    // }
                     node.init(x, y, walkable);
                     rowArray.push(node);
                 }

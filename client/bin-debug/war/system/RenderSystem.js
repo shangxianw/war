@@ -20,14 +20,25 @@ var war;
         };
         RenderSystem.prototype.destroy = function () {
         };
-        RenderSystem.prototype.update = function (entity, deltaTime) {
+        RenderSystem.prototype.update = function (entity, dt) {
             if (entity == null)
                 return;
-            var posCom = entity.getComponent(war.Component.Pos);
             var renderCom = entity.getComponent(war.Component.Render);
-            if (posCom == null || renderCom == null)
+            if (renderCom == null)
                 return;
-            renderCom.updatePos(posCom.x, posCom.y);
+            var posCom = entity.getComponent(war.Component.Pos);
+            var pathCom = entity.getComponent(war.Component.Path);
+            if (posCom != null) {
+                // let distance = posCom.x - renderCom.render.x
+                // renderCom.render.x += distance / dt
+                // let distancey = posCom.y - renderCom.render.y
+                // renderCom.render.y += distancey / dt
+                renderCom.render.x = posCom.x;
+                renderCom.render.y = posCom.y;
+            }
+            if (pathCom != null && posCom != null) {
+                war.DrawUtils.DrawPath(entity);
+            }
         };
         return RenderSystem;
     }(war.SystemBase));

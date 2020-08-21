@@ -19,6 +19,7 @@ var war;
         System[System["Move"] = 1] = "Move";
         System[System["Render"] = 2] = "Render";
         System[System["Speed"] = 3] = "Speed";
+        System[System["Path"] = 4] = "Path";
     })(System = war.System || (war.System = {}));
     var Entity;
     (function (Entity) {

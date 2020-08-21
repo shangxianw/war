@@ -3,6 +3,7 @@ module war
 	export class RenderCom extends ComBase
 	{
 		public render:RenderBase;
+		public pathShap:egret.Shape
 		protected init()
 		{
 			this.comType = Component.Render

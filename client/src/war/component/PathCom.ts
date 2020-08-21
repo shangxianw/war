@@ -25,6 +25,12 @@ module war
 			this.path = newPath
 		}
 
+		public toNextNode()
+		{
+			let node = this.path.shift()
+			return node
+		}
+
 		public getCurrNode()
 		{
 			return this.path[0]
