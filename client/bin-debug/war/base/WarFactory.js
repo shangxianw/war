@@ -6,6 +6,13 @@ var war;
     var WarFactory = (function () {
         function WarFactory() {
         }
+        WarFactory.RemoveHero = function (hasCode) {
+            var entity = war.WarDataMgr.Ins().getEntity(hasCode);
+            war.WarDataMgr.Ins().removeEntity(entity);
+            var renderCom = entity.getComponent(war.Component.Render);
+            renderCom.render.parent.removeChild(renderCom.render);
+            entity.destroyAll();
+        };
         WarFactory.CreateHero = function (heroId, localX, localY) {
             var entity = new war.HeroEntity();
             var posCom = new war.PosCom();
@@ -24,6 +31,16 @@ var war;
             render.y = posCom.y;
             renderCom.setRender(render);
             entity.setComponent(renderCom);
+            // let collisionCom = new CollisionCom()
+            // collisionCom.type = Collision.Circle;
+            // collisionCom.range = 30
+            // entity.setComponent(collisionCom)
+            var attackCom = new war.AttackCom();
+            attackCom.range = 20 + Math.floor(Math.random() * 40);
+            entity.setComponent(attackCom);
+            var actionCom = new war.ActionCom();
+            actionCom.action = war.Action.Run;
+            entity.setComponent(actionCom);
             var pathCom = new war.PathCom();
             var path = war.WarDataMgr.Ins().findPath(gridX, gridY, Math.floor(Math.random() * war.WarDataMgr.Ins().Ncols), Math.floor(Math.random() * war.WarDataMgr.Ins().Nrows));
             pathCom.setPath(path);

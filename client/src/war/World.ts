@@ -8,6 +8,7 @@ module war
 		public renderSystem:RenderSystem
 		public speedSystem:SpeedSystem
 		public pathSystem:PathSystem
+		public attackSystem:AttackSystem
 		public constructor()
 		{
 			this.init()
@@ -33,6 +34,9 @@ module war
 
 			this.pathSystem = new PathSystem()
 			this.sysArray.push(this.pathSystem)
+
+			this.attackSystem = new AttackSystem()
+			this.sysArray.push(this.attackSystem)
 		}
 
 		public destroy()
@@ -48,6 +52,9 @@ module war
 
 			this.pathSystem.destroyAll()
 			this.pathSystem = null;
+
+			this.attackSystem.destroyAll()
+			this.attackSystem = null
 
 			this.sysArray.length = 0;
 		}
@@ -78,6 +85,7 @@ module war
 				this.speedSystem.update(entity, dt)
 				this.moveSystem.update(entity, dt)
 				this.pathSystem.update(entity, dt)
+				this.attackSystem.update(entity, dt)
 			}
 		}
 

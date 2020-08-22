@@ -3,7 +3,6 @@ module war
 	export abstract class RenderBase extends UIBase
 	{
 		public renderType:number;
-		public collisionShape:egret.Shape;
 		public hasCodeLb:eui.Label;
 
 		public initAll()

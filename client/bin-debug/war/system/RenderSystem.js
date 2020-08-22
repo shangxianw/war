@@ -36,9 +36,10 @@ var war;
                 renderCom.render.x = posCom.x;
                 renderCom.render.y = posCom.y;
             }
-            if (pathCom != null && posCom != null) {
-                war.DrawUtils.DrawPath(entity);
-            }
+            war.DrawUtils.DrawPath(entity);
+            war.DrawUtils.DrawAnchorCenter(entity);
+            war.DrawUtils.DrawAttackRange(entity);
+            war.DrawUtils.DrawHasCode(entity);
         };
         return RenderSystem;
     }(war.SystemBase));

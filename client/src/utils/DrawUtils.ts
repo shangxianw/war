@@ -63,37 +63,77 @@ module war
 			
 		}
 
-		public static DrawHasCode(entity:EntityBase)
-		{
-			if(DrawUtils.isTest == false)
-				return;
-		}
-
-		public static DrawRectCollision(render:RenderBase)
-		{
-			if(DrawUtils.isTest == false)
-				return;
-		}
-
 		// ---------------------------------------------------------------------- 画中心点
-		public static DrawAnchorCenter(render:RenderBase)
+		public static DrawAnchorCenter(entity:EntityBase)
 		{
 			if(DrawUtils.isTest == false)
 				return;
 			
-			if(render.collisionShape == null)
+			let renderCom = entity.getComponent(Component.Render) as RenderCom;
+			let posCom = entity.getComponent(Component.Pos) as PosCom;
+			if(renderCom == null || posCom == null)
+				return
+			if(renderCom.anchorShap == null)
 			{
-				render.collisionShape = new egret.Shape();
-				render.addChildAt(render.collisionShape, 999);
+				renderCom.anchorShap = new egret.Shape();
+				LayerManager.Ins().war.effect.addChild(renderCom.anchorShap)
 			}
 				
-			render.collisionShape.graphics.clear();
-			render.collisionShape.graphics.beginFill(0xffff00, 1);
-			render.collisionShape.graphics.lineStyle(2, 0x000000);
-			render.collisionShape.anchorOffsetX = -render.anchorOffsetX;
-			render.collisionShape.anchorOffsetY = -render.anchorOffsetY;
-			render.collisionShape.graphics.drawCircle(0, 0, 5); // 这个是没有设置锚点的，所以直接在0，0上即可
-			render.collisionShape.graphics.endFill();
+			renderCom.anchorShap.graphics.clear();
+			renderCom.anchorShap.graphics.beginFill(0xff0000, 1);
+			// renderCom.anchorShap.graphics.lineStyle(2, 0x000000);
+			renderCom.anchorShap.graphics.drawCircle(posCom.x, posCom.y, 5);
+			renderCom.anchorShap.graphics.endFill();
+		}
+
+		// ---------------------------------------------------------------------- 普攻射程
+		public static DrawAttackRange(entity:EntityBase)
+		{
+			if(DrawUtils.isTest == false)
+				return;
+			
+			let renderCom = entity.getComponent(Component.Render) as RenderCom;
+			let atkCom = entity.getComponent(Component.Attack) as AttackCom;
+			let actionCom = entity.getComponent(Component.Action) as ActionCom;
+			let posCom = entity.getComponent(Component.Pos) as PosCom;
+			if(renderCom == null || atkCom == null || posCom == null || actionCom == null)
+				return
+			if(renderCom.attackShap == null)
+			{
+				renderCom.attackShap = new egret.Shape();
+				LayerManager.Ins().war.map.addChild(renderCom.attackShap)
+			}
+
+			renderCom.attackShap.graphics.clear();
+			if(actionCom.action == Action.Attack)
+				renderCom.attackShap.graphics.beginFill(0xffffff, 0.5);
+			else
+				renderCom.attackShap.graphics.beginFill(0x000000, 0.5);
+			renderCom.attackShap.graphics.lineStyle(1, 0x000000);
+			renderCom.attackShap.graphics.drawCircle(posCom.x, posCom.y, atkCom.range);
+			renderCom.attackShap.graphics.endFill();
+		}
+
+		// ---------------------------------------------------------------------- hascode
+		public static DrawHasCode(entity:EntityBase)
+		{
+			if(DrawUtils.isTest == false)
+				return;
+			
+			let renderCom = entity.getComponent(Component.Render) as RenderCom;
+			let posCom = entity.getComponent(Component.Pos) as PosCom;
+			if(renderCom == null || posCom == null)
+				return
+			if(renderCom.hasCodeLb == null)
+			{
+				renderCom.hasCodeLb = new eui.Label();
+				renderCom.hasCodeLb.text = `${entity.hasCode}`
+				renderCom.hasCodeLb.validateNow()
+				LayerManager.Ins().war.effect.addChild(renderCom.hasCodeLb)
+			}
+
+			renderCom.hasCodeLb.x = posCom.x
+			renderCom.hasCodeLb.y = posCom.y
 		}
 	}
 }

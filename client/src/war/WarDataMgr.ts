@@ -83,6 +83,11 @@ module war
 			entity.destroyAll();
 		}
 
+		public getEntity(hasCode:number)
+		{
+			return this.entityMap.get(hasCode)
+		}
+
 		private destroyEntityMap()
 		{
 			for(let item of this.entityMap.values())

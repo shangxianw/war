@@ -19,11 +19,6 @@ var MovieClip = (function (_super) {
     MovieClip.prototype.init = function () {
         this.mc = new egret.MovieClip();
         this.addChild(this.mc);
-        var shap = new egret.Shape();
-        shap.graphics.beginFill(0xff0000);
-        shap.graphics.drawCircle(0, 0, 5);
-        shap.graphics.endFill();
-        this.addChild(shap);
     };
     MovieClip.prototype.initData = function (fileName, clipName, action, count) {
         var _this = this;

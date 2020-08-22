@@ -72,6 +72,9 @@ var war;
             this.entityMap.remove(entity.hasCode);
             entity.destroyAll();
         };
+        WarDataMgr.prototype.getEntity = function (hasCode) {
+            return this.entityMap.get(hasCode);
+        };
         WarDataMgr.prototype.destroyEntityMap = function () {
             for (var _i = 0, _a = this.entityMap.values(); _i < _a.length; _i++) {
                 var item = _a[_i];

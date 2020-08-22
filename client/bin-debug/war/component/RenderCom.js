@@ -19,6 +19,12 @@ var war;
             this.comType = war.Component.Render;
         };
         RenderCom.prototype.destroy = function () {
+            this.render.destroyAll();
+            this.render.parent.removeChild(this.render);
+            this.pathShap.parent.removeChild(this.pathShap);
+            this.anchorShap.parent.removeChild(this.anchorShap);
+            this.attackShap.parent.removeChild(this.attackShap);
+            this.hasCodeLb.parent.removeChild(this.hasCodeLb);
         };
         RenderCom.prototype.setRender = function (render) {
             this.render = render;

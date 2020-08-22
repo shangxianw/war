@@ -54,29 +54,63 @@ var war;
             }
             renderCom.pathShap.graphics.endFill();
         };
+        // ---------------------------------------------------------------------- 画中心点
+        DrawUtils.DrawAnchorCenter = function (entity) {
+            if (DrawUtils.isTest == false)
+                return;
+            var renderCom = entity.getComponent(war.Component.Render);
+            var posCom = entity.getComponent(war.Component.Pos);
+            if (renderCom == null || posCom == null)
+                return;
+            if (renderCom.anchorShap == null) {
+                renderCom.anchorShap = new egret.Shape();
+                LayerManager.Ins().war.effect.addChild(renderCom.anchorShap);
+            }
+            renderCom.anchorShap.graphics.clear();
+            renderCom.anchorShap.graphics.beginFill(0xff0000, 1);
+            // renderCom.anchorShap.graphics.lineStyle(2, 0x000000);
+            renderCom.anchorShap.graphics.drawCircle(posCom.x, posCom.y, 5);
+            renderCom.anchorShap.graphics.endFill();
+        };
+        // ---------------------------------------------------------------------- 普攻射程
+        DrawUtils.DrawAttackRange = function (entity) {
+            if (DrawUtils.isTest == false)
+                return;
+            var renderCom = entity.getComponent(war.Component.Render);
+            var atkCom = entity.getComponent(war.Component.Attack);
+            var actionCom = entity.getComponent(war.Component.Action);
+            var posCom = entity.getComponent(war.Component.Pos);
+            if (renderCom == null || atkCom == null || posCom == null || actionCom == null)
+                return;
+            if (renderCom.attackShap == null) {
+                renderCom.attackShap = new egret.Shape();
+                LayerManager.Ins().war.map.addChild(renderCom.attackShap);
+            }
+            renderCom.attackShap.graphics.clear();
+            if (actionCom.action == war.Action.Attack)
+                renderCom.attackShap.graphics.beginFill(0xffffff, 0.5);
+            else
+                renderCom.attackShap.graphics.beginFill(0x000000, 0.5);
+            renderCom.attackShap.graphics.lineStyle(1, 0x000000);
+            renderCom.attackShap.graphics.drawCircle(posCom.x, posCom.y, atkCom.range);
+            renderCom.attackShap.graphics.endFill();
+        };
+        // ---------------------------------------------------------------------- hascode
         DrawUtils.DrawHasCode = function (entity) {
             if (DrawUtils.isTest == false)
                 return;
-        };
-        DrawUtils.DrawRectCollision = function (render) {
-            if (DrawUtils.isTest == false)
+            var renderCom = entity.getComponent(war.Component.Render);
+            var posCom = entity.getComponent(war.Component.Pos);
+            if (renderCom == null || posCom == null)
                 return;
-        };
-        // ---------------------------------------------------------------------- 画中心点
-        DrawUtils.DrawAnchorCenter = function (render) {
-            if (DrawUtils.isTest == false)
-                return;
-            if (render.collisionShape == null) {
-                render.collisionShape = new egret.Shape();
-                render.addChildAt(render.collisionShape, 999);
+            if (renderCom.hasCodeLb == null) {
+                renderCom.hasCodeLb = new eui.Label();
+                renderCom.hasCodeLb.text = "" + entity.hasCode;
+                renderCom.hasCodeLb.validateNow();
+                LayerManager.Ins().war.effect.addChild(renderCom.hasCodeLb);
             }
-            render.collisionShape.graphics.clear();
-            render.collisionShape.graphics.beginFill(0xffff00, 1);
-            render.collisionShape.graphics.lineStyle(2, 0x000000);
-            render.collisionShape.anchorOffsetX = -render.anchorOffsetX;
-            render.collisionShape.anchorOffsetY = -render.anchorOffsetY;
-            render.collisionShape.graphics.drawCircle(0, 0, 5); // 这个是没有设置锚点的，所以直接在0，0上即可
-            render.collisionShape.graphics.endFill();
+            renderCom.hasCodeLb.x = posCom.x;
+            renderCom.hasCodeLb.y = posCom.y;
         };
         DrawUtils.isTest = true;
         return DrawUtils;

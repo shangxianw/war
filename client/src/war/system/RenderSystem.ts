@@ -35,10 +35,10 @@ module war
 				renderCom.render.y = posCom.y
 			}
 
-			if(pathCom != null && posCom != null)
-			{
-				DrawUtils.DrawPath(entity)
-			}
+			DrawUtils.DrawPath(entity)
+			DrawUtils.DrawAnchorCenter(entity)
+			DrawUtils.DrawAttackRange(entity)
+			DrawUtils.DrawHasCode(entity)
 		}
 	}
 }

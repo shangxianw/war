@@ -25,6 +25,8 @@ var war;
             this.sysArray.push(this.speedSystem);
             this.pathSystem = new war.PathSystem();
             this.sysArray.push(this.pathSystem);
+            this.attackSystem = new war.AttackSystem();
+            this.sysArray.push(this.attackSystem);
         };
         World.prototype.destroy = function () {
             this.moveSystem.destroyAll();
@@ -35,6 +37,8 @@ var war;
             this.speedSystem = null;
             this.pathSystem.destroyAll();
             this.pathSystem = null;
+            this.attackSystem.destroyAll();
+            this.attackSystem = null;
             this.sysArray.length = 0;
         };
         World.prototype.logicLoop = function (t) {
@@ -56,6 +60,7 @@ var war;
                 this.speedSystem.update(entity, dt);
                 this.moveSystem.update(entity, dt);
                 this.pathSystem.update(entity, dt);
+                this.attackSystem.update(entity, dt);
             }
         };
         World.prototype.renderLoop = function (t) {

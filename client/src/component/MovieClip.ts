@@ -14,11 +14,6 @@ class MovieClip extends UIBase
 	{
 		this.mc = new egret.MovieClip();
 		this.addChild(this.mc)
-		let shap = new egret.Shape()
-		shap.graphics.beginFill(0xff0000)
-		shap.graphics.drawCircle(0, 0, 5)
-		shap.graphics.endFill()
-		this.addChild(shap)
 	}
 
 	public initData(fileName:string, clipName:string, action:string=null, count:number=-1)
