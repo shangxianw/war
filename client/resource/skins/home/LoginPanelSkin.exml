@@ -15,4 +15,5 @@
 	<e:Image width="20" height="20" x="782" y="300"/>
 	<e:Image left="0" right="0" top="0" bottom="0" source="战斗法力修改01_jpg" visible="false"/>
 	<e:Button id="loginBtn" label="{data.lab}" x="588" y="314" skinName="skins.ButtonSkin" touchChildren="false"/>
+	<e:TextInput left="0" right="0" top="0" skinName="skins.TextInputSkin" height="393"/>
 </e:Skin>

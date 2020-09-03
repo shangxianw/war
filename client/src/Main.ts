@@ -100,12 +100,6 @@ class Main extends eui.UILayer
         // this.addChild(a)
         // a.x = a.y = 200
         // ViewManager.Ins().open(home.DemoPanel)
-        SceneManager.Ins().changeScene(SceneType.War)
-
-
-
-        
+        SceneManager.Ins().changeScene(SceneType.Login)
     }
 }
-
-let mc:MovieClip
