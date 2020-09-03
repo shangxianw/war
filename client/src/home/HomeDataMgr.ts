@@ -1,0 +1,7 @@
+class HomeDataMgr
+{
+	public constructor()
+	{
+		
+	}
+}
