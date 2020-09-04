@@ -56,7 +56,7 @@ var home;
             this.loginBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnLoginTap, this);
         };
         LoginPanel.prototype.OnLoginTap = function (e) {
-            ViewManager.Ins().open(home.HomePanel, "wsx");
+            ViewManager.Ins().open(HomePanel, "wsx");
             // SceneManager.Ins().changeScene(SceneType.Home)
             // ViewManager.Ins().close(home.LoginPanel)
             // ViewManager.Ins().close("home.LoginPanel")

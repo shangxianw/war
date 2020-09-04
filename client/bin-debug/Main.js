@@ -157,5 +157,4 @@ var Main = (function (_super) {
     return Main;
 }(eui.UILayer));
 __reflect(Main.prototype, "Main");
-var mc;
 //# sourceMappingURL=Main.js.map

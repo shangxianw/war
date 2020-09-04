@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="LoginPanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0x4c4242"/>
+<e:Skin class="LoginPanelSkin" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" width="720">
+	<e:Rect top="0" bottom="0" left="0" right="0" fillColor="0xb7a7a7"/>
 
-	<e:Label id="desc" x="294" y="291" text="{data.name}"/>
-	<e:List width="200" height="200" x="368" y="436" itemRendererSkinName="skins.ButtonSkin">
-		<e:ArrayCollection>
-			<e:Array>
-				<e:Object null=""/>
-				<e:Object null=""/>
-				<e:Object null=""/>
-			</e:Array>
-		</e:ArrayCollection>
-	</e:List>
-	<e:Image width="20" height="20" x="782" y="300"/>
-	<e:Image left="0" right="0" top="0" bottom="0" source="战斗法力修改01_jpg" visible="false"/>
-	<e:Button id="loginBtn" label="{data.lab}" x="588" y="314" skinName="skins.ButtonSkin" touchChildren="false"/>
-	<e:TextInput left="0" right="0" top="0" skinName="skins.TextInputSkin" height="393"/>
+
+
+
+
+
+
+
 </e:Skin>

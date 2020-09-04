@@ -2,7 +2,7 @@ class LayerManager extends DataBase
 {
 	public stageMain:eui.UILayer; // 最外层的Main
 	
-	public war:WarLayer;
+	public war:eui.UILayer;		// 战斗层
 	public panel:eui.UILayer;	// 面板层
 	public tips:eui.UILayer;    // 提示层，如获得，伤害等
 	protected init()
@@ -13,7 +13,6 @@ class LayerManager extends DataBase
 
 	protected destroy()
 	{
-		this.war = null;
 		this.panel = null;
 		this.stageMain = null;
 	}
@@ -22,10 +21,9 @@ class LayerManager extends DataBase
 	{
 		this.stageMain = main;
 
-		this.war = new WarLayer();
+		this.war = new eui.UILayer();
 		this.war.name = `war`;
 		this.war.touchEnabled = false
-		this.war.initLayer()
 		this.stageMain.addChild(this.war);
 		
 		this.panel = new eui.UILayer();
