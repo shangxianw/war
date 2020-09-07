@@ -18,16 +18,14 @@ var LayerManager = (function (_super) {
             return;
     };
     LayerManager.prototype.destroy = function () {
-        this.war = null;
         this.panel = null;
         this.stageMain = null;
     };
     LayerManager.prototype.initLayer = function (main) {
         this.stageMain = main;
-        this.war = new WarLayer();
+        this.war = new eui.UILayer();
         this.war.name = "war";
         this.war.touchEnabled = false;
-        this.war.initLayer();
         this.stageMain.addChild(this.war);
         this.panel = new eui.UILayer();
         this.panel.name = "panel";

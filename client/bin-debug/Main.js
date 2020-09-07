@@ -152,7 +152,10 @@ var Main = (function (_super) {
         // this.addChild(a)
         // a.x = a.y = 200
         // ViewManager.Ins().open(home.DemoPanel)
-        SceneManager.Ins().changeScene(SceneType.Login);
+        // SceneManager.Ins().changeScene(SceneType.Login)
+        this.addEventListener(egret.Event.ENTER_FRAME, function () {
+            console.log(1);
+        }, this);
     };
     return Main;
 }(eui.UILayer));
