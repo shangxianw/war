@@ -1,1 +1,6 @@
-"interface IHerodata\n{\n    heroid:number\n    cost:number\n    quality:number\n}"
+interface IHerodata
+{
+    heroid:number
+    cost:number
+    quality:number
+}

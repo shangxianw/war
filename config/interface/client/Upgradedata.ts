@@ -1,1 +1,8 @@
-"interface IUpgradedata\n{\n    heroid:number\n    level:number\n    hp:number\n    attack:number\n    attackspeed:number\n}"
+interface IUpgradedata
+{
+    heroid:number
+    level:number
+    hp:number
+    attack:number
+    attackspeed:number
+}

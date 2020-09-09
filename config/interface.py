@@ -70,7 +70,7 @@ class DaoCfg(object):
         tarClientFile = self.tarClientDir + fileName + ".ts"
 
         jsonFile = open(tarClientFile, "w", encoding='utf-8')
-        jsonFile.write(json.dumps(clientContent, indent=4, ensure_ascii=False))  # indent=4 缩进处理 ensure_ascii 不使用这种格式存储
+        jsonFile.write(clientContent)
         jsonFile.close()
         print("写入 " + sheet.name + " 完成")
     
