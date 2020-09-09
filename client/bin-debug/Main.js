@@ -138,7 +138,7 @@ var Main = (function (_super) {
         });
     };
     Main.prototype.createGameScene = function () {
-        LayerManager.Ins().initLayer(this);
+        // LayerManager.Ins().initLayer(this);
         // ViewManager.Ins().open(home.LoginPanel)
         // let a = new astar.AStarTest()
         // this.addChild(a)
@@ -153,9 +153,8 @@ var Main = (function (_super) {
         // a.x = a.y = 200
         // ViewManager.Ins().open(home.DemoPanel)
         // SceneManager.Ins().changeScene(SceneType.Login)
-        this.addEventListener(egret.Event.ENTER_FRAME, function () {
-            console.log(1);
-        }, this);
+        // RedPointMgr.Ins()
+        TestRedPointMgr.Init(this);
     };
     return Main;
 }(eui.UILayer));

@@ -35,6 +35,7 @@
 		"bin-debug/base/redPointMgr/RedConfig.js",
 		"bin-debug/base/redPointMgr/RedPointData.js",
 		"bin-debug/base/GameData.js",
+		"bin-debug/base/redPointMgr/TestRedPointMgr.js",
 		"bin-debug/base/resmanager/GroupCollectData.js",
 		"bin-debug/base/resmanager/ResData.js",
 		"bin-debug/base/resmanager/ResManager.js",

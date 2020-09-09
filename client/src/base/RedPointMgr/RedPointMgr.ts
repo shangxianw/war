@@ -51,6 +51,24 @@ class RedPointMgr
 		return true;
 	}
 
+	/**
+	 * 动态添加红点监听
+	 * 用于动态创建的子项，如列表子项
+	 */
+	public addlistener2(redName:string, parent:string, cbFn:Function, thisObj:Object)
+	{
+		if(redName == null || cbFn == null || thisObj == null || this.redMap.has(parent) == false)
+		{
+			return false;
+		}
+
+		let redData = new RedPointData()
+		redData.packData(redName, parent, [])
+		this.redMap.set(redName, redData)
+		redData.addRedCB(cbFn, thisObj)
+		return true;
+	}
+
 	public removeListenter(redName:string, cbFn:Function, thisObj:Object)
 	{
 		if(this.redMap.has(redName) == false)

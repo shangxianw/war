@@ -41,6 +41,20 @@ var RedPointMgr = (function () {
         redData.addRedCB(cbFn, thisObj);
         return true;
     };
+    /**
+     * 动态添加红点监听
+     * 用于动态创建的子项，如列表子项
+     */
+    RedPointMgr.prototype.addlistener2 = function (redName, parent, cbFn, thisObj) {
+        if (redName == null || cbFn == null || thisObj == null || this.redMap.has(parent) == false) {
+            return false;
+        }
+        var redData = new RedPointData();
+        redData.packData(redName, parent, []);
+        this.redMap.set(redName, redData);
+        redData.addRedCB(cbFn, thisObj);
+        return true;
+    };
     RedPointMgr.prototype.removeListenter = function (redName, cbFn, thisObj) {
         if (this.redMap.has(redName) == false) {
             return true;

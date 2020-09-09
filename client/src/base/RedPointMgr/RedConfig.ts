@@ -1,17 +1,23 @@
-let RedConfig = {
-	"main_jundui":{
-		"kazu":{
+let RedConfig = 
+{
+	"main_jundui":
+	{
+		"kazu":
+		{
 			"hero_upgrade":{},
 			"hero_new":{},
 			"haha":{}
 		},
-		"lingzhu":{
+		"lingzhu":
+		{
 
 		}
 	},
 	"main_kazu":{},
-	"saishi":{
-		"zbs":{
+	"saishi":
+	{
+		"zbs":
+		{
 			"duanwei":{},
 			"count":{}
 		},
