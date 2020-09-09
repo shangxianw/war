@@ -25,13 +25,3 @@ enum FrameFps
 	Logic = 60,
 	Render = 60
 }
-
-/**
- * 货币支付类型
- */
-enum CostType
-{
-	RMB = 1,
-	Gold = 2,
-	Dimand = 3
-}
