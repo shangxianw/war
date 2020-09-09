@@ -1,0 +1,66 @@
+{
+    "10010": {
+        "heroid": 10010,
+        "skill": [
+            1,
+            1
+        ],
+        "strokeColor": "0x111112"
+    },
+    "10040": {
+        "heroid": 10040,
+        "skill": [
+            2,
+            2
+        ],
+        "strokeColor": "0x111113"
+    },
+    "10050": {
+        "heroid": 10050,
+        "skill": [
+            3,
+            3
+        ],
+        "strokeColor": "0x111114"
+    },
+    "10070": {
+        "heroid": 10070,
+        "skill": [
+            4,
+            4
+        ],
+        "strokeColor": "0x111115"
+    },
+    "10080": {
+        "heroid": 10080,
+        "skill": [
+            5,
+            5
+        ],
+        "strokeColor": "0x111116"
+    },
+    "10090": {
+        "heroid": 10090,
+        "skill": [
+            6,
+            6
+        ],
+        "strokeColor": "0x111117"
+    },
+    "10100": {
+        "heroid": 10100,
+        "skill": [
+            7,
+            7
+        ],
+        "strokeColor": "0x111118"
+    },
+    "10110": {
+        "heroid": 10110,
+        "skill": [
+            8,
+            8
+        ],
+        "strokeColor": "0x111119"
+    }
+}

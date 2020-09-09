@@ -1,0 +1,1 @@
+"interface IHerodata\n{\n    heroid:number\n    cost:number\n    quality:number\n}"
