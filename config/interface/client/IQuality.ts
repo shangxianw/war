@@ -1,0 +1,4 @@
+interface IQuality
+{
+    id:number
+}

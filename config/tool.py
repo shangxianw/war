@@ -33,6 +33,10 @@ class DaoCfg(object):
         self.cellTypeString     = 1
         self.cellTypeNumber     = 2
         self.cellTypeBoolean    = 4
+
+        self.writedJson         = []                                   # 记录已经处理过的表，如果出现同名，会在此报错
+        self.sameTableArray     = []                                   # 保存相同的表格
+        self.errorTabelArray    = []                                   # 保存出错表格
     
     def destroy(self):
         pass
@@ -44,6 +48,7 @@ class DaoCfg(object):
             filePath = self.oriDir + file
             if self.isFileSupport(filePath) is True:
                 self.openExcel(filePath)
+        self.printWarnArray()
     
     def openExcel(self, filePath):
         excel          = xlrd.open_workbook(filePath)
@@ -51,8 +56,11 @@ class DaoCfg(object):
         sheet          = None
         for sheetName in sheetNameArray:                               # 遍历每个sheet
             sheet = excel.sheet_by_name(sheetName)
+            if self.isValidTabe(filePath, sheetName) is False:
+                continue
+            if self.hasSameTabName(filePath, sheetName) is True:
+                continue
             self.packJson(sheet)
-            # print(filePath + "   " + sheetName)
     
     def packJson(self, sheet):
         clientJson = {}
@@ -138,6 +146,13 @@ class DaoCfg(object):
                                 tarObjServer[key] = []
                             if value != "":
                                 self.writeToTwoArray(tarObjServer[key], value, 3)
+                    
+                    # 任意类型
+                    elif vType == self.anyType:
+                        if scArr[0] is True:
+                            tarObjClient[key] = value
+                        if scArr[1] is True:
+                            tarObjServer[key] = value
 
         self.write2JSON(sheet, clientJson, serverJson)
     
@@ -184,6 +199,49 @@ class DaoCfg(object):
                 array.append([value])
             else:
                 lastItem.append(value)
+
+    # 检验是否为合法表格(因为有一些是用来做说明文档之类):
+    def isValidTabe(self, filePath, sheetName):
+        excel = xlrd.open_workbook(filePath)
+        sheet = excel.sheet_by_name(sheetName)
+        try:
+            keyNum    = int(sheet.cell(self.keyNum[1], self.keyNum[0]).value)
+            if keyNum <= 0:
+                errorTabel = filePath + " " + sheetName
+                self.errorTabelArray.append(errorTabel)
+                return False
+            tableName = sheet.cell(self.tableName[1], self.tableName[0]).value
+            if tableName == "":
+                errorTabel = filePath + " " + sheetName
+                self.errorTabelArray.append(errorTabel)
+                return False
+            return True
+        except(BaseException):
+            errorTabel = filePath + " " + sheetName
+            self.errorTabelArray.append(errorTabel)
+            return False
+
+
+    # 检验是否同名
+    def hasSameTabName(self, filePath, sheetName):
+        excel = xlrd.open_workbook(filePath)
+        sheet = excel.sheet_by_name(sheetName)
+        tableName     = sheet.cell(self.tableName[1], self.tableName[0]).value
+        tabDir = filePath + "_" + sheetName + "_" + tableName
+        for item in self.writedJson:
+            b = item.split("_")
+            writedTable = b[len(b)-1]
+            if writedTable == tableName:
+                self.sameTableArray.append(tabDir + " 和 " + item)
+                return True
+        self.writedJson.append(tabDir)
+        return False
+    
+    def printWarnArray(self):
+        for item in self.errorTabelArray:
+            print("==========\n存在异常表格 " + item)
+        for item in self.sameTableArray:
+            print("==========\n存在相同表格 " + item)
 
     # 判断该文件是否为支持文件
     def isFileSupport(self, filePath):

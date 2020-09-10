@@ -1,0 +1,79 @@
+{
+    "120001": {
+        "id": 120001,
+        "name": "1阶普通宝箱",
+        "desc": 8.0,
+        "icon": "",
+        "time": 3,
+        "mingold": 9,
+        "maxgold": 11,
+        "showopenicon": "icon_bx_011",
+        "quality": 1
+    },
+    "120002": {
+        "id": 120002,
+        "name": "2阶普通宝箱",
+        "desc": 13.0,
+        "icon": "",
+        "time": 3,
+        "mingold": 14,
+        "maxgold": 17,
+        "showopenicon": "icon_bx_011",
+        "quality": 1
+    },
+    "120003": {
+        "id": 120003,
+        "name": "3阶普通宝箱",
+        "desc": 17.0,
+        "icon": "",
+        "time": 3,
+        "mingold": 18,
+        "maxgold": 22,
+        "showopenicon": "icon_bx_012",
+        "quality": 1
+    },
+    "120004": {
+        "id": 120004,
+        "name": "4阶普通宝箱",
+        "desc": 23.0,
+        "icon": "",
+        "time": 3,
+        "mingold": 23,
+        "maxgold": 29,
+        "showopenicon": "icon_bx_013",
+        "quality": 1
+    },
+    "120005": {
+        "id": 120005,
+        "name": "5阶普通宝箱",
+        "desc": 26.0,
+        "icon": "",
+        "time": 4,
+        "mingold": 28,
+        "maxgold": 34,
+        "showopenicon": "icon_bx_014",
+        "quality": 2
+    },
+    "120006": {
+        "id": 120006,
+        "name": "6阶普通宝箱",
+        "desc": 31.0,
+        "icon": "",
+        "time": 5,
+        "mingold": 32,
+        "maxgold": 40,
+        "showopenicon": "icon_bx_011",
+        "quality": 2
+    },
+    "120007": {
+        "id": 120007,
+        "name": "7阶普通宝箱",
+        "desc": 25.0,
+        "icon": "",
+        "time": 6,
+        "mingold": 37,
+        "maxgold": 45,
+        "showopenicon": "icon_bx_011",
+        "quality": 3
+    }
+}

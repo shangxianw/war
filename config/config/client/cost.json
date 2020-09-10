@@ -1,0 +1,42 @@
+{
+    "1": {
+        "id": 1,
+        "name": "金币",
+        "codename": "Gold",
+        "attrname": "gold",
+        "successtips": "支付成功",
+        "falitips": "金币不足"
+    },
+    "2": {
+        "id": 2,
+        "name": "钻石",
+        "codename": "Dimand",
+        "attrname": "dimand",
+        "successtips": "支付成功",
+        "falitips": "钻石不足"
+    },
+    "3": {
+        "id": 3,
+        "name": "贡献",
+        "codename": "Contribute",
+        "attrname": "contribute",
+        "successtips": "支付成功",
+        "falitips": "贡献不足"
+    },
+    "4": {
+        "id": 4,
+        "name": "钥匙",
+        "codename": "Key",
+        "attrname": "key",
+        "successtips": "支付成功",
+        "falitips": "钥匙不足"
+    },
+    "5": {
+        "id": 5,
+        "name": "人民币",
+        "codename": "Rmb",
+        "attrname": "rmb",
+        "successtips": "支付成功",
+        "falitips": "人民币不足"
+    }
+}

@@ -13,6 +13,7 @@ class DaoCfg(object):
         self.tarServerDir       = "./interface/server/"                # 服务端的目标文件夹
         self.supportType        = [".xls"]                             # 只处理源文件夹中支持的格式类型的文件
 
+        self.keyNum             = [0, 1]                               # 键的数量（单元格坐标）
         self.tableName          = [1, 1]                               # 表名（单元格坐标）
         self.intType            = "int"                                # 以下为定义单元格数据类型
         self.strType            = "string"
@@ -24,6 +25,10 @@ class DaoCfg(object):
         self.scLine             = 2                                    # 定义导出为客户端/服务端类型的行(从0开始)
         self.typeLine           = 3                                    # 定义单元格数据类型的行(从0开始)
         self.keyLine            = 4                                    # 定义键值的行(从0开始)
+
+        self.writedJson         = []                                   # 记录已经处理过的表，如果出现同名，会在此报错
+        self.sameTableArray     = []                                   # 保存相同的表格
+        self.errorTabelArray    = []                                   # 保存出错表格
     
     def destroy(self):
         pass
@@ -35,6 +40,7 @@ class DaoCfg(object):
             filePath = self.oriDir + file
             if self.isFileSupport(filePath) is True:
                 self.openExcel(filePath)
+        self.printWarnArray()
     
     def openExcel(self, filePath):
         excel          = xlrd.open_workbook(filePath)
@@ -42,16 +48,20 @@ class DaoCfg(object):
         sheet          = None
         for sheetName in sheetNameArray:                               # 遍历每个sheet
             sheet = excel.sheet_by_name(sheetName)
+            if self.isValidTabe(filePath, sheetName) is False:
+                continue
+            if self.hasSameTabName(filePath, sheetName) is True:
+                continue
             self.packJson(sheet)
     
     def packJson(self, sheet):
-        clientContent = "interface I[fileName]\n{\n" + "[content]" + "}"
-        tabName = sheet.cell(self.tableName[1], self.tableName[0]).value.capitalize()
+        clientContent = "interface [fileName]\n{\n" + "[content]" + "}"
+        tabName = "I" + sheet.cell(self.tableName[1], self.tableName[0]).value.capitalize()
         clientContent = clientContent.replace("[fileName]", tabName)
 
         content = ""
         for row, rowValue in enumerate(sheet.row_values(0)):       # 列
-            template = "    [key]:[type]\n"
+            template = "    [key]:[type];\n"
             sc    = self.getKey(sheet, self.scLine, row)
             scArr = [self.isDaoClient(sc), self.isDaoServer(sc)]
             key   = self.getKey(sheet, self.keyLine, row)
@@ -72,18 +82,14 @@ class DaoCfg(object):
         jsonFile = open(tarClientFile, "w", encoding='utf-8')
         jsonFile.write(clientContent)
         jsonFile.close()
-        print("写入 " + sheet.name + " 完成")
+        print("写入 " + fileName + " 完成")
     
     def removeAllFile(self):
         cDir = os.listdir(self.tarClientDir)
-        sDir = os.listdir(self.tarServerDir)
 
         filePath = ""
         for file in cDir:
             filePath = self.tarClientDir + file
-            os.remove(filePath)
-        for file in sDir:
-            filePath = self.tarServerDir + file
             os.remove(filePath)
     
     # ---------------------------------------------------------------------- Tools
@@ -91,18 +97,49 @@ class DaoCfg(object):
     def addKeyValueToJson(self, keyObj, tarClient):
         for key in keyObj:
             tarClient[key] = keyObj[key]
+    
+    # 检验是否为合法表格(因为有一些是用来做说明文档之类):
+    def isValidTabe(self, filePath, sheetName):
+        excel = xlrd.open_workbook(filePath)
+        sheet = excel.sheet_by_name(sheetName)
+        try:
+            keyNum    = int(sheet.cell(self.keyNum[1], self.keyNum[0]).value)
+            if keyNum <= 0:
+                errorTabel = filePath + " " + sheetName
+                self.errorTabelArray.append(errorTabel)
+                return False
+            tableName = sheet.cell(self.tableName[1], self.tableName[0]).value
+            if tableName == "":
+                errorTabel = filePath + " " + sheetName
+                self.errorTabelArray.append(errorTabel)
+                return False
+            return True
+        except(BaseException):
+            errorTabel = filePath + " " + sheetName
+            self.errorTabelArray.append(errorTabel)
+            return False
 
-    # 写入二维数组
-    def writeToTwoArray(self, array, value, itemArrayLen=2):
-        l = len(array)
-        if l <= 0:
-            array.append([value])
-        else:
-            lastItem = array[l-1]
-            if len(lastItem) == itemArrayLen:
-                array.append([value])
-            else:
-                lastItem.append(value)
+
+    # 检验是否同名
+    def hasSameTabName(self, filePath, sheetName):
+        excel = xlrd.open_workbook(filePath)
+        sheet = excel.sheet_by_name(sheetName)
+        tableName     = sheet.cell(self.tableName[1], self.tableName[0]).value
+        tabDir = filePath + "_" + sheetName + "_" + tableName
+        for item in self.writedJson:
+            b = item.split("_")
+            writedTable = b[len(b)-1]
+            if writedTable == tableName:
+                self.sameTableArray.append(tabDir + " 和 " + item)
+                return True
+        self.writedJson.append(tabDir)
+        return False
+    
+    def printWarnArray(self):
+        for item in self.errorTabelArray:
+            print("==========\n存在异常表格 " + item)
+        for item in self.sameTableArray:
+            print("==========\n存在相同表格 " + item)
 
     # 判断该文件是否为支持文件
     def isFileSupport(self, filePath):
@@ -136,6 +173,6 @@ class DaoCfg(object):
         return daoType.find("s") >= 0
 
 D = DaoCfg()
-# D.removeAllFile()
+D.removeAllFile()
 D.start()
 D.destroy()
