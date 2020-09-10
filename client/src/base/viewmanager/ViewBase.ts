@@ -38,4 +38,9 @@ class ViewBase extends UIBase
 	{
 
 	}
+
+	public closeSelf()
+	{
+		ViewManager.Ins().close(this)
+	}
 }

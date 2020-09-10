@@ -16,10 +16,14 @@ var UIBase = (function (_super) {
             param[_i] = arguments[_i];
         }
         var _this = _super.call(this) || this;
-        // ---------------------------------------------------------------------- 添加事件监听
+        // ---------------------------------------------------------------------- 添加系统事件监听
         _this.eventArray = []; // [target, type, callback, thisObj][]
         // ---------------------------------------------------------------------- 添加属性监听
         _this.attrArray = []; // [target, attrName, cbFn, thisObj][]
+        // ---------------------------------------------------------------------- 添加定时器
+        _this.timerArray = []; // [cbFn, thisObj, args]
+        // ---------------------------------------------------------------------- 添加消息监听
+        _this.msgArray = [];
         _this.info = param;
         _this.addEventListener(egret.Event.REMOVED_FROM_STAGE, _this.OnRemoveFromeStage, _this);
         _this.init.apply(_this, param);
@@ -142,7 +146,86 @@ var UIBase = (function (_super) {
         }
         return true;
     };
-    // ---------------------------------------------------------------------- 添加定时器
+    UIBase.prototype.addTimer = function (delay, cbFn, thisObj, isExec) {
+        if (isExec === void 0) { isExec = true; }
+        var args = [];
+        for (var _i = 4; _i < arguments.length; _i++) {
+            args[_i - 4] = arguments[_i];
+        }
+        // 参数有误
+        if (delay == null || cbFn == null || thisObj == null)
+            return false;
+        // 重复注册
+        for (var _a = 0, _b = this.timerArray; _a < _b.length; _a++) {
+            var item = _b[_a];
+            if (cbFn == item[0] && thisObj == item[1]) {
+                return false;
+            }
+        }
+        this.timerArray.push([cbFn, thisObj, args]);
+        return TimerManager.Ins().addTimer(delay, cbFn, thisObj, isExec, args);
+    };
+    UIBase.prototype.removeTimer = function (cbFn, thisObj) {
+        // 参数有误
+        if (cbFn == null || thisObj == null)
+            return false;
+        var index = 0;
+        for (var _i = 0, _a = this.timerArray; _i < _a.length; _i++) {
+            var item = _a[_i];
+            if (cbFn == item[0] && thisObj == item[1]) {
+                TimerManager.Ins().removeTimer(cbFn, thisObj);
+                item[0] = item[1] = null;
+                this.timerArray.splice(index, 1);
+                return true;
+            }
+            index += 1;
+        }
+        return false;
+    };
+    UIBase.prototype.removeAllTimer = function () {
+        while (this.timerArray.length > 0) {
+            var item = this.timerArray.shift();
+            item[0] = item[1] = item[2] = null;
+        }
+        return true;
+    };
+    UIBase.prototype.addMsgListener = function (type, cbFn, thisObj) {
+        // 参数有误
+        if (type == null || cbFn == null || thisObj == null)
+            return false;
+        // 重复注册
+        for (var _i = 0, _a = this.msgArray; _i < _a.length; _i++) {
+            var item = _a[_i];
+            if (type == item[0] && cbFn == item[1] && thisObj == item[2])
+                return false;
+        }
+        this.msgArray.push([type, cbFn, thisObj]);
+        return MessageManager.Ins().addListener(type, cbFn, thisObj);
+    };
+    UIBase.prototype.removeMsgListener = function (type, cbFn, thisObj) {
+        // 参数有误
+        if (type == null || cbFn == null || thisObj == null)
+            return false;
+        var index = 0;
+        for (var _i = 0, _a = this.msgArray; _i < _a.length; _i++) {
+            var item = _a[_i];
+            if (type == item[0] && cbFn == item[1] && thisObj == item[2]) {
+                MessageManager.Ins().removeListener(type, cbFn, thisObj);
+                item[0] = item[1] = item[2] = null;
+                this.msgArray.splice(index, 1);
+                return true;
+            }
+            index += 1;
+        }
+        return false;
+    };
+    UIBase.prototype.removeAllMsgListener = function () {
+        while (this.msgArray.length > 0) {
+            var item = this.msgArray.shift();
+            item[0] = item[1] = item[2] = null;
+        }
+        return true;
+    };
     // ---------------------------------------------------------------------- 系统内部调用
     UIBase.prototype.createChildren = function () {
         _super.prototype.createChildren.call(this);
@@ -155,6 +238,8 @@ var UIBase = (function (_super) {
     UIBase.prototype.OnRemoveFromeStage = function () {
         this.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.OnRemoveFromeStage, this);
         this.removeAllEvent();
+        this.removeAllTimer();
+        this.removeAllAttrListener();
         this.destroy.apply(this, this.info);
     };
     return UIBase;

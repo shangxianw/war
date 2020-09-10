@@ -16,20 +16,23 @@ var ViewBase = (function (_super) {
             query[_i] = arguments[_i];
         }
         var _this = this;
-        var param = query[0];
-        if (param == null)
-            _this = _super.call(this, param) || this;
-        else {
-            if (param.length = 1)
-                _this = _super.call(this, param[0]) || this;
-            else if (param.length = 2)
-                _this = _super.call(this, param[0], param[1]) || this;
-            else if (param.length = 3)
-                _this = _super.call(this, param[0], param[1], param[2]) || this;
-            else if (param.length = 4)
-                _this = _super.call(this, param[0], param[1], param[2], param[3]) || this;
-            else if (param.length = 5)
-                _this = _super.call(this, param[0], param[1], param[2], param[3], param[4]) || this;
+        if (query != null && query[0] != null) {
+            var param = query[0];
+            if (param == null)
+                _this = _super.call(this, param) || this;
+            else {
+                if (param.length = 1)
+                    _this = _super.call(this, param[0]) || this;
+                else if (param.length = 2)
+                    _this = _super.call(this, param[0], param[1]) || this;
+                else if (param.length = 3)
+                    _this = _super.call(this, param[0], param[1], param[2]) || this;
+                else if (param.length = 4)
+                    _this = _super.call(this, param[0], param[1], param[2], param[3]) || this;
+                else if (param.length = 5)
+                    _this = _super.call(this, param[0], param[1], param[2], param[3], param[4]) || this;
+                // 不够就加
+            }
         }
         _this.layer = LayerManager.Ins().panel;
         _this.resGroup = [];
@@ -38,6 +41,9 @@ var ViewBase = (function (_super) {
     ViewBase.prototype.show = function () {
     };
     ViewBase.prototype.hide = function () {
+    };
+    ViewBase.prototype.closeSelf = function () {
+        ViewManager.Ins().close(this);
     };
     return ViewBase;
 }(UIBase));

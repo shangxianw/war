@@ -48,7 +48,7 @@ class UIBase extends eui.Component
 		
 	}
 
-	// ---------------------------------------------------------------------- 添加事件监听
+	// ---------------------------------------------------------------------- 添加系统事件监听
 	public eventArray:[egret.DisplayObject, string, Function, Object][] = [] // [target, type, callback, thisObj][]
 	public addEvent(target:egret.DisplayObject, type:string, callback:Function, thisObj:Object):boolean
 	{
@@ -157,6 +157,106 @@ class UIBase extends eui.Component
 	}
 
 	// ---------------------------------------------------------------------- 添加定时器
+	public timerArray:[Function, Object, any[]][] = [] // [cbFn, thisObj, args]
+	public addTimer(delay:number, cbFn:Function, thisObj:Object, isExec:boolean=true, ...args:any[]):boolean
+	{
+		// 参数有误
+		if(delay == null || cbFn == null || thisObj == null)
+			return false;
+		
+		// 重复注册
+		for(let item of this.timerArray)
+		{
+			if(cbFn == item[0] && thisObj == item[1])
+			{
+				return false;
+			}
+		}
+
+		this.timerArray.push([cbFn, thisObj, args])
+		return TimerManager.Ins().addTimer(delay, cbFn, thisObj, isExec, args)
+	}
+
+	public removeTimer(cbFn:Function, thisObj:Object)
+	{
+		// 参数有误
+		if(cbFn == null || thisObj == null)
+			return false;
+		
+		let index = 0;
+		for(let item of this.timerArray)
+		{
+			if(cbFn == item[0] && thisObj == item[1])
+			{
+				TimerManager.Ins().removeTimer(cbFn, thisObj)
+				item[0] = item[1] = null;
+				this.timerArray.splice(index, 1)
+				return true;
+			}
+			index += 1;
+		}
+		return false;
+	}
+
+	public removeAllTimer()
+	{
+		while(this.timerArray.length > 0)
+		{
+			let item = this.timerArray.shift()
+			item[0] = item[1] = item[2] = null
+		}
+		return true;
+	}
+
+	// ---------------------------------------------------------------------- 添加消息监听
+	public msgArray:[number, Function, Object][] = []
+	public addMsgListener(type:number, cbFn:Function, thisObj:Object):boolean
+	{
+		// 参数有误
+		if(type == null || cbFn == null || thisObj == null)
+			return false;
+		
+		// 重复注册
+		for(let item of this.msgArray)
+		{
+			if(type == item[0] && cbFn == item[1] && thisObj == item[2])
+				return false;
+		}
+
+		this.msgArray.push([type, cbFn, thisObj])
+		return MessageManager.Ins().addListener(type, cbFn, thisObj)
+	}
+
+	public removeMsgListener(type:number, cbFn:Function, thisObj:Object)
+	{
+		// 参数有误
+		if(type == null || cbFn == null || thisObj == null)
+			return false;
+		
+		let index = 0;
+		for(let item of this.msgArray)
+		{
+			if(type == item[0] && cbFn == item[1] && thisObj == item[2])
+			{
+				MessageManager.Ins().removeListener(type, cbFn, thisObj)
+				item[0] = item[1] = item[2] = null;
+				this.msgArray.splice(index, 1)
+				return true;
+			}
+			index += 1;
+		}
+		return false;
+	}
+
+	public removeAllMsgListener()
+	{
+		while(this.msgArray.length > 0)
+		{
+			let item = this.msgArray.shift()
+			item[0] = item[1] = item[2] = null
+		}
+		return true;
+	}
 
 	// ---------------------------------------------------------------------- 系统内部调用
 	protected createChildren()
@@ -175,6 +275,8 @@ class UIBase extends eui.Component
 	{
 		this.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.OnRemoveFromeStage, this)
 		this.removeAllEvent()
+		this.removeAllTimer()
+		this.removeAllAttrListener();
 		this.destroy.apply(this, this.info);
 	}
 }

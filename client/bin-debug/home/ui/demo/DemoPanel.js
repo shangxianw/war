@@ -17,7 +17,13 @@ var DemoPanel = (function (_super) {
         this.skinName = "DemoPanelSkin";
     };
     DemoPanel.prototype.initView = function (name, skill) {
+        var _this = this;
+        this.addTimer(1000, function (a, b) {
+            _this.haha.text = a + "  " + b;
+            return true;
+        }, this);
         this.haha.text = name;
+        this.addEvent(this, egret.TouchEvent.TOUCH_TAP, this.closeSelf, this);
     };
     return DemoPanel;
 }(ViewBase));
