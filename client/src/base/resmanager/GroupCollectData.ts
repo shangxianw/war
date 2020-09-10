@@ -14,7 +14,7 @@ class CollectData extends DataBase
 
 	public errLoadCount:number;
 
-	protected init()
+	public init()
 	{
 		this.groupNameArray = [];
 		this.priority = null;
@@ -25,8 +25,9 @@ class CollectData extends DataBase
 		this.errLoadCount = 0;
 	}
 
-	protected destroy()
+	public destroy()
 	{
+		super.destroy();
 		this.groupNameArray.length = 0;
 		this.groupNameArray = null;
 		this.priority = null;

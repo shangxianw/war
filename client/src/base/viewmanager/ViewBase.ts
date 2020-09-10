@@ -1,63 +1,40 @@
 class ViewBase extends UIBase
 {
-	public info:IViewData;
-	public initAll()
+	public layer:eui.UILayer;
+	public resGroup:string[]
+	public resKey:number;
+	public constructor(...query:any[])
 	{
-		let classNameArray:any = this.constructor.prototype.__class__.split(".");
-		let cls = window[classNameArray[0]][`${classNameArray[1]}Data`];
-		this.info = new cls();
-		super.initAll();
+		if(query != null && query[0] != null)
+		{
+			let param = query[0]
+			if(param == null)
+				super(param)
+			else
+			{
+				if(param.length = 1)
+					super(param[0])
+				else if(param.length = 2)
+					super(param[0], param[1])
+				else if(param.length = 3)
+					super(param[0], param[1], param[2])
+				else if(param.length = 4)
+					super(param[0], param[1], param[2], param[3])
+				else if(param.length = 5)
+					super(param[0], param[1], param[2], param[3], param[4])
+				// 不够就加
+			}
+		}
+		this.layer = LayerManager.Ins().panel
+		this.resGroup = [];
 	}
 
-	public destroyAll()
-	{
-		this.info.destroyAll();
-		this.destroy()
-	}
-
-	protected destroy(){}					// 关闭面板(移除舞台后)时执行
-
-	// ----------在执行constructor时
-	protected init()
-	{
-
-	}
-
-	// 执行constructor后，添加到舞台前
-	public openBefore()
-	{
-
-	}
-
-	// 添加到舞台后
-	public open()
-	{
-
-	}
-
-	public closeBefore()
-	{
-
-	}
-
-	public close()
-	{
-
-	}
-
-	// ---------------------------------------------------------------------- 显示与隐藏，不会从舞台中移除，用于二级页面
 	public show()
 	{
 
 	}
 
 	public hide()
-	{
-
-	}
-
-	// ---------------------------------------------------------------------- 
-	public addAttrListener()
 	{
 
 	}

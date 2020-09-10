@@ -4,14 +4,15 @@
 class TimerManager extends DataBase
 {
 	public timerArray:TimerData[];
-	protected init()
+	public init()
 	{
 		this.timerArray = []
 		egret.startTick(this.update, this);
 	}
 
-	protected destroy()
+	public destroy()
 	{
+		super.destroy();
 		egret.stopTick(this.update, this);
 		this.removeAllTimer()
 		this.timerArray = null;
@@ -58,7 +59,7 @@ class TimerManager extends DataBase
 			if(timer.cbFn == cbFn && timer.thisObj == thisObj)
 			{
 				this.timerArray.splice(index, 1);
-				timer.destroyAll();
+				timer.destroy();
 				timer = null
 				return true;
 			}
@@ -85,7 +86,7 @@ class TimerManager extends DataBase
 	{
 		for(let timer of this.timerArray)
 		{
-			timer.destroyAll()
+			timer.destroy()
 		}
 		this.timerArray.length = 0
 	}
@@ -112,7 +113,7 @@ class TimerManager extends DataBase
 				if(flag == false) // 停止
 				{
 					this.timerArray.splice(index, 1);
-					timer.destroyAll();
+					timer.destroy();
 					timer = null
 				}
 				continue;
@@ -127,7 +128,7 @@ class TimerManager extends DataBase
 				if(flag == false || flag == null) // 停止
 				{
 					this.timerArray.splice(index, 1);
-					timer.destroyAll();
+					timer.destroy();
 					timer = null
 					break;
 				}

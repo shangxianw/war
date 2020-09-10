@@ -28,7 +28,7 @@ class SceneManager
 		ViewManager.Ins().closeAll()
 		TimerManager.Ins().removeAllTimer()
 		ResManager.Ins().destroyAllGroup() // 会把常驻资源也删掉的喂
-		// war.WarDataMgr.Ins().destroyAll()
+		// war.WarDataMgr.Ins().destroy()
 		if(type == SceneType.None)
 		{
 			// 用于检查内存

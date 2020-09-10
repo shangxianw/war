@@ -18,6 +18,7 @@ var LayerManager = (function (_super) {
             return;
     };
     LayerManager.prototype.destroy = function () {
+        _super.prototype.destroy.call(this);
         this.panel = null;
         this.stageMain = null;
     };

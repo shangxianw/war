@@ -2,13 +2,13 @@ module war
 {
 	export class WarDataMgr extends DataBase
 	{
-		protected init()
+		public init()
 		{
 		}
 
-		protected destroy()
+		public destroy()
 		{
-			
+			super.destroy();
 		}
 
 		private static instance:WarDataMgr;

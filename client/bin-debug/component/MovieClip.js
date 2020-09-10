@@ -20,30 +20,31 @@ var MovieClip = (function (_super) {
         this.mc = new egret.MovieClip();
         this.addChild(this.mc);
     };
-    MovieClip.prototype.initData = function (fileName, clipName, action, count) {
-        var _this = this;
-        if (action === void 0) { action = null; }
-        if (count === void 0) { count = -1; }
-        if (fileName == null || clipName == null) {
-            // LogUtils.Error(`参数错误`);
-            return false;
-        }
-        ResManager.Ins().loadResAsync(fileName + "_json", function (data1, key1) {
-            ResManager.Ins().loadResAsync(fileName + "_png", function (data2, key2) {
-                var data = data1;
-                var txtr = data2;
-                if (data == null || txtr == null) {
-                    // LogUtils.Error(`资源未加载`);
-                    return false;
-                }
-                _this.mcFactory = new egret.MovieClipDataFactory(data, txtr);
-                _this.mc.movieClipData = _this.mcFactory.generateMovieClipData(clipName);
-                if (action != null) {
-                    _this.play(action, count);
-                }
-                return true;
-            }, _this);
-        }, this);
+    MovieClip.prototype.initData = function () {
+        // if(fileName == null || clipName == null)
+        // {
+        // 	// LogUtils.Error(`参数错误`);
+        // 	return false;
+        // }
+        // ResManager.Ins().loadResAsync(`${fileName}_json`, (data1, key1)=>{
+        // 	ResManager.Ins().loadResAsync(`${fileName}_png`, (data2, key2)=>{
+        // 		let data = data1
+        // 		let txtr = data2
+        // 		if(data == null || txtr == null)
+        // 		{
+        // 			// LogUtils.Error(`资源未加载`);
+        // 			return false;
+        // 		}
+        // 		this.mcFactory = new egret.MovieClipDataFactory(data, txtr);
+        // 		this.mc.movieClipData = this.mcFactory.generateMovieClipData(clipName);
+        // 		if(action != null)
+        // 		{
+        // 			this.play(action, count);
+        // 		}
+        // 		return true;
+        // 	},this)
+        // },this)
+        // return true;
     };
     MovieClip.prototype.destroy = function () {
         this.mcFactory.clearCache();

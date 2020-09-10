@@ -5,14 +5,15 @@ class LayerManager extends DataBase
 	public war:eui.UILayer;		// 战斗层
 	public panel:eui.UILayer;	// 面板层
 	public tips:eui.UILayer;    // 提示层，如获得，伤害等
-	protected init()
+	public init()
 	{
 		if(this.stageMain == null)
 			return
 	}
 
-	protected destroy()
+	public destroy()
 	{
+		super.destroy();
 		this.panel = null;
 		this.stageMain = null;
 	}

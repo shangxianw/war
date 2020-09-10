@@ -18,6 +18,7 @@ var war;
         WarDataMgr.prototype.init = function () {
         };
         WarDataMgr.prototype.destroy = function () {
+            _super.prototype.destroy.call(this);
         };
         WarDataMgr.Ins = function () {
             if (WarDataMgr.instance == null)

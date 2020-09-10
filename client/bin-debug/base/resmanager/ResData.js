@@ -18,6 +18,7 @@ var ResData = (function (_super) {
         this.refCount = 0;
     };
     ResData.prototype.destroy = function () {
+        _super.prototype.destroy.call(this);
         this.resName = "";
         this.refCount = 0;
     };

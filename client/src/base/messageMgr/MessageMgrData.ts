@@ -3,12 +3,12 @@ class MessageMgrData extends DataBase
 	public type:number;
 	public cbFn:Function;
 	public thisObj:Object;
-	protected init()
+	public init()
 	{
 
 	}
 
-	protected destroy()
+	public destroy()
 	{
 
 	}

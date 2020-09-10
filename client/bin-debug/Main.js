@@ -138,23 +138,8 @@ var Main = (function (_super) {
         });
     };
     Main.prototype.createGameScene = function () {
-        // LayerManager.Ins().initLayer(this);
-        // ViewManager.Ins().open(home.LoginPanel)
-        // let a = new astar.AStarTest()
-        // this.addChild(a)
-        // ResManager.Ins().loadGroup(["war_preload"], ()=>{
-        //     1;
-        // }, this)
-        // let a = new astar.AStarTest()
-        // this.addChild(a)
-        // let a = new MovieClip()
-        // a.initData("hero_10050", "hero_10050", "attack2")
-        // this.addChild(a)
-        // a.x = a.y = 200
-        // ViewManager.Ins().open(home.DemoPanel)
-        // SceneManager.Ins().changeScene(SceneType.Login)
-        // RedPointMgr.Ins()
-        TestRedPointMgr.Init(this);
+        LayerManager.Ins().initLayer(this);
+        ViewManager.Ins().open(DemoPanel, "wsx", [1, 2, 3]);
     };
     return Main;
 }(eui.UILayer));

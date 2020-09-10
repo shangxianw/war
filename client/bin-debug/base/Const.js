@@ -22,13 +22,4 @@ var FrameFps;
     FrameFps[FrameFps["Logic"] = 60] = "Logic";
     FrameFps[FrameFps["Render"] = 60] = "Render";
 })(FrameFps || (FrameFps = {}));
-/**
- * 货币支付类型
- */
-var CostType;
-(function (CostType) {
-    CostType[CostType["RMB"] = 1] = "RMB";
-    CostType[CostType["Gold"] = 2] = "Gold";
-    CostType[CostType["Dimand"] = 3] = "Dimand";
-})(CostType || (CostType = {}));
 //# sourceMappingURL=Const.js.map

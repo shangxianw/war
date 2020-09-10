@@ -36,7 +36,7 @@ class DataUtils
 			item = map.get(key);
 			if(item == null)
 				continue;
-			item.destroyAll();
+			item.destroy();
 		}
 		map.destroy();
 		if(setNull == true)
@@ -51,7 +51,7 @@ class DataUtils
 		{
 			if(item == null)
 				continue;
-			item.destroyAll();
+			item.destroy();
 		}
 		map.destroy();
 		if(setNull == true)
@@ -63,7 +63,7 @@ class DataUtils
 	{
 		for(let item of arr)
 		{
-			item.destroyAll();
+			item.destroy();
 		}
 		arr.length = 0;
 		if(setNull == true)
@@ -75,7 +75,7 @@ class DataUtils
 	{
 		for(let item of arr)
 		{
-			item.destroyAll();
+			item.destroy();
 		}
 		arr.length = 0;
 		if(setNull == true)
@@ -87,7 +87,7 @@ class DataUtils
 	{
 		if(data != null)
 		{
-			data.destroyAll();
+			data.destroy();
 			if(setNull == true)
 				data = null;
 		}

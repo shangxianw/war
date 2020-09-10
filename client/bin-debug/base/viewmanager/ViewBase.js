@@ -11,39 +11,33 @@ r.prototype = e.prototype, t.prototype = new r();
 var ViewBase = (function (_super) {
     __extends(ViewBase, _super);
     function ViewBase() {
-        return _super !== null && _super.apply(this, arguments) || this;
+        var query = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            query[_i] = arguments[_i];
+        }
+        var _this = this;
+        var param = query[0];
+        if (param == null)
+            _this = _super.call(this, param) || this;
+        else {
+            if (param.length = 1)
+                _this = _super.call(this, param[0]) || this;
+            else if (param.length = 2)
+                _this = _super.call(this, param[0], param[1]) || this;
+            else if (param.length = 3)
+                _this = _super.call(this, param[0], param[1], param[2]) || this;
+            else if (param.length = 4)
+                _this = _super.call(this, param[0], param[1], param[2], param[3]) || this;
+            else if (param.length = 5)
+                _this = _super.call(this, param[0], param[1], param[2], param[3], param[4]) || this;
+        }
+        _this.layer = LayerManager.Ins().panel;
+        _this.resGroup = [];
+        return _this;
     }
-    ViewBase.prototype.initAll = function () {
-        var classNameArray = this.constructor.prototype.__class__.split(".");
-        var cls = window[classNameArray[0]][classNameArray[1] + "Data"];
-        this.info = new cls();
-        _super.prototype.initAll.call(this);
-    };
-    ViewBase.prototype.destroyAll = function () {
-        this.info.destroyAll();
-        this.destroy();
-    };
-    ViewBase.prototype.destroy = function () { }; // 关闭面板(移除舞台后)时执行
-    // ----------在执行constructor时
-    ViewBase.prototype.init = function () {
-    };
-    // 执行constructor后，添加到舞台前
-    ViewBase.prototype.openBefore = function () {
-    };
-    // 添加到舞台后
-    ViewBase.prototype.open = function () {
-    };
-    ViewBase.prototype.closeBefore = function () {
-    };
-    ViewBase.prototype.close = function () {
-    };
-    // ---------------------------------------------------------------------- 显示与隐藏，不会从舞台中移除，用于二级页面
     ViewBase.prototype.show = function () {
     };
     ViewBase.prototype.hide = function () {
-    };
-    // ---------------------------------------------------------------------- 
-    ViewBase.prototype.addAttrListener = function () {
     };
     return ViewBase;
 }(UIBase));

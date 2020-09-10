@@ -1,18 +1,19 @@
 class MessageManager extends DataBase
 {
 	public msgMap:Hash<number, MessageMgrData[]>
-	protected init()
+	public init()
 	{
 		this.msgMap = new Hash<number, MessageMgrData[]>();
 	}
 
-	protected destroy()
+	public destroy()
 	{
+		super.destroy();
 		for(let msgDataArray of this.msgMap.values())
 		{
 			for(let msgData of msgDataArray)
 			{
-				msgData.destroyAll();
+				msgData.destroy();
 			}
 			msgDataArray.length = 0;
 		}
@@ -57,7 +58,7 @@ class MessageManager extends DataBase
 		{
 			if(msgData.type == type && msgData.cbFn == cbFn && msgData.thisObj == thisObj)
 			{
-				msgData.destroyAll();
+				msgData.destroy();
 				msgDataArray.splice(index, 1);
 				msgData = null;
 				return true;

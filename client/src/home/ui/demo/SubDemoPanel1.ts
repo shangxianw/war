@@ -1,28 +1,12 @@
-module home
+class SubDemoPanel1 extends eui.Component
 {
-	export class SubDemoPanel1Data extends DataBase
+	public init()
 	{
-		protected init()
-		{
-
-		}
-
-		protected destroy()
-		{
-			
-		}
+		this.skinName = "SubDemoPanel1Skin"
 	}
 
-	export class SubDemoPanel1 extends eui.Component
+	protected destroy()
 	{
-		public init()
-		{
-			this.skinName = "SubDemoPanel1Skin"
-		}
-
-		protected destroy()
-		{
-			
-		}
+		
 	}
 }

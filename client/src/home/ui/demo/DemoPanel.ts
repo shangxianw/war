@@ -1,39 +1,13 @@
-module home
+class DemoPanel extends ViewBase
 {
-	export class DemoPanelData extends ViewData
+	private haha:eui.Label;
+	public init()
 	{
-		resGroup:string[] = []
-		layer:eui.UILayer = LayerManager.Ins().panel
-
-		public exp:number;
-		protected init()
-		{
-
-		}
-
-		protected destroy()
-		{
-			
-		}
+		this.skinName = "DemoPanelSkin"
 	}
 
-	export class DemoPanel extends ViewBase
+	public initView(name:string, skill:number[])
 	{
-		private demo1:SubDemoPanel1;
-		public init()
-		{
-			this.skinName = "DemoPanelSkin"
-		}
-
-		public open()
-		{
-			// this.demo1.visible = false
-			// this.demo1.visible = true;
-		}
-
-		public close()
-		{
-
-		}
+		this.haha.text = name;
 	}
 }

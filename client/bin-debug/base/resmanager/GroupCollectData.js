@@ -22,6 +22,7 @@ var CollectData = (function (_super) {
         this.errLoadCount = 0;
     };
     CollectData.prototype.destroy = function () {
+        _super.prototype.destroy.call(this);
         this.groupNameArray.length = 0;
         this.groupNameArray = null;
         this.priority = null;

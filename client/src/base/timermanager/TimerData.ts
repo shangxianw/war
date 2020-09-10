@@ -8,7 +8,7 @@ class TimerData extends DataBase
 	public execIm:boolean;
 	
 	public lastTime:number;
-	protected init()
+	public init()
 	{
 		this.cbFn = null;
 		this.thisObj = null;
@@ -18,8 +18,9 @@ class TimerData extends DataBase
 		this.execIm = null;
 	}
 
-	protected destroy()
+	public destroy()
 	{
+		super.destroy();
 		this.cbFn = null;
 		this.thisObj = null;
 		this.delay = 0;

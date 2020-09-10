@@ -17,11 +17,12 @@ var MessageManager = (function (_super) {
         this.msgMap = new Hash();
     };
     MessageManager.prototype.destroy = function () {
+        _super.prototype.destroy.call(this);
         for (var _i = 0, _a = this.msgMap.values(); _i < _a.length; _i++) {
             var msgDataArray = _a[_i];
             for (var _b = 0, msgDataArray_1 = msgDataArray; _b < msgDataArray_1.length; _b++) {
                 var msgData = msgDataArray_1[_b];
-                msgData.destroyAll();
+                msgData.destroy();
             }
             msgDataArray.length = 0;
         }
@@ -55,7 +56,7 @@ var MessageManager = (function (_super) {
         for (var _i = 0, msgDataArray_3 = msgDataArray; _i < msgDataArray_3.length; _i++) {
             var msgData = msgDataArray_3[_i];
             if (msgData.type == type && msgData.cbFn == cbFn && msgData.thisObj == thisObj) {
-                msgData.destroyAll();
+                msgData.destroy();
                 msgDataArray.splice(index, 1);
                 msgData = null;
                 return true;

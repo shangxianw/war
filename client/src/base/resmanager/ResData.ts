@@ -3,14 +3,15 @@ class ResData extends DataBase
 	public resName:string;
 	public refCount:number;
 	public destroyTime:number;
-	protected init()
+	public init()
 	{
 		this.resName = "" ;
 		this.refCount = 0;
 	}
 
-	protected destroy()
+	public destroy()
 	{
+		super.destroy()
 		this.resName = "" ;
 		this.refCount = 0;
 	}

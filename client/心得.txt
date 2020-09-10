@@ -4,7 +4,7 @@
 碰撞问题！
 事件管理器
 
-消除一个对象，要 destroyAll
+消除一个对象，要 destroy
 内部销毁方法是destroy
 
 

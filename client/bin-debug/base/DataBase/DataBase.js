@@ -3,42 +3,38 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 };
 var DataBase = (function () {
     function DataBase() {
-        this.initAll();
-    }
-    DataBase.prototype.initAll = function () {
         this.hasCode = IDManager.Ins().getHashCode();
         this.attrMap = new Hash();
         this.init();
+    }
+    DataBase.prototype.init = function () {
     };
-    DataBase.prototype.destroyAll = function () {
-        this.hasCode = null;
-        for (var _i = 0, _a = this.attrMap.values(); _i < _a.length; _i++) {
-            var itemArray = _a[_i];
-            for (var _b = 0, itemArray_1 = itemArray; _b < itemArray_1.length; _b++) {
-                var item = itemArray_1[_b];
-                item.destroy();
-            }
-        }
-        this.attrMap.destroy();
-        this.destroy();
+    DataBase.prototype.destroy = function () {
+        this.removeAllAttrListener();
     };
-    DataBase.prototype.init = function () { };
     DataBase.prototype.addAttrListener = function (attr, cbFn, thisObj) {
+        // 错误参数
         if (attr == null || cbFn == null || thisObj == null) {
             return false;
         }
-        var itemArray;
         if (this.attrMap.has(attr) == false) {
-            itemArray = [];
-            this.attrMap.set(attr, itemArray);
+            this.attrMap.set(attr, []);
         }
-        itemArray = this.attrMap.get(attr);
-        var item = new CBData();
-        item.packData1(cbFn, thisObj);
-        itemArray.push(item);
+        else {
+            // 重复注册
+            var array = this.attrMap.get(attr);
+            for (var _i = 0, array_1 = array; _i < array_1.length; _i++) {
+                var item = array_1[_i];
+                if (item[0] == attr && item[1] == cbFn && item[2] == thisObj)
+                    return false;
+            }
+        }
+        var itemArray = this.attrMap.get(attr);
+        itemArray.push([attr, cbFn, thisObj]);
         return true;
     };
     DataBase.prototype.removeAttrListener = function (attr, cbFn, thisObj) {
+        // 错误参数
         if (attr == null || cbFn == null || thisObj == null) {
             return false;
         }
@@ -46,30 +42,39 @@ var DataBase = (function () {
             return true;
         }
         var array = this.attrMap.get(attr);
-        var itemArray = DataUtils.CopyArray(array);
-        for (var i = 0, len = itemArray.length; i < len; i++) {
-            var item = itemArray[i];
-            if (item.cbFn == cbFn && item.thisObj == thisObj) {
-                array.splice(i, 1);
-                item.destroy();
-                item = null;
-            }
+        var index = 0;
+        for (var _i = 0, array_2 = array; _i < array_2.length; _i++) {
+            var item = array_2[_i];
+            if (item[0] == attr && item[1] == cbFn && item[2] == thisObj)
+                return true;
+            index += 1;
         }
-        return true;
+        return false;
+    };
+    DataBase.prototype.removeAllAttrListener = function () {
+        for (var _i = 0, _a = this.attrMap.values(); _i < _a.length; _i++) {
+            var item = _a[_i];
+            item[0] = item[1] = item[2] = null;
+        }
+        this.attrMap.destroy();
     };
     DataBase.prototype.updateAttr = function (attr, value) {
-        if (attr == null || this.attrMap.has(attr) == false) {
+        if (attr == null)
             return false;
-        }
+        if (this.attrMap.has(attr) == false)
+            return true;
         this[attr] = value;
-        this.flush(attr);
+        return this.flush(attr);
     };
     DataBase.prototype.flush = function (attr) {
-        var itemArray = this.attrMap.get(attr);
-        for (var i = 0, len = itemArray.length; i < len; i++) {
-            var item = itemArray[i];
-            item.exec();
+        if (this.attrMap.has(attr) == false)
+            return true;
+        var array = this.attrMap.get(attr);
+        for (var _i = 0, array_3 = array; _i < array_3.length; _i++) {
+            var item = array_3[_i];
+            item[1].apply(item[2]);
         }
+        return true;
     };
     return DataBase;
 }());

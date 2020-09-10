@@ -1,59 +1,57 @@
-abstract class DataBase
+class DataBase
 {
-	public attrMap:Hash<string, CBData[]>
 	public hasCode:number
 	
 	public constructor()
 	{
-		this.initAll()
-	}
-
-	public initAll()
-	{
 		this.hasCode = IDManager.Ins().getHashCode();
-		this.attrMap = new Hash<string, CBData[]>()
-		this.init();
+		this.attrMap = new Hash<string, any[]>()
+		this.init()
 	}
 
-	public destroyAll()
+	public init()
 	{
-		this.hasCode = null;
-		for(let itemArray of this.attrMap.values())
-		{
-			for(let item of itemArray)
-			{
-				item.destroy()
-			}
-		}
-		this.attrMap.destroy();
-		this.destroy();
+
 	}
 
-	protected init(){}
-	protected abstract destroy()
+	public destroy()
+	{
+		this.removeAllAttrListener();
+	}
 
+	// ---------------------------------------------------------------------- 添加属性监听
+	public attrMap:Hash<string, any[]> // [attr, cbFn, thisObj][]
 	public addAttrListener(attr:string, cbFn:Function, thisObj:Object)
 	{
+		// 错误参数
 		if(attr == null || cbFn == null || thisObj == null)
 		{
 			return false;
 		}
 
-		let itemArray:CBData[];
 		if(this.attrMap.has(attr) == false)
 		{
-			itemArray = []
-			this.attrMap.set(attr, itemArray)
+			this.attrMap.set(attr, [])
 		}
-		itemArray = this.attrMap.get(attr)
-		let item = new CBData()
-		item.packData1(cbFn, thisObj)
-		itemArray.push(item)
+		else
+		{
+			// 重复注册
+			let array = this.attrMap.get(attr)
+			for(let item of array)
+			{
+				if(item[0] == attr && item[1] == cbFn && item[2] == thisObj)
+					return false
+			}
+		}
+
+		let itemArray = this.attrMap.get(attr)
+		itemArray.push([attr, cbFn, thisObj])
 		return true;
 	}
 
 	public removeAttrListener(attr:string, cbFn:Function, thisObj:Object)
 	{
+		// 错误参数
 		if(attr == null || cbFn == null || thisObj == null)
 		{
 			return false;
@@ -65,38 +63,47 @@ abstract class DataBase
 		}
 
 		let array = this.attrMap.get(attr)
-		let itemArray:CBData[] = DataUtils.CopyArray(array)
-		for(let i=0, len=itemArray.length; i<len; i++)
+		let index = 0
+		for(let item of array)
 		{
-			let item = itemArray[i]
-			if(item.cbFn == cbFn && item.thisObj == thisObj)
-			{
-				array.splice(i, 1)
-				item.destroy()
-				item = null
-			}
+			if(item[0] == attr && item[1] == cbFn && item[2] == thisObj)
+				return true
+			index += 1
 		}
-		return true
+		return false
+	}
+
+	public removeAllAttrListener()
+	{
+		for(let item of this.attrMap.values())
+		{
+			item[0] = item[1] = item[2] = null
+		}
+		this.attrMap.destroy();
 	}
 
 	public updateAttr(attr:string, value:any)
 	{
-		if(attr == null || this.attrMap.has(attr) == false)
-		{
+		if(attr == null)
 			return false;
-		}
+
+		if(this.attrMap.has(attr) == false)
+			return true
 
 		this[attr] = value
-		this.flush(attr)
+		return this.flush(attr)
 	}
 
 	public flush(attr:string)
 	{
-		let itemArray:CBData[] = this.attrMap.get(attr)
-		for(let i=0, len=itemArray.length; i<len; i++)
+		if(this.attrMap.has(attr) == false)
+			return true
+
+		let array = this.attrMap.get(attr)
+		for(let item of array)
 		{
-			let item = itemArray[i]
-			item.exec()
+			item[1].apply(item[2])
 		}
+		return true;
 	}
 }

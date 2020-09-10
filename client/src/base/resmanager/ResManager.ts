@@ -26,7 +26,7 @@ class ResManager extends DataBase
 		return ResManager.instance;
 	}
 	
-	protected init()
+	public init()
 	{
 		this.READY_DERTROY_SECOND = 5000;
 		this.ERROR_LOAD_COUNT = 5;
@@ -43,8 +43,9 @@ class ResManager extends DataBase
 		TimerManager.Ins().addTimer(200, this.update, this);
 	}
 
-	protected destroy()
+	public destroy()
 	{
+		super.destroy();
 		this.isLoading = false;
 		DataUtils.DestroyDataBaseArray(this.collectArray);
 		DataUtils.DestroyDataBaseArray(this.useCollectArray);
@@ -156,7 +157,7 @@ class ResManager extends DataBase
 		
 		// 减少引用
 		this.reduceRefCount(cData);
-		cData.destroyAll();
+		cData.destroy();
 		cData = null
 		cData = null;
 		LogUtils.Log(`【销毁资源组集】id:${hasCode}`)
@@ -277,7 +278,7 @@ class ResManager extends DataBase
 					{
 						this.waitDestroyArray.splice(i, 1);
 						this.reduceRefCount(this.currCollectData);
-						this.currCollectData.destroyAll();
+						this.currCollectData.destroy();
 						this.currCollectData = null
 						LogUtils.Log(`【销毁已完成的资源组集】id:${this.currCollectData.hasCode}`);
 						break;
@@ -331,7 +332,7 @@ class ResManager extends DataBase
 				LogUtils.Log(`【加载资源】resName:${resData.resName}`);
 				RES.destroyRes(resData.resName);
 				this.resMap.remove(resData.resName);
-				resData.destroyAll();
+				resData.destroy();
 				resData = null
 				destroyCount++;
 			}

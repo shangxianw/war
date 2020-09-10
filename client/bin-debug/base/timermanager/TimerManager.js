@@ -21,6 +21,7 @@ var TimerManager = (function (_super) {
         egret.startTick(this.update, this);
     };
     TimerManager.prototype.destroy = function () {
+        _super.prototype.destroy.call(this);
         egret.stopTick(this.update, this);
         this.removeAllTimer();
         this.timerArray = null;
@@ -62,7 +63,7 @@ var TimerManager = (function (_super) {
                 continue;
             if (timer.cbFn == cbFn && timer.thisObj == thisObj) {
                 this.timerArray.splice(index, 1);
-                timer.destroyAll();
+                timer.destroy();
                 timer = null;
                 return true;
             }
@@ -84,7 +85,7 @@ var TimerManager = (function (_super) {
     TimerManager.prototype.removeAllTimer = function () {
         for (var _i = 0, _a = this.timerArray; _i < _a.length; _i++) {
             var timer = _a[_i];
-            timer.destroyAll();
+            timer.destroy();
         }
         this.timerArray.length = 0;
     };
@@ -105,7 +106,7 @@ var TimerManager = (function (_super) {
                 flag = timer.exec(timer.count);
                 if (flag == false) {
                     this.timerArray.splice(index, 1);
-                    timer.destroyAll();
+                    timer.destroy();
                     timer = null;
                 }
                 continue;
@@ -117,7 +118,7 @@ var TimerManager = (function (_super) {
                 flag = timer.exec(timer.count);
                 if (flag == false || flag == null) {
                     this.timerArray.splice(index, 1);
-                    timer.destroyAll();
+                    timer.destroy();
                     timer = null;
                     break;
                 }

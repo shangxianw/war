@@ -6,21 +6,21 @@
 class ViewManager extends DataBase
 {
 	private viewMap:Hash<string, ViewBase>;
-	protected init()
+	public init()
 	{
 		this.viewMap = new Hash<string, ViewBase>();
 	}
 
-	protected destroy()
+	public destroy()
 	{
 		for(let view of this.viewMap.values())
 		{
-			view.destroyAll();
+			view.destroy();
 		}
 		this.viewMap = null;
 	}
 
-	public open(cls:Function, data:any=null):boolean
+	public open(cls:Function, ...param:any[]):boolean
 	{
 		if(cls == null)
 			return false
@@ -29,14 +29,11 @@ class ViewManager extends DataBase
 			return false;
 		
 		if(this.viewMap.has(className) == true)
-		{
-			console.warn("面板已打开")
 			return true;
-		}
 
 		try
 		{
-			this.handView(cls, data);
+			this.handView.apply(this, [].concat(cls, param));
 		}
 		catch(e)
 		{
@@ -57,12 +54,10 @@ class ViewManager extends DataBase
 			return true;
 		
 		let view = this.viewMap.remove(className);
-		let layer = view.info.layer;
+		let layer = view.layer
 		if(layer == null)
 			return;
-		view.closeBefore();
 		layer.removeChild(view);
-		view.close();
 		if(view.info.resGroupKey != null)
 			ResManager.Ins().destroyGroup(view.info.resGroupKey)
 		view = null;
@@ -100,6 +95,18 @@ class ViewManager extends DataBase
 		}
 	}
 
+	private handView(cls:Function, ...param:any[]):boolean
+	{
+		let viewClass:any = cls;
+		let view:ViewBase = new viewClass(param);
+		view.resKey = ResManager.Ins().loadGroup(view.resGroup, ()=>{
+			let className = this.getClassName(cls)
+			this.viewMap.set(className, view);
+			view.layer.addChild(view);
+		}, this)
+		return true;
+	}
+
 	private getClassName(cls:Function | Object | string)
 	{
 		let className:string;
@@ -116,24 +123,6 @@ class ViewManager extends DataBase
 			className = cls
 		}
 		return className;
-	}
-
-	private handView(cls:Function, data:any=null):boolean
-	{
-		let viewClass:any = cls;
-		let view = new viewClass();
-		let info:IViewData = view.info
-		let layer = info.layer;
-		info.data = data;
-		if(layer == null)
-			return;
-		info.resGroupKey = ResManager.Ins().loadGroup(info.resGroup, ()=>{
-			let className = this.getClassName(cls)
-			this.viewMap.set(className, view);
-			view.openBefore()
-			layer.addChild(view);
-			view.open();
-		}, this)
 	}
 
 	private static Instance:ViewManager;

@@ -22,6 +22,7 @@ var TimerData = (function (_super) {
         this.execIm = null;
     };
     TimerData.prototype.destroy = function () {
+        _super.prototype.destroy.call(this);
         this.cbFn = null;
         this.thisObj = null;
         this.delay = 0;

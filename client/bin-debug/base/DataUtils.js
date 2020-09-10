@@ -36,7 +36,7 @@ var DataUtils = (function () {
             item = map.get(key);
             if (item == null)
                 continue;
-            item.destroyAll();
+            item.destroy();
         }
         map.destroy();
         if (setNull == true)
@@ -50,7 +50,7 @@ var DataUtils = (function () {
             var item_1 = _a[_i];
             if (item_1 == null)
                 continue;
-            item_1.destroyAll();
+            item_1.destroy();
         }
         map.destroy();
         if (setNull == true)
@@ -61,7 +61,7 @@ var DataUtils = (function () {
         if (setNull === void 0) { setNull = true; }
         for (var _i = 0, arr_1 = arr; _i < arr_1.length; _i++) {
             var item = arr_1[_i];
-            item.destroyAll();
+            item.destroy();
         }
         arr.length = 0;
         if (setNull == true)
@@ -72,7 +72,7 @@ var DataUtils = (function () {
         if (setNull === void 0) { setNull = true; }
         for (var _i = 0, arr_2 = arr; _i < arr_2.length; _i++) {
             var item = arr_2[_i];
-            item.destroyAll();
+            item.destroy();
         }
         arr.length = 0;
         if (setNull == true)
@@ -82,7 +82,7 @@ var DataUtils = (function () {
     DataUtils.DestroyDataBaseClass = function (data, setNull) {
         if (setNull === void 0) { setNull = true; }
         if (data != null) {
-            data.destroyAll();
+            data.destroy();
             if (setNull == true)
                 data = null;
         }

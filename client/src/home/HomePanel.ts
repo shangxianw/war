@@ -1,36 +1,20 @@
-class HomePanelData extends ViewData
-{
-	protected init()
-	{
-		this.resGroup = [];
-		this.layer = LayerManager.Ins().panel;
-	}
-
-	protected destroy()
-	{
-		
-	}
-}
-
 class HomePanel extends ViewBase
 {
 	private fightBtn:eui.Button;
 	private renderLb:eui.Label;
 	private logicLb:eui.Label;
-	
-	public info:HomePanelData;
 	public constructor()
 	{
 		super();
 		this.skinName = "HomePanelSkin";
 	}
 
-	protected init() 
+	public init() 
 	{
 		
 	}
 
-	protected destroy()
+	public destroy()
 	{
 		this.fightBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this)
 	}

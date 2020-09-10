@@ -10,40 +10,41 @@ class MovieClip extends UIBase
 		this.height = 0
 	}
 
-	protected init()
+	public init()
 	{
 		this.mc = new egret.MovieClip();
 		this.addChild(this.mc)
 	}
 
-	public initData(fileName:string, clipName:string, action:string=null, count:number=-1)
+	public initData():void
 	{
-		if(fileName == null || clipName == null)
-		{
-			// LogUtils.Error(`参数错误`);
-			return false;
-		}
+		// if(fileName == null || clipName == null)
+		// {
+		// 	// LogUtils.Error(`参数错误`);
+		// 	return false;
+		// }
 
-		ResManager.Ins().loadResAsync(`${fileName}_json`, (data1, key1)=>{
-			ResManager.Ins().loadResAsync(`${fileName}_png`, (data2, key2)=>{
-				let data = data1
-				let txtr = data2
-				if(data == null || txtr == null)
-				{
-					// LogUtils.Error(`资源未加载`);
-					return false;
-				}
+		// ResManager.Ins().loadResAsync(`${fileName}_json`, (data1, key1)=>{
+		// 	ResManager.Ins().loadResAsync(`${fileName}_png`, (data2, key2)=>{
+		// 		let data = data1
+		// 		let txtr = data2
+		// 		if(data == null || txtr == null)
+		// 		{
+		// 			// LogUtils.Error(`资源未加载`);
+		// 			return false;
+		// 		}
 
-				this.mcFactory = new egret.MovieClipDataFactory(data, txtr);
-				this.mc.movieClipData = this.mcFactory.generateMovieClipData(clipName);
+		// 		this.mcFactory = new egret.MovieClipDataFactory(data, txtr);
+		// 		this.mc.movieClipData = this.mcFactory.generateMovieClipData(clipName);
 
-				if(action != null)
-				{
-					this.play(action, count);
-				}
-				return true;
-			},this)
-		},this)
+		// 		if(action != null)
+		// 		{
+		// 			this.play(action, count);
+		// 		}
+		// 		return true;
+		// 	},this)
+		// },this)
+		// return true;
 	}
 
 	public destroy()

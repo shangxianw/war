@@ -40,6 +40,7 @@ var ResManager = (function (_super) {
         TimerManager.Ins().addTimer(200, this.update, this);
     };
     ResManager.prototype.destroy = function () {
+        _super.prototype.destroy.call(this);
         this.isLoading = false;
         DataUtils.DestroyDataBaseArray(this.collectArray);
         DataUtils.DestroyDataBaseArray(this.useCollectArray);
@@ -134,7 +135,7 @@ var ResManager = (function (_super) {
         }
         // 减少引用
         this.reduceRefCount(cData);
-        cData.destroyAll();
+        cData.destroy();
         cData = null;
         cData = null;
         LogUtils.Log("\u3010\u9500\u6BC1\u8D44\u6E90\u7EC4\u96C6\u3011id:" + hasCode);
@@ -226,7 +227,7 @@ var ResManager = (function (_super) {
                     if (this.currCollectData.hasCode == hasCode) {
                         this.waitDestroyArray.splice(i, 1);
                         this.reduceRefCount(this.currCollectData);
-                        this.currCollectData.destroyAll();
+                        this.currCollectData.destroy();
                         this.currCollectData = null;
                         LogUtils.Log("\u3010\u9500\u6BC1\u5DF2\u5B8C\u6210\u7684\u8D44\u6E90\u7EC4\u96C6\u3011id:" + this.currCollectData.hasCode);
                         break;
@@ -269,7 +270,7 @@ var ResManager = (function (_super) {
                 LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u3011resName:" + resData.resName);
                 RES.destroyRes(resData.resName);
                 this.resMap.remove(resData.resName);
-                resData.destroyAll();
+                resData.destroy();
                 resData = null;
                 destroyCount++;
             }

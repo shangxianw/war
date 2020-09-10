@@ -24,23 +24,24 @@ var ViewManager = (function (_super) {
     ViewManager.prototype.destroy = function () {
         for (var _i = 0, _a = this.viewMap.values(); _i < _a.length; _i++) {
             var view = _a[_i];
-            view.destroyAll();
+            view.destroy();
         }
         this.viewMap = null;
     };
-    ViewManager.prototype.open = function (cls, data) {
-        if (data === void 0) { data = null; }
+    ViewManager.prototype.open = function (cls) {
+        var param = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            param[_i - 1] = arguments[_i];
+        }
         if (cls == null)
             return false;
         var className = this.getClassName(cls);
         if (className == null)
             return false;
-        if (this.viewMap.has(className) == true) {
-            console.warn("面板已打开");
+        if (this.viewMap.has(className) == true)
             return true;
-        }
         try {
-            this.handView(cls, data);
+            this.handView.apply(this, [].concat(cls, param));
         }
         catch (e) {
             return false;
@@ -54,12 +55,10 @@ var ViewManager = (function (_super) {
         if (this.viewMap.has(className) == false)
             return true;
         var view = this.viewMap.remove(className);
-        var layer = view.info.layer;
+        var layer = view.layer;
         if (layer == null)
             return;
-        view.closeBefore();
         layer.removeChild(view);
-        view.close();
         if (view.info.resGroupKey != null)
             ResManager.Ins().destroyGroup(view.info.resGroupKey);
         view = null;
@@ -90,6 +89,21 @@ var ViewManager = (function (_super) {
             this.close(panel);
         }
     };
+    ViewManager.prototype.handView = function (cls) {
+        var _this = this;
+        var param = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            param[_i - 1] = arguments[_i];
+        }
+        var viewClass = cls;
+        var view = new viewClass(param);
+        view.resKey = ResManager.Ins().loadGroup(view.resGroup, function () {
+            var className = _this.getClassName(cls);
+            _this.viewMap.set(className, view);
+            view.layer.addChild(view);
+        }, this);
+        return true;
+    };
     ViewManager.prototype.getClassName = function (cls) {
         var className;
         if (typeof cls == "function") {
@@ -102,24 +116,6 @@ var ViewManager = (function (_super) {
             className = cls;
         }
         return className;
-    };
-    ViewManager.prototype.handView = function (cls, data) {
-        var _this = this;
-        if (data === void 0) { data = null; }
-        var viewClass = cls;
-        var view = new viewClass();
-        var info = view.info;
-        var layer = info.layer;
-        info.data = data;
-        if (layer == null)
-            return;
-        info.resGroupKey = ResManager.Ins().loadGroup(info.resGroup, function () {
-            var className = _this.getClassName(cls);
-            _this.viewMap.set(className, view);
-            view.openBefore();
-            layer.addChild(view);
-            view.open();
-        }, this);
     };
     ViewManager.Ins = function () {
         if (ViewManager.Instance == null)
