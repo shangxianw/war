@@ -25,6 +25,10 @@ class ViewBase extends UIBase
 				// 不够就加
 			}
 		}
+		else
+		{
+			super(query)
+		}
 		this.layer = LayerManager.Ins().panel
 		this.resGroup = [];
 	}

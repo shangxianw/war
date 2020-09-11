@@ -11,21 +11,18 @@ r.prototype = e.prototype, t.prototype = new r();
 var HomePanel = (function (_super) {
     __extends(HomePanel, _super);
     function HomePanel() {
-        var _this = _super.call(this) || this;
-        _this.skinName = "HomePanelSkin";
-        return _this;
+        return _super.call(this) || this;
     }
     HomePanel.prototype.init = function () {
+        this.skinName = "HomePanelSkin";
+    };
+    HomePanel.prototype.initView = function () {
+        this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
     };
     HomePanel.prototype.destroy = function () {
-        this.fightBtn.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
-    };
-    HomePanel.prototype.open = function () {
-        this.fightBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
-        // this.showFrame()
     };
     HomePanel.prototype.OnFightTap = function (e) {
-        SceneManager.Ins().changeScene(SceneType.War);
+        alert(1);
     };
     return HomePanel;
 }(ViewBase));

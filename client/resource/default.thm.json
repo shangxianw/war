@@ -15,6 +15,7 @@
 		"resource/skins/eui_skins/ToggleSwitchSkin.exml",
 		"resource/skins/eui_skins/VScrollBarSkin.exml",
 		"resource/skins/eui_skins/VSliderSkin.exml",
+		"resource/skins/home/demo/DemoBtnSkin.exml",
 		"resource/skins/home/demo/DemoPanelSkin.exml",
 		"resource/skins/home/demo/SubDemoPanel1Skin.exml",
 		"resource/skins/home/HomePanelSkin.exml",

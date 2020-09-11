@@ -85,7 +85,8 @@ class Main extends eui.UILayer
     
     protected createGameScene(): void {
         LayerManager.Ins().initLayer(this);
+        SceneManager.Ins().changeScene(SceneType.Home)
 
-        ViewManager.Ins().open(DemoPanel, "wsx", [1,2,3])
+        // ViewManager.Ins().open(DemoPanel, "wsx", [1,2,3])
     }
 }

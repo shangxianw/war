@@ -69,7 +69,7 @@ var TimerManager = (function (_super) {
             }
             index++;
         }
-        return false;
+        return true;
     };
     TimerManager.prototype.hasTimer = function (cbFn, thisObj) {
         var array = DataUtils.CopyArray(this.timerArray);

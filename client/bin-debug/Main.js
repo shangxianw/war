@@ -139,7 +139,8 @@ var Main = (function (_super) {
     };
     Main.prototype.createGameScene = function () {
         LayerManager.Ins().initLayer(this);
-        ViewManager.Ins().open(DemoPanel, "wsx", [1, 2, 3]);
+        SceneManager.Ins().changeScene(SceneType.Home);
+        // ViewManager.Ins().open(DemoPanel, "wsx", [1,2,3])
     };
     return Main;
 }(eui.UILayer));

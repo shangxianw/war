@@ -34,6 +34,9 @@ var ViewBase = (function (_super) {
                 // 不够就加
             }
         }
+        else {
+            _this = _super.call(this, query) || this;
+        }
         _this.layer = LayerManager.Ins().panel;
         _this.resGroup = [];
         return _this;

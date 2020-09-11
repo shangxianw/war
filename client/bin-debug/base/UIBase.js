@@ -226,6 +226,7 @@ var UIBase = (function (_super) {
         }
         return true;
     };
+    // ---------------------------------------------------------------------- 缓动动画
     // ---------------------------------------------------------------------- 系统内部调用
     UIBase.prototype.createChildren = function () {
         _super.prototype.createChildren.call(this);

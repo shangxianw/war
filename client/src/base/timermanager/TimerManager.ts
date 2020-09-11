@@ -65,7 +65,7 @@ class TimerManager extends DataBase
 			}
 			index++;
 		}
-		return false;
+		return true;
 	}
 
 	public hasTimer(cbFn:Function, thisObj:any):boolean
