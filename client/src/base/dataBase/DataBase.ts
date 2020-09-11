@@ -5,7 +5,7 @@ class DataBase
 	public constructor()
 	{
 		this.hasCode = IDManager.Ins().getHashCode();
-		this.attrMap = new Hash<string, any[]>()
+		this.attrMap = new Hash<string, [string, Function, Object][]>()
 		this.init()
 	}
 
@@ -20,7 +20,7 @@ class DataBase
 	}
 
 	// ---------------------------------------------------------------------- 添加属性监听
-	public attrMap:Hash<string, any[]> // [attr, cbFn, thisObj][]
+	public attrMap:Hash<string, [string, Function, Object][]> // [attr, cbFn, thisObj][]
 	public addAttrListener(attr:string, cbFn:Function, thisObj:Object)
 	{
 		// 错误参数

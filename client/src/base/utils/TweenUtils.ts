@@ -6,7 +6,7 @@ class TweenUtils
 	}
 
 	/**
-	 * @param starInScale1 是否从1开始进行缩放
+	 * @param starInScale1 是否从缩放为1开始进行缩放
 	 */
 	public static Scale(target:egret.DisplayObject, scaleX:number=0.9, scaleY:number=0.9, time:number=60, starInScale1:boolean=true)
 	{
