@@ -1,0 +1,9 @@
+{
+    "file":"icon.png",
+    "frames":
+    {
+        "item_1":{"x":0, "y":0, "w":58, "h":58, "offX":0, "offY":0, "sourceW":58, "sourceH":58},
+        "item_2":{"x":58, "y":0, "w":58, "h":58, "offX":0, "offY":0, "sourceW":58, "sourceH":58},
+        "item_3":{"x":58, "y":0, "w":58, "h":58, "offX":0, "offY":0, "sourceW":58, "sourceH":58}
+    }
+}

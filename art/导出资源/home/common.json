@@ -1,0 +1,17 @@
+{
+    "file":"common.png",
+    "frames":
+    {
+        "bg_card_di_1":{"x":0, "y":0, "w":212, "h":137, "offX":0, "offY":0, "sourceW":212, "sourceH":137},
+        "bg_card_di_2":{"x":212, "y":0, "w":212, "h":137, "offX":0, "offY":0, "sourceW":212, "sourceH":137},
+        "bg_card_di_3":{"x":212, "y":0, "w":212, "h":137, "offX":0, "offY":0, "sourceW":212, "sourceH":137},
+        "bg_card_di_4":{"x":212, "y":0, "w":212, "h":137, "offX":0, "offY":0, "sourceW":212, "sourceH":137},
+        "bg_lz_tc02":{"x":212, "y":0, "w":70, "h":70, "offX":0, "offY":0, "sourceW":70, "sourceH":70},
+        "button_ty_blue":{"x":212, "y":0, "w":114, "h":63, "offX":0, "offY":0, "sourceW":114, "sourceH":63},
+        "button_ty_green":{"x":212, "y":0, "w":114, "h":63, "offX":0, "offY":0, "sourceW":114, "sourceH":63},
+        "button_ty_red":{"x":212, "y":0, "w":114, "h":63, "offX":0, "offY":0, "sourceW":114, "sourceH":63},
+        "button_ty_yellow":{"x":212, "y":0, "w":114, "h":63, "offX":0, "offY":0, "sourceW":114, "sourceH":63},
+        "button_ty_yellow_h":{"x":212, "y":0, "w":114, "h":63, "offX":0, "offY":0, "sourceW":114, "sourceH":63},
+        "icon_hotpoint":{"x":212, "y":0, "w":35, "h":35, "offX":0, "offY":0, "sourceW":35, "sourceH":35}
+    }
+}

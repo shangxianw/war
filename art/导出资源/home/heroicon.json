@@ -1,0 +1,13 @@
+{
+    "file":"heroicon.png",
+    "frames":
+    {
+        "heroicon_10010":{"x":0, "y":0, "w":204, "h":120, "offX":0, "offY":0, "sourceW":204, "sourceH":120},
+        "heroicon_10030":{"x":204, "y":0, "w":204, "h":120, "offX":0, "offY":0, "sourceW":204, "sourceH":120},
+        "heroicon_10050":{"x":204, "y":0, "w":204, "h":120, "offX":0, "offY":0, "sourceW":204, "sourceH":120},
+        "heroicon_10070":{"x":204, "y":0, "w":204, "h":120, "offX":0, "offY":0, "sourceW":204, "sourceH":120},
+        "heroicon_10080":{"x":204, "y":0, "w":204, "h":120, "offX":0, "offY":0, "sourceW":204, "sourceH":120},
+        "heroicon_10090":{"x":204, "y":0, "w":204, "h":120, "offX":0, "offY":0, "sourceW":204, "sourceH":120},
+        "heroicon_10110":{"x":204, "y":0, "w":204, "h":120, "offX":0, "offY":0, "sourceW":204, "sourceH":120}
+    }
+}
