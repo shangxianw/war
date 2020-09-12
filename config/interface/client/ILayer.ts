@@ -1,4 +1,0 @@
-interface ILayer
-{
-    id:number
-}

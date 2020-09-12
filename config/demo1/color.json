@@ -1,0 +1,44 @@
+{
+    "1": {
+        "id": 1,
+        "color": "0xffffff",
+        "name": "白色",
+        "codename": "White"
+    },
+    "2": {
+        "id": 2,
+        "color": "0x000000",
+        "name": "黑色",
+        "codename": "Black"
+    },
+    "3": {
+        "id": 3,
+        "color": "0xff0000",
+        "name": "红色",
+        "codename": "Red"
+    },
+    "4": {
+        "id": 4,
+        "color": "0x00ff00",
+        "name": "绿色",
+        "codename": "Green"
+    },
+    "5": {
+        "id": 5,
+        "color": "0x0000ff",
+        "name": "蓝色",
+        "codename": "Blue"
+    },
+    "6": {
+        "id": 6,
+        "color": "0xffff00",
+        "name": "黄色",
+        "codename": "Yellow"
+    },
+    "7": {
+        "id": 7,
+        "color": "0x333333",
+        "name": "灰色",
+        "codename": "Grey"
+    }
+}

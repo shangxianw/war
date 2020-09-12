@@ -1,0 +1,18 @@
+{
+    "1": {
+        "id": 1,
+        "icon": "button_ty_red"
+    },
+    "2": {
+        "id": 2,
+        "icon": "button_ty_green"
+    },
+    "3": {
+        "id": 3,
+        "icon": "button_ty_blue"
+    },
+    "4": {
+        "id": 4,
+        "icon": "button_ty_yellow"
+    }
+}

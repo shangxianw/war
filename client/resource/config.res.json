@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "upgrade_json,hero_json",
+			"keys": "upgrade_json,hero_json,item_json,playerupgrade_json,btnimg_json,quality_json,const_json,color_json,cost_json",
 			"name": "config_preload"
 		}
 	],
@@ -15,6 +15,41 @@
 			"url": "config/upgrade.json",
 			"type": "json",
 			"name": "upgrade_json"
+		},
+		{
+			"url": "config/item.json",
+			"type": "json",
+			"name": "item_json"
+		},
+		{
+			"url": "config/playerupgrade.json",
+			"type": "json",
+			"name": "playerupgrade_json"
+		},
+		{
+			"url": "config/btnimg.json",
+			"type": "json",
+			"name": "btnimg_json"
+		},
+		{
+			"url": "config/quality.json",
+			"type": "json",
+			"name": "quality_json"
+		},
+		{
+			"url": "config/const.json",
+			"type": "json",
+			"name": "const_json"
+		},
+		{
+			"url": "config/color.json",
+			"type": "json",
+			"name": "color_json"
+		},
+		{
+			"url": "config/cost.json",
+			"type": "json",
+			"name": "cost_json"
 		}
 	]
 }

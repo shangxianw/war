@@ -58,7 +58,7 @@ class DaoCfg(object):
         clientContent = "interface [fileName]\n{\n" + "[content]" + "}"
         tabName = "I" + sheet.cell(self.tableName[1], self.tableName[0]).value.capitalize()
         clientContent = clientContent.replace("[fileName]", tabName)
-
+        keyArray = []
         content = ""
         for row, rowValue in enumerate(sheet.row_values(0)):       # 列
             template = "    [key]:[type];\n"
@@ -66,12 +66,43 @@ class DaoCfg(object):
             scArr = [self.isDaoClient(sc), self.isDaoServer(sc)]
             key   = self.getKey(sheet, self.keyLine, row)
             vType = self.getKey(sheet, self.typeLine, row)
+            try:
+                keyArray.index(key)
+                continue
+            except(BaseException):
+                pass
             ############################################################################
             if vType == self.intType:
                 if scArr[0] is True:
                     template = template.replace("[key]", key)
                     template = template.replace("[type]", "number")
                     content += template
+                    keyArray.append(key)
+            elif vType == self.strType:
+                if scArr[0] is True:
+                    template = template.replace("[key]", key)
+                    template = template.replace("[type]", "string")
+                    content += template
+                    keyArray.append(key)
+            elif vType == self.arrType:
+                if scArr[0] is True:
+                    template = template.replace("[key]", key)
+                    template = template.replace("[type]", "any[]")
+                    content += template
+                    keyArray.append(key)
+            elif vType == self.twoArrType:
+                if scArr[0] is True:
+                    template = template.replace("[key]", key)
+                    template = template.replace("[type]", "any[][]")
+                    content += template
+                    keyArray.append(key)
+            elif vType == self.threeArrType:
+                if scArr[0] is True:
+                    template = template.replace("[key]", key)
+                    template = template.replace("[type]", "any[][][]")
+                    content += template
+                    keyArray.append(key)
+            
         clientContent = clientContent.replace("[content]", content)
         # print(clientContent)
         self.write2Ts(sheet, clientContent, tabName)

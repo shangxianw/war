@@ -1,6 +1,6 @@
 class HomeDataMgr extends DataBase
 {
-	public gold:number;
+	public engry:number;
 	public dimand:number;
 	public exp:number;
 	public init()
