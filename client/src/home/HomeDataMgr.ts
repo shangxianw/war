@@ -1,7 +1,15 @@
-class HomeDataMgr
+class HomeDataMgr extends DataBase
 {
-	public constructor()
+	public gold:number;
+	public dimand:number;
+	public exp:number;
+	public init()
 	{
-		
+
+	}
+
+	public destroy()
+	{
+		super.destroy();
 	}
 }
