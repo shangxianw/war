@@ -48,7 +48,7 @@ class Merge(object):
         for dir in self.hasImgDirArray:
             array = self.initAllImgInfo(dir)
             if len(array) > 0:
-                self.calcCanvas(array)
+                self.calcCanvasByMaxWidth(array)
                 self.save(array, dir)
     
     # 初始化每张图片的信息并保存在数组中
@@ -60,7 +60,7 @@ class Merge(object):
             if os.path.isfile(path) is False:
                 continue
             filename, type = file.split(".")
-            if type == ".png" or type == ".jpg":
+            if type == "png" or type == "jpg":
                 imgInfo = {}
                 texture = Image.open(path)
                 imgInfo[self.texture] = texture
@@ -74,28 +74,43 @@ class Merge(object):
                 imgInfo[self.sourceW] = texture.size[0]
                 imgInfo[self.sourceH] = texture.size[1]
                 imgInfoArray.append(imgInfo)
-                # print(imgInfo)
         return imgInfoArray
     
     # 计算每张图片的位置 & 画布宽高
-    def calcCanvas(self, imgInfoArray):
+    def calcCanvasByMaxWidth(self, imgInfoArray):
+        # 将图片的高度从大到小排序
+        for i in range(len(imgInfoArray)):
+            for j in range(len(imgInfoArray)):
+                if j <= i:
+                    continue
+                curr = imgInfoArray[i]
+                compare = imgInfoArray[j]
+                if curr[self.h] >= compare[self.h]:
+                    continue
+                tmp = imgInfoArray[i]
+                imgInfoArray[i] = imgInfoArray[j]
+                imgInfoArray[j] = tmp
         self.canvasWidth = 0
         self.canvasHeight = 0
+        maxx = 0
+        maxy = 0
         for i in range(len(imgInfoArray)):
             curr = imgInfoArray[i]
-            x = curr[self.x]
-            y = curr[self.y]
-            endX = curr[self.x] + curr[self.w]
-            endY = curr[self.y] + curr[self.h]
+            curr[self.x] = maxx
+            curr[self.y] = maxy
 
-            curr[self.x] = self.canvasWidth
-            curr[self.y] = y
+            maxx = curr[self.x] + curr[self.w]
 
-            if endX > self.canvasWidth:
-                self.canvasWidth = endX
-            if endY > self.canvasHeight:
-                self.canvasHeight = endY
-    
+            if maxx > self.canvasWidth:
+                self.canvasWidth = maxx
+            if curr[self.y] + curr[self.h] > self.canvasHeight:
+                self.canvasHeight = curr[self.y] + curr[self.h]
+            
+            if maxx > self.maxWidth:
+                maxx = 0
+                maxy = self.canvasHeight
+
+
     def save(self, imgInfoArray, dir):
         image = Image.new("RGBA", (self.canvasWidth, self.canvasHeight), (255, 0, 0, 0))
         jsonContent =  '{\n'
@@ -161,3 +176,13 @@ M.destroy()
 # image.paste(img, (0, 0), img) 
 # image.paste(img2, (100, 100), img2) 
 # image.save("2.png")
+
+# image = Image.new("RGB", (20, 20), (255, 255, 255))
+# im = Image.new("RGB", (10, 10), (0, 0, 0))
+# image.paste(im, box=(0, 0))
+# image.save("demo.jpg")
+# image = Image.open("demo.jpg")
+# for i in range(20):
+#     for j in range(20):
+#         a = image.getpixel((i, j))
+#         print(a)
