@@ -2,14 +2,14 @@ class DataBase
 {
 	public hasCode:number
 	
-	public constructor()
+	public constructor(...param:any[])
 	{
 		this.hasCode = IDManager.Ins().getHashCode();
 		this.attrMap = new Hash<string, [string, Function, Object][]>()
-		this.init()
+		this.init.apply(this, param)
 	}
 
-	public init()
+	public init(...anyParam:any[])
 	{
 
 	}
