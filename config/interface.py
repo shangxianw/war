@@ -66,7 +66,7 @@ class DaoCfg(object):
             scArr = [self.isDaoClient(sc), self.isDaoServer(sc)]
             key   = self.getKey(sheet, self.keyLine, row)
             vType = self.getKey(sheet, self.typeLine, row)
-            try:
+            try: # 过滤掉重复的key，如数组的key是一样的
                 keyArray.index(key)
                 continue
             except(BaseException):
