@@ -14,4 +14,12 @@ class HomeDataMgr extends DataBase
 		super.destroy();
 		this.heroDataMgr.destroy();
 	}
+
+	private static instance:HomeDataMgr;
+	public static Ins()
+	{
+		if(HomeDataMgr.instance == null)
+			HomeDataMgr.instance = new HomeDataMgr();
+		return HomeDataMgr.instance;
+	}
 }

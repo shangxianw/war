@@ -11,4 +11,12 @@ class ConfigManager extends DataBase
 		super.destroy();
 		this.cfgMap.destroy();
 	}
+
+	private static instance:ConfigManager;
+	public static Ins()
+	{
+		if(ConfigManager.instance == null)
+			ConfigManager.instance = new ConfigManager();
+		return ConfigManager.instance;
+	}
 }

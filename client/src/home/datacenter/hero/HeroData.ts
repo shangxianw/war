@@ -8,9 +8,9 @@ class HeroData extends DataBase
 		this.level;
 	}
 
-	public get cfg()
+	public get cfg():IHero
 	{
-		return {}
+		return null
 	}
 
 	public destroy()

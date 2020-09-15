@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="HeroPanelItemSkin" width="720" height="150" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
+	<e:Image left="0" source="bg_lz_tc02" right="0" top="-15" bottom="-15" scale9Grid="25,27,23,18"/>
+	<ns1:Ka id="ka" skinName="KaSkin" left="30" verticalCenter="0"/>
+	<e:Label id="title" text="label1" x="253" textColor="0x380303" top="10" bold="true"/>
+	<e:Label id="level" text="label2" x="253" verticalCenter="0" textColor="0x000000"/>
+	<e:Label id="speedlb" text="label3" x="253" textColor="0x20e830" bottom="20"/>
+	<ns1:WButton id="btn" label="label" skinName="Btn2Skin" horizontalCenter="267" verticalCenter="0"/>
+</e:Skin>

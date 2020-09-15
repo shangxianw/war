@@ -8,7 +8,7 @@ var TweenUtils = (function () {
         egret.Tween.removeTweens(target);
     };
     /**
-     * @param starInScale1 是否从1开始进行缩放
+     * @param starInScale1 是否从缩放为1开始进行缩放
      */
     TweenUtils.Scale = function (target, scaleX, scaleY, time, starInScale1) {
         if (scaleX === void 0) { scaleX = 0.9; }

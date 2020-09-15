@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="Btn1Skin" xmlns:e="http://ns.egret.com/eui" states="type1,type2,type3,type4,type5" >
+	<e:Image source="button_ty_blue" scale9Grid="14,7,86,37" source.type2="button_ty_green" source.type3="button_ty_red" source.type4="button_ty_yellow" source.type5="button_ty_yellow_h"/>
+	<e:Label text="button" left="5" right="5" top="2" bottom="12" textAlign="center" verticalAlign="middle"/>
+</e:Skin>

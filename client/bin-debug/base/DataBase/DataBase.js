@@ -3,11 +3,19 @@ var __reflect = (this && this.__reflect) || function (p, c, t) {
 };
 var DataBase = (function () {
     function DataBase() {
+        var param = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            param[_i] = arguments[_i];
+        }
         this.hasCode = IDManager.Ins().getHashCode();
         this.attrMap = new Hash();
-        this.init();
+        this.init.apply(this, param);
     }
     DataBase.prototype.init = function () {
+        var anyParam = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            anyParam[_i] = arguments[_i];
+        }
     };
     DataBase.prototype.destroy = function () {
         this.removeAllAttrListener();

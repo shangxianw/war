@@ -2,6 +2,8 @@
 	"skins": {},
 	"autoGenerateExmlsList": true,
 	"exmls": [
+		"resource/skins/component/button/Btn1Skin.exml",
+		"resource/skins/component/button/Btn2Skin.exml",
 		"resource/skins/eui_skins/ButtonSkin.exml",
 		"resource/skins/eui_skins/CheckBoxSkin.exml",
 		"resource/skins/eui_skins/HScrollBarSkin.exml",
@@ -18,6 +20,9 @@
 		"resource/skins/home/demo/DemoBtnSkin.exml",
 		"resource/skins/home/demo/DemoPanelSkin.exml",
 		"resource/skins/home/demo/SubDemoPanel1Skin.exml",
+		"resource/skins/home/hero/KaSkin.exml",
+		"resource/skins/home/hero/HeroPanelItemSkin.exml",
+		"resource/skins/home/hero/HeroPanelSkin.exml",
 		"resource/skins/home/HomePanelSkin.exml",
 		"resource/skins/home/LoginPanelSkin.exml",
 		"resource/skins/home/UIBaseSkin.exml",

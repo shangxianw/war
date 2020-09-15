@@ -18,6 +18,8 @@ var HomePanel = (function (_super) {
     };
     HomePanel.prototype.initView = function () {
         this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
+        this.list.itemRenderer = HeroPanelItem;
+        this.list.dataProvider = new eui.ArrayCollection([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     };
     HomePanel.prototype.destroy = function () {
     };

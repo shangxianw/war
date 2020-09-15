@@ -8,13 +8,12 @@ var __extends = this && this.__extends || function __extends(t, e) {
 for (var i in e) e.hasOwnProperty(i) && (t[i] = e[i]);
 r.prototype = e.prototype, t.prototype = new r();
 };
-var ButtonBase = (function (_super) {
-    __extends(ButtonBase, _super);
-    function ButtonBase() {
-        var _this = this;
-        return _this;
+var CommonButton = (function (_super) {
+    __extends(CommonButton, _super);
+    function CommonButton() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
-    return ButtonBase;
-}(UIBase));
-__reflect(ButtonBase.prototype, "ButtonBase");
-//# sourceMappingURL=ButtonBase.js.map
+    return CommonButton;
+}(WButton));
+__reflect(CommonButton.prototype, "CommonButton");
+//# sourceMappingURL=CommonButton.js.map
