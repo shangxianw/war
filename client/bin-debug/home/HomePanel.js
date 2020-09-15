@@ -11,20 +11,16 @@ r.prototype = e.prototype, t.prototype = new r();
 var HomePanel = (function (_super) {
     __extends(HomePanel, _super);
     function HomePanel() {
-        return _super.call(this) || this;
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     HomePanel.prototype.init = function () {
         this.skinName = "HomePanelSkin";
     };
     HomePanel.prototype.initView = function () {
-        this.addEvent(this.fightBtn, egret.TouchEvent.TOUCH_TAP, this.OnFightTap, this);
         this.list.itemRenderer = HeroPanelItem;
-        this.list.dataProvider = new eui.ArrayCollection([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        this.list.dataProvider = new eui.ArrayCollection([10010, 10020, 10030, 10040, 10050, 10060, 10070]);
     };
     HomePanel.prototype.destroy = function () {
-    };
-    HomePanel.prototype.OnFightTap = function (e) {
-        alert(1);
     };
     return HomePanel;
 }(ViewBase));

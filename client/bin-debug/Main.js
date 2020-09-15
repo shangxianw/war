@@ -94,14 +94,11 @@ var Main = (function (_super) {
                         return [4 /*yield*/, RES.loadConfig("resource/war.res.json", "resource/")];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, RES.loadConfig("resource/home.res.json", "resource/")];
+                        return [4 /*yield*/, RES.loadConfig("resource/config.res.json", "resource/")];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, RES.loadConfig("resource/config.res.json", "resource/")];
-                    case 4:
-                        _a.sent();
                         return [4 /*yield*/, this.loadTheme()];
-                    case 5:
+                    case 4:
                         _a.sent();
                         this.createGameScene();
                         return [2 /*return*/];

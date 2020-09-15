@@ -37,8 +37,6 @@ var ViewBase = (function (_super) {
         else {
             _this = _super.call(this, query) || this;
         }
-        _this.layer = LayerManager.Ins().panel;
-        _this.resGroup = [];
         return _this;
     }
     ViewBase.prototype.show = function () {

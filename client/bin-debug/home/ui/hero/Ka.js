@@ -27,6 +27,12 @@ var Ka = (function (_super) {
         // this.icon.source = herodata.cfg.icon
         // this.bg.source = `bg_card_di_${herodata.cfg.quality}`
     };
+    Ka.prototype.updateView = function (kaId) {
+        this.kaId = kaId;
+        this.icon.source = "heroicon_" + kaId;
+    };
+    Ka.prototype.destroy = function () {
+    };
     return Ka;
 }(UIBase));
 __reflect(Ka.prototype, "Ka");

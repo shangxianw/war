@@ -65,14 +65,14 @@ class SceneManager
 	private enterHome()
 	{
 		GameData.setFrameRate(FrameRateType.Home)
-		ViewManager.Ins().open(HomePanel)
+		ViewManager.Ins().open(HomeLoading)
 	}
 
 	// ---------------------------------------------------------------------- 进入战场
 	private enterWar()
 	{
 		GameData.setFrameRate(FrameRateType.War)
-		ViewManager.Ins().open(WarPanel)
+		ViewManager.Ins().open(WarLoading)
 	}
 
 	// ---------------------------------------------------------------------- 进入选服

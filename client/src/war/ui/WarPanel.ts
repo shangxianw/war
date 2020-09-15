@@ -4,4 +4,9 @@ class WarPanel extends ViewBase
 	{
 		this.skinName = `WarPanelSkin`
 	}
+
+	public destroy()
+	{
+		
+	}
 }

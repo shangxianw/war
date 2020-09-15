@@ -309,6 +309,7 @@ class ResManager extends DataBase
 		else
 		{
 			LogUtils.Error(`【加载资源组错误】id:${this.currCollectData.hasCode} groupName:${e.groupName} count:${this.currCollectData.errLoadCount}`);
+			this.currCollectData.execErr(e)
 			if(this.currCollectData.isEnd() == true)
 				this.currCollectData = null;
 			this.loadNextGroup();
@@ -329,7 +330,7 @@ class ResManager extends DataBase
 		{
 			if(resData.refCount <= 0 && destroyTime >= resData.destroyTime && RES.getRes(resData.resName) != null)
 			{
-				LogUtils.Log(`【加载资源】resName:${resData.resName}`);
+				LogUtils.Log(`【销毁资源】resName:${resData.resName}`);
 				RES.destroyRes(resData.resName);
 				this.resMap.remove(resData.resName);
 				resData.destroy();

@@ -15,4 +15,9 @@ class DemoPanel extends ViewBase
 		this.haha.text = name;
 		this.addEvent(this, egret.TouchEvent.TOUCH_TAP, this.closeSelf, this)
 	}
+
+	public destroy()
+	{
+		
+	}
 }

@@ -252,6 +252,7 @@ var ResManager = (function (_super) {
         }
         else {
             LogUtils.Error("\u3010\u52A0\u8F7D\u8D44\u6E90\u7EC4\u9519\u8BEF\u3011id:" + this.currCollectData.hasCode + " groupName:" + e.groupName + " count:" + this.currCollectData.errLoadCount);
+            this.currCollectData.execErr(e);
             if (this.currCollectData.isEnd() == true)
                 this.currCollectData = null;
             this.loadNextGroup();
@@ -267,7 +268,7 @@ var ResManager = (function (_super) {
         for (var _i = 0, array_1 = array; _i < array_1.length; _i++) {
             var resData = array_1[_i];
             if (resData.refCount <= 0 && destroyTime >= resData.destroyTime && RES.getRes(resData.resName) != null) {
-                LogUtils.Log("\u3010\u52A0\u8F7D\u8D44\u6E90\u3011resName:" + resData.resName);
+                LogUtils.Log("\u3010\u9500\u6BC1\u8D44\u6E90\u3011resName:" + resData.resName);
                 RES.destroyRes(resData.resName);
                 this.resMap.remove(resData.resName);
                 resData.destroy();

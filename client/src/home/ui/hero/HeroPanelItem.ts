@@ -13,6 +13,7 @@ class HeroPanelItem extends WItemRenderer
 
 	protected dataChanged()
 	{
+		this.ka.updateView(this.data)
 		this.btn.label1.text = `${this.data}`
 		this.btn.label = "0000"
 		this.btn.icon1.source = `item_3`

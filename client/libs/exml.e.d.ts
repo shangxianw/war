@@ -68,6 +68,10 @@ declare class KaSkin extends eui.Skin{
 }
 declare class HomePanelSkin extends eui.Skin{
 }
+declare class HomeLoadingSkin extends eui.Skin{
+}
+declare class WarLoadingSkin extends eui.Skin{
+}
 declare class LoginPanelSkin extends eui.Skin{
 }
 declare class UIBaseSkin extends eui.Skin{

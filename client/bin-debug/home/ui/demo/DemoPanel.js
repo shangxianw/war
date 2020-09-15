@@ -25,6 +25,8 @@ var DemoPanel = (function (_super) {
         this.haha.text = name;
         this.addEvent(this, egret.TouchEvent.TOUCH_TAP, this.closeSelf, this);
     };
+    DemoPanel.prototype.destroy = function () {
+    };
     return DemoPanel;
 }(ViewBase));
 __reflect(DemoPanel.prototype, "DemoPanel");

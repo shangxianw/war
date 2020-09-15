@@ -1,4 +1,4 @@
-class UIBase extends eui.Component
+abstract class UIBase extends eui.Component
 {
 	public info:any;
 	public constructor(...param:any[])
@@ -35,7 +35,10 @@ class UIBase extends eui.Component
 		
 	}
 
-	private aaa()
+	/**
+	 * 自行更新是方法
+	 */
+	public updateView(...param:any[])
 	{
 		
 	}
@@ -43,10 +46,7 @@ class UIBase extends eui.Component
 	/**
 	 * 销毁
 	 */
-	public destroy()
-	{
-		
-	}
+	public abstract destroy()
 
 	// ---------------------------------------------------------------------- 添加系统事件监听
 	public eventArray:[egret.DisplayObject, string, Function, Object][] = [] // [target, type, callback, thisObj][]

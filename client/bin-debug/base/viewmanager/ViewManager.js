@@ -97,10 +97,13 @@ var ViewManager = (function (_super) {
         }
         var viewClass = cls;
         var view = new viewClass(param);
-        view.resKey = ResManager.Ins().loadGroup(view.resGroup, function () {
+        var resGroup = view.resGroup != null ? view.resGroup : [];
+        view.resKey = ResManager.Ins().loadGroup(resGroup, function () {
             var className = _this.getClassName(cls);
             _this.viewMap.set(className, view);
-            view.layer.addChild(view);
+            var layer = view.layer != null ? view.layer : LayerManager.Ins().panel;
+            view.layer = layer;
+            layer.addChild(view);
         }, this);
         return true;
     };

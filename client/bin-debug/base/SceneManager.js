@@ -53,12 +53,12 @@ var SceneManager = (function () {
     // ---------------------------------------------------------------------- 进入主城
     SceneManager.prototype.enterHome = function () {
         GameData.setFrameRate(FrameRateType.Home);
-        ViewManager.Ins().open(HomePanel);
+        ViewManager.Ins().open(HomeLoading);
     };
     // ---------------------------------------------------------------------- 进入战场
     SceneManager.prototype.enterWar = function () {
         GameData.setFrameRate(FrameRateType.War);
-        ViewManager.Ins().open(WarPanel);
+        ViewManager.Ins().open(WarLoading);
     };
     // ---------------------------------------------------------------------- 进入选服
     SceneManager.prototype.enterSelectServer = function () {

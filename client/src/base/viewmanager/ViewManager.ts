@@ -99,10 +99,13 @@ class ViewManager extends DataBase
 	{
 		let viewClass:any = cls;
 		let view:ViewBase = new viewClass(param);
-		view.resKey = ResManager.Ins().loadGroup(view.resGroup, ()=>{
+		let resGroup = view.resGroup != null ? view.resGroup: []
+		view.resKey = ResManager.Ins().loadGroup(resGroup, ()=>{
 			let className = this.getClassName(cls)
 			this.viewMap.set(className, view);
-			view.layer.addChild(view);
+			let layer = view.layer != null ? view.layer : LayerManager.Ins().panel
+			view.layer = layer;
+			layer.addChild(view);
 		}, this)
 		return true;
 	}

@@ -1,4 +1,4 @@
-class ViewBase extends UIBase
+abstract class ViewBase extends UIBase
 {
 	public layer:eui.UILayer;
 	public resGroup:string[]
@@ -29,8 +29,6 @@ class ViewBase extends UIBase
 		{
 			super(query)
 		}
-		this.layer = LayerManager.Ins().panel
-		this.resGroup = [];
 	}
 
 	public show()

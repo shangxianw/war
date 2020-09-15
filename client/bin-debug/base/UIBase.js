@@ -59,12 +59,14 @@ var UIBase = (function (_super) {
             param[_i] = arguments[_i];
         }
     };
-    UIBase.prototype.aaa = function () {
-    };
     /**
-     * 销毁
+     * 自行更新是方法
      */
-    UIBase.prototype.destroy = function () {
+    UIBase.prototype.updateView = function () {
+        var param = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            param[_i] = arguments[_i];
+        }
     };
     UIBase.prototype.addEvent = function (target, type, callback, thisObj) {
         // 参数有误

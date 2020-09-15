@@ -17,6 +17,7 @@ var HeroPanelItem = (function (_super) {
         this.skinName = "HeroPanelItemSkin";
     };
     HeroPanelItem.prototype.dataChanged = function () {
+        this.ka.updateView(this.data);
         this.btn.label1.text = "" + this.data;
         this.btn.label = "0000";
         this.btn.icon1.source = "item_3";

@@ -18,10 +18,22 @@ class Ka extends UIBase
 
 	public initView()
 	{
+		
 		// let herodata:HeroData = HomeDataMgr.Ins().heroDataMgr.heroMap.get(this.kaId)
 		// if(herodata == null)
 		// 	return
 		// this.icon.source = herodata.cfg.icon
 		// this.bg.source = `bg_card_di_${herodata.cfg.quality}`
+	}
+
+	public updateView(kaId:number)
+	{
+		this.kaId = kaId
+		this.icon.source = `heroicon_${kaId}`
+	}
+
+	public destroy()
+	{
+		
 	}
 }

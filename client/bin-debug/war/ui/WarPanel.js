@@ -16,6 +16,8 @@ var WarPanel = (function (_super) {
     WarPanel.prototype.init = function () {
         this.skinName = "WarPanelSkin";
     };
+    WarPanel.prototype.destroy = function () {
+    };
     return WarPanel;
 }(ViewBase));
 __reflect(WarPanel.prototype, "WarPanel");
