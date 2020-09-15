@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin class="HomePanelSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
 	<e:Rect left="0" right="0" top="0" bottom="0" fillColor="0x4c4242"/>
-	<e:Button id="fightBtn" label="战斗" x="588" y="314" skinName="skins.ButtonSkin"/>
+	<e:Button id="fightBtn" label="战斗" x="588" y="314" skinName="skins.ButtonSkin" visible="false"/>
 	<ns1:WButton label="1112" x="258" y="579" width="100" height="50" anchorOffsetX="50" anchorOffsetY="25" skinName="DemoBtnSkin"/>
+	<e:Scroller height="298" y="69" left="0" right="0">
+		<e:List id="list" itemRendererSkinName="HeroPanelItemSkin">
+			<e:ArrayCollection>
+				<e:Array>
+				</e:Array>
+			</e:ArrayCollection>
+		</e:List>
+	</e:Scroller>
 
 
 
