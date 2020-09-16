@@ -1,0 +1,125 @@
+{
+ "file": "hero_card_num_blue.png",
+ "frames": {
+  "!": {
+   "h": 21,
+   "offX": 3,
+   "offY": 0,
+   "sourceH": 21,
+   "sourceW": 17,
+   "w": 11,
+   "x": 1,
+   "y": 70
+  },
+  "/": {
+   "h": 21,
+   "offX": 3,
+   "offY": 0,
+   "sourceH": 21,
+   "sourceW": 17,
+   "w": 11,
+   "x": 1,
+   "y": 70
+  },
+  "0": {
+   "h": 21,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 21,
+   "sourceW": 17,
+   "w": 17,
+   "x": 1,
+   "y": 47
+  },
+  "1": {
+   "h": 21,
+   "offX": 3,
+   "offY": 0,
+   "sourceH": 21,
+   "sourceW": 17,
+   "w": 10,
+   "x": 14,
+   "y": 70
+  },
+  "2": {
+   "h": 21,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 21,
+   "sourceW": 17,
+   "w": 17,
+   "x": 1,
+   "y": 24
+  },
+  "3": {
+   "h": 21,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 21,
+   "sourceW": 17,
+   "w": 16,
+   "x": 38,
+   "y": 47
+  },
+  "4": {
+   "h": 21,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 21,
+   "sourceW": 17,
+   "w": 17,
+   "x": 20,
+   "y": 24
+  },
+  "5": {
+   "h": 21,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 21,
+   "sourceW": 17,
+   "w": 17,
+   "x": 1,
+   "y": 1
+  },
+  "6": {
+   "h": 21,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 21,
+   "sourceW": 17,
+   "w": 17,
+   "x": 39,
+   "y": 24
+  },
+  "7": {
+   "h": 21,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 21,
+   "sourceW": 17,
+   "w": 16,
+   "x": 20,
+   "y": 47
+  },
+  "8": {
+   "h": 21,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 21,
+   "sourceW": 17,
+   "w": 17,
+   "x": 20,
+   "y": 1
+  },
+  "9": {
+   "h": 21,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 21,
+   "sourceW": 17,
+   "w": 17,
+   "x": 39,
+   "y": 1
+  }
+ }
+}

@@ -1,20 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="HomePanelSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
+<e:Skin class="HomePanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
+	<e:Image x="54" y="17" anchorOffsetX="0" width="335" height="82" source="bg_phb_heroicon_back" scale9Grid="14,14,9,59" touchEnabled="false"/>
+
+	<e:Image id="playerIcon" scaleX="1" scaleY="1" touchEnabled="false" source="playericon_01" verticalCenter="-303" horizontalCenter="-591"/>
+	<e:Image id="edgeIcon" scaleX="1" scaleY="1" touchEnabled="false" source="bg_phb_heroicon_up" horizontalCenter="-590" y="7.5"/>
+	<e:Image id="sexImg" source="icon_xb_n" scaleX="0.6" scaleY="0.6" x="95.5" y="27.5"/>
+	<e:Image x="438" source="bg_exp" y="18.67" width="200" scale9Grid="28,6,22,37"/>
+	<e:Image x="648" source="bg_exp" y="18.67" width="200" scale9Grid="28,6,22,37"/>
+	<e:Image x="858" source="bg_exp" y="18.67" width="200" scale9Grid="28,6,22,37"/>
+	<e:Image x="644.01" source="icon_top_coin" y="16"/>
+	<e:Image x="857.35" verticalCenter="-316" source="icon_top_diamond"/>
+	<e:Image x="796.32" y="22.17" source="button_top_add02"/>
+	<e:Image x="1009.66" y="22.17" source="button_top_add"/>
+	<e:Image source="bg_exp_nr" scale9Grid="25,4,152,31" y="23.31" width="186" x="446"/>
+	<e:Image x="424" source="icon_top_exp" y="14.67"/>
+	<e:Image x="1227" y="137.33" source="bg_dz_bldi" scale9Grid="5,6,5,41" height="485"/>
+	<e:Image x="982.37" y="141.34" source="bg_jd_btd" scale9Grid="31,1,190,12" anchorOffsetY="0" height="483"/>
 
 
 
-	<!--<e:Scroller height="298" y="69" left="0" right="0">
-		<e:List id="list" itemRendererSkinName="HeroPanelItemSkin">
-			<e:ArrayCollection>
-				<e:Array>
-				</e:Array>
-			</e:ArrayCollection>
-		</e:List>
-	</e:Scroller>-->
-	<ns1:HeroPanelItem skinName="HeroPanelItemSkin" y="50"/>
-	<ns1:HeroPanelItem skinName="HeroPanelItemSkin" y="230" visible="false"/>
+
+
+	<ns1:WGroup x="1073" y="10" width="60" height="60">
+		<e:Image source="button_top_mail" scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0"/>
+		<e:Image source="icon_hotpoint" scaleX="1" scaleY="1" horizontalCenter="20.5" verticalCenter="-19.5"/>
+	</ns1:WGroup>
+	<ns1:WGroup x="1133" y="10" width="60" height="60">
+		<e:Image scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0" source="button_top_set"/>
+		<e:Image source="icon_hotpoint" scaleX="1" scaleY="1" horizontalCenter="20.5" verticalCenter="-19.5"/>
+	</ns1:WGroup>
+	<ns1:WGroup x="1193" y="10" width="60" height="60">
+		<e:Image scaleX="1" scaleY="1" horizontalCenter="0" verticalCenter="0" source="button_top_player"/>
+		<e:Image source="icon_hotpoint" scaleX="1" scaleY="1" horizontalCenter="20.5" verticalCenter="-19.5"/>
+	</ns1:WGroup>
 
 
 
+
+	<ns1:WGroup id="btn1" width="120" height="90" horizontalCenter="-549" verticalCenter="305">
+		<e:Image source="button_down_phb" horizontalCenter="0" verticalCenter="0" x="-5" y="87.34000000000003" scaleX="1" scaleY="1"/>
+		<e:Image source="icon_hotpoint" scaleX="1" scaleY="1" horizontalCenter="40.5" verticalCenter="-29.5" x="71" y="80.34000000000003"/>
+	</ns1:WGroup>
+	<ns1:WGroup id="btn2" width="120" height="90" horizontalCenter="-369" verticalCenter="318">
+		<e:Image horizontalCenter="0" verticalCenter="0" x="-5" y="87.34000000000003" scaleX="1" scaleY="1" source="button_down_01"/>
+		<e:Image source="icon_hotpoint" scaleX="1" scaleY="1" horizontalCenter="40.5" verticalCenter="-29.5" x="71" y="80.34000000000003"/>
+	</ns1:WGroup>
+	<ns1:WGroup id="btn3" width="120" height="90" horizontalCenter="-189" verticalCenter="318">
+		<e:Image horizontalCenter="0" verticalCenter="0" x="-5" y="87.34000000000003" scaleX="1" scaleY="1" source="button_down_02"/>
+		<e:Image source="icon_hotpoint" scaleX="1" scaleY="1" horizontalCenter="40.5" verticalCenter="-29.5" x="71" y="80.34000000000003"/>
+	</ns1:WGroup>
+	<ns1:WGroup id="btn4" width="120" height="90" horizontalCenter="1" verticalCenter="318">
+		<e:Image horizontalCenter="0" verticalCenter="0" x="-5" y="87.34000000000003" scaleX="1" scaleY="1" source="button_down_03"/>
+		<e:Image source="icon_hotpoint" scaleX="1" scaleY="1" horizontalCenter="40.5" verticalCenter="-29.5" x="71" y="80.34000000000003"/>
+	</ns1:WGroup>
+	<ns1:WGroup id="btn5" width="120" height="90" horizontalCenter="151" verticalCenter="318">
+		<e:Image horizontalCenter="0" verticalCenter="0" x="-5" y="87.34000000000003" scaleX="1" scaleY="1" source="button_down_04"/>
+		<e:Image source="icon_hotpoint" scaleX="1" scaleY="1" horizontalCenter="40.5" verticalCenter="-29.5" x="71" y="80.34000000000003"/>
+	</ns1:WGroup>
+	<ns1:WGroup id="btn6" width="120" height="90" horizontalCenter="331" verticalCenter="318">
+		<e:Image horizontalCenter="0" verticalCenter="0" x="-5" y="87.34000000000003" scaleX="1" scaleY="1" source="button_down_05"/>
+		<e:Image source="icon_hotpoint" scaleX="1" scaleY="1" horizontalCenter="40.5" verticalCenter="-29.5" x="71" y="80.34000000000003"/>
+	</ns1:WGroup>
+	<ns1:WGroup id="btn7" width="120" height="90" horizontalCenter="541" verticalCenter="305">
+		<e:Image horizontalCenter="0" verticalCenter="0" x="-5" y="87.34000000000003" scaleX="1" scaleY="1" source="button_down_shop"/>
+		<e:Image source="icon_hotpoint" scaleX="1" scaleY="1" horizontalCenter="40.5" verticalCenter="-29.5" x="71" y="80.34000000000003"/>
+	</ns1:WGroup>
+
+	<e:Group id="rankGroup" y="109.33" x="13.33">
+		<e:Group width="150" height="155" scaleX="1" scaleY="1">
+			<e:Image scaleX="1" scaleY="1" touchEnabled="false" source="playericon_01" y="16" x="16"/>
+			<e:Image scaleX="1" scaleY="1" touchEnabled="false" source="bg_phb_heroicon_up" y="0" x="0"/>
+			<!--<e:BitmapLabel font="cup_font_fnt" y="96" text="0000!" x="11" scaleX="0.9" scaleY="0.9"/>-->
+			<e:Image y="117" source="bg_phb_namedi01" scale9Grid="10,12,7,11" left="10" width="139"/>
+		</e:Group>
+		<e:Group width="150" height="155" scaleX="1" scaleY="1">
+			<e:Image scaleX="1" scaleY="1" touchEnabled="false" source="playericon_01" y="16" x="16"/>
+			<e:Image scaleX="1" scaleY="1" touchEnabled="false" source="bg_phb_heroicon_up" y="0" x="0"/>
+			<!--<e:BitmapLabel font="cup_font_fnt" y="96" text="0000!" x="11" scaleX="0.9" scaleY="0.9" visible="false"/>-->
+			<e:Image y="117" scale9Grid="10,12,7,11" left="10" width="139" source="bg_phb_namedi02"/>
+		</e:Group>
+		<e:Group width="150" height="155" scaleX="1" scaleY="1">
+			<e:Image scaleX="1" scaleY="1" touchEnabled="false" source="playericon_01" y="16" x="16"/>
+			<e:Image scaleX="1" scaleY="1" touchEnabled="false" source="bg_phb_heroicon_up" y="0" x="0"/>
+			<!--<e:BitmapLabel font="cup_font_fnt" y="96" text="0000!" x="11" scaleX="0.9" scaleY="0.9" visible="false"/>-->
+			<e:Image y="117" scale9Grid="10,12,7,11" left="10" width="139" source="bg_phb_namedi03"/>
+		</e:Group>
+		<e:layout>
+			<e:VerticalLayout/>
+		</e:layout>
+	</e:Group>
+	<e:Group id="rightGroup" x="1018.61" y="141.67">
+		<e:Group scaleX="1" scaleY="1">
+			<e:Image source="button_dz_1" right="0"/>
+			<e:Image source="button_dz_zd" y="12" x="119"/>
+			<e:Image source="icon_hotpoint"/>
+
+
+		</e:Group>
+		<e:Group scaleX="1" scaleY="1" x="10" y="10">
+			<e:Image right="0" source="button_dz_0"/>
+			<e:Image y="12" x="119" source="button_dz_ss_0"/>
+			<e:Image source="icon_hotpoint"/>
+
+
+		</e:Group>
+		<e:Group scaleX="1" scaleY="1" x="20" y="20">
+			<e:Image right="0" source="button_dz_0"/>
+			<e:Image y="12" x="119" source="button_dz_rw_0"/>
+			<e:Image source="icon_hotpoint"/>
+
+
+		</e:Group>
+		<e:Group scaleX="1" scaleY="1" x="30" y="30">
+			<e:Image right="0" source="button_dz_0"/>
+			<e:Image y="12" x="119" source="button_dz_tf_0"/>
+			<e:Image source="icon_hotpoint"/>
+
+
+		</e:Group>
+		<e:layout>
+			<e:VerticalLayout/>
+		</e:layout>
+	</e:Group>
+	<e:Group x="918.97" y="64.37" scaleX="0.9" scaleY="0.9">
+		<e:Group width="85" height="85">
+			<ns1:WGroup scaleX="1" scaleY="1" width="85" height="85" horizontalCenter="0" verticalCenter="0">
+				<e:Image scaleX="1" scaleY="1" source="bg_jjc_jctp_lb"/>
+				<e:Image scaleX="1" scaleY="1" source="icon_hotpoint"/>
+			</ns1:WGroup>
+		</e:Group>
+		<e:Group width="85" height="85">
+			<ns1:WGroup scaleX="1" scaleY="1" width="85" height="85" horizontalCenter="0" verticalCenter="0">
+			<e:Image scaleX="1" scaleY="1" source="bg_jjc_jctp_lb"/>
+			<e:Image scaleX="1" scaleY="1" source="icon_hotpoint"/>
+			</ns1:WGroup>
+		</e:Group>
+		<e:Group width="85" height="85" x="10" y="10">
+			<ns1:WGroup scaleX="1" scaleY="1" width="85" height="85" horizontalCenter="0" verticalCenter="0">
+			<e:Image scaleX="1" scaleY="1" source="bg_jjc_jctp_lb"/>
+			<e:Image scaleX="1" scaleY="1" source="icon_hotpoint"/>
+			</ns1:WGroup>
+		</e:Group>
+		<e:Group width="85" height="85" x="20" y="20">
+			<ns1:WGroup scaleX="1" scaleY="1" width="85" height="85" horizontalCenter="0" verticalCenter="0">
+			<e:Image scaleX="1" scaleY="1" source="bg_jjc_jctp_lb"/>
+			<e:Image scaleX="1" scaleY="1" source="icon_hotpoint"/>
+			</ns1:WGroup>
+		</e:Group>
+		<e:layout>
+			<e:HorizontalLayout/>
+		</e:layout>
+
+
+
+
+
+	</e:Group>
+	<!--<e:BitmapLabel id="labelDisplay" text="000" font="coin_font_fnt" right="483" y="33.66"/>
+	<e:BitmapLabel id="labelDisplay0" text="000" right="268" font="diamond_font_fnt" y="35"/>
+	<e:BitmapLabel id="labelDisplay1" font="exp_num_font_fnt" text="000" verticalCenter="-317.5" horizontalCenter="-100"/>-->
 
 </e:Skin>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<e:Skin class="DemoPanelSkin" width="720" height="1280" xmlns:e="http://ns.egret.com/eui" xmlns:home="home.*" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
+<e:Skin class="DemoPanelSkin" width="1280" height="720" xmlns:e="http://ns.egret.com/eui" xmlns:home="home.*" xmlns:w="http://ns.egret.com/wing" xmlns:ns1="*">
 	<e:Rect id="demo1" width="287" height="171" x="307" y="449"/>
 	<ns1:WButton x="281" y="161" skinName="DemoBtnSkin" label="111" labelDisplay="111"/>
 </e:Skin>

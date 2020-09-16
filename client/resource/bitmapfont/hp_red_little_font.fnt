@@ -1,0 +1,165 @@
+{
+ "file": "hp_red_little_font.png",
+ "frames": {
+  "0": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 21,
+   "y": 84
+  },
+  "1": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 21,
+   "y": 42
+  },
+  "2": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 0,
+   "y": 0
+  },
+  "3": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 0,
+   "y": 42
+  },
+  "4": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 0,
+   "y": 21
+  },
+  "5": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 21,
+   "y": 63
+  },
+  "6": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 21,
+   "y": 21
+  },
+  "7": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 42,
+   "y": 84
+  },
+  "8": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 21,
+   "y": 0
+  },
+  "9": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 42,
+   "y": 21
+  },
+  "a": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 0,
+   "y": 105
+  },
+  "b": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 0,
+   "y": 63
+  },
+  "c": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 42,
+   "y": 42
+  },
+  "d": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 0,
+   "y": 84
+  },
+  "e": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 42,
+   "y": 0
+  },
+  "f": {
+   "h": 19,
+   "offX": 1,
+   "offY": 1,
+   "sourceH": 20,
+   "sourceW": 20,
+   "w": 19,
+   "x": 42,
+   "y": 63
+  }
+ }
+}

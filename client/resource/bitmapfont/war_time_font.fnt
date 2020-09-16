@@ -1,0 +1,12 @@
+{"file":"war_time_font.png","frames":{
+"7":{"x":24,"y":34,"w":21,"h":31,"offX":0,"offY":0,"sourceW":21,"sourceH":31},
+"8":{"x":70,"y":34,"w":21,"h":31,"offX":0,"offY":0,"sourceW":21,"sourceH":31},
+"9":{"x":1,"y":1,"w":22,"h":31,"offX":0,"offY":0,"sourceW":22,"sourceH":31},
+"：":{"x":108,"y":34,"w":12,"h":23,"offX":0,"offY":4,"sourceW":12,"sourceH":31},
+"0":{"x":1,"y":34,"w":21,"h":31,"offX":0,"offY":0,"sourceW":21,"sourceH":31},
+"1":{"x":93,"y":34,"w":13,"h":30,"offX":0,"offY":0,"sourceW":13,"sourceH":31},
+"2":{"x":96,"y":1,"w":21,"h":31,"offX":0,"offY":0,"sourceW":21,"sourceH":31},
+"3":{"x":73,"y":1,"w":21,"h":31,"offX":0,"offY":0,"sourceW":21,"sourceH":31},
+"4":{"x":49,"y":1,"w":22,"h":31,"offX":0,"offY":0,"sourceW":22,"sourceH":31},
+"5":{"x":47,"y":34,"w":21,"h":31,"offX":0,"offY":0,"sourceW":21,"sourceH":31},
+"6":{"x":25,"y":1,"w":22,"h":31,"offX":0,"offY":0,"sourceW":22,"sourceH":31}}}

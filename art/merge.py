@@ -9,7 +9,7 @@ class Merge(object):
         self.init()
     
     def init(self):
-        self.oriDir = "./资源/"
+        self.oriDir = "./资源/resource/ui/"
         self.tarDir = "./导出资源/"
         self.maxWidth = 1024
         self.canvasWidth = 0

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="HeadIconSkin" xmlns:e="http://ns.egret.com/eui" width="100" height="100">
+	<e:Image id="playerIcon" scaleX="1" scaleY="1" touchEnabled="false" source="playericon_01" horizontalCenter="0" verticalCenter="0"/>
+	<e:Image id="edgeIcon" scaleX="1" scaleY="1" touchEnabled="false" source="bg_phb_heroicon_up"/>
+</e:Skin>

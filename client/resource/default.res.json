@@ -1,20 +1,310 @@
 {
 	"groups": [
 		{
-			"keys": "common_json",
+			"keys": "card_lv_0_fnt,card_lv_0_png,card_lv_1_fnt,card_lv_1_png,card_lv_2_fnt,card_lv_2_png,card_lv_3_fnt,card_lv_3_png,card_lv_blue_fnt,card_lv_blue_png,card_lv_orange_fnt,card_lv_orange_png,card_num_dark_fnt,card_num_dark_png,card_num_font_fnt,card_num_font_png,coin_font_fnt,coin_font_png,cost_warn_font_fnt,cost_warn_font_png,cup_font_fnt,cup_font_png,diamond_font_fnt,diamond_font_png,exp_lv_font_fnt,exp_lv_font_png,exp_num_font_fnt,exp_num_font_png,hero_card_num_blue_fnt,hero_card_num_blue_png,hero_card_num_red_fnt,hero_card_num_red_png,hp_blue_big_font_fnt,hp_blue_big_font_png,hp_blue_little_font_fnt,hp_blue_little_font_png,hp_red_big_font_fnt,hp_red_big_font_png,hp_red_little_font_fnt,hp_red_little_font_png,jjc_lv_fnt,jjc_lv_png,pp_time_blue_font_fnt,pp_time_blue_font_png,pp_time_red_font_fnt,pp_time_red_font_png,pp_war_time_font_fnt,pp_war_time_font_png,sh_font_fnt,sh_font_png,skill_num_font_fnt,skill_num_font_png,tower_lv_blue_font_fnt,tower_lv_blue_font_png,tower_lv_red_font_fnt,tower_lv_red_font_png,war_time_font_fnt,war_time_font_png,home_json",
 			"name": "preload"
 		},
 		{
-			"keys": "common_json",
+			"keys": "",
 			"name": "test"
 		}
 	],
 	"resources": [
 		{
-			"url": "default/common.json",
+			"url": "bitmapfont/card_lv_0.fnt",
+			"type": "font",
+			"name": "card_lv_0_fnt"
+		},
+		{
+			"url": "bitmapfont/card_lv_0.png",
+			"type": "image",
+			"name": "card_lv_0_png"
+		},
+		{
+			"url": "bitmapfont/card_lv_1.fnt",
+			"type": "font",
+			"name": "card_lv_1_fnt"
+		},
+		{
+			"url": "bitmapfont/card_lv_1.png",
+			"type": "image",
+			"name": "card_lv_1_png"
+		},
+		{
+			"url": "bitmapfont/card_lv_2.fnt",
+			"type": "font",
+			"name": "card_lv_2_fnt"
+		},
+		{
+			"url": "bitmapfont/card_lv_2.png",
+			"type": "image",
+			"name": "card_lv_2_png"
+		},
+		{
+			"url": "bitmapfont/card_lv_3.fnt",
+			"type": "font",
+			"name": "card_lv_3_fnt"
+		},
+		{
+			"url": "bitmapfont/card_lv_3.png",
+			"type": "image",
+			"name": "card_lv_3_png"
+		},
+		{
+			"url": "bitmapfont/card_lv_blue.fnt",
+			"type": "font",
+			"name": "card_lv_blue_fnt"
+		},
+		{
+			"url": "bitmapfont/card_lv_blue.png",
+			"type": "image",
+			"name": "card_lv_blue_png"
+		},
+		{
+			"url": "bitmapfont/card_lv_orange.fnt",
+			"type": "font",
+			"name": "card_lv_orange_fnt"
+		},
+		{
+			"url": "bitmapfont/card_lv_orange.png",
+			"type": "image",
+			"name": "card_lv_orange_png"
+		},
+		{
+			"url": "bitmapfont/card_num_dark.fnt",
+			"type": "font",
+			"name": "card_num_dark_fnt"
+		},
+		{
+			"url": "bitmapfont/card_num_dark.png",
+			"type": "image",
+			"name": "card_num_dark_png"
+		},
+		{
+			"url": "bitmapfont/card_num_font.fnt",
+			"type": "font",
+			"name": "card_num_font_fnt"
+		},
+		{
+			"url": "bitmapfont/card_num_font.png",
+			"type": "image",
+			"name": "card_num_font_png"
+		},
+		{
+			"url": "bitmapfont/coin_font.fnt",
+			"type": "font",
+			"name": "coin_font_fnt"
+		},
+		{
+			"url": "bitmapfont/coin_font.png",
+			"type": "image",
+			"name": "coin_font_png"
+		},
+		{
+			"url": "bitmapfont/cost_warn_font.fnt",
+			"type": "font",
+			"name": "cost_warn_font_fnt"
+		},
+		{
+			"url": "bitmapfont/cost_warn_font.png",
+			"type": "image",
+			"name": "cost_warn_font_png"
+		},
+		{
+			"url": "bitmapfont/cup_font.fnt",
+			"type": "font",
+			"name": "cup_font_fnt"
+		},
+		{
+			"url": "bitmapfont/cup_font.png",
+			"type": "image",
+			"name": "cup_font_png"
+		},
+		{
+			"url": "bitmapfont/diamond_font.fnt",
+			"type": "font",
+			"name": "diamond_font_fnt"
+		},
+		{
+			"url": "bitmapfont/diamond_font.png",
+			"type": "image",
+			"name": "diamond_font_png"
+		},
+		{
+			"url": "bitmapfont/exp_lv_font.fnt",
+			"type": "font",
+			"name": "exp_lv_font_fnt"
+		},
+		{
+			"url": "bitmapfont/exp_lv_font.png",
+			"type": "image",
+			"name": "exp_lv_font_png"
+		},
+		{
+			"url": "bitmapfont/exp_num_font.fnt",
+			"type": "font",
+			"name": "exp_num_font_fnt"
+		},
+		{
+			"url": "bitmapfont/exp_num_font.png",
+			"type": "image",
+			"name": "exp_num_font_png"
+		},
+		{
+			"url": "bitmapfont/hero_card_num_blue.fnt",
+			"type": "font",
+			"name": "hero_card_num_blue_fnt"
+		},
+		{
+			"url": "bitmapfont/hero_card_num_blue.png",
+			"type": "image",
+			"name": "hero_card_num_blue_png"
+		},
+		{
+			"url": "bitmapfont/hero_card_num_red.fnt",
+			"type": "font",
+			"name": "hero_card_num_red_fnt"
+		},
+		{
+			"url": "bitmapfont/hero_card_num_red.png",
+			"type": "image",
+			"name": "hero_card_num_red_png"
+		},
+		{
+			"url": "bitmapfont/hp_blue_big_font.fnt",
+			"type": "font",
+			"name": "hp_blue_big_font_fnt"
+		},
+		{
+			"url": "bitmapfont/hp_blue_big_font.png",
+			"type": "image",
+			"name": "hp_blue_big_font_png"
+		},
+		{
+			"url": "bitmapfont/hp_blue_little_font.fnt",
+			"type": "font",
+			"name": "hp_blue_little_font_fnt"
+		},
+		{
+			"url": "bitmapfont/hp_blue_little_font.png",
+			"type": "image",
+			"name": "hp_blue_little_font_png"
+		},
+		{
+			"url": "bitmapfont/hp_red_big_font.fnt",
+			"type": "font",
+			"name": "hp_red_big_font_fnt"
+		},
+		{
+			"url": "bitmapfont/hp_red_big_font.png",
+			"type": "image",
+			"name": "hp_red_big_font_png"
+		},
+		{
+			"url": "bitmapfont/hp_red_little_font.fnt",
+			"type": "font",
+			"name": "hp_red_little_font_fnt"
+		},
+		{
+			"url": "bitmapfont/hp_red_little_font.png",
+			"type": "image",
+			"name": "hp_red_little_font_png"
+		},
+		{
+			"url": "bitmapfont/jjc_lv.fnt",
+			"type": "font",
+			"name": "jjc_lv_fnt"
+		},
+		{
+			"url": "bitmapfont/jjc_lv.png",
+			"type": "image",
+			"name": "jjc_lv_png"
+		},
+		{
+			"url": "bitmapfont/pp_time_blue_font.fnt",
+			"type": "font",
+			"name": "pp_time_blue_font_fnt"
+		},
+		{
+			"url": "bitmapfont/pp_time_blue_font.png",
+			"type": "image",
+			"name": "pp_time_blue_font_png"
+		},
+		{
+			"url": "bitmapfont/pp_time_red_font.fnt",
+			"type": "font",
+			"name": "pp_time_red_font_fnt"
+		},
+		{
+			"url": "bitmapfont/pp_time_red_font.png",
+			"type": "image",
+			"name": "pp_time_red_font_png"
+		},
+		{
+			"url": "bitmapfont/pp_war_time_font.fnt",
+			"type": "font",
+			"name": "pp_war_time_font_fnt"
+		},
+		{
+			"url": "bitmapfont/pp_war_time_font.png",
+			"type": "image",
+			"name": "pp_war_time_font_png"
+		},
+		{
+			"url": "bitmapfont/sh_font.fnt",
+			"type": "font",
+			"name": "sh_font_fnt"
+		},
+		{
+			"url": "bitmapfont/sh_font.png",
+			"type": "image",
+			"name": "sh_font_png"
+		},
+		{
+			"url": "bitmapfont/skill_num_font.fnt",
+			"type": "font",
+			"name": "skill_num_font_fnt"
+		},
+		{
+			"url": "bitmapfont/skill_num_font.png",
+			"type": "image",
+			"name": "skill_num_font_png"
+		},
+		{
+			"url": "bitmapfont/tower_lv_blue_font.fnt",
+			"type": "font",
+			"name": "tower_lv_blue_font_fnt"
+		},
+		{
+			"url": "bitmapfont/tower_lv_blue_font.png",
+			"type": "image",
+			"name": "tower_lv_blue_font_png"
+		},
+		{
+			"url": "bitmapfont/tower_lv_red_font.fnt",
+			"type": "font",
+			"name": "tower_lv_red_font_fnt"
+		},
+		{
+			"url": "bitmapfont/tower_lv_red_font.png",
+			"type": "image",
+			"name": "tower_lv_red_font_png"
+		},
+		{
+			"url": "bitmapfont/war_time_font.fnt",
+			"type": "font",
+			"name": "war_time_font_fnt"
+		},
+		{
+			"url": "bitmapfont/war_time_font.png",
+			"type": "image",
+			"name": "war_time_font_png"
+		},
+		{
+			"url": "default/home.json",
 			"type": "sheet",
-			"name": "common_json",
-			"subkeys": "bg_card_di_1,bg_card_di_2,bg_card_di_3,bg_card_di_4,bg_lz_tc02,button_ty_blue,button_ty_green,button_ty_red,button_ty_yellow,button_ty_yellow_h,heroicon_10010,heroicon_10020,heroicon_10030,heroicon_10040,heroicon_10050,heroicon_10060,heroicon_10070,icon_hotpoint,item_1,item_2,item_3"
+			"name": "home_json",
+			"subkeys": "bg_exp,bg_exp_nr,bg_jjc_jctp_lb,bg_phb_heroicon_back,bg_phb_heroicon_up,bg_phb_heroicon_up01,bg_phb_heroicon_up02,bg_phb_heroicon_up03,bg_phb_namedi01,bg_phb_namedi02,bg_phb_namedi03,button_down_01,button_down_02,button_down_03,button_down_04,button_down_05,button_down_phb,button_down_shop,button_dz_0,button_dz_1,button_dz_rw,button_dz_rw_0,button_dz_ss,button_dz_ss_0,button_dz_tf,button_dz_tf_0,button_dz_zd,button_dz_zd_0,button_top_add,button_top_add02,button_top_mail,button_top_player,button_top_set,icon_hotpoint,icon_top_coin,icon_top_diamond,icon_top_exp,icon_xb_n,icon_xb_nv,playericon_01,playericon_02,playericon_03,playericon_04,playericon_05,playericon_06,playericon_07,playericon_08,playericon_09,playericon_10,playericon_11,playericon_12,playericon_13,playericon_14,playericon_15,playericon_16,playericon_17,playericon_18,playericon_19,playericon_20,playericon_21,playericon_22,playericon_23,playericon_24"
 		}
 	]
 }

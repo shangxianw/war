@@ -1,0 +1,125 @@
+{
+ "file": "pp_war_time_font.png",
+ "frames": {
+  "!": {
+   "h": 19,
+   "offX": 8,
+   "offY": 3,
+   "sourceH": 26,
+   "sourceW": 22,
+   "w": 7,
+   "x": 47,
+   "y": 0
+  },
+  "/": {
+   "h": 19,
+   "offX": 8,
+   "offY": 3,
+   "sourceH": 26,
+   "sourceW": 22,
+   "w": 7,
+   "x": 47,
+   "y": 0
+  },
+  "0": {
+   "h": 25,
+   "offX": 1,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 22,
+   "w": 21,
+   "x": 24,
+   "y": 0
+  },
+  "1": {
+   "h": 25,
+   "offX": 7,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 22,
+   "w": 9,
+   "x": 46,
+   "y": 27
+  },
+  "2": {
+   "h": 26,
+   "offX": 1,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 22,
+   "w": 20,
+   "x": 24,
+   "y": 27
+  },
+  "3": {
+   "h": 26,
+   "offX": 1,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 22,
+   "w": 20,
+   "x": 0,
+   "y": 56
+  },
+  "4": {
+   "h": 26,
+   "offX": 2,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 22,
+   "w": 18,
+   "x": 43,
+   "y": 83
+  },
+  "5": {
+   "h": 26,
+   "offX": 1,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 22,
+   "w": 20,
+   "x": 0,
+   "y": 28
+  },
+  "6": {
+   "h": 26,
+   "offX": 1,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 22,
+   "w": 20,
+   "x": 22,
+   "y": 55
+  },
+  "7": {
+   "h": 26,
+   "offX": 3,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 22,
+   "w": 18,
+   "x": 44,
+   "y": 55
+  },
+  "8": {
+   "h": 26,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 22,
+   "w": 22,
+   "x": 0,
+   "y": 0
+  },
+  "9": {
+   "h": 26,
+   "offX": 2,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 22,
+   "w": 19,
+   "x": 22,
+   "y": 83
+  }
+ }
+}

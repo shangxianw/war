@@ -14,7 +14,7 @@ class HomeLoading extends ViewBase
 
 	private loadPreload()
 	{
-		ResManager.Ins().loadGroup(["test"], this.OnCbFn, this, this.OnProFn, this.OnErrorFn)
+		ResManager.Ins().loadGroup(["preload"], this.OnCbFn, this, this.OnProFn, this.OnErrorFn)
 	}
 
 	private OnCbFn(e:RES.ResourceEvent)

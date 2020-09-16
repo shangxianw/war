@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="Bar1Skin" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing"  width="188">
+	<e:Image id="thumb" source="bg_exp_nr" left="0" right="0" scale9Grid="25,4,152,31"/>
+	<e:BitmapLabel id="labelDisplay" font="exp_num_font_fnt" text="000" verticalCenter="0" horizontalCenter="0"/>
+</e:Skin>

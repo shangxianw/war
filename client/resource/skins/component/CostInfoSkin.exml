@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="CostInfoSkin" width="1280" height="120" currentState="common1" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing" xmlns:game="game.*" xmlns:ns1="*" states="common1,家族" >
+	<e:Image x="438" source="bg_exp" y="18.67" width="200" scale9Grid="28,6,22,37"/>
+	<e:Image x="648" source="bg_exp" y="18.67" width="200" scale9Grid="28,6,22,37"/>
+	<e:Image x="858" source="bg_exp" y="18.67" width="200" scale9Grid="28,6,22,37"/>
+	<e:Image x="644.01" source="icon_top_coin" verticalCenter="-14"/>
+	<e:Image x="857.35" verticalCenter="-14" source="icon_top_diamond"/>
+	<e:Image x="796.32" y="22.17" source="button_top_add02"/>
+	<e:Image x="1009.66" y="22.17" source="button_top_add"/>
+	<ns1:WProgressBar x="444" y="24.17" skinName="Bar1Skin" value="100" includeIn="common1"/>
+	<e:Image x="424" source="icon_top_exp" y="16.67" source.家族="icon_jz_gx"/>
+	<e:BitmapLabel id="labelDisplay" text="000" font="coin_font_fnt" verticalCenter="-16.5" right="483"/>
+	<e:BitmapLabel id="labelDisplay0" text="000" verticalCenter="-16.5" right="268" font="diamond_font_fnt"/>
+	<e:BitmapLabel id="labelDisplay1" font="exp_num_font_fnt" text="000" verticalCenter="-16.5" horizontalCenter="-100" includeIn="家族"/>
+	
+</e:Skin>

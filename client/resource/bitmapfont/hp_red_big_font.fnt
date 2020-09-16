@@ -1,0 +1,105 @@
+{
+ "file": "hp_red_big_font.png",
+ "frames": {
+  "0": {
+   "h": 16,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 16,
+   "sourceW": 14,
+   "w": 14,
+   "x": 16,
+   "y": 18
+  },
+  "1": {
+   "h": 16,
+   "offX": 3,
+   "offY": 0,
+   "sourceH": 16,
+   "sourceW": 14,
+   "w": 9,
+   "x": 16,
+   "y": 36
+  },
+  "2": {
+   "h": 16,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 16,
+   "sourceW": 14,
+   "w": 14,
+   "x": 32,
+   "y": 18
+  },
+  "3": {
+   "h": 16,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 16,
+   "sourceW": 14,
+   "w": 14,
+   "x": 0,
+   "y": 0
+  },
+  "4": {
+   "h": 16,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 16,
+   "sourceW": 14,
+   "w": 14,
+   "x": 0,
+   "y": 36
+  },
+  "5": {
+   "h": 16,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 16,
+   "sourceW": 14,
+   "w": 14,
+   "x": 16,
+   "y": 0
+  },
+  "6": {
+   "h": 16,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 16,
+   "sourceW": 14,
+   "w": 14,
+   "x": 0,
+   "y": 18
+  },
+  "7": {
+   "h": 16,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 16,
+   "sourceW": 14,
+   "w": 14,
+   "x": 48,
+   "y": 0
+  },
+  "8": {
+   "h": 16,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 16,
+   "sourceW": 14,
+   "w": 14,
+   "x": 48,
+   "y": 18
+  },
+  "9": {
+   "h": 16,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 16,
+   "sourceW": 14,
+   "w": 14,
+   "x": 32,
+   "y": 0
+  }
+ }
+}

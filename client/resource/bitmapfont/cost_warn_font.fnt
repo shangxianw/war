@@ -1,0 +1,125 @@
+{
+ "file": "cost_warn_font.png",
+ "frames": {
+  "!": {
+   "h": 26,
+   "offX": 2,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 19,
+   "w": 16,
+   "x": 0,
+   "y": 84
+  },
+  "/": {
+   "h": 26,
+   "offX": 2,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 19,
+   "w": 16,
+   "x": 0,
+   "y": 84
+  },
+  "0": {
+   "h": 26,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 19,
+   "w": 19,
+   "x": 0,
+   "y": 56
+  },
+  "1": {
+   "h": 26,
+   "offX": 4,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 19,
+   "w": 12,
+   "x": 18,
+   "y": 84
+  },
+  "2": {
+   "h": 26,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 19,
+   "w": 19,
+   "x": 42,
+   "y": 28
+  },
+  "3": {
+   "h": 26,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 19,
+   "w": 19,
+   "x": 21,
+   "y": 0
+  },
+  "4": {
+   "h": 26,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 19,
+   "w": 19,
+   "x": 42,
+   "y": 0
+  },
+  "5": {
+   "h": 26,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 19,
+   "w": 19,
+   "x": 0,
+   "y": 28
+  },
+  "6": {
+   "h": 26,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 19,
+   "w": 19,
+   "x": 42,
+   "y": 56
+  },
+  "7": {
+   "h": 26,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 19,
+   "w": 19,
+   "x": 21,
+   "y": 56
+  },
+  "8": {
+   "h": 26,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 19,
+   "w": 19,
+   "x": 21,
+   "y": 28
+  },
+  "9": {
+   "h": 26,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 26,
+   "sourceW": 19,
+   "w": 19,
+   "x": 0,
+   "y": 0
+  }
+ }
+}

@@ -1,0 +1,165 @@
+{
+ "file": "tower_lv_blue_font.png",
+ "frames": {
+  "0": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 0,
+   "y": 32
+  },
+  "1": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 64,
+   "y": 64
+  },
+  "2": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 0,
+   "y": 96
+  },
+  "3": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 96,
+   "y": 96
+  },
+  "4": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 0,
+   "y": 64
+  },
+  "5": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 64,
+   "y": 0
+  },
+  "6": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 96,
+   "y": 0
+  },
+  "7": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 32,
+   "y": 32
+  },
+  "8": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 0,
+   "y": 0
+  },
+  "9": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 96,
+   "y": 32
+  },
+  "a": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 32,
+   "y": 96
+  },
+  "b": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 64,
+   "y": 32
+  },
+  "c": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 64,
+   "y": 96
+  },
+  "d": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 32,
+   "y": 0
+  },
+  "e": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 96,
+   "y": 64
+  },
+  "f": {
+   "h": 30,
+   "offX": 0,
+   "offY": 0,
+   "sourceH": 30,
+   "sourceW": 30,
+   "w": 30,
+   "x": 32,
+   "y": 64
+  }
+ }
+}

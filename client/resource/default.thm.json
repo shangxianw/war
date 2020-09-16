@@ -4,6 +4,10 @@
 	"exmls": [
 		"resource/skins/component/button/Btn1Skin.exml",
 		"resource/skins/component/button/Btn2Skin.exml",
+		"resource/skins/component/progressbar/Bar1Skin.exml",
+		"resource/skins/component/CostInfoSkin.exml",
+		"resource/skins/component/HeadIconSkin.exml",
+		"resource/skins/component/NameItemSkin.exml",
 		"resource/skins/eui_skins/ButtonSkin.exml",
 		"resource/skins/eui_skins/CheckBoxSkin.exml",
 		"resource/skins/eui_skins/HScrollBarSkin.exml",

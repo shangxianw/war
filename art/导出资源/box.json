@@ -1,0 +1,9 @@
+{
+    "file":"box.png",
+    "frames":
+    {
+        "icon_bx_051":{"x":0, "y":0, "w":170, "h":170, "offX":0, "offY":0, "sourceW":170, "sourceH":170},
+        "icon_bx_060":{"x":170, "y":0, "w":170, "h":170, "offX":0, "offY":0, "sourceW":170, "sourceH":170},
+        "icon_bx_061":{"x":340, "y":0, "w":170, "h":170, "offX":0, "offY":0, "sourceW":170, "sourceH":170}
+    }
+}

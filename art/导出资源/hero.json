@@ -1,0 +1,9 @@
+{
+    "file":"hero.png",
+    "frames":
+    {
+        "icon_bx_key":{"x":0, "y":0, "w":60, "h":65, "offX":0, "offY":0, "sourceW":60, "sourceH":65},
+        "button_bx_jzxz":{"x":60, "y":0, "w":53, "h":48, "offX":0, "offY":0, "sourceW":53, "sourceH":48},
+        "bg_bx_bxdik":{"x":113, "y":0, "w":46, "h":46, "offX":0, "offY":0, "sourceW":46, "sourceH":46}
+    }
+}

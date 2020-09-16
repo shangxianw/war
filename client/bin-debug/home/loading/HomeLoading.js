@@ -21,7 +21,7 @@ var HomeLoading = (function (_super) {
         this.loadPreload();
     };
     HomeLoading.prototype.loadPreload = function () {
-        ResManager.Ins().loadGroup(["test"], this.OnCbFn, this, this.OnProFn, this.OnErrorFn);
+        ResManager.Ins().loadGroup(["preload"], this.OnCbFn, this, this.OnProFn, this.OnErrorFn);
     };
     HomeLoading.prototype.OnCbFn = function (e) {
         // setTimeout(()=>{
