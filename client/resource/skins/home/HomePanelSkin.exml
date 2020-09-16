@@ -16,6 +16,7 @@
 	<e:Image x="424" source="icon_top_exp" y="14.67"/>
 	<e:Image x="1227" y="137.33" source="bg_dz_bldi" scale9Grid="5,6,5,41" height="485"/>
 	<e:Image x="982.37" y="141.34" source="bg_jd_btd" scale9Grid="31,1,190,12" anchorOffsetY="0" height="483"/>
+	<e:Image x="333.33" y="23.96" source="bg_dz_jjc_di06"/>
 
 
 
@@ -70,20 +71,21 @@
 		<e:Group width="150" height="155" scaleX="1" scaleY="1">
 			<e:Image scaleX="1" scaleY="1" touchEnabled="false" source="playericon_01" y="16" x="16"/>
 			<e:Image scaleX="1" scaleY="1" touchEnabled="false" source="bg_phb_heroicon_up" y="0" x="0"/>
-			<!--<e:BitmapLabel font="cup_font_fnt" y="96" text="0000!" x="11" scaleX="0.9" scaleY="0.9"/>-->
+
 			<e:Image y="117" source="bg_phb_namedi01" scale9Grid="10,12,7,11" left="10" width="139"/>
+			<e:Image x="30.85" y="-5.15" source="icon_phb_num01" scaleX="0.6" scaleY="0.6"/>
 		</e:Group>
 		<e:Group width="150" height="155" scaleX="1" scaleY="1">
 			<e:Image scaleX="1" scaleY="1" touchEnabled="false" source="playericon_01" y="16" x="16"/>
 			<e:Image scaleX="1" scaleY="1" touchEnabled="false" source="bg_phb_heroicon_up" y="0" x="0"/>
-			<!--<e:BitmapLabel font="cup_font_fnt" y="96" text="0000!" x="11" scaleX="0.9" scaleY="0.9" visible="false"/>-->
 			<e:Image y="117" scale9Grid="10,12,7,11" left="10" width="139" source="bg_phb_namedi02"/>
+			<e:Image x="30.85" y="-4.15" scaleX="0.6" scaleY="0.6" source="icon_phb_num02"/>
 		</e:Group>
 		<e:Group width="150" height="155" scaleX="1" scaleY="1">
 			<e:Image scaleX="1" scaleY="1" touchEnabled="false" source="playericon_01" y="16" x="16"/>
 			<e:Image scaleX="1" scaleY="1" touchEnabled="false" source="bg_phb_heroicon_up" y="0" x="0"/>
-			<!--<e:BitmapLabel font="cup_font_fnt" y="96" text="0000!" x="11" scaleX="0.9" scaleY="0.9" visible="false"/>-->
 			<e:Image y="117" scale9Grid="10,12,7,11" left="10" width="139" source="bg_phb_namedi03"/>
+			<e:Image x="30.85" y="-5.15" scaleX="0.6" scaleY="0.6" source="icon_phb_num03"/>
 		</e:Group>
 		<e:layout>
 			<e:VerticalLayout/>
@@ -150,14 +152,42 @@
 		<e:layout>
 			<e:HorizontalLayout/>
 		</e:layout>
-
-
-
-
-
 	</e:Group>
-	<!--<e:BitmapLabel id="labelDisplay" text="000" font="coin_font_fnt" right="483" y="33.66"/>
-	<e:BitmapLabel id="labelDisplay0" text="000" right="268" font="diamond_font_fnt" y="35"/>
-	<e:BitmapLabel id="labelDisplay1" font="exp_num_font_fnt" text="000" verticalCenter="-317.5" horizontalCenter="-100"/>-->
 
+	<!--label-->
+	<e:BitmapLabel font="cup_font_fnt" y="202.64" text="0000!" x="23" scaleX="0.9" scaleY="0.9"/>
+	<e:BitmapLabel font="cup_font_fnt" y="361.96" text="0000!" x="23" scaleX="0.9" scaleY="0.9"/>
+	<e:BitmapLabel font="cup_font_fnt" y="525.95" text="0000!" x="23" scaleX="0.9" scaleY="0.9"/>
+	<e:BitmapLabel y="31.39" text="0000" scaleX="0.9" scaleY="0.9" font="exp_lv_font_fnt" horizontalCenter="-97"/>
+	<e:BitmapLabel y="32.91" text="0000" right="481" font="coin_font_fnt"/>
+	<e:BitmapLabel y="32.91" text="0000" right="269" font="diamond_font_fnt"/>
+	<e:Label text="00小时" fontFamily="main_font" size="20" stroke="2" strokeColor="0x128e63" scaleX="1" scaleY="1" top="116" horizontalCenter="318"/>
+	<e:Label text="00小时" fontFamily="main_font" size="20" stroke="2" strokeColor="0x128E63" scaleX="1" scaleY="1" top="116" horizontalCenter="400"/>
+	<e:Label text="00小时" fontFamily="main_font" size="20" stroke="2" strokeColor="0x128E63" scaleX="1" scaleY="1" top="116" horizontalCenter="481"/>
+	<e:Label text="00小时" fontFamily="main_font" size="20" stroke="2" strokeColor="0x128E63" scaleX="1" scaleY="1" top="116" horizontalCenter="562"/>
+
+	<e:Group x="1057.61" y="157.15">
+		<e:Group scaleX="1" scaleY="1" height="75">
+			<e:Label text="标签" fontFamily="main_font" size="40" scaleX="1" scaleY="1"/>
+			<e:Label text="入口描述" fontFamily="desc_font" size="20" scaleX="1" scaleY="1" y="54.52"/>
+		</e:Group>
+		<e:Group scaleX="1" scaleY="1" height="75">
+			<e:Label text="标签" fontFamily="main_font" size="40" scaleX="1" scaleY="1"/>
+			<e:Label text="入口描述" fontFamily="desc_font" size="20" scaleX="1" scaleY="1" y="54.52"/>
+		</e:Group>
+		<e:Group scaleX="1" scaleY="1" height="75" x="10" y="10">
+			<e:Label text="标签" fontFamily="main_font" size="40" scaleX="1" scaleY="1"/>
+			<e:Label text="入口描述" fontFamily="desc_font" size="20" scaleX="1" scaleY="1" y="54.52"/>
+		</e:Group>
+		<e:Group scaleX="1" scaleY="1" height="75" x="20" y="20">
+			<e:Label text="标签" fontFamily="main_font" size="40" scaleX="1" scaleY="1"/>
+			<e:Label text="入口描述" fontFamily="desc_font" size="20" scaleX="1" scaleY="1" y="54.52"/>
+		</e:Group>
+		<e:layout>
+			<e:VerticalLayout gap="49"/>
+		</e:layout>
+	</e:Group>
+	<e:Label text="00小时" fontFamily="main_font" size="20" stroke="2" strokeColor="0x128E63" scaleX="1" scaleY="1" y="31.18" x="136.35"/>
+	<e:Label id="familyName" text="无家族" x="95" y="65" fontFamily="desc_font" size="24" stroke="0" anchorOffsetX="0" textColor="0x8eabb3" touchEnabled="false"/>
+	<e:Label id="cupCount" text="0000" fontFamily="main_font" size="26" stroke="0" anchorOffsetX="0" textColor="0xf2d45e" textAlign="right" touchEnabled="false" y="28.78" right="949"/>
 </e:Skin>
