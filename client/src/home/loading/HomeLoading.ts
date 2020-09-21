@@ -21,6 +21,7 @@ class HomeLoading extends ViewBase
 	{
 		// setTimeout(()=>{
 			this.closeSelf()
+			ViewManager.Ins().open(HomeBgPanel)
 			ViewManager.Ins().open(HomePanel)
 		// }, 1000);
 	}

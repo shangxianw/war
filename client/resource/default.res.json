@@ -1,11 +1,11 @@
 {
 	"groups": [
 		{
-			"keys": "card_lv_0_fnt,card_lv_0_png,card_lv_1_fnt,card_lv_1_png,card_lv_2_fnt,card_lv_2_png,card_lv_3_fnt,card_lv_3_png,card_lv_blue_fnt,card_lv_blue_png,card_lv_orange_fnt,card_lv_orange_png,card_num_dark_fnt,card_num_dark_png,card_num_font_fnt,card_num_font_png,coin_font_fnt,coin_font_png,cost_warn_font_fnt,cost_warn_font_png,cup_font_fnt,cup_font_png,diamond_font_fnt,diamond_font_png,exp_lv_font_fnt,exp_lv_font_png,exp_num_font_fnt,exp_num_font_png,hero_card_num_blue_fnt,hero_card_num_blue_png,hero_card_num_red_fnt,hero_card_num_red_png,hp_blue_big_font_fnt,hp_blue_big_font_png,hp_blue_little_font_fnt,hp_blue_little_font_png,hp_red_big_font_fnt,hp_red_big_font_png,hp_red_little_font_fnt,hp_red_little_font_png,jjc_lv_fnt,jjc_lv_png,pp_time_blue_font_fnt,pp_time_blue_font_png,pp_time_red_font_fnt,pp_time_red_font_png,pp_war_time_font_fnt,pp_war_time_font_png,sh_font_fnt,sh_font_png,skill_num_font_fnt,skill_num_font_png,tower_lv_blue_font_fnt,tower_lv_blue_font_png,tower_lv_red_font_fnt,tower_lv_red_font_png,war_time_font_fnt,war_time_font_png,home_json",
+			"keys": "home_json,bg_main_jpg,cup_font_png,cup_font_fnt,coin_font_png,coin_font_fnt,exp_lv_font_png,exp_lv_font_fnt,diamond_font_png,diamond_font_fnt",
 			"name": "preload"
 		},
 		{
-			"keys": "",
+			"keys": "home_json",
 			"name": "test"
 		}
 	],
@@ -305,6 +305,11 @@
 			"type": "sheet",
 			"name": "home_json",
 			"subkeys": "bg_dz_jjc_di06,bg_exp,bg_exp_nr,bg_jjc_jctp_lb,bg_phb_heroicon_back,bg_phb_heroicon_up,bg_phb_heroicon_up01,bg_phb_heroicon_up02,bg_phb_heroicon_up03,bg_phb_namedi01,bg_phb_namedi02,bg_phb_namedi03,button_down_01,button_down_02,button_down_03,button_down_04,button_down_05,button_down_phb,button_down_shop,button_dz_0,button_dz_1,button_dz_rw,button_dz_rw_0,button_dz_ss,button_dz_ss_0,button_dz_tf,button_dz_tf_0,button_dz_zd,button_dz_zd_0,button_top_add,button_top_add02,button_top_mail,button_top_player,button_top_set,icon_hotpoint,icon_phb_num01,icon_phb_num02,icon_phb_num03,icon_top_coin,icon_top_diamond,icon_top_exp,icon_xb_n,icon_xb_nv,playericon_01,playericon_02,playericon_03,playericon_04,playericon_05,playericon_06,playericon_07,playericon_08,playericon_09,playericon_10,playericon_11,playericon_12,playericon_13,playericon_14,playericon_15,playericon_16,playericon_17,playericon_18,playericon_19,playericon_20,playericon_21,playericon_22,playericon_23,playericon_24"
+		},
+		{
+			"url": "bigui/bg_main.jpg",
+			"type": "image",
+			"name": "bg_main_jpg"
 		}
 	]
 }

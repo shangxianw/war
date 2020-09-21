@@ -26,6 +26,7 @@ var HomeLoading = (function (_super) {
     HomeLoading.prototype.OnCbFn = function (e) {
         // setTimeout(()=>{
         this.closeSelf();
+        ViewManager.Ins().open(HomeBgPanel);
         ViewManager.Ins().open(HomePanel);
         // }, 1000);
     };

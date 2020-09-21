@@ -29,6 +29,9 @@
 var __reflect = (this && this.__reflect) || function (p, c, t) {
     p.__class__ = c, t ? t.push(c) : t = [c], p.__types__ = p.__types__ ? t.concat(p.__types__) : t;
 };
+/**
+ * 不需要 RES.getResAsync 和 RES.getResByUrl 方法，因为这样统计不到skin上的资源引用。
+ */
 var AssetAdapter = (function () {
     function AssetAdapter() {
     }
@@ -48,13 +51,13 @@ var AssetAdapter = (function () {
             if (data) {
                 onGetRes(data);
             }
-            else {
-                RES.getResAsync(source, onGetRes, this);
-            }
+            // else {
+            //     RES.getResAsync(source, onGetRes, this);
+            // }
         }
-        else {
-            RES.getResByUrl(source, onGetRes, this, RES.ResourceItem.TYPE_IMAGE);
-        }
+        // else {
+        //     RES.getResByUrl(source, onGetRes, this, RES.ResourceItem.TYPE_IMAGE);
+        // }
     };
     return AssetAdapter;
 }());

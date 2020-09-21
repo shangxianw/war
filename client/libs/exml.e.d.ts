@@ -74,6 +74,8 @@ declare class HeroPanelSkin extends eui.Skin{
 }
 declare class KaSkin extends eui.Skin{
 }
+declare class HomeBgPanelSkin extends eui.Skin{
+}
 declare class HomePanelSkin extends eui.Skin{
 }
 declare class HomeLoadingSkin extends eui.Skin{

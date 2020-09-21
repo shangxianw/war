@@ -10,6 +10,8 @@ var GameData = (function () {
     GameData.getFrameRate = function () {
         return LayerManager.Ins().stageMain.stage.frameRate;
     };
+    GameData.Width = 1280;
+    GameData.Height = 720;
     GameData.DevelopMode = DevelopMode.DEBUG;
     return GameData;
 }());

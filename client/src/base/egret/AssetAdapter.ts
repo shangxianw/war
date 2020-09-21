@@ -27,7 +27,9 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
+/**
+ * 不需要 RES.getResAsync 和 RES.getResByUrl 方法，因为这样统计不到skin上的资源引用。
+ */
 class AssetAdapter implements eui.IAssetAdapter {
     /**
      * @language zh_CN
@@ -45,12 +47,12 @@ class AssetAdapter implements eui.IAssetAdapter {
             if (data) {
                 onGetRes(data);
             }
-            else {
-                RES.getResAsync(source, onGetRes, this);
-            }
+            // else {
+            //     RES.getResAsync(source, onGetRes, this);
+            // }
         }
-        else {
-            RES.getResByUrl(source, onGetRes, this, RES.ResourceItem.TYPE_IMAGE);
-        }
+        // else {
+        //     RES.getResByUrl(source, onGetRes, this, RES.ResourceItem.TYPE_IMAGE);
+        // }
     }
 }
