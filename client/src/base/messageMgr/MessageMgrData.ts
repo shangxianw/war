@@ -1,6 +1,6 @@
 class MessageMgrData extends DataBase
 {
-	public type:number;
+	public type:string;
 	public cbFn:Function;
 	public thisObj:Object;
 	public init()
@@ -13,7 +13,7 @@ class MessageMgrData extends DataBase
 
 	}
 
-	public packData(type:number, cbFn:Function, thisObj:Object)
+	public packData(type:string, cbFn:Function, thisObj:Object)
 	{
 		this.type = type;
 		this.cbFn = cbFn;

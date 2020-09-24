@@ -1,9 +1,9 @@
 class MessageManager extends DataBase
 {
-	public msgMap:Hash<number, MessageMgrData[]>
+	public msgMap:Hash<string, MessageMgrData[]>
 	public init()
 	{
-		this.msgMap = new Hash<number, MessageMgrData[]>();
+		this.msgMap = new Hash<string, MessageMgrData[]>();
 	}
 
 	public destroy()
@@ -21,7 +21,7 @@ class MessageManager extends DataBase
 		this.msgMap = null;
 	}
 
-	public addListener(type:number, cbFn:Function, thisObj:Object):boolean
+	public addListener(type:string, cbFn:Function, thisObj:Object):boolean
 	{
 		if(type == null || cbFn == null || thisObj == null)
 			return false;
@@ -44,7 +44,7 @@ class MessageManager extends DataBase
 		return true;
 	}
 
-	public removeListener(type:number, cbFn:Function, thisObj:Object)
+	public removeListener(type:string, cbFn:Function, thisObj:Object)
 	{
 		if(type == null || cbFn == null || thisObj == null)
 			return false;
@@ -68,7 +68,7 @@ class MessageManager extends DataBase
 		return false;
 	}
 
-	public update(type:number, param:any=null)
+	public update(type:string, param:any=null)
 	{
 		if(type == null)
 			return false;

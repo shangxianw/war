@@ -190,4 +190,5 @@
 	<e:Label text="00小时" fontFamily="main_font" size="20" stroke="2" strokeColor="0x128E63" scaleX="1" scaleY="1" y="31.18" x="136.35"/>
 	<e:Label id="familyName" text="无家族" x="95" y="65" fontFamily="desc_font" size="24" stroke="0" anchorOffsetX="0" textColor="0x8eabb3" touchEnabled="false"/>
 	<e:Label id="cupCount" text="0000" fontFamily="main_font" size="26" stroke="0" anchorOffsetX="0" textColor="0xf2d45e" textAlign="right" touchEnabled="false" y="28.78" right="949"/>
+	<e:Button id="fightBtn" label="Button" x="479" y="315" skinName="skins.ButtonSkin"/>
 </e:Skin>

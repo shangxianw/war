@@ -17,8 +17,14 @@ var HomePanel = (function (_super) {
         this.skinName = "HomePanelSkin";
     };
     HomePanel.prototype.initView = function () {
-        this.list.itemRenderer = HeroPanelItem;
-        this.list.dataProvider = new eui.ArrayCollection([10010, 10020, 10030, 10040, 10050, 10060, 10070]);
+        var _this = this;
+        // this.list.itemRenderer = HeroPanelItem;
+        // this.list.dataProvider = new eui.ArrayCollection([10010, 10020, 10030, 10040, 10050, 10060, 10070])
+        this.fightBtn.label = "a";
+        this.addMsgListener("update_demo", function () {
+            _this.fightBtn.label = "b";
+        }, this);
+        MessageManager.Ins().update("update_demo");
     };
     HomePanel.prototype.destroy = function () {
     };

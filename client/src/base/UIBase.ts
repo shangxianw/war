@@ -209,8 +209,8 @@ abstract class UIBase extends eui.Component
 	}
 
 	// ---------------------------------------------------------------------- 添加消息监听
-	public msgArray:[number, Function, Object][] = []
-	public addMsgListener(type:number, cbFn:Function, thisObj:Object):boolean
+	public msgArray:[string, Function, Object][] = []
+	public addMsgListener(type:string, cbFn:Function, thisObj:Object):boolean
 	{
 		// 参数有误
 		if(type == null || cbFn == null || thisObj == null)
@@ -227,7 +227,7 @@ abstract class UIBase extends eui.Component
 		return MessageManager.Ins().addListener(type, cbFn, thisObj)
 	}
 
-	public removeMsgListener(type:number, cbFn:Function, thisObj:Object)
+	public removeMsgListener(type:string, cbFn:Function, thisObj:Object)
 	{
 		// 参数有误
 		if(type == null || cbFn == null || thisObj == null)
